@@ -162,7 +162,7 @@ filter: none;
                 <div class="slide" style="background: url('../images/upload/slider-3.jpg')no-repeat center center">
                     <div class="block">
                         <h1>Складские помещения</h1>
-                        <p class="next_h1">фрукты | овощи | ягоды | экзотика</p>
+                        <p class="next_h1">фрукты | овощи | ягоды</p>
                         <h2>Температурный режим +2…+8 °С</h2>
                         <p class="next_h2">Оптимальные условия</p>
                     </div>
@@ -417,7 +417,7 @@ filter: none;
             </div>
         </section>
         <section class="map" id="five">
-            <iframe src="https://api-maps.yandex.ru/frame/v1/-/CVwWBXZb" frameborder="0"></iframe>
+            <div id="contacts-map" class="map-container"></div>
             <div class="buble">
                 <strong>наш адрес</strong>
                 <p class="plane">г. Домодедово, мкр. Северный, ул. Логистическая, участок 9</p>
@@ -590,6 +590,10 @@ filter: none;
     <script type="text/javascript" src="js/vendor/scroll.js"></script>
     <script type="text/javascript" src="js/vendor/slick.min.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/main.js"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYQPq92PcAvbnyl9H7MqeQ86w_4FfsCaU&callback=App.googleMapsCallback">
+    </script>
 </body>
 
 </html>
