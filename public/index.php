@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__.'/api.php';
+?>
 <!doctype html>
 <html lang="ru">
 
@@ -435,48 +438,51 @@ filter: none;
     <!--Модалки-->
     <!--Обратный звонок-->
     <div class="modal modal_window" id="re_call">
-        <form class="block" method="post" action="" name="" id="">
+        <form class="block" method="post" action="" name="">
+            <input name="fn" type="hidden" value="callback-request">
             <span class="close"></span>
             <strong>Заказать звонок</strong>
-            <input type="text" placeholder="ФИО">
-            <input type="text" placeholder="Телефон">
-            <textarea placeholder="Сообщение"></textarea>
+            <input name="name" type="text" placeholder="ФИО">
+            <input name="phone" type="text" placeholder="Телефон">
+            <textarea name="message" placeholder="Сообщение"></textarea>
             <div class="bottom">
-                <button class="btn">отправить</button>
+                <button type="submit" class="btn">отправить</button>
             </div>
         </form>
     </div>
     <!--Написать письмо-->
     <div class="modal modal_window" id="write_letter">
-        <form class="block" method="post" action="" name="" id="">
+        <form class="block" method="post" action="" name="">
+            <input name="fn" type="hidden" value="message">
             <span class="close"></span>
             <strong>Написать письмо</strong>
-            <input type="text" placeholder="ФИО">
-            <input type="text" placeholder="Почта">
-            <textarea placeholder="Сообщение"></textarea>
+            <input name="name" type="text" placeholder="ФИО">
+            <input name="email" type="text" placeholder="Почта">
+            <textarea name="message" placeholder="Сообщение"></textarea>
             <div class="bottom">
-                <button class="btn">отправить</button>
+                <button type="submit" class="btn">отправить</button>
             </div>
         </form>
     </div>
     <!--Форма аренды-->
     <div class="modal modal_window" id="rent">
-        <form class="block" method="post" action="" name="" id="">
+        <form class="block" method="post" action="" name="">
+            <input name="fn" type="hidden" value="rent">
             <span class="close"></span>
             <strong>Написать письмо</strong>
-            <input type="text" placeholder="ФИО">
-            <input type="text" placeholder="Телефон">
-            <input type="text" placeholder="Почта">
-            <select name="" id="">
-                <option value="">Тип помещения</option>
-                <option value="">Офис</option>
-                <option value="">Склад</option>
+            <input name="name" type="text" placeholder="ФИО">
+            <input name="phone" type="text" placeholder="Телефон">
+            <input name="email" type="text" placeholder="Почта">
+            <select name="type" id="">
+                <option value="Не выбран">Тип помещения</option>
+                <option value="Офис">Офис</option>
+                <option value="Склад">Склад</option>
             </select>
             <!--<div class="people_test">
                 <img src="images/robot.png" alt="">
             </div>-->
             <div class="bottom">
-                <button class="btn">отправить</button>
+                <button type="submit" class="btn">отправить</button>
             </div>
         </form>
     </div>
