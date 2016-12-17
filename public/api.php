@@ -4,13 +4,12 @@ $autoload = $_SERVER['DOCUMENT_ROOT'].'/private/vendor/autoload.php';
 require_once $autoload;
 
 class App {
-    const ADMIN_EMAIL = 'novikov@i-market.ru';
-
     static function newMail() {
         $mail = new PHPMailer();
         $mail->CharSet = 'UTF-8';
         $mail->setFrom('postmaster@domodedovo.nichost.ru', 'Четыре сезона');
-        $mail->addAddress(App::ADMIN_EMAIL);
+        $mail->addAddress('surovets@mspdom.ru');
+        $mail->addAddress('bezin@i-market.ru');
         return $mail;
     }
 }
