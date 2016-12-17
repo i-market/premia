@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $params = $_POST;
         $mail = App::newMail();
         $mail->Subject = 'На сайте заказали обратный звонок';
-        $mail->Body = 'Имя: '.$params['name'].PHP_EOL
+        $mail->Body = 'ФИО: '.$params['name'].PHP_EOL
             .'Телефон: '.$params['phone'].PHP_EOL
             .'Сообщение: '.$params['message'];
         $mail->send();
@@ -29,9 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $params = $_POST;
         $mail = App::newMail();
         $mail->Subject = 'С сайта отправлено письмо';
-        $mail->Body = 'Имя: '.$params['name'].PHP_EOL
-            .'Email: '.$params['email'].PHP_EOL
+        $mail->Body = 'ФИО: '.$params['name'].PHP_EOL
+            .'Почта: '.$params['email'].PHP_EOL
             .'Сообщение: '.$params['message'];
+        $mail->send();
+    } elseif ($fn === 'rent') {
+        $params = $_POST;
+        $mail = App::newMail();
+        $mail->Subject = 'На сайте запросили форму на аренду';
+        $mail->Body = 'ФИО: '.$params['name'].PHP_EOL
+            .'Телефон: '.$params['phone'].PHP_EOL
+            .'Почта: '.$params['email'].PHP_EOL
+            .'Тип помещения: '.$params['type'];
         $mail->send();
     }
 }
