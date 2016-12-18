@@ -170,7 +170,7 @@ filter: none;
                         <h1>Четыре Сезона</h1>
                         <p class="next_h1">г.Домодедово</p>
                         <h2>Всего 15 км от МКАД</h2>
-                        <p class="next_h2">4 км от М4 "Дон" | 8 км до М4 "Крым"</p>
+                        <p class="next_h2">4 км от М4 "Дон" | 8 км от М2 "Крым"</p>
                     </div>
                 </div>
                 <div class="slide" style="background: url('images/upload/slider-3.jpg')no-repeat center center">
