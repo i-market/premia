@@ -1,3 +1,8 @@
 .idea/
 
 public/private/vendor/
+
+node_modules/
+.sass-cache/
+public/private/template/css/*.css
+public/private/template/css/*.css.map
