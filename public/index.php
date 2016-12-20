@@ -188,7 +188,7 @@ filter: none;
             <span class="achor achor--two" id="two"></span>
             <div class="wrap">
                 <div class="top">
-                    <p class="big_text">42 900 м2</p>
+                    <p class="big_text">70 000 м²</p>
                     <div class="block">
                         <h3>предложения по аренде</h3>
                         <p>ОРЦ "Четыре сезона" предлагает в аренду складские корпуса с постоянным температурным режимом и удобные помещения под офисы</p>
@@ -198,28 +198,28 @@ filter: none;
                     <div class="item col_3">
                         <div class="img">
                             <img src="images/pic_2.jpg" alt="">
-                            <p class="text">Павильоны 25 500 м2</p>
+                            <p class="text">Павильоны 25 500 м²</p>
                         </div>
                         <div class="info">
                             <p>
                                 <span>Арендуемая площадь</span>
-                                <span>- от 150 до 600 м2</span>
+                                <span>— от 150 до 600 м²</span>
                             </p>
                             <p>
                                 <span>Температурный режим</span>
-                                <span>- от +4 до +8 С</span>
+                                <span>— от +4 до +8 °С</span>
                             </p>
                             <p>
                                 <span>Высота потолков</span>
-                                <span>- 10 м</span>
+                                <span>— 10 м</span>
                             </p>
                             <p>
                                 <span>Нагрузка на пол</span>
-                                <span>- 600 кг/м2</span>
+                                <span>— 600 кг/м²</span>
                             </p>
                             <p>
                                 <span>Строение</span>
-                                <span>- №2, №3</span>
+                                <span>— №2, №3</span>
                             </p>
                         </div>
                         <div class="bottom">
@@ -229,28 +229,28 @@ filter: none;
                     <div class="item col_3">
                         <div class="img">
                             <img src="images/upload/sklad-2.png" alt="">
-                            <p class="text">Павильоны 14 700 м2</p>
+                            <p class="text">Павильоны 14 700 м²</p>
                         </div>
                         <div class="info">
                             <p>
                                 <span>Арендуемая площадь</span>
-                                <span>- от 256 до 512 м2</span>
+                                <span>— от 256 до 512 м²</span>
                             </p>
                             <p>
                                 <span>Температурный режим</span>
-                                <span>- от 2 до +12 C</span>
+                                <span>— от 2 до +12 °С</span>
                             </p>
                             <p>
                                 <span>Высота потолков</span>
-                                <span>- 6 м</span>
+                                <span>— 6 м</span>
                             </p>
                             <p>
                                 <span>Нагрузка на пол</span>
-                                <span>- 600 кг/м2</span>
+                                <span>— 600 кг/м²</span>
                             </p>
                             <p>
                                 <span>Строение</span>
-                                <span>- №11, №12, №13</span>
+                                <span>— №11, №12, №13</span>
                             </p>
                         </div>
                         <div class="bottom">
@@ -260,7 +260,7 @@ filter: none;
                     <div class="item col_3">
                         <div class="img">
                             <img src="images/upload/sklad-3.png" alt="">
-                            <p class="text">Офисы 2 700 м2</p>
+                            <p class="text">Офисы 2 700 м²</p>
                         </div>
                         <div class="info">
                             <p>
