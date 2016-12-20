@@ -1,4 +1,6 @@
 <?php
+// TODO probably won't need this in prod env
+date_default_timezone_set('Europe/Moscow');
 require_once __DIR__.'/api.php';
 ?>
 <!doctype html>
@@ -432,7 +434,7 @@ filter: none;
     </main>
     <!-- FOOTER -->
     <footer class="footer">
-        <p>2016 © Четыре-сезона.рф. Создание и продвижение сайта: <a href="#">i-Market</a>
+        <p><?= date('Y') ?> © Четыре-сезона.рф. Создание и продвижение сайта: <a href="https://i-market.ru/" rel="nofollow" target="_blank">i-Market</a>
         </p>
     </footer>
     <!--Модалки-->
