@@ -161,7 +161,7 @@ filter: none;
                     <div class="block">
                         <h1>Арендные каникулы</h1>
                         <p class="next_h1">Снижение ставки</p>
-                        <h2>Скидка c м2  - <span>20 P</span>  в сутки</h2>
+                        <h2>Скидка c м² <span class="orange">−20 P</span> в сутки</h2>
                         <p class="next_h2">На складские помещения и офисы</p>
                     </div>
                 </div>
@@ -169,7 +169,7 @@ filter: none;
                     <div class="block">
                         <h1>Четыре Сезона</h1>
                         <p class="next_h1">г.Домодедово</p>
-                        <h2>Всего 15 км от МКАД</h2>
+                        <h2>Всего <span class="orange">15 км</span> от МКАД</h2>
                         <p class="next_h2">4 км от М4 "Дон" | 8 км от М2 "Крым"</p>
                     </div>
                 </div>
@@ -177,7 +177,7 @@ filter: none;
                     <div class="block">
                         <h1>Склады</h1>
                         <p class="next_h1">фрукты | овощи | ягоды</p>
-                        <h2>Режим t +2...+8 °С</h2>
+                        <h2>Режим t <span class="orange">+2...+8 °С</span></h2>
                         <p class="next_h2">Оптимальные условия аренды</p>
                     </div>
                 </div>
