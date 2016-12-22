@@ -266,15 +266,28 @@ filter: none;
                         </div>
                         <div class="info">
                             <p>
-                                <!-- TODO css issue -->
-                                <span></span>
-                                <span>
-                                Мы можем выполнить проект по индивидуальным характеристикам дизайну, требованиям. Наши профессиональные сотрудники помогут Вам создать свой уникальный склад.
-                                </span>
+                                <span>Арендуемая площадь</span>
+                                <span>— от 22 м²</span>
                             </p>
                             <p>
-                                <span>&nbsp;</span>
-                                <span>&nbsp;</span>
+                                <span>Этажность</span>
+                                <span>— 3/3</span>
+                            </p>
+                            <p>
+                                <span>Планировка</span>
+                                <span>— коридорно-кабинетная</span>
+                            </p>
+                            <p>
+                                <span>Кондиционирование</span>
+                                <span>— центральное</span>
+                            </p>
+                            <p>
+                                <span>Отопление</span>
+                                <span>— центральное</span>
+                            </p>
+                            <p>
+                                <span>Охрана</span>
+                                <span>— ЧОП, круглосуточно</span>
                             </p>
                         </div>
                         <div class="bottom">
