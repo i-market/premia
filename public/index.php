@@ -493,6 +493,7 @@ filter: none;
                 <option value="Офис">Офис</option>
                 <option value="Склад">Склад</option>
             </select>
+            <input name="space-needed" type="text" placeholder="Интересующая площадь в м²">
             <!--<div class="people_test">
                 <img src="images/robot.png" alt="">
             </div>-->

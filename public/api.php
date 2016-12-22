@@ -45,7 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->Body = 'ФИО: ' . $params['name'] . PHP_EOL
                 . 'Телефон: ' . $params['phone'] . PHP_EOL
                 . 'Почта: ' . $params['email'] . PHP_EOL
-                . 'Тип помещения: ' . $params['type'];
+                . 'Тип помещения: ' . $params['type'] . PHP_EOL
+                . 'Интересующая площадь в м²: ' . $params['space-needed'];
             $mail->send();
         }
     }
