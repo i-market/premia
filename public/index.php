@@ -167,7 +167,7 @@ filter: none;
                         <p class="next_h2">На складские помещения и офисы</p>
                     </div>
                 </div>
-                <div class="slide" style="background: url('images/upload/slider-2.jpg')no-repeat center center">
+                <div class="slide" style="background: url('images/upload/slide-2.jpg')no-repeat center center">
                     <div class="block">
                         <h1>Четыре Сезона</h1>
                         <p class="next_h1">г.Домодедово</p>
@@ -175,7 +175,7 @@ filter: none;
                         <p class="next_h2">4 км от М4 "Дон" | 8 км от М2 "Крым"</p>
                     </div>
                 </div>
-                <div class="slide" style="background: url('images/upload/slider-3.jpg')no-repeat center center">
+                <div class="slide" style="background: url('images/upload/slide-3.jpg')no-repeat center center">
                     <div class="block">
                         <h1>Склады</h1>
                         <p class="next_h1">фрукты | овощи | ягоды</p>
