@@ -285,10 +285,6 @@ filter: none;
                                 <span>Отопление</span>
                                 <span>— центральное</span>
                             </p>
-                            <p>
-                                <span>Охрана</span>
-                                <span>— ЧОП, круглосуточно</span>
-                            </p>
                         </div>
                         <div class="bottom">
                             <span class="btn btn--red" data-modal="rental_offers_3">Показать схему</span>
