@@ -1,0 +1,19 @@
+# intellij idea
+.idea/
+
+# bitrix
+/public/bitrix/*
+/public/upload/
+
+# composer
+/public/local/vendor/
+
+# phpdotenv
+.env
+
+# node.js
+node_modules/
+
+# ansible
+*.retry
+vault_pass.txt
