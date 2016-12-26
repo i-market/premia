@@ -1,0 +1,28 @@
+---
+- hosts: all
+  vars_files:
+    - vars/{{ env }}.yml
+  tasks:
+    - name: push dbconn.php
+      template:
+        src: templates/dbconn.php.j2
+        dest: "{{ document_root }}/bitrix/php_interface/dbconn.php"
+        backup: yes
+    - name: push .settings.php
+      template:
+        src: templates/settings.php.j2
+        dest: "{{ document_root }}/bitrix/.settings.php"
+        backup: yes
+    - name: push .env
+      template:
+        src: templates/env.j2
+        dest: "{{ document_root }}/local/.env"
+        backup: yes
+    - name: push staging robots.txt
+      copy:
+        src: files/stage/robots.txt
+        dest: "{{ document_root }}/robots.txt"
+        backup: yes
+      when: env == "stage"
+      # TODO git ftp push
+      # TODO sync /upload

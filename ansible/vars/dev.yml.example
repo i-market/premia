@@ -1,0 +1,8 @@
+---
+# TODO encrypt sensitive data with ansible-vault
+ansible_user: root
+document_root: /home/bitrix/www
+db_host: localhost
+db_name: example
+db_user: root
+db_password: ~
