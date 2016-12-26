@@ -24,5 +24,10 @@
         dest: "{{ document_root }}/robots.txt"
         backup: yes
       when: env == "stage"
-      # TODO git ftp push
-      # TODO sync /upload
+    - name: git-ftp push
+      local_action: >
+        shell git-ftp push
+        {% if ansible_check_mode %}--dry-run{% endif %}
+        --user {{ ansible_user }}
+        --passwd {{ ansible_ssh_pass }}
+        sftp://{{ ansible_host }}/{{ repo_path }}
