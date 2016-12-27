@@ -31,3 +31,4 @@
         --user {{ ansible_user }}
         --passwd {{ ansible_ssh_pass }}
         sftp://{{ ansible_host }}/{{ repo_path }}
+        when: env != "dev"
