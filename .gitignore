@@ -1,8 +1,19 @@
+# intellij idea
 .idea/
 
-public/private/vendor/
+# bitrix
+/public/bitrix/*
+/public/upload/
 
+# composer
+/public/local/vendor/
+
+# phpdotenv
+.env
+
+# node.js
 node_modules/
-.sass-cache/
-public/private/template/css/*.css
-public/private/template/css/*.css.map
+
+# ansible
+*.retry
+vault_pass.txt

@@ -1,0 +1,5 @@
+[stage]
+example.com
+
+[stage:vars]
+env=stage

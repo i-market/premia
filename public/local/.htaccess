@@ -1,0 +1,9 @@
+<Directory />
+    Order Deny,Allow
+    Deny from all
+</Directory>
+
+<Directory /templates>
+    Order Deny,Allow
+    Allow from all
+</Directory>
