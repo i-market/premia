@@ -1,0 +1,5 @@
+{
+    "require": {
+        "maximaster/tools.twig": "^1.0"
+    }
+}
