@@ -1,0 +1,9 @@
+---
+ansible_user: root
+ansible_pass: ~
+repo_path: ~
+document_root: /home/bitrix/www
+db_host: localhost
+db_name: 4seasons
+db_user: root
+db_password: ~

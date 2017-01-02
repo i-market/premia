@@ -29,6 +29,6 @@
         shell git-ftp push
         {% if ansible_check_mode %}--dry-run{% endif %}
         --user {{ ansible_user }}
-        --passwd {{ ansible_ssh_pass }}
+        --passwd {{ ansible_pass }}
         sftp://{{ ansible_host }}/{{ repo_path }}
-        when: env != "dev"
+      when: env != "dev"

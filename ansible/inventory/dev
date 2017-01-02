@@ -1,5 +1,5 @@
 [dev]
-example.local
+bitrix.localhost
 
 [dev:vars]
 env=dev
