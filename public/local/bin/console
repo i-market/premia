@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+// https://github.com/cjp2600/bim-core/blob/bf4f8c216d76c0ca4b5c638d01560fcfb64c83dc/src/bin/bim
+ini_set('max_execution_time', 36000);
+define('NO_KEEP_STATISTIC', true);
+define('NO_AGENT_STATISTIC', true);
+define('NOT_CHECK_PERMISSIONS', true);
+
+$_SERVER['DOCUMENT_ROOT'] = realpath(__DIR__.'/../..');
+
+require $_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_before.php';
+require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../src/console.php';
+
+use Symfony\Component\Console\Application;
+use App\Console as c;
+
+$app = new Application();
+$app->add(new c\DbDump());
+$app->run();
