@@ -1,5 +1,6 @@
 {
     "require": {
         "maximaster/tools.twig": "^1.0"
+        "vlucas/phpdotenv": "^2.4",
     }
 }
