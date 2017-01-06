@@ -17,3 +17,5 @@ node_modules/
 # ansible
 *.retry
 vault_pass.txt
+
+/public/local/templates/*/dev/
