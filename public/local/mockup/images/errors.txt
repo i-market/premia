@@ -1,3 +1,0 @@
-[Wed Dec 14 2016 12:52:43 GMT+0200 (EET)] layer "+7 (495) 223-61-23": Expected Either a default asset specification or a layer asset specification but "+" found.
-[Wed Dec 14 2016 12:52:43 GMT+0200 (EET)] layer "Единый Миграционный Центр  кафе и столовые   магазины, банки,  ": Expected end of input but "," found.
-[Wed Dec 14 2016 12:52:43 GMT+0200 (EET)] layer "envelope.pmg": Unsupported extension: pmg

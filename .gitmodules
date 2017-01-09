@@ -1,0 +1,3 @@
+[submodule "public/local/mockup"]
+	path = public/local/mockup
+	url = git@gitlab.com:i-market/4seasons-mockup.git
