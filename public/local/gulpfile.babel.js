@@ -8,10 +8,20 @@ import child from 'child_process';
 import _ from 'lodash';
 
 gulp.task('sass', () => {
-  return gulp.src('assets/styles/main.scss')
+  return gulp.src('mockup/css/*.scss')
     .pipe(sass())
     .pipe(gulp.dest('templates/main/dev'))
     .pipe(browserSync.stream());
+});
+
+gulp.task('css', () => {
+  return gulp.src('mockup/css/lib/**/*.css')
+    .pipe(gulp.dest('templates/main/dev/lib'));
+});
+
+gulp.task('js', () => {
+  return gulp.src('mockup/js/**/*.js')
+    .pipe(gulp.dest('templates/main/dev'));
 });
 
 gulp.task('browser-sync', () => {
@@ -40,7 +50,8 @@ gulp.task('test:e2e', () => {
   });
 });
 
-gulp.task('dev', ['sass', 'browser-sync'], () => {
-  gulp.watch('assets/styles/main.scss', ['sass']);
-  gulp.watch('templates/main/**/*.php').on('change', browserSync.reload);
+gulp.task('dev', ['sass', 'css', 'js', 'browser-sync'], () => {
+  gulp.watch('mockup/css/*.scss', ['sass']);
+  gulp.watch('mockup/js/**/*.js', ['js']);
+  gulp.watch(['templates/main/**/*.php', 'templates/main/**/*.twig']).on('change', browserSync.reload);
 });

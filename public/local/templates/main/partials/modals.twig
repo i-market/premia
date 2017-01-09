@@ -1,0 +1,49 @@
+<!--Модалки-->
+<!--Обратный звонок-->
+<div class="modal modal_window" id="re_call">
+    <form class="block" method="post" action="" name="" id="">
+        <span class="close"></span>
+        <strong>Заказать звонок</strong>
+        <input name="name" type="text" placeholder="ФИО">
+        <input name="phone" type="text" placeholder="Телефон">
+        <textarea name="message" placeholder="Сообщение"></textarea>
+        <div class="bottom">
+            <button type="submit" class="btn">отправить</button>
+        </div>
+    </form>
+</div>
+<!--Написать письмо-->
+<div class="modal modal_window" id="write_letter">
+    <form class="block" method="post" action="" name="" id="">
+        <span class="close"></span>
+        <strong>Написать письмо</strong>
+        <input name="name" type="text" placeholder="ФИО">
+        <input name="email" type="text" placeholder="Почта">
+        <textarea name="message" placeholder="Сообщение"></textarea>
+        <div class="bottom">
+            <button type="submit" class="btn">отправить</button>
+        </div>
+    </form>
+</div>
+<!--Форма аренды-->
+<div class="modal modal_window" id="rent">
+    <form class="block" method="post" action="" name="" id="">
+        <span class="close"></span>
+        <strong>Написать письмо</strong>
+        <input name="name" type="text" placeholder="ФИО">
+        <input name="phone" type="text" placeholder="Телефон">
+        <input name="email" type="text" placeholder="Почта">
+        <select name="type" id="">
+            <option value="Не выбран">Тип помещения</option>
+            <option value="Офис">Офис</option>
+            <option value="Склад">Склад</option>
+        </select>
+        <input name="space-needed" type="text" placeholder="Интересующая площадь в м²">
+        <!--<div class="people_test">
+        <img src="{{ asset_uri('images/robot.png') }}" alt="">
+        </div>-->
+        <div class="bottom">
+            <button type="submit" class="btn">отправить</button>
+        </div>
+    </form>
+</div>

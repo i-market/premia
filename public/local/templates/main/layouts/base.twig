@@ -1,0 +1,129 @@
+<!--точки с прокруткой-->
+<div id="navbar">
+    <ul class="nav">
+        <li class="active">
+            <a href="#one"></a>
+        </li>
+        <li>
+            <a href="#two"></a>
+        </li>
+        <li>
+            <a href="#three"></a>
+        </li>
+        <li>
+            <a href="#four"></a>
+        </li>
+        <li>
+            <a href="#five"></a>
+        </li>
+    </ul>
+</div>
+<!--гамбургер-->
+<div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+<!--мобильное меню-->
+<div class="hidden_menu">
+    <div class="top">
+        <a href="#">+7 (495) 223-61-23</a>
+    </div>
+    <ul>
+        {#TODO tmp fix#}
+        {#<li><a href="#"><span>О комплексе</span></a></li>#}
+        <li><a href="#"><span>Арендаторам</span></a></li>
+        <li><a href="#"><span>Покупателям</span></a></li>
+        {#<li><a href="#"><span>Контакты</span></a></li>#}
+        <li><a href="#"><span data-modal="re_call">Обратный звонок</span></a></li>
+        <li><a href="#"><span data-modal="rent">Форма на аренду</span></a></li>
+        <li><a href="#"><span data-modal="write_letter">Написать письмо</span></a></li>
+    </ul>
+    <div class="bottom">
+        <div class="social_icons">
+            {# TODO paths #}
+            {% include '/local/templates/main/partials/social_icons.twig' %}
+        </div>
+    </div>
+</div>
+<!--нижнее меню-->
+<div class="bottom_line">
+    <div class="wrap">
+        <span class="write_letter" data-modal="write_letter">написать письмо</span>
+        <span class="btn" data-modal="re_call">заказать звонок</span>
+        <span class="form_order" data-modal="rent">Запросить форму на аренду</span>
+    </div>
+</div>
+<!--HEADER-->
+<header class="header">
+    <div class="wrap">
+        <div class="opacity_bars"></div>
+        <a class="logo_mobile" href="#">
+            <img src="{{ asset_uri('images/logo.png') }}" alt="">
+        </a>
+        <div class="left">
+            <div class="social_icons">
+                {# TODO paths #}
+                {% include '/local/templates/main/partials/social_icons.twig' %}
+            </div>
+            <a href="#five" class="scheme btn">схема проезда</a>
+        </div>
+        <nav class="main_menu cf">
+            <ul>
+                <li><a href="#">о комплексе</a></li>
+                {% set uri = SITE_DIR ~ 'rent/' %}
+                {% set is_active = APPLICATION.GetCurDir() == uri %}
+                <li><a href="{{ uri }}" class="{{ is_active ? 'active' }}">Арендаторам</a></li>
+                <li class="logo">
+                    <a href="/"></a>
+                </li>
+                {% set uri = SITE_DIR ~ 'for-customers/' %}
+                {% set is_active = APPLICATION.GetCurDir() == uri %}
+                <li><a href="{{ uri }}" class="{{ is_active ? 'active' }}">Покупателям</a></li>
+                <li><a href="#">Контакты</a></li>
+            </ul>
+        </nav>
+        <div class="right">
+            <p class="tel"><a href="tel:+7 (495) 223-61-23">+7 (495) 223-61-23</a></p>
+            <div class="lang_block">
+                <div class="flag"><img src="{{ asset_uri('images/lang.png') }}" alt=""></div>
+                <div class="blcok_choose_lang">
+                    <span class="lang">RUS</span>
+                    <div class="dd_choose_lang">
+                        <a href="#"><img src="{{ asset_uri('images/az.png') }}" alt="">Az</a>
+                        <a href="#"><img src="{{ asset_uri('images/eng.png') }}" alt="">Eng</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- CONTENT -->
+<main class="content">
+    {{ page }}
+    <section class="map" id="five">
+      <iframe src="https://api-maps.yandex.ru/frame/v1/-/CVwWBXZb" frameborder="0"></iframe>
+      <div class="buble">
+        <strong>наш адрес</strong>
+        <p class="plane">г. Домодедово, мкр. Северный, ул. Логистическая, участок 9</p>
+        <p class="marker">GPS: 55.470993, 37.712681</p>
+      </div>
+    </section>
+</main>
+<!-- FOOTER -->
+<footer class="footer">
+    <p>{{ copyright_year }} © Четыре-сезона.рф. Создание и продвижение сайта: <a href="https://i-market.ru/" rel="nofollow" target="_blank">I-market</a>
+    </p>
+</footer>
+{# TODO paths #}
+{% include '/local/templates/main/partials/modals.twig' %}
+<!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://use.fontawesome.com/d5e5cdfb8c.js"></script>
+{% for uri in script_uris %}
+    <script src="{{ uri }}"></script>
+{% endfor %}
+{#<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYQPq92PcAvbnyl9H7MqeQ86w_4FfsCaU&callback=App.googleMapsCallback">#}
+{#</script>#}
+{# TODO paths #}
+{% include '/local/templates/main/partials/tracking_scripts.twig' %}

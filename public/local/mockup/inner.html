@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Краткое описание сайта для поисковика">
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>Название страницы - заголовок</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800&amp;subset=cyrillic-ext" rel="stylesheet">
+  <link rel="stylesheet" media="screen" href="css/lib/normalize.min.css">
+  <link rel="stylesheet" media="screen" href="css/lib/slick.css">
+  <link rel="stylesheet" media="screen" href="css/main.css">
+  <!--[if gte IE 9]>
+<style type="text/css">
+.gradient {
+filter: none;
+}
+</style>
+<![endif]-->
+</head>
+
+<body data-spy="scroll" data-target="#navbar" id="one">
+  <!--точки с прокруткой-->
+  <div id="navbar">
+    <ul class="nav">
+      <li class="active">
+        <a href="#one"></a>
+      </li>
+      <li>
+        <a href="#two"></a>
+      </li>
+      <li>
+        <a href="#three"></a>
+      </li>
+      <li>
+        <a href="#four"></a>
+      </li>
+      <li>
+        <a href="#five"></a>
+      </li>
+    </ul>
+  </div>
+  <!--гамбургер-->
+  <div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <!--мобильное меню-->
+  <div class="hidden_menu">
+    <div class="top">
+      <a href="#">+7 (495) 223-61-23</a>
+    </div>
+    <ul>
+      <li><a href="#"><span>О комплексе</span></a></li>
+      <li><a href="#"><span>Арендаторам</span></a></li>
+      <li><a href="#"><span>Покупателям</span></a></li>
+      <li><a href="#"><span>Контакты</span></a></li>
+      <li><a href="#"><span data-modal="re_call">Обратный звонок</span></a></li>
+      <li><a href="#"><span data-modal="rent">Форма на аренду</span></a></li>
+      <li><a href="#"><span data-modal="write_letter">Написать письмо</span></a></li>
+    </ul>
+    <div class="bottom">
+      <div class="social_icons">
+        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+        <a href="#" class="vk"><i class="fa fa-vk"></i></a>
+        <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+  <!--нижнее меню-->
+  <div class="bottom_line">
+    <div class="wrap">
+      <span class="write_letter" data-modal="write_letter">написать письмо</span>
+      <span class="btn" data-modal="re_call">заказать звонок</span>
+      <span class="form_order" data-modal="rent">Запросить форму на аренду</span>
+    </div>
+  </div>
+  <!--HEADER-->
+  <header class="header">
+    <div class="wrap">
+      <div class="opacity_bars"></div>
+      <a class="logo_mobile" href="#">
+        <img src="images/logo.png" alt="">
+      </a>
+      <div class="left">
+        <div class="social_icons">
+          <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+          <a href="#" class="vk"><i class="fa fa-vk"></i></a>
+          <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+        </div>
+        <span class="scheme btn">схема проезда</span>
+      </div>
+      <nav class="main_menu cf">
+        <ul>
+          <li><a href="#">о комплексе</a></li>
+          <li><a href="#">Арендаторам</a></li>
+          <li class="logo">
+            <a href="#"></a>
+          </li>
+          <li><a href="#" class="active">Покупателям</a></li>
+          <li><a href="#">Контакты</a></li>
+        </ul>
+      </nav>
+      <div class="right">
+        <p class="tel"><a href="tel:+7 (495) 223-61-23">+7 (495) 223-61-23</a></p>
+        <div class="lang_block">
+          <div class="flag"><img src="images/lang.png" alt=""></div>
+          <div class="blcok_choose_lang">
+            <span class="lang">RUS</span>
+            <div class="dd_choose_lang">
+              <a href="#"><img src="images/az.png" alt="">Az</a>
+              <a href="#"><img src="images/eng.png" alt="">Eng</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- CONTENT -->
+  <main class="content">
+    <section class="wrap_slider">
+      <div class="wrap_arrows">
+        <span class="arrows prev"></span>
+        <span class="arrows next"></span>
+      </div>
+      <div class="slider">
+        <div class="slide slide--inner" style="background: url('../images/slider2.png')no-repeat center center">
+          <div class="block">
+            <h1>Четыре сезона</h1>
+            <span class="line"></span>
+            <h2>Фрукты и овощи от производителя<br>по оптовым ценам</h2>
+          </div>
+        </div>
+        <div class="slide slide--inner" style="background: url('../images/slider2.png')no-repeat center center">
+          <div class="block">
+            <h1>Три сезона</h1>
+            <span class="line"></span>
+            <h2>Фрукты и овощи от производителя<br>по оптовым ценам</h2>
+          </div>
+        </div>
+      </div>
+      <div class="dots"></div>
+    </section>
+    <section class="price_list">
+      <span class="anchor" id="two"></span>
+      <div class="wrap">
+        <div class="block">
+          <h3>что покупают у нас<h3>
+          <p class="sub_title">орц "Четыре сезона" обладает высокотехнологичным оборудованием, что позволяет сохранять Ваши фрукты и овощи всегда свежими. </p>
+          <div class="grid">
+            <div class="item col_5">
+              <img src="images/Group%2016.png" alt="">
+              <p>Экзотика</p>
+            </div>
+            <div class="item col_5">
+              <img src="images/Group%2017.png" alt="">
+              <p>Фрукты</p>
+            </div>
+            <div class="item col_5">
+              <img src="images/Group%2018.png" alt="">
+              <p>Овощи</p>
+            </div>
+            <div class="item col_5">
+              <img src="images/Group%2019.png" alt="">
+              <p>Зелень</p>
+            </div>
+            <div class="item col_5">
+              <img src="images/Group%2020.png" alt="">
+              <p>Ягоды</p>
+            </div>
+            <div class="item col_5">
+              <img src="images/Group%2021.png" alt="">
+              <p>Грибы</p>
+            </div>
+            <div class="item col_5">
+              <img src="images/Group%2022.png" alt="">
+              <p>Бахчевые</p>
+            </div>
+            <div class="item col_5">
+              <img src="images/Group%2023.png" alt="">
+              <p>Орехи</p>
+            </div>
+            <div class="item col_5">
+              <img src="images/Group%2024.png" alt="">
+              <p>Сухофрукты</p>
+            </div>
+            <a href="#" class="item item--download col_5">
+              <img src="images/download.jpg" alt="">
+              <p>Скачать
+                <br>прайс лист</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="why_buy_from_us">
+      <span class="anchor" id="three"></span>
+      <div class="wrap">
+        <h3>Почему покупают у нас</h3>
+          <div class="grid">
+            <div class="metro col_4">
+              <div class="front">
+                <div class="box1">
+                  <div class="ico">
+                    <img src="images/price.png" alt="">
+                  </div>
+                  <strong>Цены<br>и ассортимент</strong>
+                  <span class="line"></span>
+                  <p>Находимся в непосредственной близости к трассам федерального значения и маршрутам поставки грузов</p>
+                  <span class="metro_btn">Подробнее</span>
+                </div>
+              </div>
+              <div class="back">
+                <div class="box2">
+                  <strong>Цены и ассортимент</strong>
+                  <p>Российская специфика, как следует из вышесказанного, все еще интересна для многих.
+                    <br>Баинг и селлинг концентрирует потребительский формирование имиджа.</p>
+                  <span class="metro_btn">Назад</span>
+                </div>
+              </div>
+            </div>
+            <div class="metro col_4">
+              <div class="front">
+                <div class="box1">
+                  <div class="ico">
+                    <img src="images/quality.png" alt="">
+                  </div>
+                  <strong>Качество<br>продукции</strong>
+                  <span class="line"></span>
+                  <p>Находимся в непосредственной близости к трассам федерального значения и маршрутам поставки грузов</p>
+                  <span class="metro_btn">Подробнее</span>
+                </div>
+              </div>
+              <div class="back">
+                <div class="box2">
+                  <strong>Цены и ассортимент</strong>
+                  <p>Российская специфика, как следует из вышесказанного, все еще интересна для многих.
+                    <br>Баинг и селлинг концентрирует потребительский формирование имиджа.</p>
+                  <span class="metro_btn">Назад</span>
+                </div>
+              </div>
+            </div>
+            <div class="metro col_4">
+              <div class="front">
+                <div class="box1">
+                  <div class="ico">
+                    <img src="images/service.png" alt="">
+                  </div>
+                  <strong>Удобный<br>сервис</strong>
+                  <span class="line"></span>
+                  <p>Находимся в непосредственной близости к трассам федерального значения и маршрутам поставки грузов</p>
+                  <span class="metro_btn">Подробнее</span>
+                </div>
+              </div>
+              <div class="back">
+                <div class="box2">
+                  <strong>Цены и ассортимент</strong>
+                  <p>Российская специфика, как следует из вышесказанного, все еще интересна для многих.
+                    <br>Баинг и селлинг концентрирует потребительский формирование имиджа.</p>
+                  <span class="metro_btn">Назад</span>
+                </div>
+              </div>
+            </div>
+            <div class="metro col_4">
+              <div class="front">
+                <div class="box1">
+                  <div class="ico">
+                    <img src="images/volume.png" alt="">
+                  </div>
+                  <strong>Любой<br>объем</strong>
+                  <span class="line"></span>
+                  <p>Находимся в непосредственной близости к трассам федерального значения и маршрутам поставки грузов</p>
+                  <span class="metro_btn">Подробнее</span>
+                </div>
+              </div>
+              <div class="back">
+                <div class="box2">
+                  <strong>Цены и ассортимент</strong>
+                  <p>Российская специфика, как следует из вышесказанного, все еще интересна для многих.
+                    <br>Баинг и селлинг концентрирует потребительский формирование имиджа.</p>
+                  <span class="metro_btn">Назад</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+    <section class="who_buy_from_us">
+      <span class="anchor" id="four"></span>
+      <div class="wrap">
+        <h3>кто покупает у нас</h3>
+        <div class="grid">
+          <div class="item col_3">
+            <div class="img">
+              <img src="images/pic_5.jpg" alt="">
+            </div>
+            <div class="info">
+              <div class="ico">
+                <img src="images/ico_101.png" alt="">
+              </div>
+              <strong>HoReCa</strong>
+              <span class="line"></span>
+              <p>Находимся в непосредственной близости к трассам федерального значения и маршрутам поставки грузов</p>
+            </div>
+          </div>
+          <div class="item col_3">
+            <div class="img">
+              <img src="images/pic_6.jpg" alt="">
+            </div>
+            <div class="info">
+              <div class="ico">
+                <img src="images/ico_102.png" alt="">
+              </div>
+              <strong>Предприниматели</strong>
+              <span class="line"></span>
+              <p>Находимся в непосредственной близости к трассам федерального значения и маршрутам поставки грузов</p>
+            </div>
+          </div>
+          <div class="item col_3">
+            <div class="img">
+              <img src="images/pic_7.jpg" alt="">
+            </div>
+            <div class="info">
+              <div class="ico">
+                <img src="images/ico_103.png" alt="">
+              </div>
+              <strong>Покупатели</strong>
+              <span class="line"></span>
+              <p>Находимся в непосредственной близости к трассам федерального значения и маршрутам поставки грузов</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="map" id="five">
+      <iframe src="https://api-maps.yandex.ru/frame/v1/-/CVwWBXZb" frameborder="0"></iframe>
+      <div class="buble">
+        <strong>наш адрес</strong>
+        <p class="plane">г. Домодедово, мкр. Северный, ул. Логистическая, участок 9</p>
+        <p class="marker">GPS: 55.470993, 37.712681</p>
+      </div>
+    </section>
+  </main>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>2016 © Четыре-сезона.рф. Создание и продвижение сайта: <a href="#">i-Market</a></p>
+  </footer>
+  <!--Модалки-->
+  <!--Обратный звонок-->
+  <div class="modal modal_window" id="re_call">
+    <form class="block" method="post" action="" name="" id="">
+      <span class="close"></span>
+      <strong>Заказать звонок</strong>
+      <input type="text" placeholder="ФИО">
+      <input type="text" placeholder="Почта">
+      <textarea placeholder="Сообщение"></textarea>
+      <div class="bottom">
+        <button class="btn">отправить</button>
+      </div>
+    </form>
+  </div>
+  <!--Написать письмо-->
+  <div class="modal modal_window" id="write_letter">
+    <form class="block" method="post" action="" name="" id="">
+      <span class="close"></span>
+      <strong>Написать письмо</strong>
+      <input type="text" placeholder="ФИО">
+      <input type="text" placeholder="Почта">
+      <textarea placeholder="Сообщение"></textarea>
+      <div class="bottom">
+        <button class="btn">отправить</button>
+      </div>
+    </form>
+  </div>
+  <!--Форма аренды-->
+  <div class="modal modal_window" id="rent">
+    <form class="block" method="post" action="" name="" id="">
+      <span class="close"></span>
+      <strong>Написать письмо</strong>
+      <input type="text" placeholder="ФИО">
+      <input type="text" placeholder="Телефон">
+      <input type="text" placeholder="Почта">
+      <select name="" id="">
+        <option value="">Тип помещения</option>
+        <option value="">Тип помещения 1</option>
+        <option value="">Тип помещения 2</option>
+        <option value="">Тип помещения 3</option>
+        <option value="">Тип помещения 4</option>
+      </select>
+      <div class="people_test">
+        <img src="images/robot.png" alt="">
+      </div>
+      <div class="bottom">
+        <button class="btn">отправить</button>
+      </div>
+    </form>
+  </div>
+  <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ -->
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://use.fontawesome.com/d5e5cdfb8c.js"></script>
+  <script type="text/javascript" src="js/vendor/scroll.js"></script>
+  <script type="text/javascript" src="js/vendor/slick.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+
+</html>

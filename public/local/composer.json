@@ -5,6 +5,6 @@
         "symfony/console": "^3.2"
     },
     "autoload": {
-        "files": []
+        "files": ["src/app.php", "src/hendrix.php"]
     }
 }

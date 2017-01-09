@@ -11,8 +11,8 @@
 # phpdotenv
 .env
 
-# node.js
 node_modules/
+.sass-cache/
 
 # ansible
 *.retry
