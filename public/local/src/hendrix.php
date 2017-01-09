@@ -3,6 +3,7 @@
 namespace Hendrix;
 
 use Hendrix\Underscore as _;
+use Hendrix\Strings as str;
 
 class Underscore {
     static function get($array, $key, $default = null) {
@@ -37,5 +38,21 @@ class App {
 
     static function isEnv() {
         return in_array(self::env(), func_get_args(), true);
+    }
+}
+
+class View {
+    // TODO refactor
+    static function asset($path) {
+        if (str::startsWith($path, 'images')) {
+            return SITE_TEMPLATE_PATH.'/assets/'.$path;
+        }
+        // TODO prod assets
+        // TODO move paths to config
+        return App::isEnv(Env::DEV) ? SITE_TEMPLATE_PATH.'/assets/dev/'.$path : 'TODO';
+    }
+
+    static function partial($path) {
+        return SITE_TEMPLATE_PATH.'/partials/'.$path;
     }
 }

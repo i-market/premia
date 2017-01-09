@@ -45,5 +45,6 @@ class BreakpointExtension extends Twig_Extension
 $twig = \Maximaster\Tools\Twig\TemplateEngine::getInstance()->getEngine();
 $twig->addExtension(new BreakpointExtension());
 // TODO rename to `asset` for consistency
-$twig->addFunction(new Twig_SimpleFunction('asset', 'App\View::asset'));
+$twig->addFunction(new Twig_SimpleFunction('asset', 'Hendrix\View::asset'));
+$twig->addFunction(new Twig_SimpleFunction('partial', 'Hendrix\View::partial'));
 $twig->addGlobal('SITE_DIR', SITE_DIR);

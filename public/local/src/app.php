@@ -32,16 +32,6 @@ class View {
         echo self::$footer;
     }
 
-    // TODO refactor
-    static function asset($path) {
-        if (str::startsWith($path, 'images')) {
-           return SITE_TEMPLATE_PATH.'/'.$path;
-        }
-        // TODO prod assets
-        // TODO move paths to config
-        return App::isEnv(Env::DEV) ? SITE_TEMPLATE_PATH.'/dev/'.$path : 'TODO';
-    }
-
     static function twig() {
         return TemplateEngine::getInstance()->getEngine();
     }
