@@ -69,15 +69,13 @@
         <nav class="main_menu cf">
             <ul>
                 <li><a href="#">о комплексе</a></li>
-                {% set uri = SITE_DIR ~ 'rent/' %}
-                {% set is_active = APPLICATION.GetCurDir() == uri %}
-                <li><a href="{{ uri }}" class="{{ is_active ? 'active' }}">Арендаторам</a></li>
+                {% set item = menu.rent %}
+                <li><a href="{{ item.uri }}" class="{{ item.is_active ? 'active' }}">Арендаторам</a></li>
                 <li class="logo">
                     <a href="/"></a>
                 </li>
-                {% set uri = SITE_DIR ~ 'for-customers/' %}
-                {% set is_active = APPLICATION.GetCurDir() == uri %}
-                <li><a href="{{ uri }}" class="{{ is_active ? 'active' }}">Покупателям</a></li>
+                {% set item = menu.for_customers %}
+                <li><a href="{{ item.uri }}" class="{{ item.is_active ? 'active' }}">Покупателям</a></li>
                 <li><a href="#">Контакты</a></li>
             </ul>
         </nav>
