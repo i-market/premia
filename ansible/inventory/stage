@@ -1,0 +1,5 @@
+[stage]
+46.30.45.77
+
+[stage:vars]
+env=stage
