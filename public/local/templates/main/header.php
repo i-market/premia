@@ -15,9 +15,9 @@ use Hendrix\Env;
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title><? $APPLICATION->ShowTitle() ?></title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800&amp;subset=cyrillic-ext" rel="stylesheet">
-    <link rel="stylesheet" media="screen" href="<?= View::assetUri('lib/normalize.min.css') ?>">
-    <link rel="stylesheet" media="screen" href="<?= View::assetUri('lib/slick.css') ?>">
-    <link rel="stylesheet" media="screen" href="<?= View::assetUri('main.css') ?>">
+    <link rel="stylesheet" media="screen" href="<?= View::asset('lib/normalize.min.css') ?>">
+    <link rel="stylesheet" media="screen" href="<?= View::asset('lib/slick.css') ?>">
+    <link rel="stylesheet" media="screen" href="<?= View::asset('main.css') ?>">
     <!--[if gte IE 9]>
     <style type="text/css">
         .gradient {

@@ -33,7 +33,7 @@ class View {
     }
 
     // TODO refactor
-    static function assetUri($path) {
+    static function asset($path) {
         if (str::startsWith($path, 'images')) {
            return SITE_TEMPLATE_PATH.'/'.$path;
         }
