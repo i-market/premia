@@ -47,4 +47,3 @@ $twig->addExtension(new BreakpointExtension());
 // TODO rename to `asset` for consistency
 $twig->addFunction(new Twig_SimpleFunction('asset', 'Hendrix\View::asset'));
 $twig->addFunction(new Twig_SimpleFunction('partial', 'Hendrix\View::partial'));
-$twig->addGlobal('SITE_DIR', SITE_DIR);
