@@ -31,7 +31,11 @@ class Env {
 }
 
 class App {
+    static function env() {
+        return _::get($_ENV, 'APP_ENV', Env::PROD);
+    }
+
     static function isEnv() {
-        return in_array(_::get($_ENV, 'APP_ENV', Env::PROD), func_get_args(), true);
+        return in_array(self::env(), func_get_args(), true);
     }
 }

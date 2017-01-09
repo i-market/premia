@@ -1,6 +1,9 @@
 <?php
 
 use App\View;
+use Hendrix\App;
+use Hendrix\Env;
+
 ?>
 <!doctype html>
 <html lang="<?= LANGUAGE_ID ?>">
@@ -43,6 +46,7 @@ $scripts = array(
     'script.js'
 );
 View::showLayoutHeader(array(
-    'script_uris' => array_map('App\View::assetUri', $scripts),
-    'copyright_year' => date('Y')
+    'scripts' => $scripts,
+    'copyright_year' => date('Y'),
+    'include_tracking_scripts' => App::env() !== Env::DEV
 ));

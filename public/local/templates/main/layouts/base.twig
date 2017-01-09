@@ -120,10 +120,12 @@
 <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://use.fontawesome.com/d5e5cdfb8c.js"></script>
-{% for uri in script_uris %}
-    <script src="{{ uri }}"></script>
+{% for script in scripts %}
+    <script src="{{ asset(script) }}"></script>
 {% endfor %}
 {#<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYQPq92PcAvbnyl9H7MqeQ86w_4FfsCaU&callback=App.googleMapsCallback">#}
 {#</script>#}
-{# TODO paths #}
-{% include '/local/templates/main/partials/tracking_scripts.twig' %}
+{% if include_tracking_scripts %}
+    {# TODO paths #}
+    {% include '/local/templates/main/partials/tracking_scripts.twig' %}
+{% endif %}
