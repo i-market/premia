@@ -1,0 +1,13 @@
+---
+- hosts: all
+  vars_files:
+    - vars/{{ env }}.yml
+  tasks:
+    - name: git-ftp catchup
+      local_action: >
+        shell git-ftp catchup
+        {% if ansible_check_mode %}--dry-run{% endif %}
+        --user {{ ansible_user }}
+        --passwd {{ ansible_pass }}
+        sftp://{{ ansible_host }}/{{ repo_path }}
+      when: env != "dev"
