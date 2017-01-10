@@ -3,6 +3,7 @@
 use App\View;
 use Hendrix\App;
 use Hendrix\Env;
+use Hendrix\View as v;
 
 $scripts = array(
     'js/vendor/scroll.js',
@@ -13,8 +14,8 @@ $menu = array_map(function($item) use (&$APPLICATION) {
     $item['is_active'] = $item['uri'] === $APPLICATION->GetCurDir();
     return $item;
 }, array(
-    'rent' => array('uri' => SITE_DIR.'rent/'),
-    'for_customers' => array('uri' => SITE_DIR.'for-customers/')
+    'rent' => array('uri' => v::path('rent')),
+    'for_customers' => array('uri' => v::path('for-customers'))
 ));
 View::showLayoutHeader(array(
     'menu' => $menu,

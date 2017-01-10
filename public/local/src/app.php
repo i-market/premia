@@ -2,9 +2,6 @@
 
 namespace App;
 
-use Hendrix\App;
-use Hendrix\Env;
-use Hendrix\Strings as str;
 use Maximaster\Tools\Twig\TemplateEngine;
 
 class View {

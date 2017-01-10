@@ -55,4 +55,8 @@ class View {
     static function partial($path) {
         return SITE_TEMPLATE_PATH.'/partials/'.$path;
     }
+
+    static function path($path) {
+        return SITE_DIR.$path.'/';
+    }
 }
