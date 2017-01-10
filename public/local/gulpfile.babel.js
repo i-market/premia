@@ -10,18 +10,13 @@ import _ from 'lodash';
 gulp.task('sass', () => {
   return gulp.src('mockup/css/*.scss')
     .pipe(sass())
-    .pipe(gulp.dest('templates/main/dev'))
+    .pipe(gulp.dest('templates/main/assets/css'))
     .pipe(browserSync.stream());
-});
-
-gulp.task('css', () => {
-  return gulp.src('mockup/css/lib/**/*.css')
-    .pipe(gulp.dest('templates/main/dev/lib'));
 });
 
 gulp.task('js', () => {
   return gulp.src('mockup/js/**/*.js')
-    .pipe(gulp.dest('templates/main/dev'));
+    .pipe(gulp.dest('templates/main/assets/js'));
 });
 
 gulp.task('browser-sync', () => {
@@ -50,7 +45,7 @@ gulp.task('test:e2e', () => {
   });
 });
 
-gulp.task('dev', ['sass', 'css', 'js', 'browser-sync'], () => {
+gulp.task('dev', ['sass', 'js', 'browser-sync'], () => {
   gulp.watch('mockup/css/*.scss', ['sass']);
   gulp.watch('mockup/js/**/*.js', ['js']);
   gulp.watch(['templates/main/**/*.php', 'templates/main/**/*.twig']).on('change', browserSync.reload);

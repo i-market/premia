@@ -25,6 +25,15 @@
         dest: "{{ document_root }}/robots.txt"
         backup: yes
       when: env == "stage"
+    - name: build assets
+      local_action: shell gulp build
+      args:
+        chdir: ../public/local
+    - name: push assets
+      synchronize:
+        src: ../public/local/templates/main/assets
+        dest: "{{ document_root }}/local/templates/main/assets"
+        delete: yes
     - name: git-ftp push
       local_action: >
         shell git-ftp push
