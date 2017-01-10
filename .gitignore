@@ -19,3 +19,4 @@ node_modules/
 vault_pass.txt
 
 /public/local/out/
+/public/local/templates/*/assets/
