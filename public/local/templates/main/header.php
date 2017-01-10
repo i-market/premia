@@ -16,9 +16,9 @@ use Hendrix\View as v;
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title><? $APPLICATION->ShowTitle() ?></title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800&amp;subset=cyrillic-ext" rel="stylesheet">
-    <link rel="stylesheet" media="screen" href="<?= v::asset('lib/normalize.min.css') ?>">
-    <link rel="stylesheet" media="screen" href="<?= v::asset('lib/slick.css') ?>">
-    <link rel="stylesheet" media="screen" href="<?= v::asset('main.css') ?>">
+    <link rel="stylesheet" media="screen" href="<?= v::asset('css/lib/normalize.min.css') ?>">
+    <link rel="stylesheet" media="screen" href="<?= v::asset('css/lib/slick.css') ?>">
+    <link rel="stylesheet" media="screen" href="<?= v::asset('css/main.css') ?>">
     <!--[if gte IE 9]>
     <style type="text/css">
         .gradient {
@@ -42,9 +42,9 @@ use Hendrix\View as v;
 <? $APPLICATION->ShowPanel() ?>
 <?
 $scripts = array(
-    'vendor/scroll.js',
-    'vendor/slick.min.js',
-    'script.js'
+    'js/vendor/scroll.js',
+    'js/vendor/slick.min.js',
+    'js/script.js'
 );
 $menu = array_map(function($item) use (&$APPLICATION) {
     $item['is_active'] = $item['uri'] === $APPLICATION->GetCurDir();

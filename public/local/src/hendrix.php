@@ -49,7 +49,7 @@ class View {
         }
         // TODO prod assets
         // TODO move paths to config
-        return SITE_TEMPLATE_PATH.'/assets/dev/'.$path;
+        return SITE_TEMPLATE_PATH.'/assets/'.$path;
     }
 
     static function partial($path) {

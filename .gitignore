@@ -18,5 +18,4 @@ node_modules/
 *.retry
 vault_pass.txt
 
-/public/local/templates/*/dev/
 /public/local/out/
