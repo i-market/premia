@@ -3,7 +3,6 @@
 namespace Hendrix;
 
 use Hendrix\Underscore as _;
-use Hendrix\Strings as str;
 
 class Underscore {
     static function get($array, $key, $default = null) {
@@ -42,14 +41,19 @@ class App {
 }
 
 class View {
-    // TODO refactor
+    private static $assetManifest = null;
+
     static function asset($path) {
-        if (str::startsWith($path, 'images')) {
+        if (App::isEnv(Env::DEV)) {
             return SITE_TEMPLATE_PATH.'/assets/'.$path;
+        } else {
+            if (self::$assetManifest === null) {
+                $assetsPath = $_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/assets';
+                self::$assetManifest = json_decode(file_get_contents($assetsPath.'/rev-manifest.json'), true);
+            }
+            $revPath = _::get(self::$assetManifest, $path, $path);
+            return SITE_TEMPLATE_PATH.'/assets/'.$revPath;
         }
-        // TODO prod assets
-        // TODO move paths to config
-        return SITE_TEMPLATE_PATH.'/assets/'.$path;
     }
 
     static function partial($path) {
