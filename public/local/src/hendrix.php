@@ -49,7 +49,7 @@ class View {
         }
         // TODO prod assets
         // TODO move paths to config
-        return App::isEnv(Env::DEV) ? SITE_TEMPLATE_PATH.'/assets/dev/'.$path : 'TODO';
+        return SITE_TEMPLATE_PATH.'/assets/dev/'.$path;
     }
 
     static function partial($path) {
