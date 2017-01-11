@@ -15,7 +15,7 @@ const paths = {
 paths.dist = `${paths.template}/build/assets`;
 paths.rev = `${paths.template}/build/rev`;
 
-gulp.task('build:clean', () => {
+gulp.task('clean', () => {
   return gulp.src([paths.dist, paths.rev])
     .pipe(clean());
 });
