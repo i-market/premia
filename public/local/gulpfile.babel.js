@@ -12,7 +12,8 @@ import config from './config.json';
 const paths = {
   template: 'templates/main'
 };
-paths.dist = `${paths.template}/assets`;
+paths.dist = `${paths.template}/build/assets`;
+paths.rev = `${paths.template}/build/rev`;
 
 function delegateMockupBuild(cb) {
   process.chdir('mockup');
@@ -25,7 +26,7 @@ function delegateMockupBuild(cb) {
 }
 
 gulp.task('build:clean', () => {
-  gulp.src(paths.dist)
+  return gulp.src([paths.dist, paths.rev])
     .pipe(clean());
 });
 
@@ -40,7 +41,7 @@ gulp.task('build:mockup', () => {
 });
 
 gulp.task('build:js', () => {
-  gulp.src('assets/js/**/*.js')
+  return gulp.src('assets/js/**/*.js')
     .pipe(babel({
       presets: ['es2015']
     }))
@@ -48,8 +49,16 @@ gulp.task('build:js', () => {
 });
 
 gulp.task('build:images', () => {
-  gulp.src('assets/images/**', {base: 'assets'})
+  return gulp.src('assets/images/**', {base: 'assets'})
     .pipe(gulp.dest(paths.dist));
+});
+
+gulp.task('build:rev', () => {
+  return gulp.src(`${paths.dist}/**`)
+    .pipe(revAll.revision())
+    .pipe(gulp.dest(paths.rev))
+    .pipe(revAll.manifestFile())
+    .pipe(gulp.dest(paths.rev));
 });
 
 gulp.task('build', ['build:mockup', 'build:js', 'build:images']);
