@@ -82,4 +82,8 @@ class View {
     static function path($path) {
         return SITE_DIR.$path.'/';
     }
+
+    static function includedArea($path) {
+        return SITE_DIR.'include/'.$path;
+    }
 }
