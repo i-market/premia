@@ -16,13 +16,6 @@ paths.dist = `${paths.template}/build/assets`;
 paths.rev = `${paths.template}/build/rev`;
 
 function delegateMockupBuild(cb) {
-  process.chdir('mockup');
-  const proc = child.exec(config.mockup.buildCommand);
-  process.chdir('..');
-  proc.stdout.on('data', function (data) {
-    util.log('mockup:', data.toString().slice(0, -1));
-  });
-  proc.on('close', cb);
 }
 
 gulp.task('build:clean', () => {
@@ -30,14 +23,21 @@ gulp.task('build:clean', () => {
     .pipe(clean());
 });
 
-gulp.task('build:mockup', () => {
-  delegateMockupBuild((code) => {
-    const isSuccess = code === 0;
-    if (isSuccess) {
-      gulp.src(`mockup/${config.mockup.buildGlob}`)
-        .pipe(gulp.dest(paths.dist));
-    }
+gulp.task('build:mockup:delegate', (cb) => {
+  process.chdir('mockup');
+  const proc = child.exec(config.mockup.buildCommand, (err) => {
+    if (err) return cb(err);
+    cb();
   });
+  process.chdir('..');
+  proc.stdout.on('data', function (data) {
+    util.log('mockup:', data.toString().slice(0, -1));
+  });
+});
+
+gulp.task('build:mockup', ['build:mockup:delegate'], () => {
+  return gulp.src(`mockup/${config.mockup.buildGlob}`)
+    .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('build:js', () => {
@@ -53,15 +53,15 @@ gulp.task('build:images', () => {
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('rev', () => {
+gulp.task('build', ['build:mockup', 'build:js', 'build:images']);
+
+gulp.task('rev', ['build'], () => {
   return gulp.src(`${paths.dist}/**`)
     .pipe(revAll.revision())
     .pipe(gulp.dest(paths.rev))
     .pipe(revAll.manifestFile())
     .pipe(gulp.dest(paths.rev));
 });
-
-gulp.task('build', ['build:mockup', 'build:js', 'build:images']);
 
 gulp.task('release', ['build', 'rev']);
 
