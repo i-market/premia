@@ -59,4 +59,15 @@ return array (
     ),
     'readonly' => true,
   ),
+  {% if env == "dev" %}
+  'maximaster' => array(
+    'value' => array(
+      'tools' => array(
+        'twig' => array(
+          'debug' => true,
+        )
+      )
+    )
+  )
+  {% endif %}
 );

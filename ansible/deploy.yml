@@ -31,9 +31,11 @@
         chdir: ../public/local
     - name: push assets
       synchronize:
-        src: ../public/local/templates/main/assets
+        # trailing slash is important, see rsync documentation
+        src: ../public/local/templates/main/assets/
         dest: "{{ document_root }}/local/templates/main/assets"
         delete: yes
+      when: env != "dev"
     - name: git-ftp push
       local_action: >
         shell git-ftp push
