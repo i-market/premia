@@ -15,9 +15,6 @@ const paths = {
 paths.dist = `${paths.template}/build/assets`;
 paths.rev = `${paths.template}/build/rev`;
 
-function delegateMockupBuild(cb) {
-}
-
 gulp.task('build:clean', () => {
   return gulp.src([paths.dist, paths.rev])
     .pipe(clean());
