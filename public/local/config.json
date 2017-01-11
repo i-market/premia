@@ -1,0 +1,6 @@
+{
+  "mockup": {
+    "buildCommand": "gulp sass && gulp css && gulp dist",
+    "buildGlob": "dist/**/*.{js,css,png,jpg,jpeg}"
+  }
+}
