@@ -44,3 +44,7 @@
         --passwd {{ ansible_ssh_pass }}
         sftp://{{ inventory_hostname }}/{{ repo_path }}
       when: env != "dev"
+    - name: clear twig cache
+      file:
+        state: absent
+        path: "{{ document_root }}/bitrix/cache/maximaster/tools.twig"
