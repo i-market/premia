@@ -59,15 +59,21 @@ return array (
     ),
     'readonly' => true,
   ),
-  {% if env == "dev" %}
+  'app' => array(
+    'value' => array(
+      'env' => '{{ env }}',
+      'google_api_key' => '{{ google_api_key }}'
+    )
+  ),
   'maximaster' => array(
     'value' => array(
       'tools' => array(
         'twig' => array(
+          {% if env == "dev" %}
           'auto_reload' => true,
+          {% endif %}
         )
       )
     )
   )
-  {% endif %}
 );

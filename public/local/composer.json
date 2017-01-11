@@ -1,7 +1,6 @@
 {
     "require": {
         "maximaster/tools.twig": "^1.0",
-        "vlucas/phpdotenv": "^2.4",
         "symfony/console": "^3.2"
     },
     "autoload": {

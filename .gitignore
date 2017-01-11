@@ -8,9 +8,6 @@
 # composer
 /public/local/vendor/
 
-# phpdotenv
-.env
-
 node_modules/
 .sass-cache/
 
