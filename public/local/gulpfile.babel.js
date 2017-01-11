@@ -53,7 +53,7 @@ gulp.task('build:images', () => {
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('build:rev', () => {
+gulp.task('rev', () => {
   return gulp.src(`${paths.dist}/**`)
     .pipe(revAll.revision())
     .pipe(gulp.dest(paths.rev))
@@ -62,6 +62,8 @@ gulp.task('build:rev', () => {
 });
 
 gulp.task('build', ['build:mockup', 'build:js', 'build:images']);
+
+gulp.task('release', ['build', 'rev']);
 
 gulp.task('dev:sass', () => {
   return gulp.src('mockup/css/*.scss')

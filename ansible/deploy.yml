@@ -26,14 +26,14 @@
         backup: yes
       when: env == "stage"
     - name: build assets
-      local_action: shell gulp build
+      local_action: shell gulp release
       args:
         chdir: ../public/local
     - name: push assets
       synchronize:
         # trailing slash is important, see rsync documentation
-        src: ../public/local/templates/main/assets/
-        dest: "{{ document_root }}/local/templates/main/assets"
+        src: ../public/local/templates/main/build/
+        dest: "{{ document_root }}/local/templates/main/build"
         delete: yes
       when: env != "dev"
     - name: git-ftp push
