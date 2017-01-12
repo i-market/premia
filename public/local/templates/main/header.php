@@ -25,5 +25,5 @@ View::showLayoutHeader(array(
     'copyright_year' => date('Y'),
     'google_api_key' => Configuration::getValue('app')['google_api_key'],
     'google_maps_callback' => 'App.googleMapsCallback',
-    'include_tracking_scripts' => false
+    'include_tracking_scripts' => App::env() !== Env::DEV
 ));
