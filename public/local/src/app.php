@@ -4,6 +4,10 @@ namespace App;
 
 use Maximaster\Tools\Twig\TemplateEngine;
 
+class Iblock {
+    const PRODUCT_CATEGORIES_ID = 2;
+}
+
 class View {
     static private $footer = null;
 

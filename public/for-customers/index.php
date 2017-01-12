@@ -191,7 +191,7 @@ use Hendrix\View as v;
     <div class="wrap">
         <h3>кто покупает у нас</h3>
         <div class="grid">
-            <div class="item col_3">
+            <div class="item col_5">
                 <div class="img">
                     <img src="<?= v::asset('images/pic_5.jpg') ?>" alt="">
                 </div>
@@ -199,12 +199,11 @@ use Hendrix\View as v;
                     <div class="ico">
                         <img src="<?= v::asset('images/ico_101.png') ?>" alt="">
                     </div>
-                    <strong>HoReCa</strong>
                     <span class="line"></span>
-                    <p>Продукты для столовых, кафе, баров, ресторанов по выгодным условиям и гибким ценам.</p>
+                    <strong>HoReCa</strong>
                 </div>
             </div>
-            <div class="item col_3">
+            <div class="item col_5">
                 <div class="img">
                     <img src="<?= v::asset('images/pic_6.jpg') ?>" alt="">
                 </div>
@@ -212,12 +211,35 @@ use Hendrix\View as v;
                     <div class="ico">
                         <img src="<?= v::asset('images/ico_102.png') ?>" alt="">
                     </div>
-                    <strong>Предприниматели</strong>
                     <span class="line"></span>
-                    <p>Более 3 500 отечественных и зарубежный поставщиков на одной площадке.</p>
+                    <strong>Федеральные торговые сети</strong>
                 </div>
             </div>
-            <div class="item col_3">
+            <div class="item col_5">
+                <div class="img">
+                    <img src="<?= v::asset('images/pic_7.jpg') ?>" alt="">
+                </div>
+                <div class="info">
+                    <div class="ico">
+                        <img src="<?= v::asset('images/ico_102.png') ?>" alt="">
+                    </div>
+                    <span class="line"></span>
+                    <strong>Региональные оптовые покупатели</strong>
+                </div>
+            </div>
+            <div class="item col_5">
+                <div class="img">
+                    <img src="<?= v::asset('images/pic_7.jpg') ?>" alt="">
+                </div>
+                <div class="info">
+                    <div class="ico">
+                        <img src="<?= v::asset('images/ico_102.png') ?>" alt="">
+                    </div>
+                    <span class="line"></span>
+                    <strong>Мелкооптовые и крупнооптовые покупатели</strong>
+                </div>
+            </div>
+            <div class="item col_5">
                 <div class="img">
                     <img src="<?= v::asset('images/pic_7.jpg') ?>" alt="">
                 </div>
@@ -225,9 +247,8 @@ use Hendrix\View as v;
                     <div class="ico">
                         <img src="<?= v::asset('images/ico_103.png') ?>" alt="">
                     </div>
-                    <strong>Покупатели</strong>
                     <span class="line"></span>
-                    <p>Сотни наименований овощей и фруктов для мелкооптовой и крупнооптовой закупок 7 дней в неделю.</p>
+                    <strong>Розничный покупатели</strong>
                 </div>
             </div>
         </div>
