@@ -39,10 +39,10 @@
     - name: git-ftp push
       local_action: >
         shell git-ftp push
-        {% if ansible_check_mode %}--dry-run{% endif %}
         --user {{ ansible_user }}
         --passwd {{ ansible_ssh_pass }}
-        sftp://{{ inventory_hostname }}{{ repo_path }}
+        --remote-root {{ repo_path }}
+        sftp://{{ inventory_hostname }}
       when: env != "dev"
     - name: clear twig cache
       file:
