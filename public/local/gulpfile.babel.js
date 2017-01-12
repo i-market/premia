@@ -1,6 +1,7 @@
 import gulp from 'gulp';
 import babel from 'gulp-babel';
-import revAll from 'gulp-rev-all';
+import rev from 'gulp-rev';
+import revReplace from 'gulp-rev-replace';
 import sass from 'gulp-sass';
 import util from 'gulp-util';
 import clean from 'gulp-clean';
@@ -52,15 +53,25 @@ gulp.task('build:images', () => {
 
 gulp.task('build', ['build:mockup', 'build:js', 'build:images']);
 
-gulp.task('rev', ['build'], () => {
+gulp.task('revision:rev', ['build'], () => {
   return gulp.src(`${paths.dist}/**`)
-    .pipe(revAll.revision())
+    .pipe(rev())
     .pipe(gulp.dest(paths.rev))
-    .pipe(revAll.manifestFile())
+    .pipe(rev.manifest())
     .pipe(gulp.dest(paths.rev));
 });
 
-gulp.task('release', ['build', 'rev']);
+gulp.task('revision:replace', ['revision:rev'], () => {
+  const manifest = gulp.src(`${paths.rev}/rev-manifest.json`);
+  // skip *.js, replacing naively might break the scripts, had a bad experience with gulp-rev-all
+  return gulp.src(`${paths.rev}/**/*.css`)
+    .pipe(revReplace({manifest: manifest}))
+    .pipe(gulp.dest(paths.rev))
+});
+
+gulp.task('revision', ['revision:rev', 'revision:replace']);
+
+gulp.task('release', ['build', 'revision']);
 
 gulp.task('dev:sass', () => {
   return gulp.src('mockup/css/*.scss')
