@@ -81,7 +81,7 @@ use Hendrix\View as v;
                     <p>Сухофрукты</p>
                 </div>
                 <a href="javascript:void(0)" data-modal="price_request" class="item item--download col_5">
-                    <img src="<?= v::asset('images/download.jpg') ?>" alt="">
+                    <img src="<?= v::asset('images/tmp/price-black.png') ?>" alt="">
                     <p>Запросить<br> цены</p>
                 </a>
             </div>
