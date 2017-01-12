@@ -80,16 +80,10 @@ use Hendrix\View as v;
                     <img src="<?= v::asset('images/Group%2024.png') ?>" alt="">
                     <p>Сухофрукты</p>
                 </div>
-                <!-- TODO tmp catalog dl link -->
-                <!--<a href="#" class="item item--download col_5">-->
-<!--                    <img src="--><?//= v::asset('images/download.jpg') ?><!--" alt="">-->
-                    <!--<p>Скачать-->
-                        <!--<br>прайс лист</p>-->
-                    <!--</a>-->
-                <div class="item col_5">
-                    <img src="<?= v::asset('images/Group%2021.png') ?>" alt="">
-                    <p>Грибы</p>
-                </div>
+                <a href="javascript:void(0)" data-modal="price_request" class="item item--download col_5">
+                    <img src="<?= v::asset('images/download.jpg') ?>" alt="">
+                    <p>Запросить<br> цены</p>
+                </a>
             </div>
         </div>
     </div>
