@@ -75,6 +75,18 @@ class View {
         }
     }
 
+    static function showForProperty($propName, $f, $defaultVal = null) {
+        global $APPLICATION;
+        $APPLICATION->AddBufferContent(function() use ($propName, $defaultVal, $f, &$APPLICATION) {
+            $propVal = $APPLICATION->GetProperty($propName, $defaultVal);
+            ob_start();
+            if ($propVal !== false) {
+                $f($propVal);
+            }
+            return ob_get_clean();
+        });
+    }
+
     static function partial($path) {
         return SITE_TEMPLATE_PATH.'/partials/'.$path;
     }
