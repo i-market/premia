@@ -53,9 +53,13 @@
       local_action: shell git log -1 --oneline
       register: last_commit_msg
     - name: slack notification
-      # don't commit the secrets!
       uri:
         url: "{{ slack_webhook_url }}"
         method: POST
         body: >
-          payload={"channel": "#dev", "username": "webhookbot", "text": "Pushed to {{ env }}, current commit: {{ last_commit_msg.stdout }}", "icon_emoji": ":robot_face:"}
+          payload={
+            "channel": "#dev",
+            "username": "webhookbot",
+            "text": "Pushed to {{ env }}, current commit: {{ last_commit_msg.stdout }}",
+            "icon_emoji": ":robot_face:"
+          }
