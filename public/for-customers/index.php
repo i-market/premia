@@ -1,6 +1,7 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Покупателям");
+$APPLICATION->SetPageProperty('layout', 'for-customers.twig');
 
 use Hendrix\View as v;
 // TODO prevent editing this

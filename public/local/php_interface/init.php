@@ -48,3 +48,4 @@ $twig->addExtension(new BreakpointExtension());
 $twig->addFunction(new Twig_SimpleFunction('asset', 'Hendrix\View::asset'));
 $twig->addFunction(new Twig_SimpleFunction('partial', 'Hendrix\View::partial'));
 $twig->addFunction(new Twig_SimpleFunction('path', 'Hendrix\View::path'));
+$twig->addFunction(new Twig_SimpleFunction('layout', 'Hendrix\View::layout'));

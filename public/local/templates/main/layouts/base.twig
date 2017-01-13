@@ -50,7 +50,9 @@
     <div class="wrap">
         <span class="write_letter" data-modal="write_letter">написать письмо</span>
         <span class="btn" data-modal="re_call">заказать звонок</span>
-        <span class="form_order" data-modal="rent">Запросить форму на аренду</span>
+        {% block footer_right_button %}
+            <span class="form_order" data-modal="rent">Запросить форму на аренду</span>
+        {% endblock %}
     </div>
 </div>
 <!--HEADER-->
@@ -113,7 +115,9 @@
     <p>{{ copyright_year }} © Четыре-сезона.рф. Создание и продвижение сайта: <a href="https://i-market.ru/" rel="nofollow" target="_blank">I-market</a>
     </p>
 </footer>
-{% include partial('modals.twig') %}
+{% block modals %}
+    {% include partial('modals.twig') %}
+{% endblock %}
 <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://use.fontawesome.com/d5e5cdfb8c.js"></script>
