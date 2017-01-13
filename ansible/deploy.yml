@@ -1,6 +1,7 @@
 ---
 - hosts: all
   vars_files:
+    - vars/common.yml
     - vars/{{ env }}.yml
   tasks:
     - name: push dbconn.php
@@ -48,3 +49,13 @@
       file:
         state: absent
         path: "{{ document_root }}/bitrix/cache/maximaster/tools.twig"
+    - name: get last commit message
+      local_action: shell git log -1 --oneline
+      register: last_commit_msg
+    - name: slack notification
+      # don't commit the secrets!
+      uri:
+        url: "{{ slack_webhook_url }}"
+        method: POST
+        body: >
+          payload={"channel": "#dev", "username": "webhookbot", "text": "Pushed to {{ env }}, current commit: {{ last_commit_msg.stdout }}", "icon_emoji": ":robot_face:"}
