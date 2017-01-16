@@ -9,6 +9,10 @@ class Iblock {
     const PRODUCT_CATEGORIES_ID = 2;
 }
 
+class PageProperty {
+    const LAYOUT = 'layout';
+}
+
 class View {
     static private $footer = null;
 

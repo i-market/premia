@@ -1,5 +1,6 @@
 <?php
 
+use App\PageProperty;
 use App\View;
 use Bitrix\Main\Config\Configuration;
 use Hendrix\App;
@@ -54,7 +55,7 @@ $menu = array_map(function($item) use (&$APPLICATION) {
     'rent' => array('uri' => v::path('rent')),
     'for_customers' => array('uri' => v::path('for-customers'))
 ));
-View::showLayoutHeader('layout', 'base.twig', array(
+View::showLayoutHeader(PageProperty::LAYOUT, 'base.twig', array(
     'menu' => $menu,
     'scripts' => $scripts,
     'copyright_year' => date('Y'),
