@@ -49,10 +49,6 @@ class App {
         $app = Null::get(Configuration::getValue('app'), array());
         return _::get($app, 'env', Env::PROD);
     }
-
-    static function isEnv() {
-        return in_array(self::env(), func_get_args(), true);
-    }
 }
 
 class View {
@@ -60,7 +56,7 @@ class View {
 
     static function asset($path) {
         $build = SITE_TEMPLATE_PATH.'/build';
-        if (App::isEnv(Env::DEV)) {
+        if (App::env() === Env::DEV) {
             return $build.'/assets/'.$path;
         } else {
             if (self::$assetManifest === null) {
