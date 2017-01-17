@@ -4,14 +4,24 @@ namespace Hendrix;
 
 use Bitrix\Main\Config\Configuration;
 use Hendrix\Underscore as _;
+use Underscore\Methods\ArraysMethods;
+use Underscore\Methods\StringsMethods;
 
-class Underscore {
-    static function get($array, $key, $default = null) {
-        return $default !== null && !array_key_exists($key, $array) ? $default : $array[$key];
-    }
-
+class Underscore extends ArraysMethods {
     static function drop($array, $n) {
         return array_slice($array, $n);
+    }
+
+    static function identity() {
+        return function($x) {
+            return $x;
+        };
+    }
+
+    static function constantly($x) {
+        return function() use ($x) {
+            return $x;
+        };
     }
 }
 
@@ -24,17 +34,9 @@ class Null {
     }
 }
 
-class Strings {
-    // TODO copy-pasta
-    public static function startsWith($haystack, $needles)
-    {
-        foreach ((array) $needles as $needle) {
-            if ($needle !== '' && strpos($haystack, $needle) === 0) {
-                return true;
-            }
-        }
-
-        return false;
+class Strings extends StringsMethods {
+    static function ifEmpty($str, $value) {
+        return trim($str) === '' ? $value : $str;
     }
 }
 
