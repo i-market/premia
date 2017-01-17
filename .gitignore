@@ -17,3 +17,4 @@ vault_pass.txt
 
 /public/local/out/
 /public/local/templates/*/build/
+/public/local/e2e-tests/screenshots/
