@@ -1,7 +1,8 @@
 {
     "require": {
         "maximaster/tools.twig": "^1.0",
-        "symfony/console": "^3.2"
+        "symfony/console": "^3.2",
+        "anahkiasen/underscore-php": "^2.0"
     },
     "autoload": {
         "files": ["src/app.php", "src/hendrix.php"]
