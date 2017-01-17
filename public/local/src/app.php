@@ -17,10 +17,12 @@ class View {
     static private $footer = null;
 
     static function showLayoutHeader($pageProperty, $defaultLayout, $context) {
-        v::showForProperty($pageProperty, function($path) use ($context) {
+        v::showForProperty($pageProperty, function($layout) use ($context) {
+            $path = is_array($layout) ? $layout[0] : $layout;
+            $propCtx = is_array($layout) ? $layout[1] : array();
             $twig = TemplateEngine::getInstance()->getEngine();
             $placeholder = '<page-placeholder/>';
-            $ctx = array_merge(array('page' => $placeholder), $context);
+            $ctx = array_merge(array('page' => $placeholder), $context, $propCtx);
             $html = $twig->render(SITE_TEMPLATE_PATH.'/layouts/'.$path, $ctx);
             $parts = explode($placeholder, $html);
             $header = $parts[0];
