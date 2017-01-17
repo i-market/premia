@@ -1,4 +1,5 @@
 import gulp from 'gulp';
+import concat from 'gulp-concat';
 import babel from 'gulp-babel';
 import rev from 'gulp-rev';
 import revReplace from 'gulp-rev-replace';
@@ -36,6 +37,19 @@ gulp.task('build:mockup:delegate', (cb) => {
 gulp.task('build:mockup', ['build:mockup:delegate'], () => {
   return gulp.src(`mockup/${config.mockup.buildGlob}`)
     .pipe(gulp.dest(paths.dist));
+});
+
+// TODO put in the build pipeline
+gulp.task('build:vendor', () => {
+  gulp.src([
+    // TODO babel polyfill
+    'node_modules/virtual-dom/dist/virtual-dom.js',
+    'node_modules/dom2hscript/dist/dom2hscript.js',
+    'node_modules/twig/twig.js',
+    'node_modules/validate-js/validate.js'
+  ])
+    .pipe(concat('vendor.js'))
+    .pipe(gulp.dest(`${paths.dist}/js`));
 });
 
 gulp.task('build:js', () => {

@@ -46,6 +46,7 @@ $scripts = array(
     'js/vendor/scroll.js',
     'js/vendor/slick.min.js',
     'js/script.js',
+    'js/vendor.js',
     'js/main.js'
 );
 $menu = array_map(function($item) use (&$APPLICATION) {
@@ -58,6 +59,8 @@ $menu = array_map(function($item) use (&$APPLICATION) {
 View::showLayoutHeader(PageProperty::LAYOUT, 'base.twig', array(
     'menu' => $menu,
     'scripts' => $scripts,
+    'forms' => \App\App::forms(),
+    'forms_json' => json_encode(\App\App::forms()),
     'copyright_year' => date('Y'),
     'google_api_key' => Configuration::getValue('app')['google_api_key'],
     'google_maps_callback' => 'App.googleMapsCallback',

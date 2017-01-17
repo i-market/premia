@@ -12,3 +12,22 @@ window.App = {
     });
   }
 };
+
+// TODO es6 modules
+$(() => {
+  const template = Twig.twig({data: $('#form-template').text()});
+  const validator = new FormValidator('re_call', [{
+    name: 'name',
+    display: 'required',
+    rules: 'required'
+  }], function(errors, event) {
+    // TODO hi
+    const html = template.render(Object.assign(window._forms.re_call, {title: 'hi'}));
+    const el = $('form[name=re_call]')[0];
+    const tree = eval('var h = virtualDom.h;' + dom2hscript.parseDOM(el));
+    const newTree = eval('var h = virtualDom.h;' + dom2hscript.parseHTML(html));
+    virtualDom.patch(el, virtualDom.diff(tree, newTree))
+  });
+
+  $('form[name=re_call]').focusout(validator.form.onsubmit);
+});

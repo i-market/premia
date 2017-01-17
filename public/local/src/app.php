@@ -5,6 +5,36 @@ namespace App;
 use Hendrix\View as v;
 use Maximaster\Tools\Twig\TemplateEngine;
 
+class App {
+    static function forms() {
+        return array(
+            're_call' => array(
+                'name' => 're_call',
+                'title' => 'Заказать звонок',
+                'action' => '/todo', // TODO form action
+                'fields' => array(
+                    array(
+                        'name' => 'name',
+                        'label' => 'ФИО'
+                    ),
+                    array(
+                        'name' => 'phone',
+                        'label' => 'Телефон'
+                    ),
+                    array(
+                        'name' => 'message',
+                        'type' => 'textarea',
+                        'label' => 'Сообщение'
+                    )
+                ),
+                'validations' => array(
+                    'required' => array('name')
+                )
+            )
+        );
+    }
+}
+
 class Iblock {
     const PRODUCT_CATEGORIES_ID = 2;
 }

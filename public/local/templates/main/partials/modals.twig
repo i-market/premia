@@ -1,16 +1,13 @@
+<script>
+    window._forms = {{ forms_json }};
+</script>
+<script type="text/template" id="form-template">
+    {{ source(partial('modal_form.twig')) }}
+</script>
 <!--Модалки-->
 <!--Обратный звонок-->
 <div class="modal modal_window" id="re_call">
-    <form class="block" method="post" action="" name="">
-        <span class="close"></span>
-        <strong>Заказать звонок</strong>
-        <input name="name" type="text" placeholder="ФИО">
-        <input name="phone" type="text" placeholder="Телефон">
-        <textarea name="message" placeholder="Сообщение"></textarea>
-        <div class="bottom">
-            <button type="submit" class="btn">отправить</button>
-        </div>
-    </form>
+    {% include partial('modal_form.twig') with forms.re_call %}
 </div>
 <!--Написать письмо-->
 <div class="modal modal_window" id="write_letter">
