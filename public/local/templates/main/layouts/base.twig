@@ -36,7 +36,9 @@
         <li><a href="{{ path('for-customers') }}"><span>Покупателям</span></a></li>
         {#<li><a href="#"><span>Контакты</span></a></li>#}
         <li><a href="#"><span data-modal="re_call">Обратный звонок</span></a></li>
-        <li><a href="#"><span data-modal="rent">Форма на аренду</span></a></li>
+        {% block page_menu_items %}
+            <li><a href="#"><span data-modal="rent">Форма на аренду</span></a></li>
+        {% endblock %}
         <li><a href="#"><span data-modal="write_letter">Написать письмо</span></a></li>
     </ul>
     <div class="bottom">

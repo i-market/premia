@@ -7,6 +7,10 @@
     <span class="form_order" data-modal="{{ modal_id }}">{{ order_action }}</span>
 {% endblock %}
 
+{% block page_menu_items %}
+    <li><a href="#"><span data-modal="{{ modal_id }}">{{ order_action }}</span></a></li>
+{% endblock %}
+
 {% block modals %}
     {{ parent() }}
     <div class="modal modal_window" id="{{ modal_id }}">
