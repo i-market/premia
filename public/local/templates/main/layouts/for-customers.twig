@@ -3,6 +3,24 @@
 {% set modal_id = 'order' %}
 {% set order_action = 'Заявка в торговый дом' %}
 
+{% block pagination_items %}
+    <li>
+        <a href="#two"></a>
+    </li>
+    <li>
+        <a href="#three"></a>
+    </li>
+    <li>
+        <a href="#four"></a>
+    </li>
+    <li>
+        <a href="#five"></a>
+    </li>
+    <li>
+        <a href="#six"></a>
+    </li>
+{% endblock %}
+
 {% block footer_right_button %}
     <span class="form_order" data-modal="{{ modal_id }}">{{ order_action }}</span>
 {% endblock %}

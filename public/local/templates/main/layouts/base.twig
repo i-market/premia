@@ -4,17 +4,19 @@
         <li class="active">
             <a href="#one"></a>
         </li>
+        {% block pagination_items %}
+            <li>
+                <a href="#two"></a>
+            </li>
+            <li>
+                <a href="#three"></a>
+            </li>
+            <li>
+                <a href="#four"></a>
+            </li>
+        {% endblock %}
         <li>
-            <a href="#two"></a>
-        </li>
-        <li>
-            <a href="#three"></a>
-        </li>
-        <li>
-            <a href="#four"></a>
-        </li>
-        <li>
-            <a href="#five"></a>
+            <a href="#contacts"></a>
         </li>
     </ul>
 </div>
@@ -104,13 +106,31 @@
 <!-- CONTENT -->
 <main class="content">
     {{ page }}
-    <section class="map" id="five">
-      <div id="contacts-map" class="map-container"></div>
-      <div class="buble">
-        <strong>наш адрес</strong>
-        <p class="plane">г. Домодедово, мкр. Северный, ул. Логистическая, участок 9</p>
-        <p class="marker">GPS: 55.470993, 37.712681</p>
-      </div>
+    <section class="map" id="contacts">
+        <div class="buble">
+            <strong>наши контакты</strong>
+            <div class="item tel">
+                <p><a href="tel:+74953576144">+7 (495) 357 61 44</a></p>
+                <p><a href="tel:+74953676123">+7 (495) 367 61 23</a></p>
+                <p><a href="tel:+74952236123">+7 (495) 223 61 23</a></p>
+            </div>
+            <div class="item clock">
+                <p>с 04:00 до 20:00 Без выходных</p>
+            </div>
+            <div class="item mail">
+                <p>Офис: <a href="mailto:office@mspdom.ru">office@mspdom.ru</a></p>
+                <p>Отдел кадров: <a href="mailto:job@mspdom.ru">job@mspdom.ru</a></p>
+                <p>Торговый дом: <a href="mailto:trade@mspdom.ru">trade@mspdom.ru</a></p>
+            </div>
+            <div class="item locate">
+                <p>г. Домодедово, мкрн. Северный, ул. Логистическая, участок 9</p>
+            </div>
+            <div class="bottom">
+                {# TODO geo link #}
+                <a href="#"><img src="{{ asset('images/navigator.png') }}" alt=""></a>
+            </div>
+        </div>
+        <iframe src="https://api-maps.yandex.ru/frame/v1/-/CVwWBXZb" frameborder="0"></iframe>
     </section>
 </main>
 <!-- FOOTER -->
