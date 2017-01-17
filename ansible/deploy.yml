@@ -25,6 +25,7 @@
         command: install
         working_dir: "{{ document_root }}/local"
       delegate_to: 127.0.0.1
+      # TODO npm install first?
     - name: build assets
       local_action: shell gulp release
       args:
