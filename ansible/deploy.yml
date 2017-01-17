@@ -14,12 +14,6 @@
         src: templates/settings.php.j2
         dest: "{{ document_root }}/bitrix/.settings.php"
         backup: yes
-    - name: push .env
-      template:
-        src: templates/env.j2
-        dest: "{{ document_root }}/local/.env"
-        backup: yes
-      #when: env != "prod"
     - name: push staging robots.txt
       copy:
         src: files/stage/robots.txt
