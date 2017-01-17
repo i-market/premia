@@ -88,6 +88,8 @@ class View {
     }
 
     static function path($path) {
+        // TODO ad-hoc
+        if ($path === '/') return SITE_DIR;
         return SITE_DIR.$path.'/';
     }
 
