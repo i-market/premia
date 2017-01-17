@@ -20,16 +20,26 @@
         dest: "{{ document_root }}/robots.txt"
         backup: yes
       when: env == "stage"
+    - name: composer install
+      composer:
+        command: install
+        working_dir: "{{ document_root }}/local"
+      delegate_to: 127.0.0.1
     - name: build assets
       local_action: shell gulp release
       args:
         chdir: ../public/local
-    - name: push assets
+    - name: sync directories
       synchronize:
         # trailing slash is important, see rsync documentation
-        src: ../public/local/templates/main/build/
-        dest: "{{ document_root }}/local/templates/main/build"
+        src: ../public/local/{{ item }}/
+        dest: "{{ document_root }}/local/{{ item }}"
         delete: yes
+      with_items:
+        # assets
+        - templates/main/build
+        # composer
+        - vendor
       when: env != "dev"
     - name: git-ftp push
       local_action: >
@@ -39,6 +49,8 @@
         --remote-root {{ repo_path }}
         sftp://{{ inventory_hostname }}
       when: env != "dev"
+      tags:
+        - git-ftp
     - name: clear twig cache
       file:
         state: absent
