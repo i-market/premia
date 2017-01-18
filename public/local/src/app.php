@@ -28,9 +28,11 @@ class App {
                     )
                 ),
                 'validations' => array(
-                    'type' => 'required',
-                    'fields' => array('name'),
-                    'message' => '{{ name }} '
+                    array(
+                        'type' => 'required',
+                        'fields' => array('name'),
+                        'message' => "Пожалуйста, введите {{ label == 'ФИО' ? label : label|lower }}."
+                    )
                 )
             )
         );
