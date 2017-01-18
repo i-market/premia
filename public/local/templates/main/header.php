@@ -47,6 +47,7 @@ $scripts = array(
     'js/vendor/slick.min.js',
     'js/script.js',
     'js/vendor.js',
+    // depends on mockup script.js
     'js/main.js'
 );
 $menu = array_map(function($item) use (&$APPLICATION) {

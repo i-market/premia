@@ -54,14 +54,13 @@ $(() => {
     });
   }
 
-  const $form = $('form[name=re_call]');
-  const template = twig.twig({data: _.trim($('#form-template').text())});
-  state.vtree = virtualize(template.render(formSpecs['re_call']));
-  $form.replaceWith(createElement(state.vtree));
-  // TODO optimize?
-  // get new dom element
-  const el = $('form[name=re_call]')[0];
-  const spec = formSpecs['re_call'];
+  function onValidate(spec, element, errors, event) {
+    const ctx = context(spec, errors);
+    const newTree = virtualize(template.render(ctx));
+    vdom.patch(element, vdom.diff(state.vtree, newTree));
+    onUpdate(spec, element);
+    state.vtree = newTree;
+  }
 
   function context(spec, errors) {
     return _.update(_.cloneDeep(spec), 'fields', (fields) => {
@@ -80,17 +79,23 @@ $(() => {
     });
   }
 
-  function onValidate(errors, event) {
-    const ctx = context(spec, errors);
-    const newTree = virtualize(template.render(ctx));
-    vdom.patch(el, vdom.diff(state.vtree, newTree));
-    state.vtree = newTree;
+  function onUpdate(spec, element) {
+    // restore mockup jquery stuff
+    window._modals();
+    const validator = new FormValidator('re_call', fromSpec(spec), _.partial(onValidate, spec, element));
+    const validate = validator._validateForm.bind(validator);
+    $('form[name=re_call]').focusout((event) => {
+      validate(event);
+    });
   }
 
-  const validator = new FormValidator('re_call', fromSpec(spec), onValidate);
-
-  const validate = validator._validateForm.bind(validator);
-  $('form[name=re_call]').focusout((event) => {
-    validate(event);
-  });
+  const $form = $('form[name=re_call]');
+  const template = twig.twig({data: _.trim($('#form-template').text())});
+  state.vtree = virtualize(template.render(formSpecs['re_call']));
+  $form.replaceWith(createElement(state.vtree));
+  // TODO optimize?
+  // get new dom element
+  const spec = formSpecs['re_call'];
+  const element = $('form[name=re_call]')[0];
+  onUpdate(spec, element);
 });
