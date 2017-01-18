@@ -2,10 +2,14 @@
     <span class="close"></span>
     <strong>{{ title }}</strong>
     {% for field in fields %}
+        {% set class = field.error ? 'error' : '' %}
         {% if field.type == 'textarea' %}
-            <textarea name="{{ field.name }}" placeholder="{{ field.label }}"></textarea>
+            <textarea name="{{ field.name }}" placeholder="{{ field.label }}" class="{{ class }}"></textarea>
         {% else %}
-            <input name="{{ field.name }}" type="text" placeholder="{{ field.label }}">
+            <input name="{{ field.name }}" type="text" placeholder="{{ field.label }}" class="{{ class }}">
+        {% endif %}
+        {% if field.error %}
+            <div class="error-message">{{ field.error.message }}</div>
         {% endif %}
     {% endfor %}
     <div class="bottom">

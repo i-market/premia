@@ -1,5 +1,5 @@
 <script>
-    window._forms = {{ forms_json }};
+    window._formSpecs = {{ form_specs_json }};
 </script>
 <script type="text/template" id="form-template">
     {{ source(partial('modal_form.twig')) }}
@@ -7,7 +7,7 @@
 <!--Модалки-->
 <!--Обратный звонок-->
 <div class="modal modal_window" id="re_call">
-    {% include partial('modal_form.twig') with forms.re_call %}
+    {% include partial('modal_form.twig') with form_specs.re_call %}
 </div>
 <!--Написать письмо-->
 <div class="modal modal_window" id="write_letter">

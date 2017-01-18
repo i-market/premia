@@ -6,7 +6,7 @@ use Hendrix\View as v;
 use Maximaster\Tools\Twig\TemplateEngine;
 
 class App {
-    static function forms() {
+    static function formSpecs() {
         return array(
             're_call' => array(
                 'name' => 're_call',
@@ -28,7 +28,9 @@ class App {
                     )
                 ),
                 'validations' => array(
-                    'required' => array('name')
+                    'type' => 'required',
+                    'fields' => array('name'),
+                    'message' => '{{ name }} '
                 )
             )
         );

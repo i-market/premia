@@ -9,6 +9,9 @@ import clean from 'gulp-clean';
 import browserSync from 'browser-sync';
 import child from 'child_process';
 import _ from 'lodash';
+import browserify from 'browserify';
+import babelify from 'babelify';
+import source from 'vinyl-source-stream';
 import config from './config.json';
 
 const paths = {
@@ -40,9 +43,11 @@ gulp.task('build:mockup', ['build:mockup:delegate'], () => {
 });
 
 // TODO put in the build pipeline
-gulp.task('build:vendor', () => {
+// TODO integrate with browserify
+gulp.task('build:vendor:js', () => {
   gulp.src([
-    // TODO babel polyfill
+    'node_modules/babel-polyfill/dist/polyfill.js',
+    'node_modules/lodash/lodash.js',
     'node_modules/virtual-dom/dist/virtual-dom.js',
     'node_modules/dom2hscript/dist/dom2hscript.js',
     'node_modules/twig/twig.js',
@@ -52,11 +57,18 @@ gulp.task('build:vendor', () => {
     .pipe(gulp.dest(`${paths.dist}/js`));
 });
 
+// gulp.task('build:vendor:css', () => {
+//   gulp.src([
+//   ])
+//     .pipe(concat('vendor.css'))
+//     .pipe(gulp.dest(`${paths.dist}/css`));
+// });
+
 gulp.task('build:js', () => {
-  return gulp.src('assets/js/**/*.js')
-    .pipe(babel({
-      presets: ['es2015']
-    }))
+  return browserify('assets/js/main.js')
+    .transform(babelify, {presets: ['es2015']})
+    .bundle()
+    .pipe(source('main.js'))
     .pipe(gulp.dest(`${paths.dist}/js`));
 });
 
