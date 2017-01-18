@@ -1,4 +1,12 @@
-import dom2hscript from 'dom2hscript';
+import _ from 'lodash';
+import twig from 'twig';
+import vdom from 'virtual-dom';
+import vnode from 'virtual-dom/vnode/vnode';
+import vtext from 'virtual-dom/vnode/vtext';
+import htmlToVdom from 'html-to-vdom';
+import createElement from 'virtual-dom/create-element';
+
+const virtualizeHtml = htmlToVdom({VNode: vnode, VText: vtext});
 
 window.App = {
   googleMapsCallback: () => {
@@ -15,16 +23,26 @@ window.App = {
   }
 };
 
-// TODO es6 modules
 $(() => {
   const formSpecs = window._formSpecs;
+  const state = {};
 
+  function virtualize(html) {
+    return virtualizeHtml({
+      getVNodeKey: function (attributes) {
+        // now we won't lose focus on form inputs
+        return attributes.name;
+      }
+    }, html);
+  }
+
+  const $form = $('form[name=re_call]');
+  const template = twig.twig({data: _.trim($('#form-template').text())});
+  state.vtree = virtualize(template.render(formSpecs['re_call']));
+  $form.replaceWith(createElement(state.vtree));
+  // TODO optimize?
+  // get new dom element
   const el = $('form[name=re_call]')[0];
-
-  // virtualize server-rendered dom
-
-
-  const template = Twig.twig({data: $('#form-template').text()});
   const validator = new FormValidator('re_call', [{
     name: 'name',
     display: 'required',
@@ -37,18 +55,13 @@ $(() => {
         return error ? _.set(field, 'error', error) : field;
       });
     });
-    const html = template.render(ctx);
-    // TODO https://github.com/TimBeyer/html-to-vdom
-    const tree = eval('var h = virtualDom.h;' + dom2hscript.parseDOM(el));
-    const newTree = eval('var h = virtualDom.h;' + dom2hscript.parseHTML(html));
-    virtualDom.patch(el, virtualDom.diff(tree, newTree))
+    const newTree = virtualize(template.render(ctx));
+    vdom.patch(el, vdom.diff(state.vtree, newTree));
+    state.vtree = newTree;
   });
 
   const validate = validator._validateForm.bind(validator);
   $('form[name=re_call]').focusout((event) => {
-    _.delay(() => {
-      validate(event);
-    }, 1000);
+    validate(event);
   });
-  window.validate = validate;
 });

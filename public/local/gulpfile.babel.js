@@ -66,6 +66,9 @@ gulp.task('build:vendor:js', () => {
 
 gulp.task('build:js', () => {
   return browserify('assets/js/main.js')
+    .on('error', (error) => {
+      util.log('Browserify:', error.message);
+    })
     .transform(babelify, {presets: ['es2015']})
     .bundle()
     .pipe(source('main.js'))
