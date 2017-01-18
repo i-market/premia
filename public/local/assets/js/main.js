@@ -79,15 +79,19 @@ $(() => {
     });
   }
 
-  function onUpdate(spec, element) {
+  const onUpdate = _.debounce((spec, element) => {
     // restore mockup jquery stuff
     window._modals();
+    // TODO calling this a lot kills performance, added `debounce` for now
     const validator = new FormValidator('re_call', fromSpec(spec), _.partial(onValidate, spec, element));
     const validate = validator._validateForm.bind(validator);
     $('form[name=re_call]').focusout((event) => {
-      validate(event);
+      // validate.js will validate on submit, don't trigger it twice
+      if (event.relatedTarget.type !== 'submit') {
+        validate(event);
+      }
     });
-  }
+  }, 100);
 
   const $form = $('form[name=re_call]');
   const template = twig.twig({data: _.trim($('#form-template').text())});
