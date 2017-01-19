@@ -5,6 +5,8 @@ import vnode from 'virtual-dom/vnode/vnode';
 import vtext from 'virtual-dom/vnode/vtext';
 import htmlToVdom from 'html-to-vdom';
 import createElement from 'virtual-dom/create-element';
+import FormValidator from 'validate-js';
+import enquire from 'enquire.js';
 
 const virtualizeHtml = htmlToVdom({VNode: vnode, VText: vtext});
 
@@ -24,6 +26,50 @@ window.App = {
 };
 
 $(() => {
+  function initRentalOffers() {
+    const $rentalItems = $('.rental_offers .item');
+    const $buttons = $rentalItems.find('.bottom');
+    const matchHeightQuery = 'only screen and (min-width: 767px)';
+    const state = {
+      afterUpdate: _.noop
+    };
+
+    function matchButtons() {
+      const maxTop = _.max($buttons.map(function () {
+        return $(this).position().top;
+      }));
+      $buttons.each(function () {
+        // align all buttons horizontally
+        $(this).css('padding-top', maxTop - $(this).position().top);
+      });
+    }
+
+    function unmatchButtons() {
+      $buttons.each(function () {
+        $(this).css('padding-top', 0);
+      });
+    }
+
+    enquire.register(matchHeightQuery, {
+      match: () => {
+        $rentalItems.matchHeight();
+        state.afterUpdate = matchButtons;
+      },
+      unmatch: () => {
+        $rentalItems.matchHeight('remove');
+        state.afterUpdate = unmatchButtons;
+      }
+    });
+    // TODO replace with css
+    $.fn.matchHeight._afterUpdate = _.debounce((event, groups) => {
+      state.afterUpdate();
+    }, 100);
+  }
+
+  initRentalOffers();
+
+  // forms
+
   const formSpecs = window._formSpecs;
   const state = {};
 

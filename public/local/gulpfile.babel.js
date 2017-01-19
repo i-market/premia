@@ -42,27 +42,16 @@ gulp.task('build:mockup', ['build:mockup:delegate'], () => {
     .pipe(gulp.dest(paths.dist));
 });
 
-// TODO put in the build pipeline
-// TODO integrate with browserify
 gulp.task('build:vendor:js', () => {
   gulp.src([
     'node_modules/babel-polyfill/dist/polyfill.js',
-    'node_modules/lodash/lodash.js',
-    'node_modules/virtual-dom/dist/virtual-dom.js',
-    'node_modules/dom2hscript/dist/dom2hscript.js',
-    'node_modules/twig/twig.js',
-    'node_modules/validate-js/validate.js'
+    'node_modules/jquery-match-height/dist/jquery.matchHeight.js'
   ])
     .pipe(concat('vendor.js'))
     .pipe(gulp.dest(`${paths.dist}/js`));
 });
 
-// gulp.task('build:vendor:css', () => {
-//   gulp.src([
-//   ])
-//     .pipe(concat('vendor.css'))
-//     .pipe(gulp.dest(`${paths.dist}/css`));
-// });
+gulp.task('build:vendor', ['build:vendor:js']);
 
 gulp.task('build:js', () => {
   return browserify('assets/js/main.js')
@@ -80,7 +69,7 @@ gulp.task('build:images', () => {
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('build', ['build:mockup', 'build:js', 'build:images']);
+gulp.task('build', ['build:mockup', 'build:js', 'build:images', 'build:vendor']);
 
 gulp.task('revision:rev', ['build'], () => {
   return gulp.src(`${paths.dist}/**`)
