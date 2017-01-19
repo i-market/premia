@@ -77,4 +77,8 @@ class View {
     static function twig() {
         return TemplateEngine::getInstance()->getEngine();
     }
+    
+    static function geoUri($latLng) {
+        return 'geo:'.$latLng['lat'].','.$latLng['lng'];
+    }
 }

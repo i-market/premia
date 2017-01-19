@@ -57,11 +57,13 @@ $menu = array_map(function($item) use (&$APPLICATION) {
     'rent' => array('uri' => v::path('rent')),
     'for_customers' => array('uri' => v::path('for-customers'))
 ));
+$contactsLatLng = array('lat' => 55.470993, 'lng' => 37.712681);
 View::showLayoutHeader(PageProperty::LAYOUT, 'base.twig', array(
     'menu' => $menu,
     'scripts' => $scripts,
     'form_specs' => \App\App::formSpecs(),
     'form_specs_json' => json_encode(\App\App::formSpecs()),
+    'contacts_geo_uri' => View::geoUri($contactsLatLng),
     'copyright_year' => date('Y'),
     'google_api_key' => Configuration::getValue('app')['google_api_key'],
     'google_maps_callback' => 'App.googleMapsCallback',
