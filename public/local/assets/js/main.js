@@ -87,7 +87,7 @@ $(() => {
     const validate = validator._validateForm.bind(validator);
     $('form[name=re_call]').focusout((event) => {
       // validate.js will validate on submit, don't trigger it twice
-      if (event.relatedTarget.type !== 'submit') {
+      if (_.get(event, 'relatedTarget.type') !== 'submit') {
         validate(event);
       }
     });

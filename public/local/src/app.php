@@ -30,7 +30,7 @@ class App {
                 'validations' => array(
                     array(
                         'type' => 'required',
-                        'fields' => array('name'),
+                        'fields' => array('name', 'phone'),
                         'message' => "Пожалуйста, введите {{ label == 'ФИО' ? label : label|lower }}."
                     )
                 )
