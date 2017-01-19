@@ -129,7 +129,7 @@
                 <a href="{{ contacts_geo_uri }}"><img src="{{ asset('images/navigator.png') }}" alt=""></a>
             </div>
         </div>
-        <iframe src="https://api-maps.yandex.ru/frame/v1/-/CVwWBXZb" frameborder="0"></iframe>
+        <div id="contacts-map" class="map-container"></div>
     </section>
 </main>
 <!-- FOOTER -->
@@ -146,7 +146,7 @@
 {% for script in scripts %}
     <script src="{{ asset(script) }}"></script>
 {% endfor %}
-{#<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&callback={{ google_maps_callback }}"></script>#}
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&callback={{ google_maps_callback }}"></script>
 {% if include_tracking_scripts %}
     {% include partial('tracking_scripts.twig') %}
 {% endif %}
