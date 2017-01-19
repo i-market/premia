@@ -80,6 +80,25 @@ use Hendrix\View as v;
                     <img src="<?= v::asset('images/Group%2024.png') ?>" alt="">
                     <p>Сухофрукты</p>
                 </div>
+                <div class="item col_5">
+                    <img src="<?= v::asset('images/Group%2020.png') ?>" alt="">
+                    <p>Ягоды</p>
+                </div>                <div class="item col_5">
+                    <img src="<?= v::asset('images/Group%2016.png') ?>" alt="">
+                    <p>Экзотика</p>
+                </div>
+                <div class="item col_5">
+                    <img src="<?= v::asset('images/Group%2017.png') ?>" alt="">
+                    <p>Фрукты</p>
+                </div>
+                <div class="item col_5">
+                    <img src="<?= v::asset('images/Group%2018.png') ?>" alt="">
+                    <p>Овощи</p>
+                </div>
+                <div class="item col_5">
+                    <img src="<?= v::asset('images/Group%2019.png') ?>" alt="">
+                    <p>Зелень</p>
+                </div>
                 <a href="javascript:void(0)" data-modal="price_request" class="item item--download col_5">
                     <img src="<?= v::asset('images/tmp/price-black.png') ?>" alt="">
                     <p>Запросить<br> цены</p>
