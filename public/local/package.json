@@ -12,6 +12,7 @@
     "html-to-vdom": "^0.7.0",
     "jquery-match-height": "^0.7.0",
     "lodash": "^4.17.4",
+    "matchmedia-polyfill": "^0.3.0",
     "twig": "^0.10.3",
     "validate-js": "^2.0.1",
     "virtual-dom": "^2.1.1"

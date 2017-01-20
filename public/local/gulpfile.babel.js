@@ -45,6 +45,8 @@ gulp.task('build:mockup', ['build:mockup:delegate'], () => {
 gulp.task('build:vendor:js', () => {
   gulp.src([
     'node_modules/babel-polyfill/dist/polyfill.js',
+    'node_modules/matchmedia-polyfill/matchMedia.js',
+    'node_modules/matchmedia-polyfill/matchMedia.addListener.js',
     'node_modules/jquery-match-height/dist/jquery.matchHeight.js'
   ])
     .pipe(concat('vendor.js'))
