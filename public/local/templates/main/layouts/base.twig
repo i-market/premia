@@ -1,3 +1,4 @@
+{% set contacts_link = '#contacts' %}
 <!--точки с прокруткой-->
 <div id="navbar">
     <ul class="nav">
@@ -16,7 +17,7 @@
             </li>
         {% endblock %}
         <li>
-            <a href="#contacts"></a>
+            <a href="{{ contacts_link }}"></a>
         </li>
     </ul>
 </div>
@@ -32,11 +33,10 @@
         <a href="tel:+74952236123">+7 (495) 223-61-23</a>
     </div>
     <ul>
-        {#TODO tmp fix#}
-        {#<li><a href="#"><span>О комплексе</span></a></li>#}
+        <li><a href="{{ path('/') }}"><span>О комплексе</span></a></li>
         <li><a href="{{ path('rent') }}"><span>Арендаторам</span></a></li>
         <li><a href="{{ path('for-customers') }}"><span>Покупателям</span></a></li>
-        {#<li><a href="#"><span>Контакты</span></a></li>#}
+        <li><a href="{{ contacts_link }}"><span>Контакты</span></a></li>
         <li><a href="javascript:void(0)"><span data-modal="re_call">Обратный звонок</span></a></li>
         {% block page_menu_items %}
             <li><a href="javascript:void(0)"><span data-modal="rent">Форма на аренду</span></a></li>
@@ -70,12 +70,11 @@
             <div class="social_icons">
                 {% include partial('social_icons.twig') %}
             </div>
-            <a href="#contacts" class="scheme btn">схема проезда</a>
+            <a href="{{ contacts_link }}" class="scheme btn">схема проезда</a>
         </div>
         <nav class="main_menu cf">
             <ul>
-                {# TODO hidden link #}
-                <li><a href="#">о комплексе</a></li>
+                <li><a href="{{ path('/') }}">о комплексе</a></li>
                 {% set item = menu.rent %}
                 <li><a href="{{ item.uri }}" class="{{ item.is_active ? 'active' }}">Арендаторам</a></li>
                 <li class="logo">
@@ -83,8 +82,7 @@
                 </li>
                 {% set item = menu.for_customers %}
                 <li><a href="{{ item.uri }}" class="{{ item.is_active ? 'active' }}">Покупателям</a></li>
-                {# TODO hidden link #}
-                <li><a href="#">Контакты</a></li>
+                <li><a href="{{ contacts_link }}">Контакты</a></li>
             </ul>
         </nav>
         <div class="right">
@@ -94,7 +92,7 @@
                 <div class="blcok_choose_lang">
                     <span class="lang">RUS</span>
                     <div class="dd_choose_lang">
-                        {# TODO international pages #}
+                        {# TODO lang pages #}
                         <a href="#"><img src="{{ asset('images/az.png') }}" alt="">Az</a>
                         <a href="#"><img src="{{ asset('images/eng.png') }}" alt="">Eng</a>
                     </div>

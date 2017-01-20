@@ -28,16 +28,6 @@ use Hendrix\View as v;
         }
     </style>
     <![endif]-->
-    <!-- TODO tmp fixes -->
-    <style>
-        .main_menu ul li:nth-child(1),
-        .main_menu ul li:nth-child(5) {
-            visibility: hidden;
-        }
-        .main_menu ul li.logo {
-            visibility: visible;
-        }
-    </style>
 </head>
 <body data-spy="scroll" data-target="#navbar" id="one">
 <? $APPLICATION->ShowPanel() ?>
