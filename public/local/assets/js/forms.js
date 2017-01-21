@@ -1,0 +1,110 @@
+import _ from 'lodash';
+import twig from 'twig';
+import vdom from 'virtual-dom';
+import vnode from 'virtual-dom/vnode/vnode';
+import vtext from 'virtual-dom/vnode/vtext';
+import htmlToVdom from 'html-to-vdom';
+import createElement from 'virtual-dom/create-element';
+
+function virtualize(html) {
+  const f = htmlToVdom({VNode: vnode, VText: vtext});
+  return f({
+    getVNodeKey: function (attributes) {
+      // now we won't lose focus on form inputs
+      return attributes.name;
+    }
+  }, html);
+}
+
+function context(spec, errors) {
+  return _.update(_.cloneDeep(spec), 'fields', (fields) => {
+    return _.map(fields, (field) => {
+      const error = errors[field.name];
+      if (error) {
+        return _.set(field, 'error', _.set(error, 'message', error.message));
+      } else {
+        return field;
+      }
+    });
+  });
+}
+
+function formFields($form) {
+  return _.reduce($form.serializeArray(), (m, field) => {
+    return _.set(m, field.name, field.value);
+  }, {});
+}
+
+function validate(form) {
+  // TODO optimize?
+  const $form = $(form.selector).find('form').addBack('form');
+  const fields = formFields($form);
+  // TODO optimize
+  const errors = _.reduce(fields, (acc, value, field) => {
+    const requiredValidation = _.find(form.spec.validations, (validation) => {
+      return validation.type === 'required' && _.includes(validation.fields, field);
+    });
+    if (requiredValidation && _.trim(value) === '') {
+      const fieldSpec = _.find(form.spec.fields, {name: field});
+      const message = twig.twig({data: requiredValidation.message}).render(fieldSpec);
+      return _.set(acc, field, {message});
+    } else {
+      return acc;
+    }
+  }, {});
+  return errors;
+}
+
+function update(form, state, context) {
+  const newTree = virtualize(form.template.render(context));
+  const element = $(form.selector)[0];
+  const diff = vdom.diff(state.vtree, newTree);
+  vdom.patch(element, diff);
+  form.afterUpdate(form);
+  state.vtree = newTree;
+}
+
+function mountForm(selector, spec, afterMounting, afterUpdate) {
+  const form = {
+    selector,
+    spec,
+    afterUpdate,
+    // TODO decouple template
+    template: twig.twig({data: _.trim($('#form-template').text())})
+  };
+  const state = {};
+  state.vtree = virtualize(form.template.render(form.spec));
+  $(selector).replaceWith(createElement(state.vtree));
+  const $form = $(selector).find('form').addBack('form');
+  function onUserInput() {
+    const errors = validate(form);
+    const ctx = _.merge(_.cloneDeep(form.spec), context(form.spec, errors));
+    update(form, state, ctx);
+    return errors;
+  }
+  $form
+    .on('focusout', (event) => {
+      console.log('focusout');
+      // don't validate twice when submit button is clicked
+      if (_.get(event, 'relatedTarget.type') !== 'submit') {
+        onUserInput();
+      }
+    })
+    .on('submit', (evt) => {
+      console.log('submit');
+      const errors = onUserInput();
+      // from rick harrison's validate.js
+      if (!_.isEmpty(errors)) {
+        if (evt && evt.preventDefault) {
+          console.log('prevent default');
+          evt.preventDefault();
+        } else if (event) {
+          // IE uses the global event variable
+          event.returnValue = false;
+        }
+      }
+    });
+  afterMounting(form);
+}
+
+export default {mountForm};

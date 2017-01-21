@@ -7,6 +7,7 @@ use Maximaster\Tools\Twig\TemplateEngine;
 
 class App {
     static function formSpecs() {
+        $requiredMessage = "Пожалуйста, заполните поле «{{ label }}».";
         return array(
             're_call' => array(
                 'name' => 're_call',
@@ -31,7 +32,35 @@ class App {
                     array(
                         'type' => 'required',
                         'fields' => array('name', 'phone'),
-                        'message' => "Пожалуйста, введите {{ label == 'ФИО' ? label : label|lower }}."
+                        'message' => $requiredMessage
+                    )
+                )
+            ),
+            'write_letter' => array(
+                'name' => 'write_letter',
+                'title' => 'Написать письмо',
+                'action' => '/todo', // TODO form action
+                'fields' => array(
+                    array(
+                        'name' => 'name',
+                        'label' => 'ФИО'
+                    ),
+                    array(
+                        'name' => 'email',
+                        'type' => 'email',
+                        'label' => 'Почта'
+                    ),
+                    array(
+                        'name' => 'message',
+                        'type' => 'textarea',
+                        'label' => 'Сообщение'
+                    )
+                ),
+                'validations' => array(
+                    array(
+                        'type' => 'required',
+                        'fields' => array('name', 'email', 'message'),
+                        'message' => $requiredMessage
                     )
                 )
             )

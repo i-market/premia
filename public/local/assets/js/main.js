@@ -1,14 +1,6 @@
 import _ from 'lodash';
-import twig from 'twig';
-import vdom from 'virtual-dom';
-import vnode from 'virtual-dom/vnode/vnode';
-import vtext from 'virtual-dom/vnode/vtext';
-import htmlToVdom from 'html-to-vdom';
-import createElement from 'virtual-dom/create-element';
-import FormValidator from 'validate-js';
 import enquire from 'enquire.js';
-
-const virtualizeHtml = htmlToVdom({VNode: vnode, VText: vtext});
+import forms from './forms';
 
 window.App = {
   googleMapsCallback: () => {
@@ -70,82 +62,13 @@ $(() => {
 
   // forms
 
-  const formSpecs = window._formSpecs;
-  const state = {};
-
-  function virtualize(html) {
-    return virtualizeHtml({
-      getVNodeKey: function (attributes) {
-        // now we won't lose focus on form inputs
-        return attributes.name;
-      }
-    }, html);
-  }
-
-  function fromSpec(spec) {
-    return _.flatMap(spec.validations, (validation) => {
-      const cases = {
-        // TODO ad-hoc
-        required: () => {
-          return _.map(validation.fields, (field) => {
-            return {
-              name: field,
-              display: 'required',
-              rules: 'required'
-            }
-          });
-        }
-      };
-      return cases[validation.type]();
-    });
-  }
-
-  function onValidate(spec, element, errors, event) {
-    const ctx = context(spec, errors);
-    const newTree = virtualize(template.render(ctx));
-    vdom.patch(element, vdom.diff(state.vtree, newTree));
-    onUpdate(spec, element);
-    state.vtree = newTree;
-  }
-
-  function context(spec, errors) {
-    return _.update(_.cloneDeep(spec), 'fields', (fields) => {
-      return _.map(fields, (field) => {
-        const error = _.find(errors, {name: field.name});
-        if (error) {
-          const messageTemplate = _.find(spec.validations, (validation) => {
-            return validation.type === error.rule && _.includes(validation.fields, field.name);
-          })['message'];
-          const message = twig.twig({data: messageTemplate}).render(field);
-          return _.set(field, 'error', _.set(error, 'message', message));
-        } else {
-          return field;
-        }
-      });
-    });
-  }
-
-  const onUpdate = _.debounce((spec, element) => {
-    // restore mockup jquery stuff
-    window._modals();
-    // TODO calling this a lot kills performance, added `debounce` for now
-    const validator = new FormValidator('re_call', fromSpec(spec), _.partial(onValidate, spec, element));
-    const validate = validator._validateForm.bind(validator);
-    $('form[name=re_call]').focusout((event) => {
-      // validate.js will validate on submit, don't trigger it twice
-      if (_.get(event, 'relatedTarget.type') !== 'submit') {
-        validate(event);
-      }
-    });
-  }, 100);
-
-  const $form = $('form[name=re_call]');
-  const template = twig.twig({data: _.trim($('#form-template').text())});
-  state.vtree = virtualize(template.render(formSpecs['re_call']));
-  $form.replaceWith(createElement(state.vtree));
-  // TODO optimize?
-  // get new dom element
-  const spec = formSpecs['re_call'];
-  const element = $('form[name=re_call]')[0];
-  onUpdate(spec, element);
+  _.forEach(['re_call'], (formName) => {
+    const spec = window._formSpecs[formName];
+    function afterUpdate() {
+      // restore mockup jquery stuff
+      window._modals();
+    }
+    const afterMounting = afterUpdate;
+    forms.mountForm(`form[name="${formName}"]`, spec, afterMounting, afterUpdate);
+  });
 });
