@@ -9,9 +9,9 @@
         {% else %}
             <input name="{{ field.name }}" type="{{ type }}" placeholder="{{ field.label }}" class="{{ class }}">
         {% endif %}
-        {% if field.error %}
-            <div class="error-message">{{ field.error.message }}</div>
-        {% endif %}
+        {# always render for correct virtual-dom diffing #}
+        {% set display = field.error ? 'block' : 'none' %}
+        <div class="error-message" style="display: {{ display }}">{{ field.error.message }}</div>
     {% endfor %}
     <div class="bottom">
         <button type="submit" class="btn">отправить</button>

@@ -62,13 +62,12 @@ $(() => {
 
   // forms
 
-  _.forEach(['re_call'], (formName) => {
+  _.forEach(['re_call', 'write_letter'], (formName) => {
     const spec = window._formSpecs[formName];
-    function afterUpdate() {
+    function afterMounting() {
       // restore mockup jquery stuff
       window._modals();
     }
-    const afterMounting = afterUpdate;
-    forms.mountForm(`form[name="${formName}"]`, spec, afterMounting, afterUpdate);
+    forms.mountForm(`form[name="${formName}"]`, spec, afterMounting, _.noop);
   });
 });

@@ -4,24 +4,11 @@
 <script type="text/template" id="form-template">
     {{ source(partial('modal_form.twig')) }}
 </script>
-<!--Модалки-->
-<!--Обратный звонок-->
-<div class="modal modal_window" id="re_call">
-    {% include partial('modal_form.twig') with form_specs.re_call %}
-</div>
-<!--Написать письмо-->
-<div class="modal modal_window" id="write_letter">
-    <form class="block" method="post" action="" name="">
-        <span class="close"></span>
-        <strong>Написать письмо</strong>
-        <input name="name" type="text" placeholder="ФИО">
-        <input name="email" type="text" placeholder="Почта">
-        <textarea name="message" placeholder="Сообщение"></textarea>
-        <div class="bottom">
-            <button type="submit" class="btn">отправить</button>
-        </div>
-    </form>
-</div>
+{% for spec in form_specs %}
+    <div class="modal modal_window" id="{{ spec.name }}">
+        {% include partial('modal_form.twig') with spec %}
+    </div>
+{% endfor %}
 <!--Форма аренды-->
 <div class="modal modal_window" id="rent">
     <form class="block" method="post" action="" name="">

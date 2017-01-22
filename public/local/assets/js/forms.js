@@ -7,13 +7,12 @@ import htmlToVdom from 'html-to-vdom';
 import createElement from 'virtual-dom/create-element';
 
 function virtualize(html) {
-  const f = htmlToVdom({VNode: vnode, VText: vtext});
-  return f({
+  const options = {
     getVNodeKey: function (attributes) {
-      // now we won't lose focus on form inputs
-      return attributes.name;
+      return _.get(attributes, 'attributes.data-vdom-key');
     }
-  }, html);
+  };
+  return htmlToVdom({VNode: vnode, VText: vtext})(options, html);
 }
 
 function context(spec, errors) {
@@ -82,28 +81,23 @@ function mountForm(selector, spec, afterMounting, afterUpdate) {
     update(form, state, ctx);
     return errors;
   }
-  $form
-    .on('focusout', (event) => {
-      console.log('focusout');
-      // don't validate twice when submit button is clicked
-      if (_.get(event, 'relatedTarget.type') !== 'submit') {
-        onUserInput();
+  $form.find(':input').on('blur', (event) => {
+    if (_.get(event, 'relatedTarget.type') !== 'submit') {
+      onUserInput();
+    }
+  });
+  $form.on('submit', (evt) => {
+    const errors = onUserInput();
+    // from rick harrison's validate.js
+    if (!_.isEmpty(errors)) {
+      if (evt && evt.preventDefault) {
+        evt.preventDefault();
+      } else if (event) {
+        // IE uses the global event variable
+        event.returnValue = false;
       }
-    })
-    .on('submit', (evt) => {
-      console.log('submit');
-      const errors = onUserInput();
-      // from rick harrison's validate.js
-      if (!_.isEmpty(errors)) {
-        if (evt && evt.preventDefault) {
-          console.log('prevent default');
-          evt.preventDefault();
-        } else if (event) {
-          // IE uses the global event variable
-          event.returnValue = false;
-        }
-      }
-    });
+    }
+  });
   afterMounting(form);
 }
 
