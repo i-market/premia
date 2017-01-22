@@ -63,6 +63,12 @@ function update(form, state, context) {
   state.vtree = newTree;
 }
 
+function showErrorsBefore(field, errors, spec) {
+  const fields = _.map(spec.fields, 'name');
+  const showFields = _.take(fields, _.indexOf(fields, field));
+  return _.pick(errors, showFields);
+}
+
 function mountForm(selector, spec, afterMounting, afterUpdate) {
   const form = {
     selector,
@@ -75,19 +81,23 @@ function mountForm(selector, spec, afterMounting, afterUpdate) {
   state.vtree = virtualize(form.template.render(form.spec));
   $(selector).replaceWith(createElement(state.vtree));
   const $form = $(selector).find('form').addBack('form');
-  function onUserInput() {
+  function onUserInput(event) {
     const errors = validate(form);
-    const ctx = _.merge(_.cloneDeep(form.spec), context(form.spec, errors));
+    // TODO improve ux
+    const ctxErrors = event.type === 'blur' && _.get(event, 'relatedTarget.name')
+      ? showErrorsBefore(_.get(event, 'relatedTarget.name'), errors, spec)
+      : errors;
+    const ctx = _.merge(_.cloneDeep(form.spec), context(form.spec, ctxErrors));
     update(form, state, ctx);
     return errors;
   }
   $form.find(':input').on('blur', (event) => {
     if (_.get(event, 'relatedTarget.type') !== 'submit') {
-      onUserInput();
+      onUserInput(event);
     }
   });
   $form.on('submit', (evt) => {
-    const errors = onUserInput();
+    const errors = onUserInput(evt);
     // from rick harrison's validate.js
     if (!_.isEmpty(errors)) {
       if (evt && evt.preventDefault) {

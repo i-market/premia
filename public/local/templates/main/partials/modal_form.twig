@@ -10,7 +10,7 @@
             <input name="{{ field.name }}" type="{{ type }}" placeholder="{{ field.label }}" class="{{ class }}">
         {% endif %}
         {# always render for correct virtual-dom diffing #}
-        {% set display = field.error ? 'block' : 'none' %}
+        {% set display = field.error.message ? 'block' : 'none' %}
         <div class="error-message" style="display: {{ display }}">{{ field.error.message }}</div>
     {% endfor %}
     <div class="bottom">
