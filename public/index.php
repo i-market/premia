@@ -21,8 +21,7 @@ $APPLICATION->SetPageProperty(\App\PageProperty::LAYOUT, 'homepage.twig');
         </div>
         <div class="slide slide--inner slide--opacity" style="background: url('<?= v::asset('images/slider3.png') ?>')no-repeat center center">
             <div class="block">
-                <? // TODO stub content ?>
-                <h1>Три сезона</h1>
+                <h1>Четыре сезона</h1>
                 <span class="line"></span>
                 <h2>Оптово-распределительный центр</h2>
             </div>
@@ -191,7 +190,7 @@ $APPLICATION->SetPageProperty(\App\PageProperty::LAYOUT, 'homepage.twig');
                 <p>Создание таможенного поста и СВХ</p>
                 <p>Создание собственной сети сбыта (ритейл)</p>
                 <p>Создание системы аукционной торговли</p>
-                <p>Создание интернетмагазина для оптоворозничной торговли</p>
+                <p>Создание интернет магазина для оптоворозничной торговли</p>
             </div>
             <div class="bottom"><span>2018</span></div>
         </div>
