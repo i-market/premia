@@ -1,5 +1,5 @@
 [stage]
-46.30.45.77
+i-market.ru
 
 [stage:vars]
 env=stage

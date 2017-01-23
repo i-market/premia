@@ -1,0 +1,5 @@
+[prod]
+ssh.domodedovo.nichost.ru
+
+[prod:vars]
+env=prod
