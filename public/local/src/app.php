@@ -4,6 +4,7 @@ namespace App;
 
 use Hendrix\View as v;
 use Maximaster\Tools\Twig\TemplateEngine;
+use Hendrix\Form as f;
 
 class App {
     static function formSpecs() {
@@ -14,19 +15,9 @@ class App {
                 'title' => 'Заказать звонок',
                 'action' => '/todo', // TODO form action
                 'fields' => array(
-                    array(
-                        'name' => 'name',
-                        'label' => 'ФИО'
-                    ),
-                    array(
-                        'name' => 'phone',
-                        'label' => 'Телефон'
-                    ),
-                    array(
-                        'name' => 'message',
-                        'type' => 'textarea',
-                        'label' => 'Сообщение'
-                    )
+                    f::field('name', 'ФИО'),
+                    f::field('phone', 'Телефон'),
+                    f::field('message', 'Сообщение', 'textarea')
                 ),
                 'validations' => array(
                     array(

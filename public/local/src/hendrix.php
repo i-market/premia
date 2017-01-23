@@ -103,3 +103,13 @@ class View {
         return SITE_TEMPLATE_PATH.'/layouts/'.$path;
     }
 }
+
+class Form {
+    static function field($name, $label, $type = 'text') {
+        return array(
+            'name' => $name,
+            'type' => $type,
+            'label' => $label
+        );
+    }
+}
