@@ -13,7 +13,7 @@ class App {
             're_call' => array(
                 'name' => 're_call',
                 'title' => 'Заказать звонок',
-                'action' => '/todo', // TODO form action
+                'action' => '/re_call',
                 'fields' => array(
                     f::field('name', 'ФИО'),
                     f::field('phone', 'Телефон'),
@@ -30,7 +30,7 @@ class App {
             'write_letter' => array(
                 'name' => 'write_letter',
                 'title' => 'Написать письмо',
-                'action' => '/todo', // TODO form action
+                'action' => '/write_letter',
                 'fields' => array(
                     array(
                         'name' => 'name',
