@@ -1,24 +1,13 @@
 {% set contacts_link = '#contacts' %}
+
 <!--точки с прокруткой-->
 <div id="navbar">
     <ul class="nav">
         <li class="active">
+            {# body tag #}
             <a href="#one"></a>
         </li>
-        {% block pagination_items %}
-            <li>
-                <a href="#plan"></a>
-            </li>
-            <li>
-                <a href="#two"></a>
-            </li>
-            <li>
-                <a href="#three"></a>
-            </li>
-            <li>
-                <a href="#four"></a>
-            </li>
-        {% endblock %}
+        {% block pagination_items %}{% endblock %}
         <li>
             <a href="{{ contacts_link }}"></a>
         </li>
@@ -77,7 +66,8 @@
         </div>
         <nav class="main_menu cf">
             <ul>
-                <li><a href="{{ path('/') }}">о комплексе</a></li>
+                {% set item = menu.homepage %}
+                <li><a href="{{ item.uri }}" class="{{ item.is_active ? 'active' }}">О комплексе</a></li>
                 {% set item = menu.rent %}
                 <li><a href="{{ item.uri }}" class="{{ item.is_active ? 'active' }}">Арендаторам</a></li>
                 <li class="logo">
@@ -90,6 +80,7 @@
         </nav>
         <div class="right">
             <p class="tel"><a href="tel:+7 (495) 223-61-23">+7 (495) 223-61-23</a></p>
+            <div class="working-hours">с 4:00 до 20:00 без выходных</div>
             <div class="lang_block">
                 <div class="flag"><img src="{{ asset('images/lang.png') }}" alt=""></div>
                 <div class="blcok_choose_lang">

@@ -19,6 +19,7 @@ use Hendrix\View as v;
     <title><? $APPLICATION->ShowTitle() ?></title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&amp;subset=cyrillic-ext" rel="stylesheet">
     <link rel="stylesheet" media="screen" href="<?= v::asset('css/lib/normalize.min.css') ?>">
+    <link rel="stylesheet" media="screen" href="<?= v::asset('css/lib/jquery.fancybox.css') ?>">
     <link rel="stylesheet" media="screen" href="<?= v::asset('css/lib/slick.css') ?>">
     <link rel="stylesheet" media="screen" href="<?= v::asset('css/main.css') ?>">
     <!--[if gte IE 9]>
@@ -33,6 +34,7 @@ use Hendrix\View as v;
 <? $APPLICATION->ShowPanel() ?>
 <?
 $scripts = array(
+    'js/vendor/jquery.fancybox.pack.js',
     'js/vendor/scroll.js',
     'js/vendor/slick.min.js',
     'js/script.js',
@@ -44,6 +46,7 @@ $menu = array_map(function($item) use (&$APPLICATION) {
     $item['is_active'] = $item['uri'] === $APPLICATION->GetCurDir();
     return $item;
 }, array(
+    'homepage' => array('uri' => v::path('/')),
     'rent' => array('uri' => v::path('rent')),
     'for_customers' => array('uri' => v::path('for-customers'))
 ));
