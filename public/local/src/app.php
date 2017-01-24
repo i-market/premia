@@ -78,9 +78,7 @@ class View {
             $placeholder = '<page-placeholder/>';
             $ctx = array_merge(array('page' => $placeholder), $context, $propCtx);
             $html = $twig->render(SITE_TEMPLATE_PATH.'/layouts/'.$path, $ctx);
-            $parts = explode($placeholder, $html);
-            $header = $parts[0];
-            $footer = $parts[1];
+            list($header, $footer) = explode($placeholder, $html);
             self::$footer = $footer;
             echo $header;
         }, $defaultLayout);
