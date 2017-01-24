@@ -240,8 +240,8 @@ $APPLICATION->SetPageProperty(\App\PageProperty::LAYOUT, 'homepage.twig');
             </div>
             <div class="right">
                 <div class="wrap_news_slider">
-                    <span class="next"></span>
                     <span class="prev"></span>
+                    <span class="next"></span>
                     <div class="news_slider">
                         <div class="news_item">
                             <div class="img foto">
