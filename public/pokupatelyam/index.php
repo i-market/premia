@@ -21,7 +21,7 @@ use Hendrix\View as v;
         </div>
         <div class="slide slide--inner" style="background: url('<?= v::asset('images/slider2.png') ?>')no-repeat center center">
             <div class="block">
-                <h1>Три сезона</h1>
+                <h1>Четыре сезона</h1>
                 <span class="line"></span>
                 <h2>Фрукты и овощи от производителя<br>по оптовым ценам</h2>
             </div>
