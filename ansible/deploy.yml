@@ -45,9 +45,9 @@
     - name: git-ftp push
       local_action: >
         shell git-ftp push
-        --user {{ ansible_user }}
-        --passwd {{ ansible_ssh_pass }}
-        --remote-root {{ repo_path }}
+        --user "{{ ansible_user }}"
+        --passwd "{{ ansible_ssh_pass }}"
+        --remote-root "{{ repo_path }}"
         sftp://{{ inventory_hostname }}
       when: env != "dev"
       tags:
