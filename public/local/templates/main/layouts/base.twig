@@ -132,7 +132,17 @@
     </p>
 </footer>
 {% block modals %}
-    {% include partial('modals.twig') %}
+    <script>
+        window._formSpecs = {{ form_specs_json }};
+    </script>
+    <script type="text/template" id="form-template">
+        {{ source(partial('modal_form.twig')) }}
+    </script>
+    {% for spec in form_specs %}
+        <div class="modal modal_window" id="{{ spec.name }}">
+            {% include partial('modal_form.twig') with spec %}
+        </div>
+    {% endfor %}
 {% endblock %}
 <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
