@@ -81,23 +81,25 @@ use Hendrix\View as v;
                     <p>Сухофрукты</p>
                 </div>
                 <div class="item col_5">
-                    <img src="<?= v::asset('images/Group%2020.png') ?>" alt="">
-                    <p>Ягоды</p>
-                </div>                <div class="item col_5">
-                    <img src="<?= v::asset('images/Group%2016.png') ?>" alt="">
-                    <p>Экзотика</p>
+                    <img src="<?= v::asset('images/Group-11.png') ?>" alt="">
+                    <p>Бакалея</p>
+                </div>
+                <? // third row ?>
+                <div class="item col_5">
+                    <img src="<?= v::asset('images/Group-03.png') ?>" alt="">
+                    <p>Мясо</p>
                 </div>
                 <div class="item col_5">
-                    <img src="<?= v::asset('images/Group%2017.png') ?>" alt="">
-                    <p>Фрукты</p>
+                    <img src="<?= v::asset('images/Group-05.png') ?>" alt="">
+                    <p>Птица</p>
                 </div>
                 <div class="item col_5">
-                    <img src="<?= v::asset('images/Group%2018.png') ?>" alt="">
-                    <p>Овощи</p>
+                    <img src="<?= v::asset('images/Group-07.png') ?>" alt="">
+                    <p>Рыба и морепродукты</p>
                 </div>
                 <div class="item col_5">
-                    <img src="<?= v::asset('images/Group%2019.png') ?>" alt="">
-                    <p>Зелень</p>
+                    <img src="<?= v::asset('images/Group-09.png') ?>" alt="">
+                    <p>Молочная продукция</p>
                 </div>
                 <a href="javascript:void(0)" data-modal="price_request" class="item item--download col_5">
                     <img src="<?= v::asset('images/tmp/price-black.png') ?>" alt="">
