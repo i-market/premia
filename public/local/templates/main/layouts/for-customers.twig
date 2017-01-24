@@ -1,8 +1,5 @@
 {% extends layout('base.twig') %}
 
-{% set modal_id = 'order' %}
-{% set order_action = 'Заявка в торговый дом' %}
-
 {% block pagination_items %}
     <li>
         <a href="#two"></a>
@@ -22,42 +19,9 @@
 {% endblock %}
 
 {% block footer_right_button %}
-    <span class="form_order" data-modal="{{ modal_id }}">{{ order_action }}</span>
+    <span class="form_order" data-modal="{{ form_specs.order.name }}">{{ form_specs.order.title }}</span>
 {% endblock %}
 
 {% block page_menu_items %}
-    <li><a href="javascript:void(0)"><span data-modal="{{ modal_id }}">{{ order_action }}</span></a></li>
-{% endblock %}
-
-{% block modals %}
-    {{ parent() }}
-    <div class="modal modal_window" id="{{ modal_id }}">
-        <form class="block" method="post" action="" name="">
-            <span class="close"></span>
-            <strong>{{ order_action }}</strong>
-            <input name="name" type="text" placeholder="ФИО">
-            <input name="phone" type="text" placeholder="Телефон">
-            <input name="email" type="text" placeholder="Почта">
-            <input name="region" type="text" placeholder="Регион">
-            <select name="delivery_type">
-                <option value="Не выбран" disabled selected>Форма получения...</option>
-                <option value="Самовывоз">Самовывоз</option>
-                <option value="Доставка">Доставка</option>
-            </select>
-            <input name="product_category" type="text" placeholder="Вид продукции">
-            <select name="product_volume">
-                <option value="Не выбран" disabled selected>Объем...</option>
-                <option value="Розница">Розница</option>
-                <option value="Крупный опт">Крупный опт</option>
-                <option value="Мелкий опт">Мелкий опт</option>
-            </select>
-            <input name="about_you" type="text" placeholder="Коротко об организации">
-            <!--<div class="people_test">
-        <img src="{{ asset('images/robot.png') }}" alt="">
-        </div>-->
-            <div class="bottom">
-                <button type="submit" class="btn">отправить</button>
-            </div>
-        </form>
-    </div>
+    <li><a href="javascript:void(0)"><span data-modal="{{ form_specs.order.name }}">{{ form_specs.order.title }}</span></a></li>
 {% endblock %}

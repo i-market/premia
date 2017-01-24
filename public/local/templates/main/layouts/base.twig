@@ -47,7 +47,7 @@
         <span class="write_letter" data-modal="write_letter">написать письмо</span>
         <span class="btn" data-modal="re_call">заказать звонок</span>
         {% block footer_right_button %}
-            <span class="form_order" data-modal="rent">Запросить форму на аренду</span>
+            <span class="form_order" data-modal="{{ form_specs.work_with_us.name }}">{{ form_specs.work_with_us.title }}</span>
         {% endblock %}
     </div>
 </div>
