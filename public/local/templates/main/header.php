@@ -51,6 +51,7 @@ $menu = array_map(function($item) use (&$APPLICATION) {
     'for_customers' => array('uri' => v::path('for-customers'))
 ));
 $contactsLatLng = array('lat' => 55.470993, 'lng' => 37.712681);
+$domainName = explode(':', $_SERVER['HTTP_HOST'])[0];
 View::showLayoutHeader(PageProperty::LAYOUT, 'base.twig', array(
     'menu' => $menu,
     'scripts' => $scripts,
@@ -59,6 +60,7 @@ View::showLayoutHeader(PageProperty::LAYOUT, 'base.twig', array(
     'contacts_latlng' => $contactsLatLng,
     'contacts_geo_uri' => View::geoUri($contactsLatLng),
     'copyright_year' => date('Y'),
+    'copyright_domain_name' => $domainName,
     'google_api_key' => Configuration::getValue('app')['google_api_key'],
     'google_maps_callback' => 'App.googleMapsCallback',
     'include_tracking_scripts' => App::env() !== Env::DEV
