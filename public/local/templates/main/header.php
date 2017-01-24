@@ -56,6 +56,7 @@ View::showLayoutHeader(PageProperty::LAYOUT, 'base.twig', array(
     'scripts' => $scripts,
     'form_specs' => \App\App::formSpecs(),
     'form_specs_json' => json_encode(\App\App::formSpecs()),
+    'contacts_latlng' => $contactsLatLng,
     'contacts_geo_uri' => View::geoUri($contactsLatLng),
     'copyright_year' => date('Y'),
     'google_api_key' => Configuration::getValue('app')['google_api_key'],

@@ -102,22 +102,24 @@
         <div class="buble">
             <strong>наши контакты</strong>
             <div class="item tel">
-                <p><a href="tel:+74953576144">+7 (495) 357 61 44</a></p>
-                <p><a href="tel:+74953676123">+7 (495) 367 61 23</a></p>
-                <p><a href="tel:+74952236123">+7 (495) 223 61 23</a></p>
+                <p><a href="tel:+74952980760">+7 (495) 298-07-60 <span class="working-hours text-nowrap">(24 часа)</span></a></p>
+                <p><a href="tel:+74953576144">+7 (495) 357-61-44</a></p>
+                <p><a href="tel:+74953676123">+7 (495) 367-61-23</a></p>
+                <p><a href="tel:+74952236123">+7 (495) 223-61-23</a></p>
             </div>
             <div class="item clock">
-                <p>с 04:00 до 20:00 Без выходных</p>
+                <p><span style="font-weight: 600;">с 04:00 до 20:00</span> без выходных</p>
             </div>
             <div class="item mail">
                 <p>Офис: <a href="mailto:office@mspdom.ru">office@mspdom.ru</a></p>
-                <p>Отдел кадров: <a href="mailto:job@mspdom.ru">job@mspdom.ru</a></p>
                 <p>Торговый дом: <a href="mailto:trade@mspdom.ru">trade@mspdom.ru</a></p>
             </div>
             <div class="item locate">
                 <p>г. Домодедово, мкрн. Северный, ул. Логистическая, участок 9</p>
+                {% set coords = contacts_latlng.lat ~ ', ' ~ contacts_latlng.lng %}
+                <p class="hidden-md-down">GPS: <span class="strong">{{ coords }}</span></p>
             </div>
-            <div class="bottom">
+            <div class="bottom hidden-lg-up">
                 <a href="{{ contacts_geo_uri }}"><img src="{{ asset('images/navigator.png') }}" alt=""></a>
             </div>
         </div>
