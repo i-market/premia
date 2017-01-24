@@ -47,8 +47,8 @@ $menu = array_map(function($item) use (&$APPLICATION) {
     return $item;
 }, array(
     'homepage' => array('uri' => v::path('/')),
-    'rent' => array('uri' => v::path('rent')),
-    'for_customers' => array('uri' => v::path('for-customers'))
+    'rent' => array('uri' => v::path('arendatoram')),
+    'for_customers' => array('uri' => v::path('pokupatelyam'))
 ));
 $contactsLatLng = array('lat' => 55.470993, 'lng' => 37.712681);
 $domainName = explode(':', $_SERVER['HTTP_HOST'])[0];
