@@ -15,6 +15,10 @@
     </li>
 {% endblock %}
 
+{% block footer_right_button %}
+    <span class="form_order" data-modal="{{ form_specs.work_with_us.name }}">{{ form_specs.work_with_us.title }}</span>
+{% endblock %}
+
 {% block modals %}
     {{ parent() }}
     <!--окно новости-->

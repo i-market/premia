@@ -112,4 +112,18 @@ class Form {
             'label' => $label
         );
     }
+
+    static function select($name, $options) {
+        return array(
+            'name' => $name,
+            'type' => 'select',
+            'options' => array_map(function($option) {
+                return is_array($option) ? $option : array(
+                    'text' => $option,
+                    'value' => $option,
+                    'attributes' => array()
+                );
+            }, $options)
+        );
+    }
 }

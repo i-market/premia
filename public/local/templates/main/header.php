@@ -52,11 +52,12 @@ $menu = array_map(function($item) use (&$APPLICATION) {
 ));
 $contactsLatLng = array('lat' => 55.470993, 'lng' => 37.712681);
 $domainName = explode(':', $_SERVER['HTTP_HOST'])[0];
+$formSpecs = \App\App::formSpecs();
 View::showLayoutHeader(PageProperty::LAYOUT, 'base.twig', array(
     'menu' => $menu,
     'scripts' => $scripts,
-    'form_specs' => \App\App::formSpecs(),
-    'form_specs_json' => json_encode(\App\App::formSpecs()),
+    'form_specs' => $formSpecs,
+    'form_specs_json' => json_encode($formSpecs),
     'contacts_latlng' => $contactsLatLng,
     'contacts_geo_uri' => View::geoUri($contactsLatLng),
     'copyright_year' => date('Y'),

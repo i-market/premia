@@ -3,11 +3,17 @@
     <strong>{{ title }}</strong>
     {% for field in fields %}
         {% set class = field.error ? 'error' : '' %}
-        {% set type = field.type or 'text' %}
-        {% if type == 'textarea' %}
+        {% if field.type == 'textarea' %}
             <textarea name="{{ field.name }}" placeholder="{{ field.label }}" class="{{ class }}"></textarea>
+        {% elseif field.type == 'select' %}
+            <select name="field.name">
+                {% for option in field.options %}
+                    {# TODO support key-value attributes #}
+                    <option value="{{ option.value }}" {{ option.attributes|keys|join(' ') }}>{{ option.text }}</option>
+                {% endfor %}
+            </select>
         {% else %}
-            <input name="{{ field.name }}" type="{{ type }}" placeholder="{{ field.label }}" class="{{ class }}">
+            <input name="{{ field.name }}" type="{{ field.type }}" placeholder="{{ field.label }}" class="{{ class }}">
         {% endif %}
         {# always render for correct virtual-dom diffing #}
         {% set display = field.error.message ? 'block' : 'none' %}

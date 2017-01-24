@@ -7,13 +7,20 @@ use Maximaster\Tools\Twig\TemplateEngine;
 use Hendrix\Form as f;
 
 class App {
+    private static function placeholderOption($text, $value) {
+        return array(
+            'type' => 'placeholder',
+            'text' => $text.'...',
+            'value' => $value,
+            'attributes' => array('disabled' => '', 'selected' => '')
+        );
+    }
+
     static function formSpecs() {
         $requiredMessage = "Пожалуйста, заполните поле «{{ label }}».";
-        return array(
+        $ret = array(
             're_call' => array(
-                'name' => 're_call',
                 'title' => 'Заказать звонок',
-                'action' => '/re_call',
                 'fields' => array(
                     f::field('name', 'ФИО'),
                     f::field('phone', 'Телефон'),
@@ -28,24 +35,11 @@ class App {
                 )
             ),
             'write_letter' => array(
-                'name' => 'write_letter',
                 'title' => 'Написать письмо',
-                'action' => '/write_letter',
                 'fields' => array(
-                    array(
-                        'name' => 'name',
-                        'label' => 'ФИО'
-                    ),
-                    array(
-                        'name' => 'email',
-                        'type' => 'email',
-                        'label' => 'Почта'
-                    ),
-                    array(
-                        'name' => 'message',
-                        'type' => 'textarea',
-                        'label' => 'Сообщение'
-                    )
+                    f::field('name', 'ФИО'),
+                    f::field('email', 'Почта', 'email'),
+                    f::field('message', 'Сообщение', 'textarea')
                 ),
                 'validations' => array(
                     array(
@@ -54,8 +48,109 @@ class App {
                         'message' => $requiredMessage
                     )
                 )
+            ),
+            'rent' => array(
+                'title' => 'Запросить форму на аренду',
+                'fields' => array(
+                    f::field('name', 'ФИО'),
+                    f::field('phone', 'Телефон'),
+                    f::field('email', 'Почта', 'email'),
+                    f::select('type', array(
+                        self::placeholderOption('Тип помещения', 'Не выбран'),
+                        'Офис',
+                        'Склад'
+                    )),
+                    f::field('space-needed', 'Интересующая площадь в м²')
+                ),
+                'validations' => array(
+                    array(
+                        'type' => 'required',
+                        'fields' => array('name', 'phone', 'type'),
+                        'message' => $requiredMessage
+                    )
+                )
+            ),
+            'order' => array(
+                'title' => 'Заявка в торговый дом',
+                'fields' => array(
+                    f::field('name', 'ФИО'),
+                    f::field('phone', 'Телефон'),
+                    f::field('email', 'Почта', 'email'),
+                    f::field('region', 'Регион'),
+                    f::select('delivery_type', array(
+                        self::placeholderOption('Форма получения', 'Не выбрана'),
+                        'Самовывоз',
+                        'Доставка'
+                    )),
+                    f::field('product_category', 'Вид продукции'),
+                    f::select('product_volume', array(
+                        self::placeholderOption('Объем', 'Не выбран'),
+                        'Розница',
+                        'Крупный опт',
+                        'Мелкий опт'
+                    )),
+                    f::field('about_you', 'Коротко об организации')
+                ),
+                'validations' => array(
+                    array(
+                        'type' => 'required',
+                        'fields' => array(
+                            'name',
+                            'phone',
+                            'region',
+                            'delivery_type',
+                            'product_category',
+                            'product_volume'
+                        ),
+                        'message' => $requiredMessage
+                    )
+                )
+            ),
+            'work_with_us' => array(
+                'title' => 'Сотрудничество с нами',
+                'fields' => array(
+                    f::field('name', 'ФИО'),
+                    f::field('phone', 'Телефон'),
+                    f::field('email', 'Почта', 'email'),
+                    f::select('type', array(
+                        self::placeholderOption('Форма сотрудничества', 'Не выбрана'),
+                        'Аренда',
+                        'Покупка',
+                        'Поставка'
+                    )),
+                    f::field('comment', 'Комментарий', 'textarea')
+                ),
+                'validations' => array(
+                    array(
+                        'type' => 'required',
+                        'fields' => array('name', 'phone'),
+                        'message' => $requiredMessage
+                    )
+                )
+            ),
+            'price_request' => array(
+                'title' => 'Запросить цены',
+                'fields' => array(
+                    f::field('name', 'ФИО'),
+                    f::field('phone', 'Телефон'),
+                    f::field('email', 'Почта', 'email'),
+                    f::field('region', 'Регион'),
+                    f::field('comment', 'Комментарий', 'textarea')
+                ),
+                'validations' => array(
+                    array(
+                        'type' => 'required',
+                        'fields' => array('name', 'phone'),
+                        'message' => $requiredMessage
+                    )
+                )
             )
         );
+        foreach ($ret as $name => $spec) {
+            $ret[$name]['name'] = $name;
+            $ret[$name]['action'] = '/api/'.$name;
+        }
+        return $ret;
     }
 }
 
