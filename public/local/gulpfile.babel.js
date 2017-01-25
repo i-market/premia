@@ -6,12 +6,14 @@ import revReplace from 'gulp-rev-replace';
 import sass from 'gulp-sass';
 import util from 'gulp-util';
 import clean from 'gulp-clean';
+import uglify from 'gulp-uglify';
 import browserSync from 'browser-sync';
 import child from 'child_process';
 import _ from 'lodash';
 import browserify from 'browserify';
 import babelify from 'babelify';
 import source from 'vinyl-source-stream';
+import buffer from 'vinyl-buffer';
 import config from './config.json';
 
 const paths = {
@@ -63,6 +65,8 @@ gulp.task('build:js', () => {
     .transform(babelify, {presets: ['es2015']})
     .bundle()
     .pipe(source('main.js'))
+    .pipe(buffer())
+    .pipe(uglify())
     .pipe(gulp.dest(`${paths.dist}/js`));
 });
 
