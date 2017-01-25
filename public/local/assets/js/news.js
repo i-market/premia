@@ -14,6 +14,7 @@ function showModal($modal) {
 }
 
 function initNews($list, $modal) {
+  // $list.find('.news_item .text').dotdotdot();
   const contentSel = '.wrap_news_content';
   // loading screen
   const initialContentHtml = $modal.find(contentSel)[0].outerHTML;

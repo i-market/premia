@@ -10,8 +10,20 @@ use Underscore\Methods\ArraysMethods;
 use Underscore\Methods\StringsMethods;
 
 class Underscore extends ArraysMethods {
+    static function map($array, $f) {
+        $ret = array();
+        foreach ($array as $k => $v) {
+            $ret[$k] = $f($v, $k);
+        }
+        return $ret;
+    }
+    
     static function drop($array, $n) {
         return array_slice($array, $n);
+    }
+
+    static function take($array, $n) {
+        return array_slice($array, 0, $n);
     }
 
     static function identity() {

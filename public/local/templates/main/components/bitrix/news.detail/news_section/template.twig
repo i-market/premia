@@ -9,14 +9,17 @@
     </div>
     <div class="pictures">
         <div class="left_video">
-            {# TODO video #}
-            <iframe src="https://www.youtube.com/embed/fMEVhoDdwsM" frameborder="0" allowfullscreen></iframe>
+            {% if result.VIDEO %}
+                <iframe src="https://www.youtube.com/embed/{{ result.VIDEO.YOUTUBE_ID }}" frameborder="0" allowfullscreen></iframe>
+            {% else %}
+                <a class="img fancybox" rel="gallery" href="{{ result.FEATURED_IMAGE.SRC }}"
+                   style="background-image: url('{{ result.FEATURED_IMAGE.SRC }}');"></a>
+            {% endif %}
         </div>
         <div class="left_img">
             {% for image in result.IMAGES %}
                 <a class="col fancybox" rel="gallery" href="{{ image.SRC }}">
-                    {# TODO generate preview #}
-                    <img src="{{ image.SRC }}" alt="" />
+                    <img src="{{ image.src }}" alt="" />
                 </a>
             {% endfor %}
         </div>

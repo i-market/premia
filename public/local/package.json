@@ -11,6 +11,7 @@
     "enquire.js": "^2.1.1",
     "html-to-vdom": "^0.7.0",
     "jquery-match-height": "^0.7.0",
+    "jquery.dotdotdot": "^1.7.4",
     "lodash": "^4.17.4",
     "matchmedia-polyfill": "^0.3.0",
     "twig": "^0.10.3",

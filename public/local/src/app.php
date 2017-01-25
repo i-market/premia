@@ -213,6 +213,16 @@ class App {
             return (new CEvent)->Send($type, $siteId, $data);
         }
     }
+
+    static function youtubeVideoId($url) {
+        $matchesRef = array();
+        // https://github.com/mpratt/Embera/blob/master/Lib/Embera/Providers/Youtube.php#L30
+        if (preg_match('~(?:v=|youtu\.be/|youtube\.com/embed/)([a-z0-9_-]+)~i', $url, $matchesRef)) {
+            return $matchesRef[1];
+        } else {
+            return null;
+        }
+    }
 }
 
 class MailEvent {
@@ -299,7 +309,7 @@ class News {
                 "DISPLAY_TOP_PAGER" => "N",
                 "ELEMENT_CODE" => "",
                 "ELEMENT_ID" => $id,
-                "FIELD_CODE" => array("PREVIEW_PICTURE", ""),
+                "FIELD_CODE" => array("PREVIEW_PICTURE", "VIDEO_URL"),
                 "IBLOCK_ID" => "3",
                 "IBLOCK_TYPE" => "content",
                 "IBLOCK_URL" => "",
