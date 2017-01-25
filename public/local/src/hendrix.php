@@ -3,6 +3,8 @@
 namespace Hendrix;
 
 use Bitrix\Main\Config\Configuration;
+use CBitrixComponentTemplate;
+use CIBlock;
 use Hendrix\Underscore as _;
 use Underscore\Methods\ArraysMethods;
 use Underscore\Methods\StringsMethods;
@@ -125,5 +127,23 @@ class Form {
                 );
             }, $options)
         );
+    }
+}
+
+class NewsListLike {
+    /**
+     * @param array $element
+     * @param CBitrixComponentTemplate $template
+     * @return string dom element id
+     */
+    static function addEditingActions($element, $template) {
+        assert(array_key_exists('EDIT_LINK', $element));
+        assert(array_key_exists('DELETE_LINK', $element));
+        $template->AddEditAction($element['ID'], $element['EDIT_LINK'],
+            CIBlock::GetArrayByID($element['IBLOCK_ID'], 'ELEMENT_EDIT'));
+        $template->AddDeleteAction($element['ID'], $element['DELETE_LINK'],
+            CIBlock::GetArrayByID($element['IBLOCK_ID'], 'ELEMENT_DELETE'),
+            array('CONFIRM' => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
+        return $template->GetEditAreaId($element['ID']);
     }
 }

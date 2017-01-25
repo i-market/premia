@@ -1,0 +1,23 @@
+<div class="wrap_news_content">
+    <div class="info">
+        <p class="date">{{ result.DISPLAY_ACTIVE_FROM }}</p>
+        <p class="title">{{ result.NAME }}</p>
+        <p class="line"></p>
+        <div class="text">
+            {{ result.DETAIL_TEXT }}
+        </div>
+    </div>
+    <div class="pictures">
+        <div class="left_video">
+            {# TODO video #}
+            <iframe src="https://www.youtube.com/embed/APtusW0YGjI" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="left_img">
+            {% for image in result.IMAGES %}
+                <a class="col fancybox" rel="gallery" href="{{ image.URI }}">
+                    <img src="{{ image.PREVIEW_URI }}" alt="" />
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

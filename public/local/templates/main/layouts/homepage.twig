@@ -17,35 +17,23 @@
 
 {% block modals %}
     {{ parent() }}
-    <!--окно новости-->
     <div class="modal" id="news_modal">
         <div class="block">
             <span class="close"></span>
+            {# TODO refactor #}
+            {# content is inserted with js api #}
             <div class="wrap_news_content">
                 <div class="info">
-                    <p class="date">28 Января</p>
-                    <p class="title">В Подмосковье создадут Федеральный научный центр</p>
-                    <p class="line"></p>
-                    <p class="text">В подмосковной Лобне в 2017 году будет создан Федеральный научный центр по кормопроизводству, агроэкологии и рациональному природопользованию, сообщается на официальном сайте городского округа. Он сможет решать задачи по кормопроизводству для научного сообщества всей страны. Центр создадут путем присоединения к ВНИИ пяти научных учреждений: Калининградского и Ярославского НИИ, Всероссийского научно-исследовательского института люпина, Воронежской опытной станции по многолетним травам и Новозыбковской сельскохозяйственной опытной станции, которая находится в Брянской области.
-                        <br>На сайте городского округа указано, что во ВНИИ кормов работают более 250 человек, в том числе 100 научных сотрудников и 15 докторов наук. Учреждение координирует работу более 100 научно-исследовательских учреждений, ведет работу по селекции и семеноводству, разрабатывает технологии изготовления и использования кормов.</p>
+                    <p class="date"></p>
+                    <p class="title"></p>
+                    <div class="text">
+                        Загрузка...
+                    </div>
                 </div>
                 <div class="pictures">
                     <div class="left_video">
-                        <iframe src="https://www.youtube.com/embed/APtusW0YGjI" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="left_img">
-                        <a class="col fancybox" rel="gallery" href="{{ asset('images/pic_8.jpg') }}">
-                            <img src="{{ asset('images/pic_8.jpg') }}" alt="" />
-                        </a>
-                        <a class="col fancybox" rel="gallery" href="{{ asset('images/pic_8.jpg') }}">
-                            <img src="{{ asset('images/pic_8.jpg') }}" alt="" />
-                        </a>
-                        <a class="col fancybox" rel="gallery" href="{{ asset('images/pic_8.jpg') }}">
-                            <img src="{{ asset('images/pic_8.jpg') }}" alt="" />
-                        </a>
-                        <a class="col fancybox" rel="gallery" href="{{ asset('images/pic_8.jpg') }}">
-                            <img src="{{ asset('images/pic_8.jpg') }}" alt="" />
-                        </a>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import enquire from 'enquire.js';
 import forms from './forms';
+import news from './news';
 
 window.App = {
   googleMapsCallback: () => {
@@ -61,7 +62,6 @@ $(() => {
   initRentalOffers();
 
   // forms
-
   _.forEach(window._formSpecs, (spec) => {
     function afterMounting() {
       // restore mockup jquery stuff
@@ -69,4 +69,6 @@ $(() => {
     }
     forms.mountForm(`form[name="${spec.name}"]`, spec, afterMounting, _.noop);
   });
+
+  news.initNews($('#news'), $('#news_modal'));
 });

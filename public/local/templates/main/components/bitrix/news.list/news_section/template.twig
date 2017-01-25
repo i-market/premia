@@ -1,0 +1,102 @@
+{# TODO stub #}
+{% set stub_news_item = '3' %}
+<section class="news" id="news">
+    <span class="anchor" id="five"></span>
+    <div class="wrap">
+        <h3>События</h3>
+        <div class="wrap_news">
+            <div class="left">
+                <div class="grid">
+                    {% for item in result.ITEMS %}
+                        <div id="{{ item.BX_ID }}" class="col_3 news_item" data-item-id="{{ item.ID }}">
+                            <div class="img video">
+                                <img src="{{ asset('images/pic_8.jpg') }}" alt="">
+                                <div class="date">
+                                    {# TODO #}
+                                    <span>28 января</span>
+                                </div>
+                            </div>
+                            <div class="title">{{ item.NAME }}</div>
+                            <div class="line"></div>
+                            <div class="text">{{ item.PREVIEW_TEXT }}</div>
+                        </div>
+                    {% endfor %}
+                    <div class="col_3 news_item" data-item-id="{{ stub_news_item }}">
+                        <div class="img video">
+                            <img src="{{ asset('images/pic_8.jpg') }}" alt="">
+                            <div class="date">
+                                <span>28 января</span>
+                            </div>
+                        </div>
+                        <div class="title">В Подмосковье создадут Федеральный научный центр</div>
+                        <div class="line"></div>
+                        <div class="text">В Московской области, недалеко от столицы России, планируется организовать Федеральный научный центр по кормопроизводству, агроэкологии и </div>
+                    </div>
+                    <div class="col_3 news_item hidden_second" data-item-id="{{ stub_news_item }}">
+                        <div class="img foto">
+                            <img src="{{ asset('images/pic_8.jpg') }}" alt="">
+                            <div class="date">
+                                <span>28 января</span>
+                            </div>
+                        </div>
+                        <div class="title">В Подмосковье создадут Федеральный научный центр</div>
+                        <div class="line"></div>
+                        <div class="text">В Московской области, недалеко от столицы России, планируется организовать Федеральный научный центр по кормопроизводству, агроэкологии и </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="wrap_news_slider">
+                    <span class="prev"></span>
+                    <span class="next"></span>
+                    <div class="news_slider">
+                        <div class="news_item" data-item-id="{{ stub_news_item }}">
+                            <div class="img foto">
+                                <img src="{{ asset('images/pic_8.jpg') }}" alt="">
+                                <div class="date">
+                                    <span>28 января</span>
+                                </div>
+                            </div>
+                            <div class="title">В Подмосковье создадут Федеральный научный центр</div>
+                            <div class="line"></div>
+                            <div class="text">В Московской области, недалеко от столицы России, планируется организовать Федеральный научный центр по кормопроизводству, агроэкологии и </div>
+                        </div>
+                        <div class="news_item" data-item-id="{{ stub_news_item }}">
+                            <div class="img foto">
+                                <img src="{{ asset('images/pic_8.jpg') }}" alt="">
+                                <div class="date">
+                                    <span>28 января</span>
+                                </div>
+                            </div>
+                            <div class="title">В Подмосковье создадут Федеральный научный центр</div>
+                            <div class="line"></div>
+                            <div class="text">В Московской области, недалеко от столицы России, планируется организовать Федеральный научный центр по кормопроизводству, агроэкологии и </div>
+                        </div>
+                        <div class="news_item" data-item-id="{{ stub_news_item }}">
+                            <div class="img foto">
+                                <img src="{{ asset('images/pic_8.jpg') }}" alt="">
+                                <div class="date">
+                                    <span>28 января</span>
+                                </div>
+                            </div>
+                            <div class="title">В Подмосковье создадут Федеральный научный центр</div>
+                            <div class="line"></div>
+                            <div class="text">В Московской области, недалеко от столицы России, планируется организовать Федеральный научный центр по кормопроизводству, агроэкологии и </div>
+                        </div>
+                        <div class="news_item" data-item-id="{{ stub_news_item }}">
+                            <div class="img foto">
+                                <img src="{{ asset('images/pic_8.jpg') }}" alt="">
+                                <div class="date">
+                                    <span>28 января</span>
+                                </div>
+                            </div>
+                            <div class="title">В Подмосковье создадут Федеральный научный центр</div>
+                            <div class="line"></div>
+                            <div class="text">В Московской области, недалеко от столицы России, планируется организовать Федеральный научный центр по кормопроизводству, агроэкологии и </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
