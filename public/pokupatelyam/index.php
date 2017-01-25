@@ -95,11 +95,11 @@ use Hendrix\View as v;
                 </div>
                 <div class="item col_5">
                     <img src="<?= v::asset('images/Group-07.png') ?>" alt="">
-                    <p>Рыба и морепродукты</p>
+                    <p class="multiline">Рыба и<br> морепродукты</p>
                 </div>
                 <div class="item col_5">
                     <img src="<?= v::asset('images/Group-09.png') ?>" alt="">
-                    <p>Молочная продукция</p>
+                    <p class="multiline">Молочная<br> продукция</p>
                 </div>
                 <a href="javascript:void(0)" data-modal="price_request" class="item item--download col_5">
                     <img src="<?= v::asset('images/tmp/price-black.png') ?>" alt="">
