@@ -1,5 +1,6 @@
 <?php
 
+use App\App;
 use App\News;
 use Klein\Klein;
 
@@ -11,4 +12,8 @@ $router->with('/api', function () use ($router) {
         return News::renderNewsItem($request->id);
     });
 });
+foreach (App::formSpecs() as $spec) {
+    $route = App::formRoute($spec);
+    $router->respond($route['method'], $route['path'], $route['handler']);
+}
 $router->dispatch();

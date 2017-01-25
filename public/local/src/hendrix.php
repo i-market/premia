@@ -25,6 +25,8 @@ class Underscore extends ArraysMethods {
             return $x;
         };
     }
+
+    static function noop() {}
 }
 
 class Null {

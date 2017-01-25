@@ -2,11 +2,17 @@
 
 namespace App;
 
+use CEvent;
+use Hendrix\Env;
 use Hendrix\View as v;
+use Hendrix\Underscore as _;
 use Maximaster\Tools\Twig\TemplateEngine;
 use Hendrix\Form as f;
+use Valitron\Validator;
 
 class App {
+    const SITE_ID = 's1';
+
     private static function placeholderOption($text, $value) {
         return array(
             'type' => 'placeholder',
@@ -152,6 +158,65 @@ class App {
         }
         return $ret;
     }
+
+    static function formRoute($spec) {
+        return array(
+            'method' => 'POST',
+            'path' => $spec['action'],
+            'handler' => function($request, $response) use ($spec) {
+                $fields = array_map(function($field) {
+                    return $field['name'];
+                }, $spec['fields']);
+                $params = $request->params($fields);
+                $validator = new Validator($params);
+                foreach ($spec['validations'] as $validation) {
+                    if ($validation['type'] === 'required') {
+                        foreach ($validation['fields'] as $field) {
+                            $fieldSpec = _::find($spec['fields'], function($fieldSpec) use ($field) {
+                                return $fieldSpec['name'] === $field;
+                            });
+                            $tpl = View::twig()->createTemplate($validation['message']);
+                            $message = $tpl->render($fieldSpec);
+                            // mutate
+                            $validator->rule('required', $field)->message($message);
+                        }
+                    }
+                }
+                $validator->validate();
+                $errors = $validator->errors();
+                if (count($errors) === 0) {
+                    $eventData = array_merge(
+                        array_change_key_case($params, CASE_UPPER),
+                        array(
+                            // TODO emails
+                            'EMAIL_FROM' => 'example@example.com',
+                            'EMAIL_TO' => 'example@example.com'
+                        )
+                    );
+                    self::sendMailEvent(MailEvent::CONTACT_FORMS, self::SITE_ID, $eventData);
+                }
+                $errorsJson = array();
+                foreach ($errors as $field => $messages) {
+                    // take the first message only
+                    $errorsJson[$field] = _::first($messages);
+                }
+                return $response->json(array('errors' => (object) $errorsJson));
+            }
+        );
+    }
+
+    static function sendMailEvent($type, $siteId, $data) {
+        if (\Hendrix\App::env() === Env::DEV) {
+            $event = array($type, $siteId, $data);
+            return $event;
+        } else {
+            return (new CEvent)->Send($type, $siteId, $data);
+        }
+    }
+}
+
+class MailEvent {
+    const CONTACT_FORMS = 'CONTACT_FORMS';
 }
 
 class Iblock {
@@ -192,6 +257,7 @@ class View {
         });
     }
 
+    // TODO refactor?
     static function twig() {
         return TemplateEngine::getInstance()->getEngine();
     }
