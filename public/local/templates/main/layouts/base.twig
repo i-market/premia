@@ -31,7 +31,7 @@
         <li><a href="{{ contacts_link }}"><span>Контакты</span></a></li>
         <li><a href="javascript:void(0)"><span data-modal="re_call">Обратный звонок</span></a></li>
         {% block page_menu_items %}
-            <li><a href="javascript:void(0)"><span data-modal="rent">Форма на аренду</span></a></li>
+            <li><a href="javascript:void(0)"><span data-modal="{{ form_specs.work_with_us.name }}">{{ form_specs.work_with_us.title }}</span></a></li>
         {% endblock %}
         <li><a href="javascript:void(0)"><span data-modal="write_letter">Написать письмо</span></a></li>
     </ul>

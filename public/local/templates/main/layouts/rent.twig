@@ -18,3 +18,7 @@
 {% block footer_right_button %}
     <span class="form_order" data-modal="{{ form_specs.rent.name }}">{{ form_specs.rent.title }}</span>
 {% endblock %}
+
+{% block page_menu_items %}
+    <li><a href="javascript:void(0)"><span data-modal="{{ form_specs.rent.name }}">{{ form_specs.rent.title }}</span></a></li>
+{% endblock %}
