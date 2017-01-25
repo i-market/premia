@@ -56,7 +56,7 @@ class App {
                 )
             ),
             'rent' => array(
-                'title' => 'Запросить форму на аренду',
+                'title' => 'Запрос на аренду',
                 'fields' => array(
                     f::field('name', 'ФИО'),
                     f::field('phone', 'Телефон'),
@@ -77,7 +77,7 @@ class App {
                 )
             ),
             'order' => array(
-                'title' => 'Заявка в торговый дом',
+                'title' => 'Завяка на сотрудничество',
                 'fields' => array(
                     f::field('name', 'ФИО'),
                     f::field('phone', 'Телефон'),
@@ -299,7 +299,7 @@ class News {
                 "DISPLAY_TOP_PAGER" => "N",
                 "ELEMENT_CODE" => "",
                 "ELEMENT_ID" => $id,
-                "FIELD_CODE" => array("", ""),
+                "FIELD_CODE" => array("PREVIEW_PICTURE", ""),
                 "IBLOCK_ID" => "3",
                 "IBLOCK_TYPE" => "content",
                 "IBLOCK_URL" => "",
