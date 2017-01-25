@@ -95,7 +95,7 @@ use Hendrix\View as v;
                 </div>
                 <div class="item col_5">
                     <img src="<?= v::asset('images/Group-07.png') ?>" alt="">
-                    <p class="multiline">Рыба</p>
+                    <p>Рыба</p>
                 </div>
                 <div class="item col_5">
                     <img src="<?= v::asset('images/Group-09.png') ?>" alt="">
