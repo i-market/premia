@@ -51,7 +51,6 @@ $menu = array_map(function($item) use (&$APPLICATION) {
     'for_customers' => array('uri' => v::path('pokupatelyam'))
 ));
 $contactsLatLng = array('lat' => 55.470993, 'lng' => 37.712681);
-$domainName = explode(':', $_SERVER['HTTP_HOST'])[0];
 $formSpecs = \App\App::formSpecs();
 View::showLayoutHeader(PageProperty::LAYOUT, 'base.twig', array(
     'menu' => $menu,
@@ -60,8 +59,6 @@ View::showLayoutHeader(PageProperty::LAYOUT, 'base.twig', array(
     'form_specs_json' => json_encode($formSpecs),
     'contacts_latlng' => $contactsLatLng,
     'contacts_geo_uri' => View::geoUri($contactsLatLng),
-    'copyright_year' => date('Y'),
-    'copyright_domain_name' => $domainName,
     'google_api_key' => Configuration::getValue('app')['google_api_key'],
     'google_maps_callback' => 'App.googleMapsCallback',
     'include_tracking_scripts' => App::env() !== Env::DEV
