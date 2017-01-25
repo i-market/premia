@@ -1,4 +1,3 @@
 <?php
 
-// TODO news item images
-$arResult['IMAGES'] = array();
+$arResult['IMAGES'] = $arResult['DISPLAY_PROPERTIES']['IMAGES']['FILE_VALUE'];

@@ -10,7 +10,8 @@
                     {% for item in result.ITEMS %}
                         <div id="{{ item.BX_ID }}" class="col_3 news_item" data-item-id="{{ item.ID }}">
                             <div class="img video">
-                                <img src="{{ asset('images/pic_8.jpg') }}" alt="">
+                                {% set img = item.PREVIEW_PICTURE %}
+                                <img src="{{ img.SRC }}" title="{{ img.TITLE }}" alt="{{ img.ALT }}">
                                 <div class="date">
                                     {# TODO #}
                                     <span>28 января</span>

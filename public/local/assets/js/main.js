@@ -70,5 +70,7 @@ $(() => {
     forms.mountForm(`form[name="${spec.name}"]`, spec, afterMounting, _.noop);
   });
 
-  news.initNews($('#news'), $('#news_modal'));
+  $('#news').each(function() {
+    news.initNews($(this), $('#news_modal'));
+  });
 });

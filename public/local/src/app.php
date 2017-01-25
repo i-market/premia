@@ -245,7 +245,7 @@ class News {
                 "PAGER_SHOW_ALL" => "N",
                 "PAGER_TEMPLATE" => ".default",
                 "PAGER_TITLE" => "Страница",
-                "PROPERTY_CODE" => array("", ""),
+                "PROPERTY_CODE" => array("IMAGES", ""),
                 "SET_BROWSER_TITLE" => "N",
                 "SET_CANONICAL_URL" => "N",
                 "SET_LAST_MODIFIED" => "N",

@@ -14,8 +14,9 @@
         </div>
         <div class="left_img">
             {% for image in result.IMAGES %}
-                <a class="col fancybox" rel="gallery" href="{{ image.URI }}">
-                    <img src="{{ image.PREVIEW_URI }}" alt="" />
+                <a class="col fancybox" rel="gallery" href="{{ image.SRC }}">
+                    {# TODO generate preview #}
+                    <img src="{{ image.SRC }}" alt="" />
                 </a>
             {% endfor %}
         </div>
