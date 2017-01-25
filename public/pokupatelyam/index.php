@@ -346,7 +346,7 @@ use Hendrix\View as v;
                         <img src="<?= v::asset('images/ico_103.png') ?>" alt="">
                     </div>
                     <span class="line"></span>
-                    <strong>Розничный покупатели</strong>
+                    <strong>Розничные покупатели</strong>
                 </div>
             </div>
         </div>
