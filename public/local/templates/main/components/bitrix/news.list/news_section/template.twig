@@ -1,6 +1,3 @@
-{# TODO unused #}
-{#{% set news_item_class = 'dot-ellipsis dot-height-100' %}#}
-{% set news_item_class = '' %}
 <section class="news" id="news">
     <span class="anchor" id="five"></span>
     <div class="wrap">
@@ -19,7 +16,7 @@
                             </div>
                             <div class="title">{{ item.NAME }}</div>
                             <div class="line"></div>
-                            <div class="text {{ news_item_class }}">{{ item.PREVIEW_TEXT }}</div>
+                            <div class="text">{{ item.PREVIEW_TEXT }}</div>
                         </div>
                     {% endfor %}
                 </div>
@@ -42,7 +39,7 @@
                                 </div>
                                 <div class="title">{{ item.NAME }}</div>
                                 <div class="line"></div>
-                                <div class="text {{ news_item_class }}">{{ item.PREVIEW_TEXT }}</div>
+                                <div class="text">{{ item.PREVIEW_TEXT }}</div>
                             </div>
                         {% endfor %}
                     </div>

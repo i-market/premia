@@ -14,6 +14,7 @@ $router->with('/api', function () use ($router) {
 });
 foreach (App::formSpecs() as $spec) {
     $route = App::formRoute($spec);
+    // mutate
     $router->respond($route['method'], $route['path'], $route['handler']);
 }
 $router->dispatch();
