@@ -94,7 +94,7 @@ $APPLICATION->SetPageProperty(\App\PageProperty::LAYOUT, 'homepage.twig');
                 <div class="back">
                     <div class="box2">
                         <strong>Развитая<br>инфраструктура</strong>
-                        <p>На территории комплекса расположены банки, магазины, кафе столовые, ЕМЦ</p>
+                        <p>На территории комплекса распложен Единый Миграционный Центр, банкоматы, парикмахерская, брокерские услуги, авиакасса, кафе, минимаркеты, столовая.</p>
                         <span class="metro_btn">Назад</span>
                     </div>
                 </div>
@@ -112,7 +112,7 @@ $APPLICATION->SetPageProperty(\App\PageProperty::LAYOUT, 'homepage.twig');
                 <div class="back">
                     <div class="box2">
                         <strong>Передовые<br>технологии хранения</strong>
-                        <p>Современное оборудование обеспечивает сохранение качества продукции </p>
+                        <p>Современные складское оборудование обеспечивает соблюдение температурного режима от -18 до +8 °C, сохраняя качество продукции.</p>
                         <span class="metro_btn">Назад</span>
                     </div>
                 </div>
@@ -130,7 +130,7 @@ $APPLICATION->SetPageProperty(\App\PageProperty::LAYOUT, 'homepage.twig');
                 <div class="back">
                     <div class="box2">
                         <strong>Прямые поставки от<br> производителей</strong>
-                        <p>Позволяют нам предлагать продукцию по низким ценам</p>
+                        <p>Позволяют вести гибкую ценовую политику по всем ассортименту продукции.</p>
                         <span class="metro_btn">Назад</span>
                     </div>
                 </div>
@@ -148,7 +148,7 @@ $APPLICATION->SetPageProperty(\App\PageProperty::LAYOUT, 'homepage.twig');
                 <div class="back">
                     <div class="box2">
                         <strong>Широкий ассортимент<br>по гибким ценам</strong>
-                        <p>У нас каждый найдет именно ту продукцию, которая ему подходит</p>
+                        <p>Каждый клиент найдет для себя товар из широкой линейки продуктов питания, представленных на объекте.</p>
                         <span class="metro_btn">Назад</span>
                     </div>
                 </div>
@@ -166,7 +166,7 @@ $APPLICATION->SetPageProperty(\App\PageProperty::LAYOUT, 'homepage.twig');
                 <div class="back">
                     <div class="box2">
                         <strong>Транспортная<br>доступность</strong>
-                        <p>Мы находимся в 15 км от МКАД, федеральные трассы: 4 км от М4, 8 км от М2</p>
+                        <p>Стратегически выгодное расположение в 15 км от МКАД, федеральные трассы: 4 км от М-4 «Дон», 8 км от М-2 «Крым».</p>
                         <span class="metro_btn">Назад</span>
                     </div>
                 </div>
