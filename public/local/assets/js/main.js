@@ -13,12 +13,13 @@ window.App = {
       zoom,
       center: markerLatLng
     });
+    map.behaviors.disable('scrollZoom');
     function setCenter() {
       map.setCenter(markerLatLng, zoom);
       if (window.matchMedia('(min-width: 768px)').matches) {
         const pos = map.getGlobalPixelCenter();
-        const width = $('#contacts-map').width();
-        const offsetX = (width / 3 * 2) - (width / 2);
+        const mapWidth = $('#contacts-map').width();
+        const offsetX = (mapWidth / 3 * 2) - (mapWidth / 2);
         // TODO subtract offset to move right? wat?
         map.setGlobalPixelCenter([pos[0] - offsetX, pos[1]], zoom);
       }
