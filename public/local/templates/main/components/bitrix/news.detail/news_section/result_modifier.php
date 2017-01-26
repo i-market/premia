@@ -13,6 +13,7 @@ $video = Null::map($videoUrl, function($url) {
 $images = array_map(function($image) {
     // TODO dimensions
     $resized = CFile::ResizeImageGet($image, array('width' => 100, 'height' => 100));
+    // TODO don't merge
     return array_merge($image, $resized);
 }, array_merge(
     array($arResult['PREVIEW_PICTURE']),

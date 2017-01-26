@@ -8,6 +8,7 @@ $template = $this->getComponent()->getTemplate();
 $items = array_map(function($item) use ($template) {
     $item['BX_ID'] = NewsListLike::addEditingActions($item, $template);
     $resized = CFile::ResizeImageGet($item['PREVIEW_PICTURE'], array('width' => 300, 'height' => 300));
+    // TODO don't merge
     $item['PREVIEW_PICTURE'] = array_merge($item['PREVIEW_PICTURE'], $resized);
     $videoUrl = str::ifEmpty($item['PROPERTIES']['VIDEO_URL']['VALUE'], null);
     $item['PREVIEW_TYPE'] = $videoUrl === null ? 'foto' : 'video';
