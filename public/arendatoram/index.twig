@@ -308,18 +308,14 @@
     <div class="block">
         <span class="close"></span>
         <div class="slider_rent">
-            <div class="slide">
-                <strong></strong>
-                <div class="img">
-                    <img src="{{ asset('images/upload/floor-plans/1-1.png') }}" alt="">
+            {% for path in rental_offers %}
+                <div class="slide">
+                    <strong></strong>
+                    <div class="img">
+                        <div class="img-inner" style="background-image: url('{{ asset('images/upload/floor-plans/' ~ path) }}')"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="slide">
-                <strong></strong>
-                <div class="img">
-                    <img src="{{ asset('images/upload/floor-plans/1-2.png') }}" alt="">
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div class="bottom">
             <div class="wrap_arrows">
@@ -337,30 +333,14 @@
     <div class="block">
         <span class="close"></span>
         <div class="slider_rent">
-            <div class="slide">
-                <strong></strong>
-                <div class="img">
-                    <img src="{{ asset('images/upload/floor-plans/2-1.png') }}" alt="">
+            {% for path in rental_offers_2 %}
+                <div class="slide">
+                    <strong></strong>
+                    <div class="img">
+                        <div class="img-inner" style="background-image: url('{{ asset('images/upload/floor-plans/' ~ path) }}')"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="slide">
-                <strong></strong>
-                <div class="img">
-                    <img src="{{ asset('images/upload/floor-plans/2-2.png') }}" alt="">
-                </div>
-            </div>
-            <div class="slide">
-                <strong></strong>
-                <div class="img">
-                    <img src="{{ asset('images/upload/floor-plans/2-3.png') }}" alt="">
-                </div>
-            </div>
-            <div class="slide">
-                <strong></strong>
-                <div class="img">
-                    <img src="{{ asset('images/upload/floor-plans/2-4.png') }}" alt="">
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div class="bottom">
             <div class="wrap_arrows">
@@ -378,18 +358,14 @@
     <div class="block">
         <span class="close"></span>
         <div class="slider_rent">
-            <div class="slide">
-                <strong></strong>
-                <div class="img">
-                    <img src="{{ asset('images/upload/floor-plans/offices-1.png') }}" alt="">
+            {% for path in rental_offers_3 %}
+                <div class="slide">
+                    <strong></strong>
+                    <div class="img">
+                        <div class="img-inner" style="background-image: url('{{ asset('images/upload/floor-plans/' ~ path) }}')"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="slide">
-                <strong></strong>
-                <div class="img">
-                    <img src="{{ asset('images/upload/floor-plans/offices-2.png') }}" alt="">
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div class="bottom">
             <div class="wrap_arrows">
