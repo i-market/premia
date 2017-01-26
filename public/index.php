@@ -12,14 +12,14 @@ $APPLICATION->SetPageProperty(\App\PageProperty::LAYOUT, 'homepage.twig');
         <span class="arrows next"></span>
     </div>
     <div class="slider">
-        <div class="slide slide--inner slide--opacity" style="background: url('<?= v::asset('images/slider3.png') ?>')no-repeat center center">
+        <div class="slide slide--inner slide--opacity" style="background: url('<?= v::asset('images/slider3.jpg') ?>')no-repeat center center">
             <div class="block">
                 <h1>Четыре сезона</h1>
                 <span class="line"></span>
                 <h2>оптово-распределительный центр</h2>
             </div>
         </div>
-        <div class="slide slide--inner slide--opacity" style="background: url('<?= v::asset('images/slider3.png') ?>')no-repeat center center">
+        <div class="slide slide--inner slide--opacity" style="background: url('<?= v::asset('images/homepage-slide-1.jpg') ?>')no-repeat center center">
             <div class="block">
                 <h1>Четыре сезона</h1>
                 <span class="line"></span>

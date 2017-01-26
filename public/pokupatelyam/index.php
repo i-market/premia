@@ -12,14 +12,14 @@ use Hendrix\View as v;
         <span class="arrows next"></span>
     </div>
     <div class="slider">
-        <div class="slide slide--inner" style="background: url('<?= v::asset('images/slider2.png') ?>')no-repeat center center">
+        <div class="slide slide--inner slide--opacity" style="background: url('<?= v::asset('images/for-customers-slide-1.jpg') ?>')no-repeat center center">
             <div class="block">
                 <h1>Четыре сезона</h1>
                 <span class="line"></span>
                 <h2>Фрукты и овощи от производителя<br>по оптовым ценам</h2>
             </div>
         </div>
-        <div class="slide slide--inner" style="background: url('<?= v::asset('images/slider2.png') ?>')no-repeat center center">
+        <div class="slide slide--inner slide--opacity" style="background: url('<?= v::asset('images/for-customers-slide-1.jpg') ?>')no-repeat center center">
             <div class="block">
                 <h1>Четыре сезона</h1>
                 <span class="line"></span>
