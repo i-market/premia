@@ -3,7 +3,6 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Покупателям");
 
 use Hendrix\View as v;
-// TODO prevent editing this
 ?>
 
 <section class="wrap_slider">
@@ -105,93 +104,6 @@ use Hendrix\View as v;
                     <img src="<?= v::asset('images/tmp/price-black.png') ?>" alt="">
                     <p>Запросить<br> цены</p>
                 </a>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="brands">
-    <span class="anchor" id="three"></span>
-    <div class="wrap">
-        <h3>Торговый дом</h3>
-        <p class="text">На территории оптово-распределительного центра
-            <span>с  2014 года функционирует Торговый дом ОРЦ "Четыре сезона".</span> Удобное месторасположение и современный подход к выполнению поставленных задач зарекомендовал Торговый Дом ОРЦ “Четыре сезона”, как надежного и оперативного партнера.</p>
-        <p class="partners_text">Наши торговые партнёры</p>
-        <div class="partners_block">
-            <img src="<?= v::asset('images/brend_1.png') ?>" alt="">
-            <img src="<?= v::asset('images/brend_2.png') ?>" alt="">
-            <img src="<?= v::asset('images/brend_3.png') ?>" alt="">
-            <img src="<?= v::asset('images/brend_4.png') ?>" alt="">
-            <img src="<?= v::asset('images/brend_5.png') ?>" alt="">
-            <img src="<?= v::asset('images/brend_6.png') ?>" alt="">
-            <img src="<?= v::asset('images/brend_7.png') ?>" alt="">
-            <img src="<?= v::asset('images/brend_8.png') ?>" alt="">
-            <img src="<?= v::asset('images/brend_9.png') ?>" alt="">
-        </div>
-    </div>
-</section>
-<section class="import_manufacturers">
-    <span class="anchor" id="four"></span>
-    <div class="wrap">
-        <div class="top">
-            <strong>Более 30 контрактов</strong>
-            <p>с импортными производителями</p>
-            <span>говорят о том, что мы являемся успешными импортерами
-с/х продукции на российский рынок.</span>
-        </div>
-        <div class="grid">
-            <div class="col_4 item">
-                <img src="<?= v::asset('images/vegetables_1.png') ?>" alt="">
-                <p>Овощи</p>
-            </div>
-            <div class="col_4 item">
-                <img src="<?= v::asset('images/vegetables_2.png') ?>" alt="">
-                <p>Фрукты</p>
-            </div>
-            <div class="col_4 item">
-                <img src="<?= v::asset('images/vegetables_3.png') ?>" alt="">
-                <p>Ягоды</p>
-            </div>
-            <div class="col_4 item">
-                <img src="<?= v::asset('images/vegetables_4.png') ?>" alt="">
-                <p>Экзотика</p>
-            </div>
-        </div>
-        <div class="wrap_flags">
-            <div class="flags">
-                <div class="flag"><img src="<?= v::asset('images/flag_1.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_2.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_3.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_4.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_5.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_6.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_7.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_8.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_9.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_10.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_11.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_12.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_13.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_14.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_15.png') ?>" alt=""></div>
-                <div class="flag"><img src="<?= v::asset('images/flag_16.png') ?>" alt=""></div>
-            </div>
-            <div class="flag_text">
-                <span>Азербайджан</span>
-                <span>Аргентина</span>
-                <span>Армения</span>
-                <span>Грузия</span>
-                <span>Египет</span>
-                <span>Израиль</span>
-                <span>Индия</span>
-                <span>Иран</span>
-                <span>Казахстан</span>
-                <span>Марокко</span>
-                <span>Пакистан</span>
-                <span>Сербия</span>
-                <span>Такжикистан</span>
-                <span>Узбекистан</span>
-                <span>Чили</span>
-                <span>ЮАР</span>
             </div>
         </div>
     </div>
@@ -348,6 +260,93 @@ use Hendrix\View as v;
                     <span class="line"></span>
                     <strong>Розничные покупатели</strong>
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="brands">
+    <span class="anchor" id="three"></span>
+    <div class="wrap">
+        <h3>Торговый дом</h3>
+        <p class="text">На территории оптово-распределительного центра
+            <span>с  2014 года функционирует Торговый дом ОРЦ "Четыре сезона".</span> Удобное месторасположение и современный подход к выполнению поставленных задач зарекомендовал Торговый Дом ОРЦ “Четыре сезона”, как надежного и оперативного партнера.</p>
+        <p class="partners_text">Наши торговые партнёры</p>
+        <div class="partners_block">
+            <img src="<?= v::asset('images/brend_1.png') ?>" alt="">
+            <img src="<?= v::asset('images/brend_2.png') ?>" alt="">
+            <img src="<?= v::asset('images/brend_3.png') ?>" alt="">
+            <img src="<?= v::asset('images/brend_4.png') ?>" alt="">
+            <img src="<?= v::asset('images/brend_5.png') ?>" alt="">
+            <img src="<?= v::asset('images/brend_6.png') ?>" alt="">
+            <img src="<?= v::asset('images/brend_7.png') ?>" alt="">
+            <img src="<?= v::asset('images/brend_8.png') ?>" alt="">
+            <img src="<?= v::asset('images/brend_9.png') ?>" alt="">
+        </div>
+    </div>
+</section>
+<section class="import_manufacturers">
+    <span class="anchor" id="four"></span>
+    <div class="wrap">
+        <div class="top">
+            <strong>Более 30 контрактов</strong>
+            <p>с импортными производителями</p>
+            <span>говорят о том, что мы являемся успешными импортерами
+с/х продукции на российский рынок.</span>
+        </div>
+        <div class="grid">
+            <div class="col_4 item">
+                <img src="<?= v::asset('images/vegetables_1.png') ?>" alt="">
+                <p>Овощи</p>
+            </div>
+            <div class="col_4 item">
+                <img src="<?= v::asset('images/vegetables_2.png') ?>" alt="">
+                <p>Фрукты</p>
+            </div>
+            <div class="col_4 item">
+                <img src="<?= v::asset('images/vegetables_3.png') ?>" alt="">
+                <p>Ягоды</p>
+            </div>
+            <div class="col_4 item">
+                <img src="<?= v::asset('images/vegetables_4.png') ?>" alt="">
+                <p>Экзотика</p>
+            </div>
+        </div>
+        <div class="wrap_flags">
+            <div class="flags">
+                <div class="flag"><img src="<?= v::asset('images/flag_1.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_2.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_3.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_4.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_5.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_6.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_7.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_8.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_9.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_10.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_11.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_12.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_13.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_14.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_15.png') ?>" alt=""></div>
+                <div class="flag"><img src="<?= v::asset('images/flag_16.png') ?>" alt=""></div>
+            </div>
+            <div class="flag_text">
+                <span>Азербайджан</span>
+                <span>Аргентина</span>
+                <span>Армения</span>
+                <span>Грузия</span>
+                <span>Египет</span>
+                <span>Израиль</span>
+                <span>Индия</span>
+                <span>Иран</span>
+                <span>Казахстан</span>
+                <span>Марокко</span>
+                <span>Пакистан</span>
+                <span>Сербия</span>
+                <span>Такжикистан</span>
+                <span>Узбекистан</span>
+                <span>Чили</span>
+                <span>ЮАР</span>
             </div>
         </div>
     </div>
