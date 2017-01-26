@@ -77,7 +77,7 @@ class App {
                 )
             ),
             'order' => array(
-                'title' => 'Завяка на сотрудничество',
+                'title' => 'Заявка на сотрудничество',
                 'fields' => array(
                     f::field('name', 'ФИО'),
                     f::field('phone', 'Телефон'),
