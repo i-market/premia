@@ -23,7 +23,7 @@ $APPLICATION->SetPageProperty(\App\PageProperty::LAYOUT, 'homepage.twig');
             <div class="block">
                 <h1>Четыре сезона</h1>
                 <span class="line"></span>
-                <h2>оптово-распределительный центр</h2>
+                <h2>фрукты • овощи • ягоды • мясо<br> рыба • молочная продукция</h2>
             </div>
         </div>
     </div>

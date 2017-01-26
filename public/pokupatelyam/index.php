@@ -16,14 +16,14 @@ use Hendrix\View as v;
             <div class="block">
                 <h1>Четыре сезона</h1>
                 <span class="line"></span>
-                <h2>Фрукты и овощи от производителя<br>по оптовым ценам</h2>
+                <h2>Продукты питания от производителей<br>по оптовым ценам</h2>
             </div>
         </div>
-        <div class="slide slide--inner slide--opacity" style="background: url('<?= v::asset('images/for-customers-slide-1.jpg') ?>')no-repeat center center">
+        <div class="slide slide--inner slide--opacity" style="background: url('<?= v::asset('images/for-customers-slide-2.jpg') ?>')no-repeat center center">
             <div class="block">
                 <h1>Четыре сезона</h1>
                 <span class="line"></span>
-                <h2>Фрукты и овощи от производителя<br>по оптовым ценам</h2>
+                <h2>Прямые поставки качественных продуктов без посредников</h2>
             </div>
         </div>
     </div>
