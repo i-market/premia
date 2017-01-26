@@ -219,7 +219,7 @@ use Hendrix\View as v;
                 </div>
                 <div class="info">
                     <div class="ico">
-                        <img src="<?= v::asset('images/ico_102.png') ?>" alt="">
+                        <img src="<?= v::asset('images/ico_103.png') ?>" alt="">
                     </div>
                     <span class="line"></span>
                     <strong>Федеральные торговые сети</strong>
@@ -231,7 +231,7 @@ use Hendrix\View as v;
                 </div>
                 <div class="info">
                     <div class="ico">
-                        <img src="<?= v::asset('images/ico_102.png') ?>" alt="">
+                        <img src="<?= v::asset('images/icon-map.png') ?>" alt="">
                     </div>
                     <span class="line"></span>
                     <strong>Региональные оптовые покупатели</strong>
@@ -255,7 +255,7 @@ use Hendrix\View as v;
                 </div>
                 <div class="info">
                     <div class="ico">
-                        <img src="<?= v::asset('images/ico_103.png') ?>" alt="">
+                        <img src="<?= v::asset('images/icon-people.png') ?>" alt="">
                     </div>
                     <span class="line"></span>
                     <strong>Розничные покупатели</strong>
