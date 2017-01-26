@@ -9,11 +9,13 @@
         src: templates/dbconn.php.j2
         dest: "{{ document_root }}/bitrix/php_interface/dbconn.php"
         backup: yes
+      tags: config
     - name: push .settings.php
       template:
         src: templates/settings.php.j2
         dest: "{{ document_root }}/bitrix/.settings.php"
         backup: yes
+      tags: config
     - name: push staging robots.txt
       copy:
         src: files/stage/robots.txt
@@ -41,7 +43,6 @@
         - templates/main/build
         # composer
         - vendor
-      when: env != "dev"
     - name: git-ftp push
       local_action: >
         shell git-ftp push
@@ -49,7 +50,6 @@
         --passwd "{{ ansible_ssh_pass }}"
         --remote-root "{{ repo_path }}"
         sftp://{{ inventory_hostname }}
-      when: env != "dev"
       tags:
         - git-ftp
     - name: clear twig cache
