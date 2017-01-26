@@ -20,7 +20,6 @@ window.App = {
         const pos = map.getGlobalPixelCenter();
         const mapWidth = $('#contacts-map').width();
         const offsetX = (mapWidth / 3 * 2) - (mapWidth / 2);
-        // TODO subtract offset to move right? wat?
         map.setGlobalPixelCenter([pos[0] - offsetX, pos[1]], zoom);
       }
     }
