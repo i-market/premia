@@ -149,7 +149,7 @@
 {% for script in scripts %}
     <script src="{{ asset(script) }}"></script>
 {% endfor %}
-<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&callback={{ google_maps_callback }}"></script>
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru-RU&onload=App.ymapsCallback" type="text/javascript"></script>
 {% if include_tracking_scripts %}
     {% include partial('tracking_scripts.twig') %}
 {% endif %}

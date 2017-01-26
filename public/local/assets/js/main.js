@@ -4,17 +4,16 @@ import forms from './forms';
 import news from './news';
 
 window.App = {
-  googleMapsCallback: () => {
-    const markerLatLng = { lat: 55.470993, lng: 37.712681 };
-    const map = new google.maps.Map($('#contacts-map')[0], {
+  ymapsCallback: () => {
+    const markerLatLng = [55.470993, 37.712681];
+    const map = new ymaps.Map($('#contacts-map')[0], {
+      // TODO ymaps controls
+      controls: [],
       zoom: 13,
-      center: markerLatLng,
-      scrollwheel: false
+      center: markerLatLng
     });
-    new google.maps.Marker({
-      map: map,
-      position: markerLatLng
-    });
+    const marker = new ymaps.Placemark(markerLatLng);
+    map.geoObjects.add(marker);
   }
 };
 
