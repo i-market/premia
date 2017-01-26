@@ -16,10 +16,12 @@ $items = array_map(function($item) use ($template) {
 $featured = _::take($items, 3);
 $featured[1]['CLASS'] = 'hidden_second';
 $featured[2]['CLASS'] = 'hidden_first';
-$items[1]['CLASS'] = 'shown_second';
-$items[2]['CLASS'] = 'shown_first';
+$rest = _::drop($items, 1);
+$rest[0]['CLASS'] = 'shown_second';
+$rest[1]['CLASS'] = 'shown_first';
 
 $arResult = array(
     'ITEMS' => $items,
-    'FEATURED' => $featured
+    'FEATURED' => $featured,
+    'REST' => $rest
 );
