@@ -16,11 +16,10 @@ $items = array_map(function($item) use ($template) {
 $featured = _::take($items, 3);
 $featured[1]['CLASS'] = 'hidden_second';
 $featured[2]['CLASS'] = 'hidden_first';
-// TODO toggle first two
-$rest = _::drop($items, 3);
+$items[1]['CLASS'] = 'shown_second';
+$items[2]['CLASS'] = 'shown_first';
 
 $arResult = array(
     'ITEMS' => $items,
-    'FEATURED' => $featured,
-    'REST' => $rest
+    'FEATURED' => $featured
 );

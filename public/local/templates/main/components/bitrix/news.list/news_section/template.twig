@@ -26,8 +26,8 @@
                     <span class="prev"></span>
                     <span class="next"></span>
                     <div class="news_slider">
-                        {% for item in result.REST %}
-                            <div id="{{ item.BX_ID }}" class="news_item" data-item-id="{{ item.ID }}">
+                        {% for item in result.ITEMS %}
+                            <div id="{{ item.BX_ID }}" class="news_item{{ item.CLASS ? ' ' ~ item.CLASS }}" data-item-id="{{ item.ID }}">
                                 <div class="img foto">
                                     {# TODO isn't it always hidden anyway? #}
                                     {% set img = item.PREVIEW_PICTURE %}
