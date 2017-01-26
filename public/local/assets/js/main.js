@@ -6,12 +6,25 @@ import news from './news';
 window.App = {
   ymapsCallback: () => {
     const markerLatLng = [55.470993, 37.712681];
+    const zoom = 12;
     const map = new ymaps.Map($('#contacts-map')[0], {
       // TODO ymaps controls
       controls: [],
-      zoom: 13,
+      zoom,
       center: markerLatLng
     });
+    function setCenter() {
+      map.setCenter(markerLatLng, zoom);
+      if (window.matchMedia('(min-width: 768px)').matches) {
+        const pos = map.getGlobalPixelCenter();
+        const width = $('#contacts-map').width();
+        const offsetX = (width / 3 * 2) - (width / 2);
+        // TODO subtract offset to move right? wat?
+        map.setGlobalPixelCenter([pos[0] - offsetX, pos[1]], zoom);
+      }
+    }
+    setCenter();
+    $(window).resize(setCenter);
     const marker = new ymaps.Placemark(markerLatLng);
     map.geoObjects.add(marker);
   }
