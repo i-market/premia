@@ -36,9 +36,7 @@
     <div class="wrap">
         <div class="block">
             <h3>Схема комплекса</h3>
-            <div class="rent-plan">
-                {#<img src="{{ asset('images/rent-plan.jpg') }}" alt="">#}
-            </div>
+            <div class="rent-plan"></div>
         </div>
     </div>
 </section>
@@ -308,11 +306,11 @@
     <div class="block">
         <span class="close"></span>
         <div class="slider_rent">
-            {% for path in rental_offers %}
+            {% for item in rental_offers %}
                 <div class="slide">
-                    <strong></strong>
+                    <strong>{{ item.caption }}</strong>
                     <div class="img">
-                        <div class="img-inner" style="background-image: url('{{ asset('images/upload/floor-plans/' ~ path) }}')"></div>
+                        <div class="img-inner" style="background-image: url('{{ asset('images/upload/floor-plans/' ~ item.path) }}')"></div>
                     </div>
                 </div>
             {% endfor %}
@@ -333,11 +331,11 @@
     <div class="block">
         <span class="close"></span>
         <div class="slider_rent">
-            {% for path in rental_offers_2 %}
+            {% for item in rental_offers_2 %}
                 <div class="slide">
-                    <strong></strong>
+                    <strong>{{ item.caption }}</strong>
                     <div class="img">
-                        <div class="img-inner" style="background-image: url('{{ asset('images/upload/floor-plans/' ~ path) }}')"></div>
+                        <div class="img-inner" style="background-image: url('{{ asset('images/upload/floor-plans/' ~ item.path) }}')"></div>
                     </div>
                 </div>
             {% endfor %}
@@ -358,11 +356,11 @@
     <div class="block">
         <span class="close"></span>
         <div class="slider_rent">
-            {% for path in rental_offers_3 %}
+            {% for item in rental_offers_3 %}
                 <div class="slide">
-                    <strong></strong>
+                    <strong>{{ item.caption }}</strong>
                     <div class="img">
-                        <div class="img-inner" style="background-image: url('{{ asset('images/upload/floor-plans/' ~ path) }}')"></div>
+                        <div class="img-inner" style="background-image: url('{{ asset('images/upload/floor-plans/' ~ item.path) }}')"></div>
                     </div>
                 </div>
             {% endfor %}
