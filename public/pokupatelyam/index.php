@@ -215,7 +215,7 @@ use Hendrix\View as v;
             </div>
             <div class="item col_5">
                 <div class="img">
-                    <img src="<?= v::asset('images/pic_6.jpg') ?>" alt="">
+                    <img src="<?= v::asset('images/retail.jpg') ?>" alt="">
                 </div>
                 <div class="info">
                     <div class="ico">
@@ -227,7 +227,7 @@ use Hendrix\View as v;
             </div>
             <div class="item col_5">
                 <div class="img">
-                    <img src="<?= v::asset('images/pic_7.jpg') ?>" alt="">
+                    <img src="<?= v::asset('images/truck.jpg') ?>" alt="" style="height: 260px;">
                 </div>
                 <div class="info">
                     <div class="ico">
@@ -239,7 +239,7 @@ use Hendrix\View as v;
             </div>
             <div class="item col_5">
                 <div class="img">
-                    <img src="<?= v::asset('images/pic_7.jpg') ?>" alt="">
+                    <img src="<?= v::asset('images/pic_6.jpg') ?>" alt="">
                 </div>
                 <div class="info">
                     <div class="ico">
