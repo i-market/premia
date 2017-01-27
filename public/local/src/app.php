@@ -22,11 +22,13 @@ class App {
         );
     }
 
+    // TODO move email_subject out of spec
     static function formSpecs() {
         $requiredMessage = "Пожалуйста, заполните поле «{{ label }}».";
         $ret = array(
             're_call' => array(
                 'title' => 'Заказать звонок',
+                'email_subject' => 'На сайте заказали обратный звонок',
                 'fields' => array(
                     f::field('name', 'ФИО'),
                     f::field('phone', 'Телефон'),
@@ -42,6 +44,7 @@ class App {
             ),
             'write_letter' => array(
                 'title' => 'Написать письмо',
+                'email_subject' => 'С сайта отправлено письмо',
                 'fields' => array(
                     f::field('name', 'ФИО'),
                     f::field('email', 'Почта', 'email'),
@@ -57,11 +60,12 @@ class App {
             ),
             'rent' => array(
                 'title' => 'Запрос на аренду',
+                'email_subject' => 'На сайте запросили форму на аренду',
                 'fields' => array(
                     f::field('name', 'ФИО'),
                     f::field('phone', 'Телефон'),
                     f::field('email', 'Почта', 'email'),
-                    f::select('type', array(
+                    f::select('type', 'Тип помещения', array(
                         self::placeholderOption('Тип помещения', 'Не выбран'),
                         'Офис',
                         'Склад'
@@ -78,18 +82,19 @@ class App {
             ),
             'order' => array(
                 'title' => 'Заявка на сотрудничество',
+                'email_subject' => 'На сайте оставили заявку на сотрудничество',
                 'fields' => array(
                     f::field('name', 'ФИО'),
                     f::field('phone', 'Телефон'),
                     f::field('email', 'Почта', 'email'),
                     f::field('region', 'Регион'),
-                    f::select('delivery_type', array(
+                    f::select('delivery_type', 'Форма получения', array(
                         self::placeholderOption('Форма получения', 'Не выбрана'),
                         'Самовывоз',
                         'Доставка'
                     )),
                     f::field('product_category', 'Вид продукции'),
-                    f::select('product_volume', array(
+                    f::select('product_volume', 'Объем', array(
                         self::placeholderOption('Объем', 'Не выбран'),
                         'Розница',
                         'Крупный опт',
@@ -114,11 +119,13 @@ class App {
             ),
             'work_with_us' => array(
                 'title' => 'Сотрудничество с нами',
+                // TODO text
+                'email_subject' => 'Сотрудничество с нами',
                 'fields' => array(
                     f::field('name', 'ФИО'),
                     f::field('phone', 'Телефон'),
                     f::field('email', 'Почта', 'email'),
-                    f::select('type', array(
+                    f::select('type', 'Форма сотрудничества', array(
                         self::placeholderOption('Форма сотрудничества', 'Не выбрана'),
                         'Аренда',
                         'Покупка',
@@ -136,6 +143,7 @@ class App {
             ),
             'price_request' => array(
                 'title' => 'Запросить цены',
+                'email_subject' => 'На сайте запросили цены',
                 'fields' => array(
                     f::field('name', 'ФИО'),
                     f::field('phone', 'Телефон'),
@@ -157,6 +165,19 @@ class App {
             $ret[$name]['action'] = '/api/'.$name;
         }
         return $ret;
+    }
+
+    static function emailEvent($params, $spec, $emailTo) {
+        $lines = array_map(function($field) use ($params) {
+            return $field['label'].': '.$params[$field['name']];
+        }, $spec['fields']);
+        return array(
+            'SUBJECT' => $spec['email_subject'],
+            'BODY' => join(PHP_EOL, $lines),
+            // TODO config emails
+            'EMAIL_FROM' => 'postmaster@domodedovo.nichost.ru',
+            'EMAIL_TO' => $emailTo
+        );
     }
 
     static function formRoute($spec) {
@@ -185,15 +206,11 @@ class App {
                 $validator->validate();
                 $errors = $validator->errors();
                 if (count($errors) === 0) {
-                    $eventData = array_merge(
-                        array_change_key_case($params, CASE_UPPER),
-                        array(
-                            // TODO emails
-                            'EMAIL_FROM' => 'example@example.com',
-                            'EMAIL_TO' => 'example@example.com'
-                        )
-                    );
-                    self::sendMailEvent(MailEvent::CONTACT_FORMS, self::SITE_ID, $eventData);
+                    $emailTo = array('surovets@mspdom.ru', 'bezin@i-market.ru');
+                    foreach ($emailTo as $email) {
+                        $event = self::emailEvent($params, $spec, $email);
+                        self::sendMailEvent(MailEvent::CONTACT_FORMS, self::SITE_ID, $event);
+                    }
                 }
                 $errorsJson = array();
                 foreach ($errors as $field => $messages) {

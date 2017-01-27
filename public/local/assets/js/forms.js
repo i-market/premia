@@ -97,15 +97,13 @@ function mountForm(selector, spec, afterMounting, afterUpdate) {
     }
   });
   $form.on('submit', (evt) => {
+    evt.preventDefault();
     const errors = onUserInput(evt);
-    // from rick harrison's validate.js
-    if (!_.isEmpty(errors)) {
-      if (evt && evt.preventDefault) {
-        evt.preventDefault();
-      } else if (event) {
-        // IE uses the global event variable
-        event.returnValue = false;
-      }
+    if (_.isEmpty(errors)) {
+      $.post(spec.action, formFields($form), (errors) => {
+        const ctx = _.merge(_.cloneDeep(form.spec), {is_success: true});
+        update(form, state, ctx);
+      });
     }
   });
   afterMounting(form);

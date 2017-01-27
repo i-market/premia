@@ -129,9 +129,11 @@ class Form {
         );
     }
 
-    static function select($name, $options) {
+    // TODO label?
+    static function select($name, $label, $options) {
         return array(
             'name' => $name,
+            'label' => $label,
             'type' => 'select',
             'options' => array_map(function($option) {
                 return is_array($option) ? $option : array(

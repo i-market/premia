@@ -1,25 +1,31 @@
 <form class="block" method="post" action="{{ action }}" name="{{ name }}" novalidate>
     <span class="close"></span>
-    <strong>{{ title }}</strong>
-    {% for field in fields %}
-        {% set class = field.error ? 'error' : '' %}
-        {% if field.type == 'textarea' %}
-            <textarea name="{{ field.name }}" placeholder="{{ field.label }}" class="{{ class }}"></textarea>
-        {% elseif field.type == 'select' %}
-            <select name="field.name">
-                {% for option in field.options %}
-                    {# TODO support key-value attributes #}
-                    <option value="{{ option.value }}" {{ option.attributes|keys|join(' ') }}>{{ option.text }}</option>
-                {% endfor %}
-            </select>
-        {% else %}
-            <input name="{{ field.name }}" type="{{ field.type }}" placeholder="{{ field.label }}" class="{{ class }}">
-        {% endif %}
-        {# always render for correct virtual-dom diffing #}
-        {% set display = field.error.message ? 'block' : 'none' %}
-        <div class="error-message" style="display: {{ display }}">{{ field.error.message }}</div>
-    {% endfor %}
-    <div class="bottom">
-        <button type="submit" class="btn">отправить</button>
-    </div>
+    {% if is_success %}
+        <strong>Ваше сообщение успешно отправлено.</strong>
+    {% else %}
+        <strong>{{ title }}</strong>
+    {% endif %}
+    {% if not is_success %}
+        {% for field in fields %}
+            {% set class = field.error ? 'error' : '' %}
+            {% if field.type == 'textarea' %}
+                <textarea name="{{ field.name }}" placeholder="{{ field.label }}" class="{{ class }}"></textarea>
+            {% elseif field.type == 'select' %}
+                <select name="{{ field.name }}">
+                    {% for option in field.options %}
+                        {# TODO support key-value attributes #}
+                        <option value="{{ option.value }}" {{ option.attributes|keys|join(' ') }}>{{ option.text }}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <input name="{{ field.name }}" type="{{ field.type }}" placeholder="{{ field.label }}" class="{{ class }}">
+            {% endif %}
+            {# always render for correct virtual-dom diffing #}
+            {% set display = field.error.message ? 'block' : 'none' %}
+            <div class="error-message" style="display: {{ display }}">{{ field.error.message }}</div>
+        {% endfor %}
+        <div class="bottom">
+            <button type="submit" class="btn">отправить</button>
+        </div>
+    {% endif %}
 </form>
