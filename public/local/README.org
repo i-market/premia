@@ -1,0 +1,1 @@
+* `gulp release` в local, чтобы собрать asset’ы в templates/main/build

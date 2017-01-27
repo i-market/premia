@@ -43,6 +43,7 @@
         - templates/main/build
         # composer
         - vendor
+        - mockup
     - name: git-ftp push
       local_action: >
         shell git-ftp push
