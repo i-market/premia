@@ -101,6 +101,7 @@ function mountForm(selector, spec, afterMounting, afterUpdate) {
     const errors = onUserInput(evt);
     if (_.isEmpty(errors)) {
       $.post(spec.action, formFields($form), (errors) => {
+        // TODO check for errors
         const ctx = _.merge(_.cloneDeep(form.spec), {is_success: true});
         update(form, state, ctx);
       });
