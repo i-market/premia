@@ -199,44 +199,44 @@ class App {
                 )
             );
             $defaultEmailTo = array('surovets@mspdom.ru', 'bezin@i-market.ru');
-                $fields = array_map(function($field) {
-                    return $field['name'];
-                }, $spec['fields']);
-                $params = $request->params($fields);
-                $validator = new Validator($params);
-                foreach ($spec['validations'] as $validation) {
-                    if ($validation['type'] === 'required') {
-                        foreach ($validation['fields'] as $field) {
-                            $fieldSpec = _::find($spec['fields'], function($fieldSpec) use ($field) {
-                                return $fieldSpec['name'] === $field;
-                            });
-                            $tpl = View::twig()->createTemplate($validation['message']);
-                            $message = $tpl->render($fieldSpec);
-                            // mutate
-                            $validator->rule('required', $field)->message($message);
-                        }
+            $fields = array_map(function($field) {
+                return $field['name'];
+            }, $spec['fields']);
+            $params = $request->params($fields);
+            $validator = new Validator($params);
+            foreach ($spec['validations'] as $validation) {
+                if ($validation['type'] === 'required') {
+                    foreach ($validation['fields'] as $field) {
+                        $fieldSpec = _::find($spec['fields'], function($fieldSpec) use ($field) {
+                            return $fieldSpec['name'] === $field;
+                        });
+                        $tpl = View::twig()->createTemplate($validation['message']);
+                        $message = $tpl->render($fieldSpec);
+                        // mutate
+                        $validator->rule('required', $field)->message($message);
                     }
                 }
-                $validator->validate();
-                $errors = $validator->errors();
-                if (count($errors) === 0) {
+            }
+            $validator->validate();
+            $errors = $validator->errors();
+            if (count($errors) === 0) {
                 $cfgOrNull = _::find($mailConfig, function($item) use ($spec) {
                     return in_array($spec['name'], $item['forms']);
                 });
                 $emailTo = Null::get(Null::map($cfgOrNull, function($cfg) {
                     return $cfg['email_to'];
                 }), $defaultEmailTo);
-                    foreach ($emailTo as $email) {
-                        $event = self::emailEvent($params, $spec, $email);
-                        self::sendMailEvent(MailEvent::CONTACT_FORMS, self::SITE_ID, $event);
-                    }
+                foreach ($emailTo as $email) {
+                    $event = self::emailEvent($params, $spec, $email);
+                    self::sendMailEvent(MailEvent::CONTACT_FORMS, self::SITE_ID, $event);
                 }
-                $errorsJson = array();
-                foreach ($errors as $field => $messages) {
-                    // take the first message only
-                    $errorsJson[$field] = _::first($messages);
-                }
-                return $response->json(array('errors' => (object) $errorsJson));
+            }
+            $errorsJson = array();
+            foreach ($errors as $field => $messages) {
+                // take the first message only
+                $errorsJson[$field] = _::first($messages);
+            }
+            return $response->json(array('errors' => (object) $errorsJson));
         };
         return array(
             'method' => 'POST',
@@ -307,7 +307,6 @@ class View {
         });
     }
 
-    // TODO refactor?
     static function twig() {
         return TemplateEngine::getInstance()->getEngine();
     }

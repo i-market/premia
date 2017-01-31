@@ -45,6 +45,7 @@ class Null {
     static public function get($nullable, $default) {
         return $nullable === null ? $default : $nullable;
     }
+
     static public function map($nullable, $f) {
         return $nullable !== null ? $f($nullable) : $nullable;
     }
