@@ -1,0 +1,5 @@
+@media only screen and (max-width: 480px){
+	.blcok_choose_lang .mob_lang{
+		display: none;
+	}
+}

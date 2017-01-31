@@ -81,8 +81,8 @@ class App {
                 )
             ),
             'order' => array(
-                'title' => 'Заявка на сотрудничество',
-                'email_subject' => 'На сайте оставили заявку на сотрудничество',
+                'title' => 'Заявка в торговый дом',
+                'email_subject' => 'На сайте оставили заявку в торговый дом',
                 'fields' => array(
                     f::field('name', 'ФИО'),
                     f::field('phone', 'Телефон'),
@@ -127,9 +127,9 @@ class App {
                     f::field('email', 'Почта', 'email'),
                     f::select('type', 'Форма сотрудничества', array(
                         self::placeholderOption('Форма сотрудничества', 'Не выбрана'),
-                        'Аренда',
-                        'Покупка',
-                        'Поставка'
+                        'Аренда площадей',
+                        'Покупка товаров',
+                        'Поставка товаров'
                     )),
                     f::field('comment', 'Комментарий', 'textarea')
                 ),
@@ -206,7 +206,14 @@ class App {
                 $validator->validate();
                 $errors = $validator->errors();
                 if (count($errors) === 0) {
-                    $emailTo = array('surovets@mspdom.ru', 'bezin@i-market.ru');
+					if( ($spec['name'] == 're_call') || ($spec['name'] == 'write_letter') || ($spec['name'] == 'work_with_us') ):
+						$emailTo = array('surovets@mspdom.ru', 'office@mspdom.ru', 'bezin@i-market.ru');
+					elseif( ($spec['name'] == 'order') || ($spec['name'] == 'rent')):
+						$emailTo = array('surovets@mspdom.ru', 'trade@mspdom.ru', 'bezin@i-market.ru');
+					else:
+						$emailTo = array('surovets@mspdom.ru', 'bezin@i-market.ru');
+					endif;
+					     
                     foreach ($emailTo as $email) {
                         $event = self::emailEvent($params, $spec, $email);
                         self::sendMailEvent(MailEvent::CONTACT_FORMS, self::SITE_ID, $event);
