@@ -4,6 +4,7 @@ namespace App;
 
 use CEvent;
 use Hendrix\Env;
+use Hendrix\Null;
 use Hendrix\View as v;
 use Hendrix\Underscore as _;
 use Maximaster\Tools\Twig\TemplateEngine;
@@ -18,7 +19,7 @@ class App {
             'type' => 'placeholder',
             'text' => $text.'...',
             'value' => $value,
-            'attributes' => array('disabled' => '', 'selected' => '')
+            'attributes' => array('selected' => '')
         );
     }
 
@@ -180,11 +181,24 @@ class App {
         );
     }
 
+    // TODO refactor
     static function formRoute($spec) {
-        return array(
-            'method' => 'POST',
-            'path' => $spec['action'],
-            'handler' => function($request, $response) use ($spec) {
+        $handler = function($request, $response) use ($spec) {
+            $mailConfig = array(
+                array(
+                    'forms' => array('re_call', 'write_letter', 'work_with_us'),
+                    'email_to' => array('surovets@mspdom.ru', 'office@mspdom.ru', 'bezin@i-market.ru')
+                ),
+                array(
+                    'forms' => array('order'),
+                    'email_to' => array('surovets@mspdom.ru', 'trade@mspdom.ru', 'bezin@i-market.ru')
+                ),
+                array(
+                    'forms' => array('rent'),
+                    'email_to' => array('surovets@mspdom.ru', 'arenda@mspdom.ru', 'bezin@i-market.ru')
+                )
+            );
+            $defaultEmailTo = array('surovets@mspdom.ru', 'bezin@i-market.ru');
                 $fields = array_map(function($field) {
                     return $field['name'];
                 }, $spec['fields']);
@@ -206,14 +220,12 @@ class App {
                 $validator->validate();
                 $errors = $validator->errors();
                 if (count($errors) === 0) {
-					if( ($spec['name'] == 're_call') || ($spec['name'] == 'write_letter') || ($spec['name'] == 'work_with_us') ):
-						$emailTo = array('surovets@mspdom.ru', 'office@mspdom.ru', 'bezin@i-market.ru');
-					elseif( ($spec['name'] == 'order') || ($spec['name'] == 'rent')):
-						$emailTo = array('surovets@mspdom.ru', 'trade@mspdom.ru', 'bezin@i-market.ru');
-					else:
-						$emailTo = array('surovets@mspdom.ru', 'bezin@i-market.ru');
-					endif;
-					     
+                $cfgOrNull = _::find($mailConfig, function($item) use ($spec) {
+                    return in_array($spec['name'], $item['forms']);
+                });
+                $emailTo = Null::get(Null::map($cfgOrNull, function($cfg) {
+                    return $cfg['email_to'];
+                }), $defaultEmailTo);
                     foreach ($emailTo as $email) {
                         $event = self::emailEvent($params, $spec, $email);
                         self::sendMailEvent(MailEvent::CONTACT_FORMS, self::SITE_ID, $event);
@@ -225,7 +237,11 @@ class App {
                     $errorsJson[$field] = _::first($messages);
                 }
                 return $response->json(array('errors' => (object) $errorsJson));
-            }
+        };
+        return array(
+            'method' => 'POST',
+            'path' => $spec['action'],
+            'handler' => $handler
         );
     }
 
