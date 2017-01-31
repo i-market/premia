@@ -10,9 +10,11 @@
     "enquire.js": "^2.1.1",
     "html-to-vdom": "^0.7.0",
     "jquery-match-height": "^0.7.0",
+    "jquery.counterup": "^2.0.5",
     "lodash": "^4.17.4",
     "twig": "^0.10.3",
-    "virtual-dom": "^2.1.1"
+    "virtual-dom": "^2.1.1",
+    "waypoints": "^4.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",

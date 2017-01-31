@@ -41,32 +41,32 @@ $APPLICATION->SetPageProperty(\App\PageProperty::LAYOUT, 'homepage.twig');
         </div>
         <div class="grid">
             <div class="col_3 item">
-                <div class="number">1500000</div>
+                <div class="count-to number">1500000</div>
                 <div class="line"></div>
                 <div class="text">Тонн в год товарооборот компании</div>
             </div>
             <div class="col_3 item">
-                <div class="number">2500</div>
+                <div class="count-to number">2500</div>
                 <div class="line"></div>
                 <div class="text">Отечественных и иностранных производителей</div>
             </div>
             <div class="col_3 item">
-                <div class="number">200</div>
+                <div class="count-to number">200</div>
                 <div class="line"></div>
                 <div class="text">Крупнейших дистрибьютеров и импортёров</div>
             </div>
             <div class="col_3 item">
-                <div class="number">50000</div>
+                <div class="count-to number">50000</div>
                 <div class="line"></div>
                 <div class="text">Тонн единовременного хранения продукции</div>
             </div>
             <div class="col_3 item">
-                <div class="number">5000</div>
+                <div class="count-to number">5000</div>
                 <div class="line"></div>
                 <div class="text">Тонн товара в сутки грузопоток территории</div>
             </div>
             <div class="col_3 item">
-                <div class="number">65</div>
+                <div class="count-to number">65</div>
                 <div class="line"></div>
                 <div class="text">Регионов с регулярным присутствием</div>
             </div>

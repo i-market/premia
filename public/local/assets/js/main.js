@@ -29,6 +29,8 @@ window.App = {
 };
 
 $(() => {
+  $('.count-to').counterUp();
+
   function initRentalOffers() {
     const $rentalItems = $('.rental_offers .item');
     const $buttons = $rentalItems.find('.bottom');

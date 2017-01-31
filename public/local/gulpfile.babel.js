@@ -49,6 +49,8 @@ gulp.task('build:vendor:js', () => {
   gulp.src([
     'node_modules/babel-polyfill/dist/polyfill.js',
     'node_modules/jquery-match-height/dist/jquery.matchHeight.js',
+    'node_modules/waypoints/lib/jquery.waypoints.js',
+    'node_modules/jquery.counterup/jquery.counterup.js'
   ])
     .pipe(concat('vendor.js'))
     .pipe(gulp.dest(`${paths.dist}/js`));
