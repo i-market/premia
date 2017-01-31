@@ -376,3 +376,70 @@ class News {
         return ob_get_clean();
     }
 }
+
+class Rent {
+    static function context() {
+        $desc1 = '<strong>Арендуемая площадь —</strong> от 150 до 600 м²'
+            .'<br>'.'<strong>Температурный режим —</strong> от +4 до +8 °С'
+            .'<br>'.'<strong>Высота потолков —</strong> 10 м'
+            .'<br>'.'<strong>Нагрузка на пол —</strong> 6 т/м²'
+            .'<br>'.'<strong>Продукция —</strong> фрукты, овощи, ягоды, зелень, грибы, бахчевые, орехи, сухофрукты';
+        $desc2 = '<strong>Арендуемая площадь —</strong> от 256 до 512 м²'
+            .'<br>'.'<strong>Температурный режим —</strong> от −18 до +2 °С'
+            .'<br>'.'<strong>Высота потолков —</strong> 6 м'
+            .'<br>'.'<strong>Нагрузка на пол —</strong> 6 т/м²'
+            .'<br>'.'<strong>Продукция —</strong> фрукты, овощи, мясо, птица, рыба и морепродукты, молочная продукция, бакалея';
+        $abkDesc = '<strong>Общая площадь —</strong> 2 700 м²'
+            .'<br>'.'<strong>Арендуемая площадь —</strong> от 22 м²'
+            .'<br>'.'<strong>Этажность —</strong> 3/3'
+            .'<br>'.'<strong>Планировка —</strong> коридорно-кабинетная'
+            .'<br>'.'<strong>Кондиционирование —</strong> центральное'
+            .'<br>'.'<strong>Отопление —</strong> центральное'
+            .'<br>'.'<strong>Водоснабжение —</strong> горячая и холодная вода';
+        return array(
+            'scheme' => array(
+                'korpus_2' => array(
+                    'heading' => 'Корпус №2',
+                    'image' => 'korpus-2.jpg',
+                    'description' => $desc1
+                ),
+                'korpus_3' => array(
+                    'heading' => 'Корпус №3',
+                    'image' => 'korpus-3.jpg',
+                    'description' => $desc1
+                ),
+                'korpus_4' => array(
+                    'heading' => 'Корпус №4',
+                    'image' => 'korpus-4.jpg',
+                    'image_position' => 'top',
+                    'description' => $desc1
+                ),
+                'korpus_11' => array(
+                    'heading' => 'Корпус №11',
+                    'image' => 'korpus-11.jpg',
+                    'image_position' => 'top',
+                    'description' => $desc2
+                ),
+                'korpus_12' => array(
+                    'heading' => 'Корпус №12',
+                    'image' => 'korpus-12.jpg',
+                    'image_position' => 'top',
+                    'description' => $desc2
+                ),
+                'korpus_13' => array(
+                    'heading' => 'Корпус №13',
+                    'image' => 'korpus-13.jpg',
+                    'image_position' => 'top',
+                    'description' => $desc2
+                ),
+                'abk' => array(
+                    // TODO which image? desc?
+                    'heading' => 'Административно-бытовой корпус',
+                    'image' => 'abk.jpg',
+                    'image_position' => 'top',
+                    'description' => $abkDesc
+                )
+            )
+        );
+    }
+}
