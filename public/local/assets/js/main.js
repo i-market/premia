@@ -8,8 +8,6 @@ window.App = {
     const markerLatLng = [55.470993, 37.712681];
     const zoom = 12;
     const map = new ymaps.Map($('#contacts-map')[0], {
-      // TODO ymaps controls
-      controls: [],
       zoom,
       center: markerLatLng
     });
