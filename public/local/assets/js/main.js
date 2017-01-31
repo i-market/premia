@@ -30,6 +30,7 @@ window.App = {
 };
 
 $(() => {
+  $('.count-to').counterUp();
   accordion.init();
 
   function initRentalOffers() {
