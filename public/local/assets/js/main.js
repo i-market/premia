@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import enquire from 'enquire.js';
 import forms from './forms';
-import news from './news';
 import accordion from './accordion';
+import news from './news';
+import rent from './rent';
 
 window.App = {
   ymapsCallback: () => {
@@ -86,5 +87,9 @@ $(() => {
 
   $('#news').each(function() {
     news.initNews($(this), $('#news_modal'));
+  });
+
+  $('.section_scheme').each(function() {
+    rent.initScheme($(this));
   });
 });
