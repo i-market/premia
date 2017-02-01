@@ -186,7 +186,7 @@ class App {
         $handler = function($request, $response) use ($spec) {
             $mailConfig = array(
                 array(
-                    'forms' => array('re_call', 'write_letter', 'work_with_us'),
+                    'forms' => array('re_call', 'write_letter', 'work_with_us', 'price_request'),
                     'email_to' => array('surovets@mspdom.ru', 'office@mspdom.ru', 'bezin@i-market.ru')
                 ),
                 array(
