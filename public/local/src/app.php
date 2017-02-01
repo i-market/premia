@@ -433,14 +433,60 @@ class Rent {
                     'description' => $desc2
                 ),
                 'abk' => array(
-                    // TODO which image? desc?
                     'heading' => 'Административно-бытовой корпус',
+                    // TODO refactor `image`/`images`
                     'images' => array(
                         array('image' => 'abk.jpg', 'caption' => 'Первый этаж'),
                         array('image' => '2-floor-abk.jpg', 'caption' => 'Второй этаж')
                     ),
                     'image_position' => 'top',
                     'description' => $abkDesc
+                )
+            ),
+            'rental_offers' => array(
+                array(
+                    'path' => 'korpus-2.jpg',
+                    'caption' => 'Корпус №2'
+                ),
+                array(
+                    'path' => 'korpus-3.jpg',
+                    'caption' => 'Корпус №3'
+                ),
+                array(
+                    'path' => 'korpus-4.jpg',
+                    'caption' => 'Корпус №4'
+                )
+            ),
+            'rental_offers_2' => array(
+                array(
+                    'path' => 'korpus-11.jpg',
+                    'caption' => 'Корпус №11'
+                ),
+                array(
+                    'path' => 'korpus-12.jpg',
+                    'caption' => 'Корпус №12'
+                ),
+                array(
+                    'path' => 'korpus-13.jpg',
+                    'caption' => 'Корпус №13'
+                )
+            ),
+            'rental_offers_3' => array(
+                array(
+                    'path' => 'offices-1.jpg',
+                    'caption' => 'Корпус №2 офисы'
+                ),
+                array(
+                    'path' => 'offices-2.jpg',
+                    'caption' => 'Корпус №3 офисы'
+                ),
+                array(
+                    'path' => 'abk.jpg',
+                    'caption' => 'Административно-бытовой корпус (1 этаж)'
+                ),
+                array(
+                    'path' => '2-floor-abk.jpg',
+                    'caption' => 'Административно-бытовой корпус (2 этаж)'
                 )
             )
         );

@@ -45,6 +45,19 @@
             <div class="corp corp_6" data-modal="scheme_modal_korpus_13"><span>Корпус 13</span></div>
             <div class="corp corp_7" data-modal="scheme_modal_korpus_12"><span>Корпус 12</span></div>
         </div>
+        <div class="accordion scheme_accordion">
+            <dl>
+                {% for id, item in scheme %}
+                    {% set tab_id = 'accordion_' ~ id %}
+                    <dt>
+                        <a href="{{ '#' ~ tab_id }}" aria-expanded="false" aria-controls="{{ tab_id }}" class="accordion-title accordionTitle js-accordionTrigger">{{ item.heading }}</a>
+                    </dt>
+                    <dd class="accordion-content accordionItem is-collapsed" id="{{ tab_id }}" aria-hidden="true">
+                        <p>{{ item.description }}</p>
+                    </dd>
+                {% endfor %}
+            </dl>
+        </div>
     </div>
 </section>
 <section class="rental_offers">
