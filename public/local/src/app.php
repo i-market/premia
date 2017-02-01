@@ -435,7 +435,10 @@ class Rent {
                 'abk' => array(
                     // TODO which image? desc?
                     'heading' => 'Административно-бытовой корпус',
-                    'image' => 'abk.jpg',
+                    'images' => array(
+                        array('image' => 'abk.jpg', 'caption' => 'Первый этаж'),
+                        array('image' => '2-floor-abk.jpg', 'caption' => 'Второй этаж')
+                    ),
                     'image_position' => 'top',
                     'description' => $abkDesc
                 )

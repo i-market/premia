@@ -33,7 +33,14 @@
                 <div class="wrap_scheme_content cf">
                     <div class="heading">{{ item.heading }}</div>
                     <div class="{{ pos == 'top' ? 'top' : 'left' }}">
-                        <img src="{{ asset('images/upload/floor-plans/' ~ item.image) }}" alt="{{ item.heading }}">
+                        {% if item.images %}
+                            {% for image in item.images %}
+                                <img src="{{ asset('images/upload/floor-plans/' ~ image.image) }}" alt="{{ item.heading }}">
+                                <div class="img-caption">{{ image.caption }}</div>
+                            {% endfor %}
+                        {% else %}
+                            <img src="{{ asset('images/upload/floor-plans/' ~ item.image) }}" alt="{{ item.heading }}">
+                        {% endif %}
                     </div>
                     {# TODO add .count_2 class? #}
                     <div class="{{ pos == 'top' ? 'bottom' : 'right' }}">
