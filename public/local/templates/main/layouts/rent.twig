@@ -35,8 +35,8 @@
                     <div class="{{ pos == 'top' ? 'top' : 'left' }}">
                         {% if item.images %}
                             {% for image in item.images %}
-                                <img src="{{ asset('images/upload/floor-plans/' ~ image.image) }}" alt="{{ item.heading }}">
                                 <div class="img-caption">{{ image.caption }}</div>
+                                <img src="{{ asset('images/upload/floor-plans/' ~ image.image) }}" alt="{{ item.heading }}">
                             {% endfor %}
                         {% else %}
                             <img src="{{ asset('images/upload/floor-plans/' ~ item.image) }}" alt="{{ item.heading }}">
