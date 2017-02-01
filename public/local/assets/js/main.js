@@ -2,6 +2,7 @@ import _ from 'lodash';
 import enquire from 'enquire.js';
 import forms from './forms';
 import news from './news';
+import accordion from './accordion';
 
 window.App = {
   ymapsCallback: () => {
@@ -29,6 +30,8 @@ window.App = {
 };
 
 $(() => {
+  accordion.init();
+
   function initRentalOffers() {
     const $rentalItems = $('.rental_offers .item');
     const $buttons = $rentalItems.find('.bottom');

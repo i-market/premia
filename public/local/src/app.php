@@ -186,7 +186,7 @@ class App {
         $handler = function($request, $response) use ($spec) {
             $mailConfig = array(
                 array(
-                    'forms' => array('re_call', 'write_letter', 'work_with_us'),
+                    'forms' => array('re_call', 'write_letter', 'work_with_us', 'price_request'),
                     'email_to' => array('surovets@mspdom.ru', 'office@mspdom.ru', 'bezin@i-market.ru')
                 ),
                 array(
@@ -199,44 +199,44 @@ class App {
                 )
             );
             $defaultEmailTo = array('surovets@mspdom.ru', 'bezin@i-market.ru');
-                $fields = array_map(function($field) {
-                    return $field['name'];
-                }, $spec['fields']);
-                $params = $request->params($fields);
-                $validator = new Validator($params);
-                foreach ($spec['validations'] as $validation) {
-                    if ($validation['type'] === 'required') {
-                        foreach ($validation['fields'] as $field) {
-                            $fieldSpec = _::find($spec['fields'], function($fieldSpec) use ($field) {
-                                return $fieldSpec['name'] === $field;
-                            });
-                            $tpl = View::twig()->createTemplate($validation['message']);
-                            $message = $tpl->render($fieldSpec);
-                            // mutate
-                            $validator->rule('required', $field)->message($message);
-                        }
+            $fields = array_map(function($field) {
+                return $field['name'];
+            }, $spec['fields']);
+            $params = $request->params($fields);
+            $validator = new Validator($params);
+            foreach ($spec['validations'] as $validation) {
+                if ($validation['type'] === 'required') {
+                    foreach ($validation['fields'] as $field) {
+                        $fieldSpec = _::find($spec['fields'], function($fieldSpec) use ($field) {
+                            return $fieldSpec['name'] === $field;
+                        });
+                        $tpl = View::twig()->createTemplate($validation['message']);
+                        $message = $tpl->render($fieldSpec);
+                        // mutate
+                        $validator->rule('required', $field)->message($message);
                     }
                 }
-                $validator->validate();
-                $errors = $validator->errors();
-                if (count($errors) === 0) {
+            }
+            $validator->validate();
+            $errors = $validator->errors();
+            if (count($errors) === 0) {
                 $cfgOrNull = _::find($mailConfig, function($item) use ($spec) {
                     return in_array($spec['name'], $item['forms']);
                 });
                 $emailTo = Null::get(Null::map($cfgOrNull, function($cfg) {
                     return $cfg['email_to'];
                 }), $defaultEmailTo);
-                    foreach ($emailTo as $email) {
-                        $event = self::emailEvent($params, $spec, $email);
-                        self::sendMailEvent(MailEvent::CONTACT_FORMS, self::SITE_ID, $event);
-                    }
+                foreach ($emailTo as $email) {
+                    $event = self::emailEvent($params, $spec, $email);
+                    self::sendMailEvent(MailEvent::CONTACT_FORMS, self::SITE_ID, $event);
                 }
-                $errorsJson = array();
-                foreach ($errors as $field => $messages) {
-                    // take the first message only
-                    $errorsJson[$field] = _::first($messages);
-                }
-                return $response->json(array('errors' => (object) $errorsJson));
+            }
+            $errorsJson = array();
+            foreach ($errors as $field => $messages) {
+                // take the first message only
+                $errorsJson[$field] = _::first($messages);
+            }
+            return $response->json(array('errors' => (object) $errorsJson));
         };
         return array(
             'method' => 'POST',
@@ -307,7 +307,6 @@ class View {
         });
     }
 
-    // TODO refactor?
     static function twig() {
         return TemplateEngine::getInstance()->getEngine();
     }
@@ -375,5 +374,121 @@ class News {
             )
         );
         return ob_get_clean();
+    }
+}
+
+class Rent {
+    static function context() {
+        $desc1 = '<strong>Арендуемая площадь —</strong> от 150 до 600 м²'
+            .'<br>'.'<strong>Температурный режим —</strong> от +4 до +8 °С'
+            .'<br>'.'<strong>Высота потолков —</strong> 10 м'
+            .'<br>'.'<strong>Нагрузка на пол —</strong> 6 т/м²'
+            .'<br>'.'<strong>Продукция —</strong> фрукты, овощи, ягоды, зелень, грибы, бахчевые, орехи, сухофрукты';
+        $desc2 = '<strong>Арендуемая площадь —</strong> от 256 до 512 м²'
+            .'<br>'.'<strong>Температурный режим —</strong> от −18 до +2 °С'
+            .'<br>'.'<strong>Высота потолков —</strong> 6 м'
+            .'<br>'.'<strong>Нагрузка на пол —</strong> 6 т/м²'
+            .'<br>'.'<strong>Продукция —</strong> фрукты, овощи, мясо, птица, рыба и морепродукты, молочная продукция, бакалея';
+        $abkDesc = '<strong>Общая площадь —</strong> 2 700 м²'
+            .'<br>'.'<strong>Арендуемая площадь —</strong> от 22 м²'
+            .'<br>'.'<strong>Этажность —</strong> 3/3'
+            .'<br>'.'<strong>Планировка —</strong> коридорно-кабинетная'
+            .'<br>'.'<strong>Кондиционирование —</strong> центральное'
+            .'<br>'.'<strong>Отопление —</strong> центральное'
+            .'<br>'.'<strong>Водоснабжение —</strong> горячая и холодная вода';
+        return array(
+            'scheme' => array(
+                'korpus_2' => array(
+                    'heading' => 'Корпус №2',
+                    'image' => 'korpus-2.jpg',
+                    'description' => $desc1
+                ),
+                'korpus_3' => array(
+                    'heading' => 'Корпус №3',
+                    'image' => 'korpus-3.jpg',
+                    'description' => $desc1
+                ),
+                'korpus_4' => array(
+                    'heading' => 'Корпус №4',
+                    'image' => 'korpus-4.jpg',
+                    'image_position' => 'top',
+                    'description' => $desc1
+                ),
+                'korpus_11' => array(
+                    'heading' => 'Корпус №11',
+                    'image' => 'korpus-11.jpg',
+                    'image_position' => 'top',
+                    'description' => $desc2
+                ),
+                'korpus_12' => array(
+                    'heading' => 'Корпус №12',
+                    'image' => 'korpus-12.jpg',
+                    'image_position' => 'top',
+                    'description' => $desc2
+                ),
+                'korpus_13' => array(
+                    'heading' => 'Корпус №13',
+                    'image' => 'korpus-13.jpg',
+                    'image_position' => 'top',
+                    'description' => $desc2
+                ),
+                'abk' => array(
+                    'heading' => 'Административно-бытовой корпус',
+                    // TODO refactor `image`/`images`
+                    'images' => array(
+                        array('image' => 'abk.jpg', 'caption' => 'Первый этаж'),
+                        array('image' => '2-floor-abk.jpg', 'caption' => 'Второй этаж')
+                    ),
+                    'image_position' => 'top',
+                    'description' => $abkDesc
+                )
+            ),
+            'rental_offers' => array(
+                array(
+                    'path' => 'korpus-2.jpg',
+                    'caption' => 'Корпус №2'
+                ),
+                array(
+                    'path' => 'korpus-3.jpg',
+                    'caption' => 'Корпус №3'
+                ),
+                array(
+                    'path' => 'korpus-4.jpg',
+                    'caption' => 'Корпус №4'
+                )
+            ),
+            'rental_offers_2' => array(
+                array(
+                    'path' => 'korpus-11.jpg',
+                    'caption' => 'Корпус №11'
+                ),
+                array(
+                    'path' => 'korpus-12.jpg',
+                    'caption' => 'Корпус №12'
+                ),
+                array(
+                    'path' => 'korpus-13.jpg',
+                    'caption' => 'Корпус №13'
+                )
+            ),
+            'rental_offers_3' => array(
+                array(
+                    'path' => 'offices-1.jpg',
+                    'caption' => 'Корпус №2 офисы'
+                ),
+                array(
+                    'path' => 'offices-2.jpg',
+                    'caption' => 'Корпус №3 офисы'
+                ),
+                array(
+                    'path' => 'abk.jpg',
+                    'caption' => 'Административно-бытовой корпус (1 этаж)'
+                ),
+                array(
+                    'path' => '2-floor-abk.jpg',
+                    'caption' => 'Административно-бытовой корпус (2 этаж)'
+                )
+            )
+        );
     }
 }
