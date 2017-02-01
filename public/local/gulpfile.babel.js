@@ -94,7 +94,7 @@ gulp.task('revision:replace', ['revision:rev'], () => {
 
 gulp.task('revision', ['revision:rev', 'revision:replace']);
 
-gulp.task('release', ['clean', 'build', 'revision']);
+gulp.task('release', ['build', 'revision']);
 
 gulp.task('dev:sass', () => {
   return gulp.src('mockup/css/*.scss')
