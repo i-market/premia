@@ -29,7 +29,7 @@
       delegate_to: 127.0.0.1
       # TODO npm install first?
     - name: build assets
-      local_action: shell gulp release
+      local_action: shell npm run release
       args:
         chdir: ../public/local
     - name: sync directories

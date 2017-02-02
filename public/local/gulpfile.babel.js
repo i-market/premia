@@ -126,9 +126,8 @@ gulp.task('browser-sync', () => {
 
 gulp.task('dev', ['build', 'browser-sync'], () => {
   gulp.watch('mockup/css/*.scss', ['dev:sass']);
-  // TODO watch mockup js
-  gulp.watch('assets/js/**/*.js', ['build:js']);
-  gulp.watch([`${paths.template}/**/*.php`, `${paths.template}/**/*.twig`]).on('change', browserSync.reload);
+  gulp.watch([`${paths.dist}/js/**/*.js`, `${paths.template}/**/*.twig`])
+    .on('change', browserSync.reload);
 });
 
 // TODO invoke callback when done

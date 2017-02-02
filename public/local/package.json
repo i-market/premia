@@ -40,7 +40,9 @@
     "dist": "templates/main/build/assets"
   },
   "scripts": {
+    "release": "gulp release",
     "dev:js": "watchify assets/js/main.js -o ${npm_package_config_dist}/js/main.js -v -d -t [ babelify --presets [ es2015 ] ]",
+    "dev": "gulp dev & npm run dev:js",
     "test": "gulp test"
   },
   "author": "",
