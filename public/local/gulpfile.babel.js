@@ -88,7 +88,7 @@ gulp.task('build:images', () => {
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('build', ['build:mockup', 'build:js', 'build:images', 'build:vendor', 'build:concat']);
+gulp.task('build', ['build:mockup', 'build:js', 'build:images', 'build:vendor']);
 
 gulp.task('revision:rev', ['build'], () => {
   return gulp.src(`${paths.dist}/**`)
