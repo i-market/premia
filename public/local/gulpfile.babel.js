@@ -45,7 +45,7 @@ gulp.task('build:mockup', ['build:mockup:delegate'], () => {
 });
 
 gulp.task('build:vendor:js', () => {
-  gulp.src([
+  return gulp.src([
     'node_modules/babel-polyfill/dist/polyfill.js',
     'node_modules/jquery-match-height/dist/jquery.matchHeight.js',
     'node_modules/waypoints/lib/jquery.waypoints.js',
@@ -54,6 +54,19 @@ gulp.task('build:vendor:js', () => {
     .pipe(concat('vendor.js'))
     .pipe(uglify())
     .pipe(gulp.dest(`${paths.dist}/js`));
+});
+
+// TODO refactor bundling
+gulp.task('build:concat', ['build:mockup', 'build:js', 'build:vendor'], () => {
+  gulp.src([`${paths.dist}/js/vendor/**/*.js`, `${paths.dist}/js/vendor.js`])
+    .pipe(concat('vendor.js'))
+    .pipe(gulp.dest(`${paths.dist}/js`));
+  gulp.src([`${paths.dist}/js/script.js`, `${paths.dist}/js/main.js`])
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest(`${paths.dist}/js`));
+  gulp.src(`${paths.dist}/css/lib/**/*.css`)
+    .pipe(concat('vendor.css'))
+    .pipe(gulp.dest(`${paths.dist}/css`));
 });
 
 gulp.task('build:vendor', ['build:vendor:js']);
@@ -76,7 +89,7 @@ gulp.task('build:images', () => {
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('build', ['build:mockup', 'build:js', 'build:images', 'build:vendor']);
+gulp.task('build', ['build:mockup', 'build:js', 'build:images', 'build:vendor', 'build:concat']);
 
 gulp.task('revision:rev', ['build'], () => {
   return gulp.src(`${paths.dist}/**`)
@@ -119,6 +132,7 @@ gulp.task('dev', ['build', 'browser-sync'], () => {
   gulp.watch([`${paths.template}/**/*.php`, `${paths.template}/**/*.twig`]).on('change', browserSync.reload);
 });
 
+// TODO invoke callback when done
 gulp.task('test:e2e', () => {
   gulp.src('e2e-tests/*.js')
     .pipe(babel({
