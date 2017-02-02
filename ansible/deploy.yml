@@ -33,11 +33,17 @@
       args:
         chdir: ../public/local
     - name: sync directories
-      synchronize:
-        # trailing slash is important, see rsync documentation
-        src: ../public/local/{{ item }}/
-        dest: "{{ document_root }}/local/{{ item }}"
-        delete: yes
+      # args: src dest pwd
+      local_action: >
+        shell expect sync.exp
+        "../public/local/{{ item }}/"
+        "{{ document_root }}/local/{{ item }}"
+        "{{ ansible_ssh_pass }}"
+#      synchronize:
+#        # trailing slash is important, see rsync documentation
+#        src: ../public/local/{{ item }}/
+#        dest: "{{ document_root }}/local/{{ item }}"
+#        delete: yes
       with_items:
         # assets
         - templates/main/build
