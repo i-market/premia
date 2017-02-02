@@ -55,19 +55,6 @@ gulp.task('build:vendor:js', () => {
     .pipe(gulp.dest(`${paths.dist}/js`));
 });
 
-// TODO refactor bundling
-gulp.task('build:concat', ['build:mockup', 'build:js', 'build:vendor'], () => {
-  gulp.src([`${paths.dist}/js/vendor/**/*.js`, `${paths.dist}/js/vendor.js`])
-    .pipe(concat('vendor.js'))
-    .pipe(gulp.dest(`${paths.dist}/js`));
-  gulp.src([`${paths.dist}/js/script.js`, `${paths.dist}/js/main.js`])
-    .pipe(concat('app.js'))
-    .pipe(gulp.dest(`${paths.dist}/js`));
-  gulp.src(`${paths.dist}/css/lib/**/*.css`)
-    .pipe(concat('vendor.css'))
-    .pipe(gulp.dest(`${paths.dist}/css`));
-});
-
 gulp.task('build:vendor', ['build:vendor:js']);
 
 gulp.task('build:js', () => {
@@ -77,7 +64,7 @@ gulp.task('build:js', () => {
     })
     .transform(babelify, {presets: ['es2015']})
     .bundle()
-    .pipe(source('main.js'))
+    .pipe(source('bundle.js'))
     .pipe(buffer())
     .pipe(uglify())
     .pipe(gulp.dest(`${paths.dist}/js`));
@@ -88,7 +75,11 @@ gulp.task('build:images', () => {
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('build', ['build:mockup', 'build:js', 'build:images', 'build:vendor']);
+gulp.task('build', process.env.NODE_ENV === 'dev'
+  // TODO refactor
+  // skip build:js
+  ? ['build:mockup', 'build:images', 'build:vendor']
+  : ['build:mockup', 'build:js', 'build:images', 'build:vendor']);
 
 gulp.task('revision:rev', ['build'], () => {
   return gulp.src(`${paths.dist}/**`)

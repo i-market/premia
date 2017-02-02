@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 function scaleScheme($section) {
   const $scheme = $section.find('.block_scheme');
   if (window.matchMedia('(min-width: 1280px) and (min-height: 900px)').matches) {
