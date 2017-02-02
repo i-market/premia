@@ -33,9 +33,14 @@
     "gulp-util": "^3.0.8",
     "phantomcss": "^1.1.4",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
+  },
+  "config": {
+    "dist": "templates/main/build/assets"
   },
   "scripts": {
+    "dev:js": "watchify assets/js/main.js -o ${npm_package_config_dist}/js/bundle.js -v -d -t [ babelify --presets [ es2015 ] ]",
     "test": "gulp test"
   },
   "author": "",
