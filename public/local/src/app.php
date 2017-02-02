@@ -155,7 +155,7 @@ class App {
                 'validations' => array(
                     array(
                         'type' => 'required',
-                        'fields' => array('name', 'phone'),
+                        'fields' => array('name', 'phone', 'email'),
                         'message' => $requiredMessage
                     )
                 )
