@@ -44,7 +44,6 @@ gulp.task('build:mockup', ['build:mockup:delegate'], () => {
     .pipe(gulp.dest(paths.dist));
 });
 
-// TODO minify
 gulp.task('build:vendor:js', () => {
   gulp.src([
     'node_modules/babel-polyfill/dist/polyfill.js',
@@ -53,6 +52,7 @@ gulp.task('build:vendor:js', () => {
     'node_modules/jquery.counterup/jquery.counterup.js'
   ])
     .pipe(concat('vendor.js'))
+    .pipe(uglify())
     .pipe(gulp.dest(`${paths.dist}/js`));
 });
 
