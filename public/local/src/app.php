@@ -400,6 +400,10 @@ class Rent {
             array('images/Group%2017.png', 'images/Group%2018.png', 'images/Group%2020.png', 'images/Group%2019.png', 'images/Group%2021.png', 'images/Group%2022.png', 'images/Group%2023.png', 'images/Group%2024.png'),
             explode(', ', 'Фрукты, Овощи, Ягоды, Зелень, Грибы, Бахчевые, Орехи, Сухофрукты')
         );
+        $categories2 = array_combine(
+            array('images/Group%2017.png', 'images/Group%2018.png', 'images/Group-03.png', 'images/Group-05.png', 'images/Group-07.png', 'images/Group-09.png', 'images/Group-11.png', 'images/Group%2016.png'),
+            explode(', ', 'Фрукты, Овощи, Мясо, Птица, Рыба, Молочная, Бакалея, Экзотика')
+        );
         return array(
             'scheme' => array(
                 'korpus_2' => array(
@@ -425,19 +429,22 @@ class Rent {
                     'heading' => 'Корпус №11',
                     'image' => 'korpus-11.jpg',
                     'image_position' => 'top',
-                    'description' => $desc2
+                    'description' => $desc2,
+                    'categories' => $categories2
                 ),
                 'korpus_12' => array(
                     'heading' => 'Корпус №12',
                     'image' => 'korpus-12.jpg',
                     'image_position' => 'top',
-                    'description' => $desc2
+                    'description' => $desc2,
+                    'categories' => $categories2
                 ),
                 'korpus_13' => array(
                     'heading' => 'Корпус №13',
                     'image' => 'korpus-13.jpg',
                     'image_position' => 'top',
-                    'description' => $desc2
+                    'description' => $desc2,
+                    'categories' => $categories2
                 ),
                 'abk' => array(
                     'heading' => 'Административно-бытовой корпус',
