@@ -45,8 +45,7 @@ gulp.task('build:mockup', ['build:mockup:delegate'], () => {
 });
 
 gulp.task('build:vendor:js', () => {
-  gulp.src([
-    'node_modules/babel-polyfill/dist/polyfill.js',
+  return gulp.src([
     'node_modules/jquery-match-height/dist/jquery.matchHeight.js',
     'node_modules/waypoints/lib/jquery.waypoints.js',
     'node_modules/jquery.counterup/jquery.counterup.js'
@@ -65,7 +64,7 @@ gulp.task('build:js', () => {
     })
     .transform(babelify, {presets: ['es2015']})
     .bundle()
-    .pipe(source('main.js'))
+    .pipe(source('bundle.js'))
     .pipe(buffer())
     .pipe(uglify())
     .pipe(gulp.dest(`${paths.dist}/js`));
@@ -76,7 +75,11 @@ gulp.task('build:images', () => {
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('build', ['build:mockup', 'build:js', 'build:images', 'build:vendor']);
+gulp.task('build', process.env.NODE_ENV === 'dev'
+  // TODO refactor
+  // skip build:js
+  ? ['build:mockup', 'build:images', 'build:vendor']
+  : ['build:mockup', 'build:js', 'build:images', 'build:vendor']);
 
 gulp.task('revision:rev', ['build'], () => {
   return gulp.src(`${paths.dist}/**`)
@@ -114,11 +117,12 @@ gulp.task('browser-sync', () => {
 
 gulp.task('dev', ['build', 'browser-sync'], () => {
   gulp.watch('mockup/css/*.scss', ['dev:sass']);
-  // TODO watch mockup js
-  gulp.watch('assets/js/**/*.js', ['build:js']);
-  gulp.watch([`${paths.template}/**/*.php`, `${paths.template}/**/*.twig`]).on('change', browserSync.reload);
+  gulp.watch('assets/images/**', ['build:images']);
+  gulp.watch([`${paths.dist}/js/**/*.js`, `${paths.template}/**/*.twig`])
+    .on('change', browserSync.reload);
 });
 
+// TODO invoke callback when done
 gulp.task('test:e2e', () => {
   gulp.src('e2e-tests/*.js')
     .pipe(babel({

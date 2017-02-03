@@ -1,3 +1,5 @@
+import 'babel-polyfill';
+import $ from 'jquery';
 import _ from 'lodash';
 import enquire from 'enquire.js';
 import forms from './forms';
