@@ -396,17 +396,23 @@ class Rent {
             .'<br>'.'<strong>Кондиционирование —</strong> центральное'
             .'<br>'.'<strong>Отопление —</strong> центральное'
             .'<br>'.'<strong>Водоснабжение —</strong> горячая и холодная вода';
+        $categories1 = array_combine(
+            array('images/Group%2017.png', 'images/Group%2018.png', 'images/Group%2020.png', 'images/Group%2019.png', 'images/Group%2021.png', 'images/Group%2022.png', 'images/Group%2023.png', 'images/Group%2024.png'),
+            explode(', ', 'Фрукты, Овощи, Ягоды, Зелень, Грибы, Бахчевые, Орехи, Сухофрукты')
+        );
         return array(
             'scheme' => array(
                 'korpus_2' => array(
                     'heading' => 'Корпус №2',
                     'image' => 'korpus-2.jpg',
-                    'description' => $desc1
+                    'description' => $desc1,
+                    'categories' => $categories1
                 ),
                 'korpus_3' => array(
                     'heading' => 'Корпус №3',
                     'image' => 'korpus-3.jpg',
-                    'description' => $desc1
+                    'description' => $desc1,
+                    'categories' => $categories1
                 ),
                 'korpus_4' => array(
                     'heading' => 'Корпус №4',

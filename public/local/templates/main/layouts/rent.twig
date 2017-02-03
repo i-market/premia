@@ -45,6 +45,18 @@
                     {# TODO add .count_2 class? #}
                     <div class="{{ pos == 'top' ? 'bottom' : 'right' }}">
                         <p class="text">{{ item.description }}</p>
+                        {% if item.categories %}
+                            <div class="categories">
+                                <div class="grid">
+                                    {% for img_src, label in item.categories %}
+                                        <div class="item col_5">
+                                            <img src="{{ asset(img_src) }}" alt="{{ label }}">
+                                            <p>{{ label }}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

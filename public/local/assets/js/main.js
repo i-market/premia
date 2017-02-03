@@ -92,4 +92,10 @@ $(() => {
   $('.section_scheme').each(function() {
     rent.initScheme($(this));
   });
+
+  // TODO refactor replace with css
+  // rent
+  $('.schemeModal:has(.categories)').each(function() {
+    $(this).find('.left, .right').matchHeight();
+  })
 });
