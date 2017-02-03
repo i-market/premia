@@ -5,7 +5,8 @@ function scaleScheme($section) {
   if (window.matchMedia('(min-width: 1280px) and (min-height: 900px)').matches) {
     const available = $($section).height() - $section.find('h3').outerHeight(true);
     const scaleBy = available / $scheme.height();
-    if (scaleBy >= 1) {
+    // TODO sometimes `scaleBy` seems to be astronomical, figure out why
+    if (scaleBy >= 1 && scaleBy < 2) {
       $scheme.css('transform', `scale(${scaleBy})`);
     }
   } else {
