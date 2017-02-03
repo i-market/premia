@@ -21,8 +21,5 @@ $rest = _::drop($items, 1);
 $rest[0]['CLASS'] = 'shown_second';
 $rest[1]['CLASS'] = 'shown_first';
 
-$arResult = array(
-    'ITEMS' => $items,
-    'FEATURED' => $featured,
-    'REST' => $rest
-);
+$arResult['FEATURED'] = $featured;
+$arResult['REST'] = $rest;

@@ -1,7 +1,11 @@
+import 'babel-polyfill';
+import $ from 'jquery';
 import _ from 'lodash';
 import enquire from 'enquire.js';
 import forms from './forms';
+import accordion from './accordion';
 import news from './news';
+import rent from './rent';
 
 window.App = {
   ymapsCallback: () => {
@@ -29,6 +33,9 @@ window.App = {
 };
 
 $(() => {
+  $('.count-to').counterUp();
+  accordion.init();
+
   function initRentalOffers() {
     const $rentalItems = $('.rental_offers .item');
     const $buttons = $rentalItems.find('.bottom');
@@ -83,4 +90,14 @@ $(() => {
   $('#news').each(function() {
     news.initNews($(this), $('#news_modal'));
   });
+
+  $('.section_scheme').each(function() {
+    rent.initScheme($(this));
+  });
+
+  // TODO refactor replace with css
+  // rent
+  $('.schemeModal:has(.categories)').each(function() {
+    $(this).find('.left, .right').matchHeight();
+  })
 });

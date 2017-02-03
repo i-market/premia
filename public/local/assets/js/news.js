@@ -1,4 +1,4 @@
-// TODO require jquery?
+import $ from 'jquery';
 
 function fetchNewsItem(id, cb) {
   return $.get(`/api/news/${id}.html`, cb);

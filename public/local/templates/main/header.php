@@ -40,7 +40,7 @@ $scripts = array(
     'js/script.js',
     'js/vendor.js',
     // depends on mockup script.js
-    'js/main.js'
+    'js/bundle.js'
 );
 $menu = array_map(function($item) use (&$APPLICATION) {
     $item['is_active'] = $item['uri'] === $APPLICATION->GetCurDir();

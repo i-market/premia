@@ -2,10 +2,7 @@
 
 {% block pagination_items %}
     <li>
-        <a href="#plan"></a>
-    </li>
-    <li>
-        <a href="#two"></a>
+        <a href="#scheme"></a>
     </li>
     <li>
         <a href="#three"></a>
@@ -21,4 +18,45 @@
 
 {% block page_menu_items %}
     <li><a href="javascript:void(0)"><span data-modal="{{ form_specs.rent.name }}">{{ form_specs.rent.title }}</span></a></li>
+{% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+    {% for id, item in scheme %}
+        {% set pos = item.image_position %}
+        <div class="modal schemeModal" id="{{ 'scheme_modal_' ~ id }}">
+            <div class="block">
+                <span class="close"></span>
+                <div class="wrap_scheme_content cf">
+                    <div class="heading">{{ item.heading }}</div>
+                    <div class="{{ pos == 'top' ? 'top' : 'left' }}">
+                        {% if item.images %}
+                            {% for image in item.images %}
+                                <div class="img-caption">{{ image.caption }}</div>
+                                <img src="{{ asset('images/upload/floor-plans/' ~ image.image) }}" alt="{{ item.heading }}">
+                            {% endfor %}
+                        {% else %}
+                            <img src="{{ asset('images/upload/floor-plans/' ~ item.image) }}" alt="{{ item.heading }}">
+                        {% endif %}
+                    </div>
+                    {# TODO add .count_2 class? #}
+                    <div class="{{ pos == 'top' ? 'bottom' : 'right' }}">
+                        <p class="text">{{ item.description }}</p>
+                        {% if item.categories %}
+                            <div class="categories">
+                                <div class="grid">
+                                    {% for img_src, label in item.categories %}
+                                        <div class="item col_5">
+                                            <img src="{{ asset(img_src) }}" alt="{{ label }}">
+                                            <p>{{ label }}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

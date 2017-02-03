@@ -4,162 +4,56 @@
         <span class="arrows next"></span>
     </div>
     <div class="slider">
-        <div class="slide" style="background: url('{{ asset('images/pic_1.jpg') }}')no-repeat center center">
+        <div class="slide slide--inner slide--opacity" style="background: url('{{ asset('images/pic_1.jpg') }}')no-repeat center center">
             <div class="block">
-                <h1>Арендные каникулы</h1>
-                <p class="next_h1">Снижение ставки</p>
-                <h2>Скидка до <span class="orange">20 руб</span> кв.м. в сутки</h2>
-                <p class="next_h2">На складские помещения и офисы</p>
+                <h1>Скидки на аренду</h1>
+                <span class="line"></span>
+                <h2>до 20 руб кв.м. в сутки</h2>
             </div>
         </div>
-        <div class="slide" style="background: url('{{ asset('images/upload/slide-2.jpg') }}')no-repeat center center">
+        <div class="slide slide--inner slide--opacity" style="background: url('{{ asset('images/upload/slide-2.jpg') }}')no-repeat center center">
             <div class="block">
-                <h1>Четыре Сезона</h1>
-                <p class="next_h1">г.Домодедово</p>
-                <h2>Всего <span class="orange">15 км</span> от МКАД</h2>
-                <p class="next_h2">4 км от М4 "Дон" | 8 км от М2 "Крым"</p>
+                <h1>Склады в Домодедово</h1>
+                <span class="line"></span>
+                <h2>фрукты • овощи • ягоды • мясо<br> рыба • молочная продукция</h2>
             </div>
         </div>
-        <div class="slide" style="background: url('{{ asset('images/upload/slide-3.jpg') }}')no-repeat center center">
+        <div class="slide slide--inner slide--opacity" style="background: url('{{ asset('images/upload/slide-3.jpg') }}')no-repeat center center">
             <div class="block">
-                <h1>Склады</h1>
-                <p class="next_h1">фрукты | овощи | ягоды</p>
-                <h2>Режим t <span class="orange">+2...+8 °С</span></h2>
-                <p class="next_h2">Оптимальные условия аренды</p>
+                <h1>Аренда складов</h1>
+                <span class="line"></span>
+                <h2>Температурный режим от −18 до +8 °С</h2>
             </div>
         </div>
     </div>
     <div class="dots"></div>
 </section>
-<section class="plan">
-    <span id="plan" class="anchor"></span>
+<section class="section_scheme">
+    <span class="achor achor--scheme" id="scheme"></span>
+    <h3>СХЕМА КОМПЛЕКСА</h3>
     <div class="wrap">
-        <div class="block">
-            <h3>Схема комплекса</h3>
-            <div class="rent-plan"></div>
+        <div class="block_scheme">
+            <img src="{{ asset('images/scheme.jpg') }}" alt="">
+            <div class="corp corp_1" data-modal="scheme_modal_korpus_2"><span>Корпус 2</span></div>
+            <div class="corp corp_2" data-modal="scheme_modal_korpus_3"><span>Корпус 3</span></div>
+            <div class="corp corp_3" data-modal="scheme_modal_korpus_4"><span>Корп. 4</span></div>
+            <div class="corp corp_4" data-modal="scheme_modal_abk"><span>АБК</span></div>
+            <div class="corp corp_5" data-modal="scheme_modal_korpus_11"><span>Корпус 11</span></div>
+            <div class="corp corp_6" data-modal="scheme_modal_korpus_13"><span>Корпус 13</span></div>
+            <div class="corp corp_7" data-modal="scheme_modal_korpus_12"><span>Корпус 12</span></div>
         </div>
-    </div>
-</section>
-<section class="rental_offers">
-    <span class="achor achor--two" id="two"></span>
-    <div class="wrap">
-        <div class="top">
-            <p class="big_text">70 000 м²</p>
-            <div class="block">
-                <h3>предложения по аренде</h3>
-                <p>ОРЦ "Четыре сезона" предлагает в аренду складские корпуса с постоянным температурным режимом и удобные помещения под офисы</p>
-            </div>
-        </div>
-        <div class="grid">
-            <div class="item col_3">
-                <div class="img">
-                    <img src="{{ asset('images/pic_2.jpg') }}" alt="">
-                    <p class="text">Павильоны 25 500 м²</p>
-                </div>
-                <div class="info">
-                    <p>
-                        <span>Арендуемая площадь</span>
-                        <span>— от 150 до 600 м²</span>
-                    </p>
-                    <p>
-                        <span>Температурный режим</span>
-                        <span>— от +4 до +8 °С</span>
-                    </p>
-                    <p>
-                        <span>Высота потолков</span>
-                        <span>— 10 м</span>
-                    </p>
-                    <p>
-                        <span>Нагрузка на пол</span>
-                        <span>— 6 т/м²</span>
-                    </p>
-                    <p>
-                        <span>Строение</span>
-                        <span>— №2, №3, №4</span>
-                    </p>
-                    <p>
-                        <span>Продукция</span>
-                        <span>— фрукты, овощи, ягоды, зелень, грибы, бахчевые, орехи, сухофрукты</span>
-                    </p>
-                </div>
-                <div class="bottom">
-                    <span class="btn btn--fiolet" data-modal="rental_offers">Показать схему</span>
-                </div>
-            </div>
-            <div class="item col_3">
-                <div class="img">
-                    <img src="{{ asset('images/upload/sklad-2.png') }}" alt="">
-                    <p class="text">Павильоны 14 700 м²</p>
-                </div>
-                <div class="info">
-                    <p>
-                        <span>Арендуемая площадь</span>
-                        <span>— от 256 до 512 м²</span>
-                    </p>
-                    <p>
-                        <span>Температурный режим</span>
-                        <span>— от -18 до +2 °С</span>
-                    </p>
-                    <p>
-                        <span>Высота потолков</span>
-                        <span>— 6 м</span>
-                    </p>
-                    <p>
-                        <span>Нагрузка на пол</span>
-                        <span>— 6 т/м²</span>
-                    </p>
-                    <p>
-                        <span>Строение</span>
-                        <span>— №11, №12, №13</span>
-                    </p>
-                    <p>
-                        <span>Продукция</span>
-                        <span>— фрукты, овощи, мясо, птица, рыба и морепродукты, молочная продукция, бакалея</span>
-                    </p>
-                </div>
-                <div class="bottom">
-                    <span class="btn btn--green" data-modal="rental_offers_2">Показать схему</span>
-                </div>
-            </div>
-            <div class="item col_3">
-                <div class="img">
-                    <img src="{{ asset('images/upload/sklad-3.png') }}" alt="">
-                    <p class="text">Офисы, торговые ряды, кафе</p>
-                </div>
-                <div class="info">
-                    <p>
-                        <span>Общая площадь</span>
-                        <span>— 2 700 м²</span>
-                    </p>
-                    <p>
-                        <span>Арендуемая площадь</span>
-                        <span>— от 22 м²</span>
-                    </p>
-                    <p>
-                        <span>Этажность</span>
-                        <span>— 3/3</span>
-                    </p>
-                    <p>
-                        <span>Планировка</span>
-                        <span>— коридорно-кабинетная</span>
-                    </p>
-                    <p>
-                        <span>Кондиционирование</span>
-                        <span>— центральное</span>
-                    </p>
-                    <p>
-                        <span>Отопление</span>
-                        <span>— центральное</span>
-                    </p>
-                    <p>
-                        <span>Водоснабжение</span>
-                        <span>— горячая и холодная вода</span>
-                    </p>
-                </div>
-                <div class="bottom">
-                    <span class="btn btn--red" data-modal="rental_offers_3">Показать схему</span>
-                </div>
-            </div>
+        <div class="accordion scheme_accordion">
+            <dl>
+                {% for id, item in scheme %}
+                    {% set tab_id = 'accordion_' ~ id %}
+                    <dt>
+                        <a href="{{ '#' ~ tab_id }}" aria-expanded="false" aria-controls="{{ tab_id }}" class="accordion-title accordionTitle js-accordionTrigger">{{ item.heading }}</a>
+                    </dt>
+                    <dd class="accordion-content accordionItem is-collapsed" id="{{ tab_id }}" aria-hidden="true">
+                        <p>{{ item.description }}</p>
+                    </dd>
+                {% endfor %}
+            </dl>
         </div>
     </div>
 </section>

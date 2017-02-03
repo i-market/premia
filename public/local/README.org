@@ -1,2 +1,2 @@
-* `gulp release` в local, чтобы собрать asset’ы в templates/main/build
+* `npm run release` в local, чтобы собрать asset’ы в templates/main/build
 * в normalize.css добавлен костыль для яндекс карт: `*:not(ymaps)`
