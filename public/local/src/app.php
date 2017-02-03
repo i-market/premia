@@ -389,13 +389,7 @@ class Rent {
             .'<br>'.'<strong>Высота потолков —</strong> 6 м'
             .'<br>'.'<strong>Нагрузка на пол —</strong> 6 т/м²'
             .'<br>'.'<strong>Продукция —</strong> фрукты, овощи, мясо, птица, рыба и морепродукты, молочная продукция, бакалея';
-        $abkDesc = '<strong>Общая площадь —</strong> 2 700 м²'
-            .'<br>'.'<strong>Арендуемая площадь —</strong> от 22 м²'
-            .'<br>'.'<strong>Этажность —</strong> 3/3'
-            .'<br>'.'<strong>Планировка —</strong> коридорно-кабинетная'
-            .'<br>'.'<strong>Кондиционирование —</strong> центральное'
-            .'<br>'.'<strong>Отопление —</strong> центральное'
-            .'<br>'.'<strong>Водоснабжение —</strong> горячая и холодная вода';
+        $abkDesc = '';
         $categories1 = array_combine(
             array('images/Group%2017.png', 'images/Group%2018.png', 'images/Group%2020.png', 'images/Group%2019.png', 'images/Group%2021.png', 'images/Group%2022.png', 'images/Group%2023.png', 'images/Group%2024.png'),
             explode(', ', 'Фрукты, Овощи, Ягоды, Зелень, Грибы, Бахчевые, Орехи, Сухофрукты')
@@ -450,8 +444,8 @@ class Rent {
                     'heading' => 'Административно-бытовой корпус',
                     // TODO refactor `image`/`images`
                     'images' => array(
-                        array('image' => 'abk.jpg', 'caption' => 'Первый этаж'),
-                        array('image' => '2-floor-abk.jpg', 'caption' => 'Второй этаж')
+                        array('image' => 'abk.jpg', 'caption' => 'Первый этаж — торговые ряды'),
+                        array('image' => '2-floor-abk.jpg', 'caption' => 'Второй этаж — точки питания')
                     ),
                     'image_position' => 'top',
                     'description' => $abkDesc
