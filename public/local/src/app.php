@@ -379,8 +379,8 @@ class News {
 
 class Rent {
     static function context() {
-        $desc1 = '<strong>Арендуемая площадь —</strong> от 150 до 600 м²'
-            .'<br>'.'<strong>Температурный режим —</strong> от +4 до +8 °С'
+        $desc1 = '<strong>Арендуемая площадь —</strong> от 150 до <span class="text-nowrap">600 м²</span>'
+            .'<br>'.'<strong>Температурный режим —</strong> от +4 до <span class="text-nowrap">+8 °С</span>'
             .'<br>'.'<strong>Высота потолков —</strong> 10 м'
             .'<br>'.'<strong>Нагрузка на пол —</strong> 6 т/м²'
             .'<br>'.'<strong>Продукция —</strong> фрукты, овощи, ягоды, зелень, грибы, бахчевые, орехи, сухофрукты';
@@ -418,7 +418,8 @@ class Rent {
                     'heading' => 'Корпус №4',
                     'image' => 'korpus-4.jpg',
                     'image_position' => 'top',
-                    'description' => $desc1
+                    'description' => $desc1,
+                    'categories' => $categories1
                 ),
                 'korpus_11' => array(
                     'heading' => 'Корпус №11',
