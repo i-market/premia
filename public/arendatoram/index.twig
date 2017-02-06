@@ -50,7 +50,7 @@
                         <a href="{{ '#' ~ tab_id }}" aria-expanded="false" aria-controls="{{ tab_id }}" class="accordion-title accordionTitle js-accordionTrigger">{{ item.heading }}</a>
                     </dt>
                     <dd class="accordion-content accordionItem is-collapsed" id="{{ tab_id }}" aria-hidden="true">
-                        <p>{{ item.description }}</p>
+                        <p>{{ item.mobile_description|default(item.description) }}</p>
                     </dd>
                 {% endfor %}
             </dl>

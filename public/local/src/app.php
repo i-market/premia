@@ -448,7 +448,8 @@ class Rent {
                         array('image' => '2-floor-abk.jpg', 'caption' => 'Второй этаж — точки питания')
                     ),
                     'image_position' => 'top',
-                    'description' => $abkDesc
+                    'description' => $abkDesc,
+                    'mobile_description' => '<strong>Первый этаж —</strong> торговые ряды<br><strong>Второй этаж —</strong> точки питания'
                 )
             ),
             'rental_offers' => array(
