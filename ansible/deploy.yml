@@ -60,9 +60,9 @@
       file:
         state: absent
         path: "{{ document_root }}/bitrix/cache/maximaster/tools.twig"
-    - name: get last commit message
-      local_action: shell git log -1 --oneline
-      register: last_commit_msg
+    - name: get last commit sha
+      local_action: shell git log -1 --format="%h"
+      register: last_commit_sha
     - name: slack notification
       uri:
         url: "{{ slack_webhook_url }}"
@@ -71,6 +71,6 @@
           payload={
             "channel": "#dev",
             "username": "webhookbot",
-            "text": "Pushed to {{ env }}, current commit: {{ last_commit_msg.stdout }}",
+            "text": "Pushed to `{{ env }}`, commit: {{ last_commit_sha.stdout }}",
             "icon_emoji": ":robot_face:"
           }
