@@ -76,7 +76,7 @@ gulp.task('build:images', () => {
 });
 
 gulp.task('build', process.env.NODE_ENV === 'dev'
-  // TODO refactor
+  // TODO refactor (`dev` no longer depends on `build`)
   // skip build:js
   ? ['build:mockup', 'build:images', 'build:vendor']
   : ['build:mockup', 'build:js', 'build:images', 'build:vendor']);
@@ -115,7 +115,7 @@ gulp.task('browser-sync', () => {
   });
 });
 
-gulp.task('dev', ['build', 'browser-sync'], () => {
+gulp.task('dev', ['browser-sync'], () => {
   gulp.watch('mockup/css/*.scss', ['dev:sass']);
   gulp.watch('assets/images/**', ['build:images']);
   gulp.watch([`${paths.dist}/js/**/*.js`, `${paths.template}/**/*.twig`])
