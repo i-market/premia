@@ -398,60 +398,61 @@ class Rent {
             array('images/Group%2017.png', 'images/Group%2018.png', 'images/Group-03.png', 'images/Group-05.png', 'images/Group-07.png', 'images/Group-09.png', 'images/Group-11.png', 'images/Group%2016.png'),
             explode(', ', 'Фрукты, Овощи, Мясо, Птица, Рыба, Молочная, Бакалея, Экзотика')
         );
-        return array(
-            'scheme' => array(
-                'korpus_2' => array(
-                    'heading' => 'Корпус №2',
-                    'image' => 'korpus-2.jpg',
-                    'description' => $desc1,
-                    'categories' => $categories1
-                ),
-                'korpus_3' => array(
-                    'heading' => 'Корпус №3',
-                    'image' => 'korpus-3.jpg',
-                    'description' => $desc1,
-                    'categories' => $categories1
-                ),
-                'korpus_4' => array(
-                    'heading' => 'Корпус №4',
-                    'image' => 'korpus-4.jpg',
-                    'image_position' => 'top',
-                    'description' => $desc1,
-                    'categories' => $categories1
-                ),
-                'korpus_11' => array(
-                    'heading' => 'Корпус №11',
-                    'image' => 'korpus-11.jpg',
-                    'image_position' => 'top',
-                    'description' => $desc2,
-                    'categories' => $categories2
-                ),
-                'korpus_12' => array(
-                    'heading' => 'Корпус №12',
-                    'image' => 'korpus-12.jpg',
-                    'image_position' => 'top',
-                    'description' => $desc2,
-                    'categories' => $categories2
-                ),
-                'korpus_13' => array(
-                    'heading' => 'Корпус №13',
-                    'image' => 'korpus-13.jpg',
-                    'image_position' => 'top',
-                    'description' => $desc2,
-                    'categories' => $categories2
-                ),
-                'abk' => array(
-                    'heading' => 'Административно-бытовой корпус',
-                    // TODO refactor `image`/`images`
-                    'images' => array(
-                        array('image' => 'abk.jpg', 'caption' => 'Первый этаж — торговые ряды'),
-                        array('image' => '2-floor-abk.jpg', 'caption' => 'Второй этаж — точки питания')
-                    ),
-                    'image_position' => 'top',
-                    'description' => $abkDesc,
-                    'mobile_description' => '<strong>Первый этаж —</strong> торговые ряды<br><strong>Второй этаж —</strong> точки питания'
-                )
+        $scheme = array(
+            'korpus_2' => array(
+                'heading' => 'Корпус №2',
+                'image' => 'korpus-2.jpg',
+                'description' => $desc1,
+                'categories' => $categories1
             ),
+            'korpus_3' => array(
+                'heading' => 'Корпус №3',
+                'image' => 'korpus-3.jpg',
+                'description' => $desc1,
+                'categories' => $categories1
+            ),
+            'korpus_4' => array(
+                'heading' => 'Корпус №4',
+                'image' => 'korpus-4.jpg',
+                'image_position' => 'top',
+                'description' => $desc1,
+                'categories' => $categories1
+            ),
+            'korpus_11' => array(
+                'heading' => 'Корпус №11',
+                'image' => 'korpus-11.jpg',
+                'image_position' => 'top',
+                'description' => $desc2,
+                'categories' => $categories2
+            ),
+            'korpus_12' => array(
+                'heading' => 'Корпус №12',
+                'image' => 'korpus-12.jpg',
+                'image_position' => 'top',
+                'description' => $desc2,
+                'categories' => $categories2
+            ),
+            'korpus_13' => array(
+                'heading' => 'Корпус №13',
+                'image' => 'korpus-13.jpg',
+                'image_position' => 'top',
+                'description' => $desc2,
+                'categories' => $categories2
+            ),
+            'abk' => array(
+                'heading' => 'Административно-бытовой корпус',
+                // TODO refactor `image`/`images`
+                'images' => array(
+                    array('image' => 'abk.jpg', 'caption' => 'Первый этаж — торговые ряды'),
+                    array('image' => '2-floor-abk.jpg', 'caption' => 'Второй этаж — точки питания')
+                ),
+                'image_position' => 'top',
+                'description' => $abkDesc,
+                'mobile_description' => '<strong>Первый этаж —</strong> торговые ряды<br><strong>Второй этаж —</strong> точки питания'
+            )
+        );
+        return array(
+            'scheme' => $scheme,
             'rental_offers' => array(
                 array(
                     'path' => 'korpus-2.jpg',

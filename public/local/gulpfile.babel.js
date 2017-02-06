@@ -7,6 +7,7 @@ import sass from 'gulp-sass';
 import util from 'gulp-util';
 import clean from 'gulp-clean';
 import uglify from 'gulp-uglify';
+import responsive from 'gulp-responsive';
 import browserSync from 'browser-sync';
 import child from 'child_process';
 import _ from 'lodash';
@@ -71,15 +72,22 @@ gulp.task('build:js', () => {
 });
 
 gulp.task('build:images', () => {
-  return gulp.src('assets/images/**', {base: 'assets'})
+  const plansGlob = 'assets/images/upload/floor-plans/**';
+  const restStream = gulp.src(['assets/images/**', `!${plansGlob}`], {base: 'assets'})
     .pipe(gulp.dest(paths.dist));
+  const plansStream = gulp.src(plansGlob, {base: 'assets'})
+    .pipe(responsive({
+      '**': {
+        width: 1260
+      }
+    }, {
+      errorOnEnlargement: false
+    }))
+    .pipe(gulp.dest(paths.dist));
+  // return merge(plansStream, restStream);
 });
 
-gulp.task('build', process.env.NODE_ENV === 'dev'
-  // TODO refactor (`dev` no longer depends on `build`)
-  // skip build:js
-  ? ['build:mockup', 'build:images', 'build:vendor']
-  : ['build:mockup', 'build:js', 'build:images', 'build:vendor']);
+gulp.task('build', ['build:mockup', 'build:js', 'build:images', 'build:vendor']);
 
 gulp.task('revision:rev', ['build'], () => {
   return gulp.src(`${paths.dist}/**`)
