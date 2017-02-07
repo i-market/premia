@@ -1,9 +1,9 @@
+import $ from 'jquery';
+
 // https://codepen.io/chriswrightdesign/pen/cmanI
 function init(){
   const d = document,
-    accordionToggles = d.querySelectorAll('.js-accordionTrigger'),
-    touchSupported = ('ontouchstart' in window),
-    pointerSupported = ('pointerdown' in window);
+    $accordionToggles = $('.js-accordionTrigger');
 
   const skipClickDelay = function(e){
     e.preventDefault();
@@ -29,7 +29,6 @@ function init(){
   };
 //function
   const switchAccordion = function(e) {
-    console.log("triggered");
     e.preventDefault();
     var thisAnswer = e.target.parentNode.nextElementSibling;
     var thisQuestion = e.target;
@@ -45,15 +44,7 @@ function init(){
 
     thisAnswer.classList.toggle('animateIn');
   };
-  for (var i=0,len=accordionToggles.length; i<len; i++) {
-    if(touchSupported) {
-      accordionToggles[i].addEventListener('touchstart', skipClickDelay, false);
-    }
-    if(pointerSupported){
-      accordionToggles[i].addEventListener('pointerdown', skipClickDelay, false);
-    }
-    accordionToggles[i].addEventListener('click', switchAccordion, false);
-  }
+  $accordionToggles.on('click', switchAccordion)
 }
 
 export default {init};

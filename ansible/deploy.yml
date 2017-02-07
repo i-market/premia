@@ -71,6 +71,6 @@
           payload={
             "channel": "#dev",
             "username": "webhookbot",
-            "text": "Pushed to `{{ env }}`, commit: {{ last_commit_sha.stdout }}",
+            "text": "Pushed to `{{ env }}` at {{ inventory_hostname }}, commit: {{ last_commit_sha.stdout }}",
             "icon_emoji": ":robot_face:"
           }

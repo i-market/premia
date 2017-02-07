@@ -246,7 +246,7 @@ use Hendrix\View as v;
                         <img src="<?= v::asset('images/ico_102.png') ?>" alt="">
                     </div>
                     <span class="line"></span>
-                    <strong>Мелкооптовые и крупнооптовые покупатели</strong>
+                    <strong>Крупнооптовые покупатели</strong>
                 </div>
             </div>
             <div class="item col_5">
@@ -258,7 +258,7 @@ use Hendrix\View as v;
                         <img src="<?= v::asset('images/icon-people.png') ?>" alt="">
                     </div>
                     <span class="line"></span>
-                    <strong>Розничные покупатели</strong>
+                    <strong>Мелкооптовые покупатели</strong>
                 </div>
             </div>
         </div>
