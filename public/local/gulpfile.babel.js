@@ -69,7 +69,8 @@ gulp.task('build:vendor:css', ['build:mockup'], () => {
     `${paths.dist}/css/lib/slick.css`
   ])
     .pipe(concat('vendor.css'))
-    .pipe(gulp.dest(`${paths.dist}/css`));
+    // keep it in `lib` in case relative paths rely on it being there
+    .pipe(gulp.dest(`${paths.dist}/css/lib`));
 });
 
 gulp.task('build:vendor', ['build:vendor:js', 'build:vendor:css']);
