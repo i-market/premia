@@ -97,7 +97,9 @@
 </header>
 <!-- CONTENT -->
 <main class="content">
-    {{ page }}
+    {% block page %}
+        {{ page }}
+    {% endblock %}
     <section class="map" id="contacts">
         <div class="buble">
             <strong>наши контакты</strong>
