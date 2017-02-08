@@ -34,12 +34,7 @@ use Hendrix\View as v;
 <? $APPLICATION->ShowPanel() ?>
 <?
 $scripts = array(
-    'js/vendor/jquery.fancybox.pack.js',
-    'js/vendor/scroll.js',
-    'js/vendor/slick.min.js',
-    'js/script.js',
     'js/vendor.js',
-    // depends on mockup script.js
     'js/bundle.js'
 );
 $menu = array_map(function($item) use (&$APPLICATION) {
