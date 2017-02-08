@@ -18,9 +18,7 @@ use Hendrix\View as v;
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title><? $APPLICATION->ShowTitle() ?></title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&amp;subset=cyrillic-ext" rel="stylesheet">
-    <link rel="stylesheet" media="screen" href="<?= v::asset('css/lib/normalize.min.css') ?>">
-    <link rel="stylesheet" media="screen" href="<?= v::asset('css/lib/jquery.fancybox.css') ?>">
-    <link rel="stylesheet" media="screen" href="<?= v::asset('css/lib/slick.css') ?>">
+    <link rel="stylesheet" media="screen" href="<?= v::asset('css/lib/vendor.css') ?>">
     <link rel="stylesheet" media="screen" href="<?= v::asset('css/main.css') ?>">
     <!--[if gte IE 9]>
     <style type="text/css">
@@ -34,12 +32,7 @@ use Hendrix\View as v;
 <? $APPLICATION->ShowPanel() ?>
 <?
 $scripts = array(
-    'js/vendor/jquery.fancybox.pack.js',
-    'js/vendor/scroll.js',
-    'js/vendor/slick.min.js',
-    'js/script.js',
     'js/vendor.js',
-    // depends on mockup script.js
     'js/bundle.js'
 );
 $menu = array_map(function($item) use (&$APPLICATION) {

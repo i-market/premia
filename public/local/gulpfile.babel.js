@@ -45,18 +45,35 @@ gulp.task('build:mockup', ['build:mockup:delegate'], () => {
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('build:vendor:js', () => {
-  return gulp.src([
+gulp.task('build:vendor:js', ['build:mockup'], () => {
+  const mockup = [
+    `${paths.dist}/js/vendor/jquery.fancybox.pack.js`,
+    `${paths.dist}/js/vendor/scroll.js`,
+    `${paths.dist}/js/vendor/slick.min.js`,
+    `${paths.dist}/js/script.js`
+  ];
+  return gulp.src(_.concat(mockup, [
     'node_modules/jquery-match-height/dist/jquery.matchHeight.js',
     'node_modules/waypoints/lib/jquery.waypoints.js',
     'node_modules/jquery.counterup/jquery.counterup.js'
-  ])
+  ]))
     .pipe(concat('vendor.js'))
     .pipe(uglify())
     .pipe(gulp.dest(`${paths.dist}/js`));
 });
 
-gulp.task('build:vendor', ['build:vendor:js']);
+gulp.task('build:vendor:css', ['build:mockup'], () => {
+  return gulp.src([
+    `${paths.dist}/css/lib/normalize.min.css`,
+    `${paths.dist}/css/lib/jquery.fancybox.css`,
+    `${paths.dist}/css/lib/slick.css`
+  ])
+    .pipe(concat('vendor.css'))
+    // keep it in `lib` in case relative paths rely on it being there
+    .pipe(gulp.dest(`${paths.dist}/css/lib`));
+});
+
+gulp.task('build:vendor', ['build:vendor:js', 'build:vendor:css']);
 
 gulp.task('build:js', () => {
   return browserify('assets/js/main.js')
