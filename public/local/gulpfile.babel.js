@@ -62,7 +62,17 @@ gulp.task('build:vendor:js', ['build:mockup'], () => {
     .pipe(gulp.dest(`${paths.dist}/js`));
 });
 
-gulp.task('build:vendor', ['build:vendor:js']);
+gulp.task('build:vendor:css', ['build:mockup'], () => {
+  return gulp.src([
+    `${paths.dist}/css/lib/normalize.min.css`,
+    `${paths.dist}/css/lib/jquery.fancybox.css`,
+    `${paths.dist}/css/lib/slick.css`
+  ])
+    .pipe(concat('vendor.css'))
+    .pipe(gulp.dest(`${paths.dist}/css`));
+});
+
+gulp.task('build:vendor', ['build:vendor:js', 'build:vendor:css']);
 
 gulp.task('build:js', () => {
   return browserify('assets/js/main.js')
