@@ -8,12 +8,15 @@
 # composer
 /public/local/vendor/
 
-# phpdotenv
-.env
-
-# node.js
 node_modules/
+.sass-cache/
 
 # ansible
 *.retry
 vault_pass.txt
+
+/public/local/out/
+/public/local/templates/*/build/
+/public/local/e2e-tests/screenshots/
+
+*.log
