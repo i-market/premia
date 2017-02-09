@@ -1,0 +1,11 @@
+---
+- hosts: all
+  vars_files:
+    - vars/common.yml
+    - vars/{{ env }}.yml
+  tasks:
+    - name: sync upload/
+      synchronize:
+        # trailing slash is important, see rsync documentation
+        src: ../public/upload/
+        dest: "{{ document_root }}/upload"
