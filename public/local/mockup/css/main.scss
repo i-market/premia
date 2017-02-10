@@ -138,6 +138,12 @@ h4 {
   margin-bottom: 5px;
 }
 
+.editable-area {
+  ul {
+    @extend %list;
+  }
+}
+
 .header {
   position: relative;
   transition: .3s;
@@ -414,7 +420,7 @@ h4 {
   }
 }
 
-.list {
+%list {
   li {
     position: relative;
     padding-left: 40px;
@@ -442,6 +448,10 @@ h4 {
       text-decoration: none;
     }
   }
+}
+
+.list {
+  @extend %list;
 }
 
 .grid {
