@@ -13,30 +13,7 @@
         </div>
     </div>
 </header>
-<nav class="main_menu">
-    <ul class="wrap">
-        <li><a class="active" href="#">Премия</a>
-            <ul>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Участие</a></li>
-        <li><a href="#">Партнеры</a>
-            <ul>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Пресс-центр</a></li>
-        <li><a href="#">Мероприятие</a></li>
-        <li><a href="#">Контакты</a></li>
-    </ul>
-</nav>
+{{ main_menu }}
 <!-- CONTENT START -->
 <main class="content">
     <section class="banner">
@@ -71,16 +48,18 @@
         <div class="grid">
             <div class="col col_3">
                 <h4>Учредитель премии</h4>
+                {#TODO#}
                 <a href="#"><img src={{ asset('images/b2b.png') }} alt=""></a>
             </div>
             <div class="col right_side">
                 <div class="top">
                     <div class="left">
-                        <a class="logo" href=../></a>
-                        <p>Создание и продвижение сайта <a href="#">I-Market</a></p>
+                        <a class="logo" href="{{ path('/') }}"/></a>
+                        <p>Создание и продвижение сайта <a href="https://i-market.ru/" target="_blank">I-Market</a></p>
                     </div>
                     <div class="right">
                         <a class="btn" href="#">Написать нам</a>
+                        {#TODO social links#}
                         <div class="social">
                             <a class="facebook" href="#"></a>
                             <a class="twitter" href="#"></a>
@@ -91,6 +70,7 @@
                     </div>
                 </div>
                 <div class="bottom">
+                    {#TODO year#}
                     <p class="copy">© 2017 Премия «Лидер конкурентных продаж» Все права защищены.</p>
                 </div>
             </div>
