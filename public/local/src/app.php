@@ -8,7 +8,8 @@ class App {
     static function layoutContext() {
         return array(
             'auth_modal' => Auth::renderAuthForm(),
-            'signup_path' => Auth::signupPath()
+            'signup_path' => Auth::signupPath(),
+            'profile_path' => Auth::profilePath()
         );
     }
 }
