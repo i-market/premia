@@ -1,21 +1,23 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("Регистрация");
+$APPLICATION->SetTitle("Личный кабинет");
 ?>
 
 <?$APPLICATION->IncludeComponent(
-    "bitrix:main.register",
-    "",
-    Array(
-        "AUTH" => "Y",
-        "REQUIRED_FIELDS" => array("EMAIL"),
-        "SET_TITLE" => "N",
-        "SHOW_FIELDS" => array("EMAIL"),
-        "SUCCESS_PAGE" => \App\Auth::profilePath(),
-        "USER_PROPERTY" => array(),
-        "USER_PROPERTY_NAME" => "",
-        "USE_BACKURL" => "N"
-    )
+	"bitrix:main.profile",
+	"",
+	Array(
+		"AJAX_MODE" => "N",
+		"AJAX_OPTION_ADDITIONAL" => "",
+		"AJAX_OPTION_HISTORY" => "N",
+		"AJAX_OPTION_JUMP" => "N",
+		"AJAX_OPTION_STYLE" => "N",
+		"CHECK_RIGHTS" => "Y",
+		"SEND_INFO" => "N",
+		"SET_TITLE" => "N",
+		"USER_PROPERTY" => array(),
+		"USER_PROPERTY_NAME" => ""
+	)
 );?>
 
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
