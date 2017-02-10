@@ -1,0 +1,15 @@
+<section class="banner">
+    <div class="slider">
+        {% for item in result.ITEMS %}
+            <div class="slide" style="background: url('{{ item.PREVIEW_PICTURE.SRC }}')no-repeat center center">
+                <div id="{{ add_editing_actions(item, template) }}" class="block">
+                    <h1>{{ item.NAME }}</h1>
+                    {% set link = item.PROPERTIES.LINK.VALUE %}
+                    {% if link is not empty %}
+                        <a class="btn--blue" href="{{ link }}">Подробнее</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
