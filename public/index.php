@@ -2,6 +2,7 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("1С-Битрикс: Управление сайтом");
 use App\Auth;
+use App\Homepage;
 use Core\View as v;
 ?>
 
@@ -81,54 +82,19 @@ use Core\View as v;
           </div>
         </div>
       </div>
-        <div class="editable-area">
-            <? $APPLICATION->IncludeComponent(
-            	"bitrix:main.include",
-            	"",
-            	Array(
-            		"AREA_FILE_SHOW" => "file",
-            		"PATH" => v::includedArea('homepage/how-to.php')
-            	)
-            ); ?>
-        </div>
-    </div>
-  </div>
-</section>
-<section class="partners">
-  <div class="wrap">
-    <div class="carusel">
-      <div>
-        <img src=<?= v::asset('images/part_1.png') ?> alt="">
-      </div>
-      <div>
-        <img src=<?= v::asset('images/part_2.png') ?> alt="">
-      </div>
-      <div>
-        <img src=<?= v::asset('images/part_3.png') ?> alt="">
-      </div>
-      <div>
-        <img src=<?= v::asset('images/part_4.png') ?> alt="">
-      </div>
-      <div>
-        <img src=<?= v::asset('images/part_5.png') ?> alt="">
-      </div>
-      <div>
-        <img src=<?= v::asset('images/part_1.png') ?> alt="">
-      </div>
-      <div>
-        <img src=<?= v::asset('images/part_2.png') ?> alt="">
-      </div>
-      <div>
-        <img src=<?= v::asset('images/part_3.png') ?> alt="">
-      </div>
-      <div>
-        <img src=<?= v::asset('images/part_4.png') ?> alt="">
-      </div>
-      <div>
-        <img src=<?= v::asset('images/part_5.png') ?> alt="">
+      <div class="editable-area">
+        <? $APPLICATION->IncludeComponent(
+            "bitrix:main.include",
+            "",
+            Array(
+                "AREA_FILE_SHOW" => "file",
+                "PATH" => v::includedArea('homepage/how-to.php')
+            )
+        ); ?>
       </div>
     </div>
   </div>
 </section>
+<?= Homepage::renderPartners() ?>
 
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

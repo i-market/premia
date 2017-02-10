@@ -1,0 +1,11 @@
+<section class="partners">
+    <div class="wrap">
+        <div class="carusel">
+            {% for item in result.ITEMS %}
+                <div id="{{ add_editing_actions(item, template) }}">
+                    <img src="{{ item.PREVIEW_PICTURE.SRC }}" alt="{{ item.NAME }}">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

@@ -2,47 +2,13 @@
 
 namespace App;
 
-use Core\View as v;
-
-class App {
-    static function layoutContext() {
-        return array(
-            'main_menu' => self::renderMainMenu(),
-            'slider' => self::renderSlider(),
-            'auth_modal' => Auth::renderAuthForm(),
-            'signup_path' => Auth::signupPath(),
-            'profile_path' => Auth::profilePath()
-        );
-    }
-
-    static function renderMainMenu() {
-        global $APPLICATION;
-        ob_start();
-        $APPLICATION->IncludeComponent(
-            "bitrix:menu",
-            "main",
-            Array(
-                "ALLOW_MULTI_SELECT" => "N",
-                "CHILD_MENU_TYPE" => "left",
-                "DELAY" => "N",
-                "MAX_LEVEL" => "2",
-                "MENU_CACHE_GET_VARS" => array(""),
-                "MENU_CACHE_TIME" => "3600",
-                "MENU_CACHE_TYPE" => "N",
-                "MENU_CACHE_USE_GROUPS" => "Y",
-                "ROOT_MENU_TYPE" => "top",
-                "USE_EXT" => "Y"
-            )
-        );
-        return ob_get_clean();
-    }
-
-    static function renderSlider() {
+class Homepage {
+    static function renderPartners() {
         global $APPLICATION;
         ob_start();
         $APPLICATION->IncludeComponent(
         	"bitrix:news.list",
-        	"slider",
+        	"partners_carousel",
         	Array(
         		"ACTIVE_DATE_FORMAT" => "j F Y",
         		"ADD_SECTIONS_CHAIN" => "N",
@@ -66,7 +32,7 @@ class App {
         		"FIELD_CODE" => array("", ""),
         		"FILTER_NAME" => "",
         		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
-        		"IBLOCK_ID" => Iblock::SLIDER_ID,
+        		"IBLOCK_ID" => Iblock::PARTNERS_ID,
         		"IBLOCK_TYPE" => Iblock::CONTENT_TYPE,
         		"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
         		"INCLUDE_SUBSECTIONS" => "Y",
@@ -82,7 +48,7 @@ class App {
         		"PARENT_SECTION" => "",
         		"PARENT_SECTION_CODE" => "",
         		"PREVIEW_TRUNCATE_LEN" => "",
-        		"PROPERTY_CODE" => array("LINK"),
+        		"PROPERTY_CODE" => array("", ""),
         		"SET_BROWSER_TITLE" => "N",
         		"SET_LAST_MODIFIED" => "N",
         		"SET_META_DESCRIPTION" => "N",
@@ -95,38 +61,6 @@ class App {
         		"SORT_ORDER1" => "DESC",
         		"SORT_ORDER2" => "ASC"
         	)
-        );
-        return ob_get_clean();
-    }
-}
-
-class Iblock {
-    const CONTENT_TYPE = 'content';
-    const SLIDER_ID = 1;
-    const PARTNERS_ID = 2;
-}
-
-class Auth {
-    static function profilePath() {
-        return v::path('user/profile');
-    }
-
-    static function signupPath() {
-        return v::path('user/signup');
-    }
-
-    static function renderAuthForm() {
-        global $APPLICATION;
-        ob_start();
-        $APPLICATION->IncludeComponent(
-            "bitrix:system.auth.form",
-            "",
-            Array(
-                "FORGOT_PASSWORD_URL" => v::path('user/reset'),
-                "PROFILE_URL" => self::profilePath(),
-                "REGISTER_URL" => self::signupPath(),
-                "SHOW_ERRORS" => "Y"
-            )
         );
         return ob_get_clean();
     }
