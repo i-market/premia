@@ -34,8 +34,8 @@ class BreakpointExtension extends Twig_Extension
 // TODO tools.twig onAfterTwigTemplateEngineInited
 $twig = \Maximaster\Tools\Twig\TemplateEngine::getInstance()->getEngine();
 $twig->addExtension(new BreakpointExtension());
-$twig->addFunction(new Twig_SimpleFunction('asset', 'Hendrix\View::asset'));
-$twig->addFunction(new Twig_SimpleFunction('partial', 'Hendrix\View::partial'));
-$twig->addFunction(new Twig_SimpleFunction('path', 'Hendrix\View::path'));
-$twig->addFunction(new Twig_SimpleFunction('layout', 'Hendrix\View::layout'));
-$twig->addFunction(new Twig_SimpleFunction('add_editing_actions', 'Hendrix\NewsListLike::addEditingActions'));
+$twig->addFunction(new Twig_SimpleFunction('asset', 'Core\View::asset'));
+$twig->addFunction(new Twig_SimpleFunction('partial', 'Core\View::partial'));
+$twig->addFunction(new Twig_SimpleFunction('path', 'Core\View::path'));
+$twig->addFunction(new Twig_SimpleFunction('layout', 'Core\View::layout'));
+$twig->addFunction(new Twig_SimpleFunction('add_editing_actions', 'Core\NewsListLike::addEditingActions'));

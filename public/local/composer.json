@@ -4,7 +4,7 @@
         "anahkiasen/underscore-php": "^2.0"
     },
     "autoload": {
-        "files": ["src/app.php", "src/hendrix.php"],
+        "files": ["src/app.php", "src/core.php"],
         "psr-4": {
           "App\\": "src/"
         }

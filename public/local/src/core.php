@@ -1,11 +1,11 @@
 <?php
 
-namespace Hendrix;
+namespace Core;
 
 use Bitrix\Main\Config\Configuration;
 use CBitrixComponentTemplate;
 use CIBlock;
-use Hendrix\Underscore as _;
+use Core\Underscore as _;
 use Underscore\Methods\ArraysMethods;
 use Underscore\Methods\StringsMethods;
 
