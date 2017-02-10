@@ -20,3 +20,9 @@ vault_pass.txt
 /public/local/e2e-tests/screenshots/
 
 *.log
+
+# project-specific
+
+/public/local/mockup/css/main.css
+/public/local/mockup/css/main.css.map
+/public/local/mockup/dist
