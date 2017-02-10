@@ -1,0 +1,13 @@
+---
+- hosts: all
+  vars_files:
+    - vars/common.yml
+    - vars/{{ env }}.yml
+  tasks:
+    - name: git-ftp catchup
+      local_action: >
+        shell git-ftp catchup
+        --user "{{ ansible_user }}"
+        --passwd "{{ ansible_ssh_pass }}"
+        --remote-root "{{ repo_path }}"
+        sftp://{{ inventory_hostname }}

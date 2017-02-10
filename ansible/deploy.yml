@@ -1,0 +1,76 @@
+---
+- hosts: all
+  vars_files:
+    - vars/common.yml
+    - vars/{{ env }}.yml
+  tasks:
+    - name: push dbconn.php
+      template:
+        src: templates/dbconn.php.j2
+        dest: "{{ document_root }}/bitrix/php_interface/dbconn.php"
+        backup: yes
+      tags: config
+    - name: push .settings.php
+      template:
+        src: templates/settings.php.j2
+        dest: "{{ document_root }}/bitrix/.settings.php"
+        backup: yes
+      tags: config
+    - name: push staging robots.txt
+      copy:
+        src: files/stage/robots.txt
+        dest: "{{ document_root }}/robots.txt"
+        backup: yes
+      when: env == "stage"
+    - name: composer install
+      composer:
+        command: install
+        working_dir: "{{ document_root }}/local"
+      delegate_to: 127.0.0.1
+      # TODO npm install first?
+    - name: build assets
+      local_action: shell npm run release
+      args:
+        chdir: ../public/local
+    - name: sync directories
+      # TODO mimic `synchronize` module `delete` option
+      # args: src dest pwd
+      # trailing slash is important, see rsync documentation
+      local_action: >
+        shell expect sync.exp
+        "../public/local/{{ item }}/"
+        "{{ ansible_user}}@{{ inventory_hostname }}:{{ document_root }}/local/{{ item }}"
+        "{{ ansible_ssh_pass }}"
+      with_items:
+        # assets
+        - templates/main/build
+        # composer
+        - vendor
+        - mockup
+    - name: git-ftp push
+      local_action: >
+        shell git-ftp push
+        --user "{{ ansible_user }}"
+        --passwd "{{ ansible_ssh_pass }}"
+        --remote-root "{{ repo_path }}"
+        sftp://{{ inventory_hostname }}
+      tags:
+        - git-ftp
+    - name: clear twig cache
+      file:
+        state: absent
+        path: "{{ document_root }}/bitrix/cache/maximaster/tools.twig"
+    - name: get last commit sha
+      local_action: shell git log -1 --format="%h"
+      register: last_commit_sha
+    - name: slack notification
+      uri:
+        url: "{{ slack_webhook_url }}"
+        method: POST
+        body: >
+          payload={
+            "channel": "#dev",
+            "username": "webhookbot",
+            "text": "Pushed to `{{ env }}` at {{ inventory_hostname }}, commit: {{ last_commit_sha.stdout }}",
+            "icon_emoji": ":robot_face:"
+          }

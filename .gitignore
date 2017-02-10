@@ -1,0 +1,22 @@
+# intellij idea
+.idea/
+
+# bitrix
+/public/bitrix/*
+/public/upload/
+
+# composer
+/public/local/vendor/
+
+node_modules/
+.sass-cache/
+
+# ansible
+*.retry
+vault_pass.txt
+
+/public/local/out/
+/public/local/templates/*/build/
+/public/local/e2e-tests/screenshots/
+
+*.log
