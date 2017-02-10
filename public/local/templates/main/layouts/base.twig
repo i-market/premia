@@ -1,0 +1,102 @@
+<!-- HEADER START -->
+<header class="header">
+    <div class="top">
+        <div class="wrap">
+            <div class="left">
+                <div class="hamburger"></div>
+                <a class="logo" href=../></a>
+            </div>
+            <div class="right">
+                <a class="btn--blue reg" href="#">Зарегистрироваться</a>
+                <a class="btn lk" href="#">Личный кабинет</a>
+                <a class="btn--blue hidden" href="#">Регистрация</a>
+                <a class="btn hidden" href="#">Вход</a>
+            </div>
+        </div>
+    </div>
+</header>
+<nav class="main_menu">
+    <ul class="wrap">
+        <li><a class="active" href="#">Премия</a>
+            <ul>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Участие</a></li>
+        <li><a href="#">Партнеры</a>
+            <ul>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Пресс-центр</a></li>
+        <li><a href="#">Мероприятие</a></li>
+        <li><a href="#">Контакты</a></li>
+    </ul>
+</nav>
+<!-- CONTENT START -->
+<main class="content">
+    <section class="banner">
+        <div class="slider">
+            <div class="slide" style="background: url('{{ asset('images/banner.jpg') }}')no-repeat center center">
+                <div class="block">
+                    <h1>Открыт прием заявок премии 2017</h1>
+                    <a class="btn--blue" href="#">Подробнее</a>
+                </div>
+            </div>
+            <div class="slide" style="background: url('{{ asset('images/banner.jpg') }}')no-repeat center center">
+                <div class="block">
+                    <h1>Открыт прием заявок премии 2018</h1>
+                    <a class="btn--blue" href="#">Подробнее</a>
+                </div>
+            </div>
+            <div class="slide" style="background: url('{{ asset('images/banner.jpg') }}')no-repeat center center">
+                <div class="block">
+                    <h1>Открыт прием заявок премии 2019</h1>
+                    <a class="btn--blue" href="#">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{ page }}
+</main>
+<!-- FOOTER START -->
+<footer class="footer">
+    <div class="wrap">
+        <div class="grid">
+            <div class="col col_3">
+                <h4>Учредитель премии</h4>
+                <a href="#"><img src={{ asset('images/b2b.png') }} alt=""></a>
+            </div>
+            <div class="col right_side">
+                <div class="top">
+                    <div class="left">
+                        <a class="logo" href=../></a>
+                        <p>Создание и продвижение сайта <a href="#">I-Market</a></p>
+                    </div>
+                    <div class="right">
+                        <a class="btn" href="#">Написать нам</a>
+                        <div class="social">
+                            <a class="facebook" href="#"></a>
+                            <a class="twitter" href="#"></a>
+                            <a class="od" href="#"></a>
+                            <a class="vk" href="#"></a>
+                            <a class="google" href="#"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <p class="copy">© 2017 Премия «Лидер конкурентных продаж» Все права защищены.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ START -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/vendor.js') }}"></script>
