@@ -1,0 +1,9 @@
+---
+ansible_user: root
+ansible_ssh_pass: ~
+repo_path: ~
+document_root: /home/bitrix/www
+db_host: localhost
+db_name: premia
+db_user: root
+db_password: ~
