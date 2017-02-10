@@ -6,6 +6,8 @@ use Bitrix\Main\Config\Configuration;
 use CBitrixComponentTemplate;
 use CIBlock;
 use Core\Underscore as _;
+use Core\View as v;
+use Maximaster\Tools\Twig\TemplateEngine;
 use Underscore\Methods\ArraysMethods;
 use Underscore\Methods\StringsMethods;
 
@@ -86,6 +88,7 @@ class App {
 
 class View {
     private static $assetManifest = null;
+    private static $footer = null;
 
     static function asset($path) {
         $build = SITE_TEMPLATE_PATH.'/build';
@@ -114,6 +117,32 @@ class View {
             }
             return ob_get_clean();
         });
+    }
+
+    static function showLayoutHeader($pageProperty, $defaultLayout, $context) {
+        v::showForProperty($pageProperty, function($layout) use ($context) {
+            $path = is_array($layout) ? $layout[0] : $layout;
+            $propCtx = is_array($layout) ? $layout[1] : array();
+            $twig = TemplateEngine::getInstance()->getEngine();
+            $placeholder = '<page-placeholder/>';
+            $ctx = array_merge(array('page' => $placeholder), $context, $propCtx);
+            $html = $twig->render(SITE_TEMPLATE_PATH.'/layouts/'.$path, $ctx);
+            list($header, $footer) = explode($placeholder, $html);
+            self::$footer = $footer;
+            echo $header;
+        }, $defaultLayout);
+    }
+
+    static function showLayoutFooter() {
+        global $APPLICATION;
+        $APPLICATION->AddBufferContent(function() {
+            assert(self::$footer !== null);
+            return self::$footer;
+        });
+    }
+
+    static function twig() {
+        return TemplateEngine::getInstance()->getEngine();
     }
 
     static function partial($path) {
