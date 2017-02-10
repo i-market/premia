@@ -13,7 +13,7 @@ import _ from 'lodash';
 const config = {
   'mockup': {
     'buildCommand': 'gulp sass && gulp css && gulp dist',
-    'buildGlob': 'dist/**/*.{js,css,png,jpg,jpeg,gif}'
+    'buildGlob': 'dist/**/*.{js,css,png,jpg,jpeg,gif,svg}'
   }
 };
 const paths = {
