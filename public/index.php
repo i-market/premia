@@ -1,6 +1,7 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("1С-Битрикс: Управление сайтом");
+use App\Auth;
 use Core\View as v;
 ?>
 
@@ -63,7 +64,7 @@ use Core\View as v;
             <span>1</span>Зарегистрируйтесь на нашем сайте
           </p>
           <div class="block">
-            <a class="btn--blue" href="#">Зарегистрироваться</a>
+            <a class="btn--blue" href="<?= Auth::signupPath() ?>">Зарегистрироваться</a>
           </div>
         </div>
         <div class="col col_3">
