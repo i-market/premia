@@ -14,7 +14,7 @@ class App {
 
 class Auth {
     static function profilePath() {
-        return v::path('auth/profile');
+        return v::path('user/profile');
     }
 
     static function renderAuthForm() {
@@ -24,9 +24,9 @@ class Auth {
             "bitrix:system.auth.form",
             "",
             Array(
-                "FORGOT_PASSWORD_URL" => v::path('auth/reset'),
+                "FORGOT_PASSWORD_URL" => v::path('user/reset'),
                 "PROFILE_URL" => self::profilePath(),
-                "REGISTER_URL" => v::path('auth/signup'),
+                "REGISTER_URL" => v::path('user/signup'),
                 "SHOW_ERRORS" => "Y"
             )
         );
