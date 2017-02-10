@@ -19,6 +19,11 @@ class Underscore extends ArraysMethods {
         }
         return $ret;
     }
+
+    static function filter($array, $pred) {
+        // restore indices
+        return array_values(array_filter($array, $pred));
+    }
     
     static function drop($array, $n) {
         return array_slice($array, $n);

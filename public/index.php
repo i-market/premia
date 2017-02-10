@@ -55,33 +55,16 @@ use Core\View as v;
 <section class="participate_contest">
   <div class="wrap">
     <div class="inner">
-      <h2>Для участия в конкурсе:</h2>
-      <div class="grid">
-        <div class="col col_3">
-          <p class="title">
-            <span>1</span>Зарегистрируйтесь на нашем сайте
-          </p>
-          <div class="block">
-            <a class="btn--blue" href="<?= Auth::signupPath() ?>">Зарегистрироваться</a>
-          </div>
-        </div>
-        <div class="col col_3">
-          <p class="title">
-            <span>2</span>Заполните заявку в личном кабинете
-          </p>
-          <div class="block">
-            <img src=<?= v::asset('images/pic_2.png') ?> alt="">
-          </div>
-        </div>
-        <div class="col col_3">
-          <p class="title">
-            <span>3</span>Ждите письма с итогами конкурса
-          </p>
-          <div class="block">
-            <img src=<?= v::asset('images/pic_3.png') ?> alt="">
-          </div>
-        </div>
-      </div>
+      <? $APPLICATION->IncludeComponent(
+      	"bitrix:main.include",
+      	"",
+      	Array(
+      		"AREA_FILE_SHOW" => "file",
+      		"PATH" => v::includedArea('homepage/how_to_participate.php')
+        ),
+        null,
+        array('HIDE_ICONS' => 'Y')
+      ); ?>
       <div class="editable-area">
         <? $APPLICATION->IncludeComponent(
             "bitrix:main.include",
