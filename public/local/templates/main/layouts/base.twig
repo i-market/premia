@@ -4,7 +4,7 @@
         <div class="wrap">
             <div class="left">
                 <div class="hamburger"></div>
-                <a class="logo" href=../></a>
+                <a class="logo" href="{{ path('/') }}"/></a>
             </div>
             <div class="right">
                 <a class="btn--blue reg" href="#">Зарегистрироваться</a>
@@ -63,6 +63,8 @@
             </div>
         </div>
     </section>
+    {#TODO stub modal#}
+    {{ auth_modal }}
     {{ page }}
 </main>
 <!-- FOOTER START -->

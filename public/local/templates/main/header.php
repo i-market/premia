@@ -1,4 +1,5 @@
 <?php
+use App\App;
 use Core\View as v;
 ?>
 <!doctype html>
@@ -21,4 +22,4 @@ use Core\View as v;
     <![endif]-->
 </head>
 <body>
-<?= \Core\View::showLayoutHeader('layout', 'base.twig', array()) ?>
+<?= \Core\View::showLayoutHeader('layout', 'base.twig', App::layoutContext()) ?>
