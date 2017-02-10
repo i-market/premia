@@ -81,10 +81,16 @@ use Core\View as v;
           </div>
         </div>
       </div>
-      <h3>Как определяются победители</h3>
-      <ul class="list">
-        <li>Все конкурсные материалы получают оценку независимого экспертного сообщества, авторы лучших работ становятся номинантами Премии. Из их числа выбираются победители в соответствии с положением о премии.</li>
-      </ul>
+        <div class="editable-area">
+            <? $APPLICATION->IncludeComponent(
+            	"bitrix:main.include",
+            	"",
+            	Array(
+            		"AREA_FILE_SHOW" => "file",
+            		"PATH" => v::includedArea('homepage/how-to.php')
+            	)
+            ); ?>
+        </div>
     </div>
   </div>
 </section>
