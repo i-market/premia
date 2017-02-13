@@ -1,7 +1,6 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("1С-Битрикс: Управление сайтом");
-use App\Auth;
 use App\Homepage;
 use Core\View as v;
 ?>
