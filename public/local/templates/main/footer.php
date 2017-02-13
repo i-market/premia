@@ -1,3 +1,3 @@
-<?= \Core\View::showLayoutFooter() ?>
+<? \Core\View::showLayoutFooter() ?>
 </body>
 </html>

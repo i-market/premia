@@ -23,4 +23,4 @@ use Core\View as v;
 </head>
 <body>
 <? $APPLICATION->ShowPanel() ?>
-<?= \Core\View::showLayoutHeader('layout', 'base.twig', App::layoutContext()) ?>
+<? \Core\View::showLayoutHeader('layout', 'base.twig', App::layoutContext()) ?>
