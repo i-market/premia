@@ -7,8 +7,15 @@
                 <a class="logo" href="{{ path('/') }}"/></a>
             </div>
             <div class="right">
-                <a class="btn--blue reg" href="{{ signup_path }}">Зарегистрироваться</a>
-                <a class="btn lk" href="{{ profile_path }}">Личный кабинет</a>
+                {% if is_logged_in %}
+                    <div>Вы вошли как: <a href="{{ profile_path }}">{{ user_display_name }}</a></div>
+                    <a class="btn lk" href="{{ profile_path }}">Личный кабинет</a>
+                    {#TODO link#}
+                    <a class="btn--blue" href="#TODO">Выход</a>
+                {% else %}
+                    <a class="btn--blue reg" href="{{ signup_path }}">Зарегистрироваться</a>
+                    <a class="btn lk" href="{{ profile_path }}">Личный кабинет</a>
+                {% endif %}
             </div>
         </div>
     </div>

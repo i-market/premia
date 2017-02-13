@@ -2,14 +2,20 @@
 
 namespace App;
 
+use Core\Null;
 use Core\View as v;
+use Core\Strings as str;
+use CUser;
 
 class App {
     static function layoutContext() {
+        global $USER;
         return array(
             'main_menu' => self::renderMainMenu(),
             'slider' => self::renderSlider(),
             'auth_modal' => Auth::renderAuthForm(),
+            'is_logged_in' => $USER->IsAuthorized(),
+            'user_display_name' => $USER->GetFormattedName(),
             'signup_path' => Auth::signupPath(),
             'profile_path' => Auth::profilePath()
         );
@@ -104,8 +110,10 @@ class Iblock {
     const CONTENT_TYPE = 'content';
     const SLIDER_ID = 1;
     const PARTNERS_ID = 2;
+    const NOMINATIONS_ID = 3;
 }
 
+// TODO rename to User
 class Auth {
     static function profilePath() {
         return v::path('user/profile');
