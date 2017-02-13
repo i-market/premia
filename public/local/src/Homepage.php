@@ -3,6 +3,28 @@
 namespace App;
 
 class Homepage {
+    // TODO refactor don't use `twozebras:infoblocktree`
+    static function renderNominations() {
+        global $APPLICATION;
+        ob_start();
+        $APPLICATION->IncludeComponent(
+            "twozebras:infoblocktree",
+            "nominations",
+            array(
+                "IBLOCK_TYPE" => Iblock::CONTENT_TYPE,
+                "IBLOCK_ID" => Iblock::NOMINATIONS_ID,
+                "SECTION_USER_FIELDS" => array(),
+                "ELEMENT_PROPERTIES" => array(),
+                "CACHE_TYPE" => "A",
+                "CACHE_TIME" => "36000000",
+                "DEPTH_LEVEL" => "2",
+                "COUNT_ELEMENTS" => "N"
+            ),
+            false
+        );
+        return ob_get_clean();
+    }
+
     static function renderPartners() {
         global $APPLICATION;
         ob_start();

@@ -1,0 +1,22 @@
+<section class="nine">
+    <div class="wrap">
+        <div class="inner">
+            <div class="grid">
+                <div class="col col_3">
+                    <span class="number">{{ result.NOMINATION_COUNT }}</span>
+                    <h2>номинаций<br>премии</h2>
+                </div>
+                <div class="col right">
+                    {% for section in result.SECTIONS %}
+                        <div class="item">
+                            <h4>{{ section['~NAME'] }}</h4>
+                            {% for child in section.CHILDREN %}
+                                <p>{{ child['~NAME'] }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
