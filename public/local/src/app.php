@@ -2,10 +2,7 @@
 
 namespace App;
 
-use Core\Null;
 use Core\View as v;
-use Core\Strings as str;
-use CUser;
 
 class App {
     static function layoutContext() {
