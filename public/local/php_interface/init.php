@@ -1,5 +1,7 @@
 <?php
 
+use App\App;
+
 // composer
 require $_SERVER['DOCUMENT_ROOT'].'/local/vendor/autoload.php';
 
@@ -39,3 +41,5 @@ $twig->addFunction(new Twig_SimpleFunction('partial', 'Core\View::partial'));
 $twig->addFunction(new Twig_SimpleFunction('path', 'Core\View::path'));
 $twig->addFunction(new Twig_SimpleFunction('layout', 'Core\View::layout'));
 $twig->addFunction(new Twig_SimpleFunction('add_editing_actions', 'Core\NewsListLike::addEditingActions'));
+
+App::init();

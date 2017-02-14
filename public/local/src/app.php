@@ -6,6 +6,10 @@ use Core\View as v;
 use CUser;
 
 class App {
+    static function init() {
+        EventHandlers::listen();
+    }
+
     static function layoutContext() {
         global $USER;
         return array(

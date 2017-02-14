@@ -50,7 +50,8 @@ $arResult["USE_EMAIL_CONFIRMATION"] = (COption::GetOptionString("main", "new_use
 
 // apply core fields to user defined
 $arDefaultFields = array(
-	"LOGIN",
+    // change: email as login
+	"EMAIL",
 	"PASSWORD",
 	"CONFIRM_PASSWORD",
 );
