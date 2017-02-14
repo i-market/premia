@@ -3,6 +3,7 @@
 namespace App;
 
 use Core\View as v;
+use CUser;
 
 class App {
     static function layoutContext() {
@@ -13,7 +14,7 @@ class App {
             'social_links' => self::renderSocialLinks(),
             'auth_modal' => Auth::renderAuthForm(),
             'is_logged_in' => $USER->IsAuthorized(),
-            'user_display_name' => $USER->GetFormattedName(),
+            'user_display_name' => Auth::getDisplayName($USER),
             'signup_path' => Auth::signupPath(),
             'profile_path' => Auth::profilePath(),
             'logout_link' => Auth::logoutLink()
@@ -128,6 +129,14 @@ class Iblock {
 
 // TODO rename to User
 class Auth {
+    /**
+     * @param $user CUser
+     * @return string
+     */
+    static function getDisplayName($user) {
+        return $user->GetFormattedName();
+    }
+
     static function profilePath() {
         return v::path('user/profile');
     }
