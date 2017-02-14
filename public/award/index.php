@@ -1,4 +1,8 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Премия");
-?>Text here....<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+?>
+
+Извините, раздел находится в разработке.
+
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
