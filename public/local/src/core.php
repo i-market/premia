@@ -4,6 +4,7 @@ namespace Core;
 
 use Bitrix\Main\Config\Configuration;
 use CBitrixComponentTemplate;
+use CFile;
 use CIBlock;
 use Core\Underscore as _;
 use Core\View as v;
@@ -186,6 +187,13 @@ class View {
             $opts['PARAMS']
         );
         return ob_get_clean();
+    }
+
+    static function assocResized($items, $key, $dimensions) {
+        return array_map(function($item) use ($key, $dimensions) {
+            $resized = CFile::ResizeImageGet($item[$key], $dimensions);
+            return _::set($item, $key.'.RESIZED', $resized);
+        }, $items);
     }
 }
 
