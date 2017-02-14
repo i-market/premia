@@ -3,7 +3,7 @@
         <div class="carusel">
             {% for item in result.ITEMS %}
                 <div id="{{ add_editing_actions(item, template) }}">
-                    <img src="{{ item.PREVIEW_PICTURE.SRC }}" alt="{{ item.NAME }}">
+                    <img src="{{ item.PREVIEW_PICTURE.RESIZED.src }}" alt="{{ item.NAME }}">
                 </div>
             {% endfor %}
         </div>

@@ -9,7 +9,7 @@
                 <div class="col right">
                     {% for section in result.SECTIONS %}
                         <div class="item">
-                            <h4>{{ section['~NAME'] }}</h4>
+                            <h4>{{ section['~NAME'] }}:</h4>
                             {% for child in section.CHILDREN %}
                                 <p>{{ child['~NAME'] }}</p>
                             {% endfor %}
