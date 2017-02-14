@@ -14,7 +14,8 @@ class App {
             'is_logged_in' => $USER->IsAuthorized(),
             'user_display_name' => $USER->GetFormattedName(),
             'signup_path' => Auth::signupPath(),
-            'profile_path' => Auth::profilePath()
+            'profile_path' => Auth::profilePath(),
+            'logout_link' => Auth::logoutLink()
         );
     }
 
@@ -118,6 +119,10 @@ class Auth {
 
     static function signupPath() {
         return v::path('user/signup');
+    }
+
+    static function logoutLink() {
+        return '?logout=yes';
     }
 
     static function renderAuthForm() {
