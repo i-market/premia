@@ -167,6 +167,26 @@ class View {
     static function layout($path) {
         return SITE_TEMPLATE_PATH.'/layouts/'.$path;
     }
+
+    static function renderIncludedArea($path, $options = array()) {
+        global $APPLICATION;
+        $opts = array_merge(array(
+            'TEMPLATE' => '.default',
+            'PARAMS' => array()
+        ), $options);
+        ob_start();
+        $APPLICATION->IncludeComponent(
+            "bitrix:main.include",
+            $opts['TEMPLATE'],
+            Array(
+                "AREA_FILE_SHOW" => "file",
+                "PATH" => v::includedArea($path)
+            ),
+            null,
+            $opts['PARAMS']
+        );
+        return ob_get_clean();
+    }
 }
 
 class Form {
