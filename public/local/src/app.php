@@ -18,7 +18,7 @@ class App {
             'social_links' => v::renderIncludedArea('social_links.php'),
             'footer_left' => v::renderIncludedArea('footer_left.php'),
             'footer_copyright' => v::renderIncludedArea('footer_copyright.php'),
-            'auth_modal' => Auth::renderAuthForm(),
+            'login_modal' => Auth::renderLoginForm(),
             'is_logged_in' => $USER->IsAuthorized(),
             'user_display_name' => Auth::getDisplayName($USER),
             'signup_path' => Auth::signupPath(),
@@ -145,7 +145,7 @@ class Auth {
         return '?logout=yes';
     }
 
-    static function renderAuthForm() {
+    static function renderLoginForm() {
         global $APPLICATION;
         ob_start();
         $APPLICATION->IncludeComponent(
