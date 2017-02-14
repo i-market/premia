@@ -1,8 +1,11 @@
 <?
+use App\Homepage;
+use App\PageProperty;
+use Core\View as v;
+
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Премия «Лидер конкурентных продаж»");
-use App\Homepage;
-use Core\View as v;
+$APPLICATION->SetPageProperty(PageProperty::LAYOUT, 'homepage.twig');
 ?>
 
 <section class="about">

@@ -1,5 +1,6 @@
 <?php
 use App\App;
+use App\PageProperty;
 use Core\View as v;
 ?>
 <!doctype html>
@@ -23,4 +24,4 @@ use Core\View as v;
 </head>
 <body>
 <? $APPLICATION->ShowPanel() ?>
-<? \Core\View::showLayoutHeader('layout', 'base.twig', App::layoutContext()) ?>
+<? \Core\View::showLayoutHeader(PageProperty::LAYOUT, 'base.twig', App::layoutContext()) ?>

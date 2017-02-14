@@ -25,7 +25,15 @@
     {{ slider }}
     {#TODO stub modal#}
     {{ auth_modal }}
-    {{ page }}
+    {% block page %}
+        <section class="content_section">
+            <div class="wrap">
+                <div class="inner editable-area">
+                    {{ page }}
+                </div>
+            </div>
+        </section>
+    {% endblock %}
 </main>
 <!-- FOOTER START -->
 <footer class="footer">

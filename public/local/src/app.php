@@ -115,6 +115,10 @@ class Iblock {
     const NOMINATIONS_ID = 3;
 }
 
+class PageProperty {
+    const LAYOUT = 'layout';
+}
+
 // TODO rename to User
 class Auth {
     /**
