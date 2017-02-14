@@ -7,6 +7,7 @@
                 <a class="logo" href="{{ path('/') }}"/></a>
             </div>
             <div class="right">
+                {#
                 {% if is_logged_in %}
                     <div>Вы вошли как: <a href="{{ profile_path }}">{{ user_display_name }}</a></div>
                     <a class="btn lk" href="{{ profile_path }}">Личный кабинет</a>
@@ -15,6 +16,7 @@
                     <a class="btn--blue reg" href="{{ signup_path }}">Зарегистрироваться</a>
                     <a class="btn lk" href="{{ profile_path }}">Личный кабинет</a>
                 {% endif %}
+                #}
             </div>
         </div>
     </div>
@@ -24,7 +26,7 @@
 <main class="content">
     {{ slider }}
     {#TODO stub modal#}
-    {{ auth_modal }}
+    {#{{ auth_modal }}#}
     {% block page %}
         <section class="content_section">
             <div class="wrap">
