@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Премия";
+$arDirProperties = Array(
+
+);
+?>
