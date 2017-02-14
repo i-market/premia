@@ -10,6 +10,7 @@ class App {
         return array(
             'main_menu' => self::renderMainMenu(),
             'slider' => self::renderSlider(),
+            'social_links' => self::renderSocialLinks(),
             'auth_modal' => Auth::renderAuthForm(),
             'is_logged_in' => $USER->IsAuthorized(),
             'user_display_name' => $USER->GetFormattedName(),
@@ -99,6 +100,20 @@ class App {
         		"SORT_ORDER1" => "DESC",
         		"SORT_ORDER2" => "ASC"
         	)
+        );
+        return ob_get_clean();
+    }
+
+    static function renderSocialLinks() {
+        global $APPLICATION;
+        ob_start();
+        $APPLICATION->IncludeComponent(
+            "bitrix:main.include",
+            "",
+            Array(
+                "AREA_FILE_SHOW" => "file",
+                "PATH" => v::includedArea('social_links.php')
+            )
         );
         return ob_get_clean();
     }
