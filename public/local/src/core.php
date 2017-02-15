@@ -21,7 +21,7 @@ class Underscore extends ArraysMethods {
         return $ret;
     }
 
-    static function filter($array, $pred) {
+    static function filter($array, $pred = null) {
         // restore indices
         return array_values(array_filter($array, $pred));
     }
