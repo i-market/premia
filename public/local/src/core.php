@@ -49,7 +49,7 @@ class Underscore extends ArraysMethods {
     static function noop() {}
 }
 
-class Null {
+class Nullable {
     static public function get($nullable, $default) {
         return $nullable === null ? $default : $nullable;
     }
@@ -87,7 +87,7 @@ class Env {
 
 class App {
     static function env() {
-        $app = Null::get(Configuration::getValue('app'), array());
+        $app = Nullable::get(Configuration::getValue('app'), array());
         return _::get($app, 'env', Env::PROD);
     }
 }
