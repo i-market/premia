@@ -29,7 +29,7 @@
     "clean": "gulp clean",
     "build": "gulp build",
     "release": "gulp release",
-    "dev": "NODE_ENV=dev gulp dev"
+    "watch": "gulp watch"
   },
   "author": "",
   "license": "ISC"

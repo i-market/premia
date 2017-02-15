@@ -1,9 +1,0 @@
-{# TODO first broken draft #}
-{% if result.SHOW_ERRORS == 'Y' and result.ERROR %}
-    <div>{{ result.ERROR_MESSAGE }}</div>
-{% endif %}
-<form method="post" action="{{ result.AUTH_URL }}">
-    <input type="text" placeholder="user">
-    <input type="password" placeholder="password">
-    <button type="submit">submit</button>
-</form>

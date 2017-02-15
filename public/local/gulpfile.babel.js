@@ -92,7 +92,7 @@ gulp.task('revision', ['revision:rev', 'revision:replace']);
 
 gulp.task('release', ['build', 'revision']);
 
-gulp.task('dev:sass', () => {
+gulp.task('watch:sass', () => {
   return gulp.src('mockup/css/*.scss')
     .pipe(sass())
     .pipe(gulp.dest(`${paths.dist}/css`))
@@ -106,8 +106,8 @@ gulp.task('browser-sync', () => {
   });
 });
 
-gulp.task('dev', ['dev:sass', 'browser-sync'], () => {
-  gulp.watch('mockup/css/*.scss', ['dev:sass']);
+gulp.task('watch', ['watch:sass', 'browser-sync'], () => {
+  gulp.watch('mockup/css/*.scss', ['watch:sass']);
   gulp.watch([`${paths.dist}/js/**/*.js`, `${paths.template}/**/*.twig`])
     .on('change', browserSync.reload);
 });

@@ -139,8 +139,27 @@ h4 {
 }
 
 .editable-area {
-  ul {
+  // TODO table styles
+  line-height: 32px;
+  font-weight: 300;
+  b {
+    color: $d_blue;
+  }
+  h1 {
+    color: $d_blue;
+  }
+  // TODO ordered list styles
+  ul,
+  ol {
     @extend %list;
+  }
+  &.editable-page {
+    h1, h2, h3 {
+      padding-left: 0;
+    }
+    p {
+      //margin-bottom: 20px;
+    }
   }
 }
 

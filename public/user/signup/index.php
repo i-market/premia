@@ -4,7 +4,7 @@ $APPLICATION->SetTitle("Регистрация");
 ?>
 
 <?$APPLICATION->IncludeComponent(
-    "bitrix:main.register",
+    "app:main.register",
     "",
     Array(
         "AUTH" => "Y",
