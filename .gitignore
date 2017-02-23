@@ -1,0 +1,13 @@
+*
+!*/
+!/.gitignore
+!/public/local/mockup/**
+
+.DS_Store
+
+node_modules/
+.sass-cache/
+
+/public/local/mockup/css/main.css
+/public/local/mockup/css/main.css.map
+/public/local/mockup/dist
