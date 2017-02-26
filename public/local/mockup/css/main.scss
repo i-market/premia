@@ -169,16 +169,15 @@ h4 {
     color: $d_blue;
   }
   // TODO ordered list styles
-  ul,
-  ol {
+  ul, ol {
     @extend %list;
   }
   &.editable-page {
     h1, h2, h3 {
       padding-left: 0;
     }
-    p {
-      //margin-bottom: 20px;
+    p, ul, ol, h1, h2, h3, h4 {
+      margin-bottom: 20px;
     }
   }
 }
