@@ -22,10 +22,9 @@ $router->with('/api', function () use ($router) {
     });
 });
 foreach (App::formSpecs() as $spec) {
-    $route = Form::formRoute($spec, function($params, $errors, $response) use ($spec) {
+    $route = Form::formRoute($spec, function($params, $errors, $response) {
         if (count($errors) === 0) {
             $event = array_merge(array_change_key_case($params, CASE_UPPER), array(
-                'SUBJECT' => $spec['mail_subject'],
                 'EMAIL_FROM' => App::mailFrom(),
                 'EMAIL_TO' => App::mailTo()
             ));

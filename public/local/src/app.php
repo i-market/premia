@@ -43,7 +43,6 @@ class App {
         $ret = _::keyBy(array(
             array(
                 'name' => 'contact',
-                'mail_subject' => 'Сообщение из формы «Напишите нам сообщение»',
                 'fields' => _::keyBy(array(
                     f::field('name', 'Ваше имя'),
                     f::field('email', 'Ваш E-mail'),
