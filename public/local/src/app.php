@@ -144,6 +144,24 @@ class User {
         return '?logout=yes';
     }
 
+    static function parseFullName($fullName) {
+        $full = trim($fullName);
+        $parts = explode(' ', $full);
+        if ($parts[0] === '') unset($parts[0]);
+        if (count($parts) === 0) {
+            return array();
+        } elseif (count($parts) > 3) {
+            return array('FULL_NAME' => $full);
+        } else {
+            $ret = array();
+            $ret['FULL_NAME'] = $full;
+            if (isset($parts[0])) $ret['LAST_NAME'] = $parts[0];
+            if (isset($parts[1])) $ret['FIRST_NAME'] = $parts[1];
+            if (isset($parts[2])) $ret['PATRONYMIC'] = $parts[2];
+            return $ret;
+        }
+    }
+
     static function renderLoginForm() {
         global $APPLICATION;
         ob_start();
