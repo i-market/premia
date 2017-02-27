@@ -5,7 +5,7 @@ use Core\View as v;
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Премия «Лидер конкурентных продаж»");
-$APPLICATION->SetPageProperty(PageProperty::LAYOUT, 'homepage.twig');
+$APPLICATION->SetPageProperty(PageProperty::LAYOUT, 'bare.twig');
 ?>
 
 <section class="about">
