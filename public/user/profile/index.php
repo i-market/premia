@@ -1,11 +1,14 @@
 <?
+use App\PageProperty;
+
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Личный кабинет");
+$APPLICATION->SetPageProperty(PageProperty::LAYOUT, 'bare.twig');
 ?>
 
 <?$APPLICATION->IncludeComponent(
 	"bitrix:main.profile",
-	"",
+	"profile",
 	Array(
 		"AJAX_MODE" => "N",
 		"AJAX_OPTION_ADDITIONAL" => "",
