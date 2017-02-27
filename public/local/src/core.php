@@ -11,6 +11,7 @@ use Core\View as v;
 use Maximaster\Tools\Twig\TemplateEngine;
 use Underscore\Methods\ArraysMethods;
 use Underscore\Methods\StringsMethods;
+use Valitron\Validator;
 
 class Underscore extends ArraysMethods {
     static function map($array, $f) {
@@ -32,6 +33,15 @@ class Underscore extends ArraysMethods {
 
     static function take($array, $n) {
         return array_slice($array, 0, $n);
+    }
+
+    // TODO function $by support
+    static function keyBy($array, $by) {
+        $ret = array();
+        foreach ($array as $x) {
+            $ret[$x[$by]] = $x;
+        }
+        return $ret;
     }
 
     static function identity() {
@@ -219,6 +229,31 @@ class Form {
                     'attributes' => array()
                 );
             }, $options)
+        );
+    }
+
+    static function formRoute($spec, $f) {
+        $handler = function($request, $response) use ($spec, $f) {
+            $params = $request->params(_::pluck($spec['fields'], 'name'));
+            $validator = new Validator($params);
+            foreach ($spec['validations'] as $validation) {
+                if ($validation['type'] === 'required') {
+                    foreach ($validation['fields'] as $field) {
+                        $tpl = View::twig()->createTemplate($validation['message']);
+                        $message = $tpl->render($spec['fields'][$field]);
+                        // mutate
+                        $validator->rule('required', $field)->message($message);
+                    }
+                }
+            }
+            $validator->validate();
+            $errors = $validator->errors();
+            return $f($params, $errors, $response);
+        };
+        return array(
+            'method' => 'POST',
+            'path' => $spec['action'],
+            'handler' => $handler
         );
     }
 }

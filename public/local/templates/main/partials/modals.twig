@@ -64,25 +64,25 @@
     </div>
 </div>
 <!--Напишите нам сообщение-->
-<div class="modal" id="some3">
+<div class="modal" id="contact-modal">
     <div class="block">
         <span class="close"></span>
-        <form action="" method="post" id="" class="modal_form">
+        <form action="{{ form_specs.contact.action }}" method="post" class="modal_form">
             <h4 class="tab_title">Напишите нам сообщение</h4>
             <label class="label">
-                <input type="text" placeholder="Ваше имя">
+                <input name="name" type="text" placeholder="Ваше имя">
             </label>
             <label class="label">
-                <input type="text" placeholder="Ваш E-mail">
+                <input name="email" type="text" placeholder="Ваш E-mail">
             </label>
             <label class="label label_textarea">
-                <textarea rows="1" maxlength="15000"></textarea>
+                <textarea name="message" rows="1" maxlength="15000"></textarea>
                 <span class="placeholder">Ваше сообщение</span>
                 <span class="chars"></span>
             </label>
             <div class="wrap_btn">
                 <div>
-                    <button class="btn--blue">Отправить</button>
+                    <button type="submit" class="btn--blue">Отправить</button>
                 </div>
             </div>
         </form>

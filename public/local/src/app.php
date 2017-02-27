@@ -2,10 +2,19 @@
 
 namespace App;
 
+use Bitrix\Main\Config\Configuration;
+use CEvent;
+use COption;
+use Core\Env;
+use Core\Nullable as nil;
 use Core\View as v;
+use Core\Form as f;
 use CUser;
+use Core\Underscore as _;
 
 class App {
+    const SITE_ID = 's1';
+
     static function init() {
         EventHandlers::listen();
     }
@@ -13,6 +22,7 @@ class App {
     static function layoutContext() {
         global $USER;
         return array(
+            'form_specs' => self::formSpecs(),
             'main_menu' => self::renderMainMenu(),
             'slider' => self::renderSlider(),
             'social_links' => v::renderIncludedArea('social_links.php'),
@@ -25,6 +35,55 @@ class App {
             'profile_path' => User::profilePath(),
             'logout_link' => User::logoutLink()
         );
+    }
+
+    static function formSpecs() {
+        $requiredMessage = "Пожалуйста, заполните поле «{{ label }}».";
+        // TODO field specs are incomplete, don't use them for rendering
+        $ret = _::keyBy(array(
+            array(
+                'name' => 'contact',
+                'mail_subject' => 'Сообщение из формы «Напишите нам сообщение»',
+                'fields' => _::keyBy(array(
+                    f::field('name', 'Ваше имя'),
+                    f::field('email', 'Ваш E-mail'),
+                    f::field('message', 'Ваше сообщение')
+                ), 'name'),
+                'validations' => array(
+                    array(
+                        'type' => 'required',
+                        'fields' => array('name', 'email', 'message'),
+                        'message' => $requiredMessage
+                    )
+                )
+            )
+        ), 'name');
+        return array_map(function($spec) {
+            return _::set($spec, 'action', '/api/'.$spec['name']);
+        }, $ret);
+    }
+
+    // TODO move to core?
+    static function sendMailEvent($type, $siteId, $data) {
+        if (\Core\App::env() === Env::DEV) {
+            $event = array($type, $siteId, $data);
+            return $event;
+        } else {
+            return (new CEvent)->Send($type, $siteId, $data);
+        }
+    }
+
+    // TODO move to core?
+    private static function config() {
+        return nil::get(Configuration::getValue('app'), array());
+    }
+
+    static function mailFrom() {
+        return _::get(self::config(), 'mail_from', COption::GetOptionString('main', 'email_from'));
+    }
+
+    static function mailTo() {
+        return _::get(self::config(), 'mail_to', COption::GetOptionString('main', 'email_from'));
     }
 
     static function renderMainMenu() {
@@ -110,6 +169,10 @@ class App {
         );
         return ob_get_clean();
     }
+}
+
+class MailEvent {
+    const CONTACT_FORM = 'CONTACT_FORM';
 }
 
 class Iblock {
