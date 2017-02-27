@@ -18,12 +18,12 @@ class App {
             'social_links' => v::renderIncludedArea('social_links.php'),
             'footer_left' => v::renderIncludedArea('footer_left.php'),
             'footer_copyright' => v::renderIncludedArea('footer_copyright.php'),
-            'login_modal' => Auth::renderLoginForm(),
+            'login_modal' => User::renderLoginForm(),
             'is_logged_in' => $USER->IsAuthorized(),
-            'user_display_name' => Auth::getDisplayName($USER),
-            'signup_path' => Auth::signupPath(),
-            'profile_path' => Auth::profilePath(),
-            'logout_link' => Auth::logoutLink()
+            'user_display_name' => User::getDisplayName($USER),
+            'signup_path' => User::signupPath(),
+            'profile_path' => User::profilePath(),
+            'logout_link' => User::logoutLink()
         );
     }
 
@@ -123,8 +123,7 @@ class PageProperty {
     const LAYOUT = 'layout';
 }
 
-// TODO rename to User
-class Auth {
+class User {
     /**
      * @param $user CUser
      * @return string
