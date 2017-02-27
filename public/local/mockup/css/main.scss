@@ -1336,6 +1336,11 @@ input {
     right: -22px;
     background: url('../images/close.svg')no-repeat center center;
   }
+  .message {
+    &.error {
+      color: $red;
+    }
+  }
 }
 
 [data-modal="some1"] {

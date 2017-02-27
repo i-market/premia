@@ -37,7 +37,7 @@
         <form action="/api/user/signup" method="post" class="modal_form">
             <h4 class="tab_title">Регистрация участника конкурса</h4>
             <label class="label">
-                <input name="name" type="text" placeholder="ФИО">
+                <input name="full-name" type="text" placeholder="ФИО">
             </label>
             <label class="label">
                 <input name="company" type="text" placeholder="Название компании">
@@ -54,6 +54,7 @@
             <label class="label">
                 <input name="password-confirmation" type="password" placeholder="Введите пароль еще раз">
             </label>
+            <div class="message"></div>
             <div class="wrap_btn">
                 <div>
                     <button type="submit" class="btn--blue">Зарегистрироваться</button>

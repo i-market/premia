@@ -23,8 +23,6 @@
 <!-- CONTENT START -->
 <main class="content">
     {{ slider }}
-    {#TODO stub modal#}
-    {{ login_modal }}
     {% block page %}
         <section class="content_section">
             <div class="wrap">
@@ -67,3 +65,4 @@
 <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ START -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="{{ asset('js/vendor.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bundle.js') }}"></script>
