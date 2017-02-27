@@ -1,7 +1,8 @@
 {
     "require": {
         "maximaster/tools.twig": "^1.0",
-        "anahkiasen/underscore-php": "^2.0"
+        "anahkiasen/underscore-php": "^2.0",
+        "klein/klein": "^2.1"
     },
     "autoload": {
         "files": ["src/app.php", "src/core.php"],

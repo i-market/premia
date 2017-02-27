@@ -12,7 +12,7 @@
                     <a class="btn lk" href="{{ profile_path }}">Личный кабинет</a>
                     <a class="btn--blue" href="{{ logout_link }}">Выход</a>
                 {% else %}
-                    <a class="btn--blue reg" href="{{ signup_path }}">Зарегистрироваться</a>
+                    <div data-modal="signup-modal" class="btn--blue reg">Зарегистрироваться</div>
                     <a class="btn lk" href="{{ profile_path }}">Личный кабинет</a>
                 {% endif %}
             </div>
@@ -63,6 +63,7 @@
         </div>
     </div>
 </footer>
+{% include(partial('modals.twig')) %}
 <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ START -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="{{ asset('js/vendor.js') }}"></script>
