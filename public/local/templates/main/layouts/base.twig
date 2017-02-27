@@ -68,3 +68,35 @@
 <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ START -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="{{ asset('js/vendor.js') }}"></script>
+<script type="text/javascript">
+    $(function() {
+        // слайдеры
+        $('.slider').slick({
+            arrows: false,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            dots: true,
+        });
+        $('.carusel').slick({
+            arrows: false,
+            slidesToShow: 5,
+            slidesToScroll: 1,
+            autoplay: true,
+            responsive: [
+                {
+                    breakpoint: 1023,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 1
+                    }
+                }, {
+                    breakpoint: 580,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+    });
+</script>

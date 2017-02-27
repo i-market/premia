@@ -33,7 +33,7 @@ $(document).ready(function () {
   $('textarea').each(function () {
     $(this).keyup(function () {
       var length = $(this).val().length;
-      var length = maxLength - length;
+      length = maxLength - length;
       $(this).parent().find('.chars').text(length);
     });
     $(this).focus(function () {
@@ -46,24 +46,24 @@ $(document).ready(function () {
         $(this).parent().removeClass('focus');
       } else {
         $(this).parent().addClass('focus');
-      };
+      }
     });
   });
   var div = document.querySelectorAll('.label_textarea');
   var ta = document.querySelector('textarea');
-  div.forEach(function (itm, idx) {
-      var t = itm.children[0],
-        d = itm;
-      t.addEventListener('keydown', function () {
-        setTimeout(function () {
-          t.style.cssText = 'height:0px';
-          var height = Math.min(20 * 5, t.scrollHeight);
-          d.style.cssText = 'height:' + height + 'px';
-          t.style.cssText = 'height:' + height + 'px';
-        }, 0);
-      });
-    })
-    // табы
+  [].forEach.call(div, function (itm, idx) {
+    var t = itm.children[0],
+      d = itm;
+    t.addEventListener('keydown', function () {
+      setTimeout(function () {
+        t.style.cssText = 'height:0px';
+        var height = Math.min(20 * 5, t.scrollHeight);
+        d.style.cssText = 'height:' + height + 'px';
+        t.style.cssText = 'height:' + height + 'px';
+      }, 0);
+    });
+  });
+  // табы
   $(function () {
     $('[data-tabLinks]').on('click', function () {
       var targetNode = $('[data-tabContent=' + $(this).attr('data-tabLinks') + ']');
@@ -71,34 +71,6 @@ $(document).ready(function () {
       targetNode.parent().find('[data-tabContent]').hide().filter(targetNode).show();
     });
     $('[data-tabLinks]').parent().find('[data-tabLinks]:nth-child(1)').trigger('click');
-  });
-  // слайдеры
-  $('.slider').slick({
-    arrows: false,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    dots: true,
-  });
-  $('.carusel').slick({
-    arrows: false,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    autoplay: true,
-    responsive: [
-      {
-        breakpoint: 1023,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1
-        }
-    }, {
-        breakpoint: 580,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-    }
-  ]
   });
 
 });
