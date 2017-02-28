@@ -34,7 +34,7 @@
     "build": "gulp build",
     "release": "gulp release",
     "watch:js": "watchify assets/js/main.js -o ${npm_package_config_dist}/js/bundle.js -v -d -t [ babelify --presets [ es2015 ] ]",
-    "watch": "gulp watch"
+    "watch": "gulp watch & npm run watch:js"
   },
   "browserify": {
     "transform": [
