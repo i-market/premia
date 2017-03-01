@@ -15,8 +15,17 @@ $signupRoute = Form::formRoute($formSpecs['signup'], function($params, $errors, 
     if (count($errors) === 0) {
         $name = User::parseFullName($params['full-name']);
         // mutate
-        $message = $USER->Register($params['email'], $name['FIRST_NAME'], $name['LAST_NAME'],
+        $login = $params['email'];
+        $message = $USER->Register($login, $name['FIRST_NAME'], $name['LAST_NAME'],
             $params['password'], $params['password-confirmation'], $params['email']);
+        if ($message['TYPE'] === 'OK') {
+            $user = CUser::GetByLogin($login)->GetNext();
+            $USER->Update($user['ID'], array(
+                'SECOND_NAME' => $name['PATRONYMIC'],
+                'WORK_COMPANY' => $params['company'],
+                'PERSONAL_PHONE' => $params['phone']
+            ));
+        }
     }
     return $response->json(array(
         'errors' => (object) $errors,
