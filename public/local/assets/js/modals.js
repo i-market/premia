@@ -2,6 +2,15 @@
 
 import _ from 'lodash';
 
+function toggleSubmitButton($form, state) {
+  const $button = $form.find('button[type=submit]');
+  if (state) {
+    $button.removeAttr('disabled');
+  } else {
+    $button.attr('disabled', 'disabled');
+  }
+}
+
 function mutateField($label, errorMaybe) {
   $label.toggleClass('error', !_.isNull(errorMaybe));
   let $message = $label.find('.message');
@@ -13,7 +22,9 @@ function mutateField($label, errorMaybe) {
 }
 
 function mutateMessage($form, text, type) {
-  $form.find('.form-message').replaceWith(`<div class="form-message ${type}">${text}</div>`);
+  $(`<div class="form-message ${type}">${text}</div>`)
+    .replaceAll($form.find('.form-message'))
+    .toggle(!_.isEmpty(text));
 }
 
 function mutateForm($form, response) {
@@ -47,4 +58,4 @@ function init($form, onSuccess) {
   });
 }
 
-export default {init, mutateForm};
+export default {init, mutateForm, toggleSubmitButton};

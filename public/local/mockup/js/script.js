@@ -16,6 +16,8 @@ $(document).ready(function () {
     });
   });
   $('[data-modal]').on('click', function () {
+    // in case we open a modal from another modal
+    $('.modal').fadeOut(100);
     var dataModal = $(this).attr('data-modal'),
       dataId = $('#' + dataModal);
     dataId.fadeIn(100);

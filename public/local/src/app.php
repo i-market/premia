@@ -28,7 +28,6 @@ class App {
             'social_links' => v::renderIncludedArea('social_links.php'),
             'footer_left' => v::renderIncludedArea('footer_left.php'),
             'footer_copyright' => v::renderIncludedArea('footer_copyright.php'),
-            'login_modal' => User::renderLoginForm(),
             'is_logged_in' => $USER->IsAuthorized(),
             'user_display_name' => User::getDisplayName($USER),
             'signup_path' => User::signupPath(),
