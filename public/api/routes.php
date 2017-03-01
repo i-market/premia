@@ -18,7 +18,8 @@ $signupRoute = Form::formRoute($formSpecs['signup'], function($params, $errors, 
         $login = $params['email'];
         $message = $USER->Register($login, $name['FIRST_NAME'], $name['LAST_NAME'],
             $params['password'], $params['password-confirmation'], $params['email']);
-        if ($message['TYPE'] === 'OK') {
+        $isSuccess = $message['TYPE'] === 'OK';
+        if ($isSuccess) {
             $user = CUser::GetByLogin($login)->GetNext();
             $USER->Update($user['ID'], array(
                 'SECOND_NAME' => $name['PATRONYMIC'],
