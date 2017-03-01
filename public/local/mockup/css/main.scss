@@ -272,6 +272,17 @@ h4 {
       }
     }
   }
+  .user-display-name {
+    display: inline-block;
+
+    // same as .btn
+    line-height: 46px;
+    margin-right: 18px;
+
+    a {
+      color: $blue;
+    }
+  }
   .lk,
   .reg {
     @media only screen and (max-width: 767px) {
