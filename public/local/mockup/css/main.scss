@@ -1430,7 +1430,7 @@ input {
   .wrap_btn {
     padding-bottom: 1px;
   }
-  .form-message {
+  .form-message.error {
     color: $errorRed;
   }
 }

@@ -13,7 +13,7 @@ $signupRoute = Form::formRoute($formSpecs['signup'], function($params, $errors, 
     global $USER;
     $message = array();
     if (count($errors) === 0) {
-        $name = User::parseFullName(params['full-name']);
+        $name = User::parseFullName($params['full-name']);
         // mutate
         $message = $USER->Register($params['email'], $name['FIRST_NAME'], $name['LAST_NAME'],
             $params['password'], $params['password-confirmation'], $params['email']);
