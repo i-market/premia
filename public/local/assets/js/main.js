@@ -41,4 +41,16 @@ $(() => {
       }
     });
   }
+
+  {
+    const $form = $('#contact-modal form');
+    modals.init($form, (data) => {
+      modals.mutateForm($form, data);
+      const isSuccess = _.isEmpty(data.errors);
+      if (isSuccess) {
+        modals.mutateMessage($form, 'Ваше сообщение было успешно отправлено. Спасибо.', 'info');
+        modals.toggleSubmitButton($form, false);
+      }
+    });
+  }
 });

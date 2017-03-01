@@ -58,4 +58,4 @@ function init($form, onSuccess) {
   });
 }
 
-export default {init, mutateForm, toggleSubmitButton};
+export default {init, mutateForm, mutateMessage, toggleSubmitButton};
