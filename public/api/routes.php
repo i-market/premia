@@ -39,9 +39,12 @@ $router->with('/api', function () use ($router, $signupRoute) {
             global $USER;
             $params = $request->params(array('email', 'password', 'remember'));
             $login = $params['email'];
-            $messageOrBool = $USER->Login($login, $params['password'], $params['remember'] === 'on' ? 'Y' : 'N');
-            $message = $messageOrBool ? array() : $messageOrBool;
-            return $response->json(Api::formResponse(array(), $message));
+            $messageOrTrue = $USER->Login($login, $params['password'], $params['remember'] === 'on' ? 'Y' : 'N');
+            $message = $messageOrTrue === true ? array() : $messageOrTrue;
+            return $response->json(array_merge(
+                array('isLoggedIn' => $messageOrTrue === true),
+                Api::formResponse(array(), $message)
+            ));
         });
     });
 });

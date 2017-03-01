@@ -23,8 +23,7 @@ $(() => {
     const $form = $('#login-modal form');
     modals.init($form, (data) => {
       modals.mutateForm($form, data);
-      const isSuccess = _.isEmpty(data.bxMessage);
-      if (isSuccess) {
+      if (data.isLoggedIn) {
         window.location.reload();
       }
     });
