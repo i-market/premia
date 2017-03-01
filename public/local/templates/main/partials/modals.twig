@@ -3,23 +3,25 @@
 <div class="modal" id="login-modal">
     <div class="block">
         <span class="close"></span>
-        <form action="" method="post" id="">
+        <form action="/api/user/login" method="post">
             <h4 class="tab_title">Вход в личный кабинет</h4>
             <label class="label">
-                <input type="text" placeholder="E-mail">
+                <input name="email" type="text" placeholder="E-mail">
             </label>
             <label class="label">
-                <input type="password" placeholder="Пароль">
+                <input name="password" type="password" placeholder="Пароль">
             </label>
             <div class="remember">
-                <input type="checkbox" hidden="hidden" id="remember">
+                <input name="remember" type="checkbox" hidden="hidden" id="remember">
                 <label for="remember">Запомнить меня</label>
             </div>
+            <div class="form-message"></div>
             <div class="wrap_btn">
                 <div>
-                    <button class="btn--blue">Войти</button>
+                    <button type="submit" class="btn--blue">Войти</button>
                 </div>
                 <div>
+                    {# TODO password reset #}
                     <a href="#">Забыли пароль?</a>
                 </div>
             </div>

@@ -1441,7 +1441,8 @@ input {
   .wrap_btn {
     padding-bottom: 1px;
   }
-  .form-message.error {
-    color: $errorRed;
-  }
+}
+
+.form-message.error {
+  color: $errorRed;
 }

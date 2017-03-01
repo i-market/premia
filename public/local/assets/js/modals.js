@@ -13,7 +13,8 @@ function mutateField($label, errorMaybe) {
 }
 
 function mutateMessage($form, text, type) {
-  $form.find('.form-message').replaceWith(`<div class="form-message ${type}">${text}</div>`);
+  $form.find('.form-message')
+    .replaceWith(`<div class="form-message ${type}">${text}</div>`);
 }
 
 function mutateForm($form, response) {
