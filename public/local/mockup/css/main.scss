@@ -173,6 +173,15 @@ h4 {
   ul, ol {
     @extend %list;
   }
+  a {
+    font-weight: 700;
+    text-decoration: underline;
+    color: $d_blue;
+    &:hover {
+      color: $blue;
+      text-decoration: none;
+    }
+  }
   &.editable-page {
     h1, h2, h3 {
       padding-left: 0;
