@@ -7,13 +7,15 @@
                 <a class="logo" href="{{ path('/') }}"/></a>
             </div>
             <div class="right">
+                {# TODO user/profile #}
                 {% if is_logged_in %}
-                    <div>Вы вошли как: <a href="{{ profile_path }}">{{ user_display_name }}</a></div>
-                    <a class="btn lk" href="{{ profile_path }}">Личный кабинет</a>
+                    {# TODO wrap display name in a:href=profile_path #}
+                    <div class="user-display-name">Вы вошли как: {{ user_display_name }}</div>
+                    {#<a class="btn lk" href="{{ profile_path }}">Личный кабинет</a>#}
                     <a class="btn--blue" href="{{ logout_link }}">Выход</a>
                 {% else %}
                     <div data-modal="signup-modal" class="btn--blue reg">Зарегистрироваться</div>
-                    <div data-modal="login-modal" class="btn lk">Личный кабинет</div>
+                    {#<div data-modal="login-modal" class="btn lk">Личный кабинет</div>#}
                 {% endif %}
             </div>
         </div>
