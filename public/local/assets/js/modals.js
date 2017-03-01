@@ -2,30 +2,36 @@
 
 import _ from 'lodash';
 
-function showMessage($form, text, type = 'success') {
-  $form.find('.message').replaceWith(`<div class="message ${type}">${text}</div>`);
-}
-
-function showBxMessage($form, bxMsg) {
-  const type = {
-    'OK': 'success',
-    'ERROR': 'error'
-  };
-  return showMessage($form, bxMsg.message, type[bxMsg.type]);
-}
-
 function mutateField($label, errorMaybe) {
   $label.toggleClass('error', !_.isNull(errorMaybe));
   let $message = $label.find('.message');
   if (!$message.length) {
     $message = $('<span class="message"></span>').appendTo($label);
   }
+  // clear
   $message.html(_.isNull(errorMaybe) ? '' : errorMaybe.message);
 }
 
-function errorMessageHtml(errors, bxMessage) {
-  console.log({errors, bxMessage});
-  return _.join(_.flatMap(errors, _.identity), '<br>');
+function mutateMessage($form, text, type) {
+  $form.find('.form-message').replaceWith(`<div class="form-message ${type}">${text}</div>`);
+}
+
+function mutateForm($form, response) {
+  $form.find(':input[name]').each(function() {
+    const $label = $(this).parent('label');
+    const fieldName = $(this).attr('name');
+    const errorMaybe = _.has(response.errors, fieldName)
+      ? {message: _.join(response.errors[fieldName], '<br>')}
+      : null;
+    mutateField($label, errorMaybe);
+  });
+  if (_.isEmpty(_.get(response, 'bxMessage', {}))) {
+    // clear
+    mutateMessage($form, '', 'info');
+  } else {
+    const msgType = response.bxMessage.type === 'ERROR' ? 'error' : 'info';
+    mutateMessage($form, response.bxMessage.message, msgType);
+  }
 }
 
 function formFields($form) {
@@ -41,4 +47,4 @@ function init($form, onSuccess) {
   });
 }
 
-export default {showMessage, showBxMessage, init, mutateField};
+export default {init, mutateForm};
