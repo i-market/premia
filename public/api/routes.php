@@ -9,6 +9,7 @@ use Klein\Klein;
 
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_before.php');
 
+// TODO move handlers to `Api`
 $formSpecs = App::formSpecs();
 $signupRoute = Form::formRoute($formSpecs['signup'], function($params, $errors, $response) {
     global $USER;
@@ -45,6 +46,12 @@ $router->with('/api', function () use ($router, $signupRoute) {
                 array('isLoggedIn' => $messageOrTrue === true),
                 Api::formResponse(array(), $message)
             ));
+        });
+        $router->respond('POST', '/reset', function($request, $response) {
+            $params = $request->params(array('email'));
+            $login = $params['email'];
+            $message = CUser::SendPassword($login, $params['email']);
+            return $response->json(Api::formResponse(array(), $message));
         });
     });
 });

@@ -1,5 +1,6 @@
 $blue: #0066cc;
 $d_blue: #051945;
+$lightBlue: #dfebf8;
 $green: #33cc99;
 $red: #ec151e;
 $errorRed: #dd4b39;
@@ -86,11 +87,15 @@ textarea {
   background: #FFF;
   -webkit-user-select: none;
   user-select: none;
+  transition: .1s;
   @media only screen and (max-width: 1023px) {
     font-size: 14px;
     width: 160px;
     height: 40px;
     line-height: 40px;
+  }
+  &[disabled] {
+    opacity: 0.3;
   }
 }
 
@@ -1097,6 +1102,7 @@ h4 {
       display: block;
       margin-top: 10px;
       font-size: 14px;
+      line-height: 1.2;
       color: $errorRed;
     }
   }
@@ -1433,7 +1439,7 @@ input {
 
 .registration {
   padding: 40px 30px;
-  background: #dfebf8;
+  background: $lightBlue;
   text-align: center;
   p,
   a {
@@ -1455,6 +1461,17 @@ input {
   }
 }
 
-.form-message.error {
-  color: $errorRed;
+.form-message {
+  display: none;
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 10px;
+  &, &.info {
+    background: $lightBlue;
+    color: rgba($d_blue, 0.8);
+  }
+  &.error {
+    background: lighten($errorRed, 42%);
+    color: darken($errorRed, 5%);
+  }
 }

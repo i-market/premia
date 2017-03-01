@@ -1,4 +1,21 @@
 <!--МОДАЛКИ-->
+<div class="modal" id="password-reset-modal">
+    <div class="block">
+        <span class="close"></span>
+        <form action="/api/user/reset" method="post" class="modal_form">
+            <h4 class="tab_title">Восстановление доступа</h4>
+            <label class="label">
+                <input name="email" type="email" placeholder="E-mail">
+            </label>
+            <div class="form-message"></div>
+            <div class="wrap_btn">
+                <div>
+                    <button type="submit" class="btn--blue">Восстановить доступ</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <!--Вход в личный кабинет-->
 <div class="modal" id="login-modal">
     <div class="block">
@@ -6,7 +23,7 @@
         <form action="/api/user/login" method="post">
             <h4 class="tab_title">Вход в личный кабинет</h4>
             <label class="label">
-                <input name="email" type="text" placeholder="E-mail">
+                <input name="email" type="email" placeholder="E-mail">
             </label>
             <label class="label">
                 <input name="password" type="password" placeholder="Пароль">
@@ -21,8 +38,7 @@
                     <button type="submit" class="btn--blue">Войти</button>
                 </div>
                 <div>
-                    {# TODO password reset #}
-                    <a href="#">Забыли пароль?</a>
+                    <a data-modal="password-reset-modal" href="javascript:void(0)">Забыли пароль?</a>
                 </div>
             </div>
         </form>
@@ -45,10 +61,10 @@
                 <input name="company" type="text" placeholder="Название компании">
             </label>
             <label class="label">
-                <input name="email" type="text" placeholder="E-mail">
+                <input name="email" type="email" placeholder="E-mail">
             </label>
             <label class="label">
-                <input name="phone" type="text" placeholder="Номер телефона">
+                <input name="phone" type="tel" placeholder="Номер телефона">
             </label>
             <label class="label">
                 <input name="password" type="password" placeholder="Пароль">
@@ -75,7 +91,7 @@
                 <input name="name" type="text" placeholder="Ваше имя">
             </label>
             <label class="label">
-                <input name="email" type="text" placeholder="Ваш E-mail">
+                <input name="email" type="email" placeholder="Ваш E-mail">
             </label>
             <label class="label label_textarea">
                 <textarea name="message" rows="1" maxlength="15000"></textarea>

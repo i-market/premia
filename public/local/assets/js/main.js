@@ -7,11 +7,13 @@ $(() => {
   const signupRedirectPath = '/';
 
   {
+    // TODO disable button on `submit`?
     const $form = $('#signup-modal form');
     modals.init($form, (data) => {
       modals.mutateForm($form, data);
       const isSuccess = _.get(data, 'bxMessage.type') === 'OK';
       if (isSuccess) {
+        modals.toggleSubmitButton($form, false);
         setTimeout(() => {
           window.location.href = window.location.origin + signupRedirectPath;
         }, 2000);
@@ -25,6 +27,17 @@ $(() => {
       modals.mutateForm($form, data);
       if (data.isLoggedIn) {
         window.location.reload();
+      }
+    });
+  }
+
+  {
+    const $form = $('#password-reset-modal form');
+    modals.init($form, (data) => {
+      modals.mutateForm($form, data);
+      const isSuccess = _.get(data, 'bxMessage.type') === 'OK';
+      if (isSuccess) {
+        modals.toggleSubmitButton($form, false);
       }
     });
   }
