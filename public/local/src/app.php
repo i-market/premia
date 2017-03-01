@@ -2,10 +2,19 @@
 
 namespace App;
 
+use Bitrix\Main\Config\Configuration;
+use CEvent;
+use COption;
+use Core\Env;
+use Core\Nullable as nil;
 use Core\View as v;
+use Core\Form as f;
 use CUser;
+use Core\Underscore as _;
 
 class App {
+    const SITE_ID = 's1';
+
     static function init() {
         EventHandlers::listen();
     }
@@ -13,18 +22,97 @@ class App {
     static function layoutContext() {
         global $USER;
         return array(
+            'form_specs' => self::formSpecs(),
             'main_menu' => self::renderMainMenu(),
             'slider' => self::renderSlider(),
             'social_links' => v::renderIncludedArea('social_links.php'),
             'footer_left' => v::renderIncludedArea('footer_left.php'),
             'footer_copyright' => v::renderIncludedArea('footer_copyright.php'),
-            'login_modal' => Auth::renderLoginForm(),
+            'login_modal' => User::renderLoginForm(),
             'is_logged_in' => $USER->IsAuthorized(),
-            'user_display_name' => Auth::getDisplayName($USER),
-            'signup_path' => Auth::signupPath(),
-            'profile_path' => Auth::profilePath(),
-            'logout_link' => Auth::logoutLink()
+            'user_display_name' => User::getDisplayName($USER),
+            'signup_path' => User::signupPath(),
+            'profile_path' => User::profilePath(),
+            'logout_link' => User::logoutLink()
         );
+    }
+
+    static function formSpecs() {
+        $requiredMessage = "Пожалуйста, заполните это поле.";
+        // TODO field specs are incomplete, don't use them to render forms
+        $ret = _::keyBy(array(
+            array(
+                'name' => 'contact',
+                'fields' => _::keyBy(array(
+                    f::field('name', 'Ваше имя'),
+                    f::field('email', 'Ваш E-mail'),
+                    f::field('message', 'Ваше сообщение')
+                ), 'name'),
+                'validations' => array(
+                    array(
+                        'type' => 'required',
+                        'fields' => array('name', 'email', 'message'),
+                        'message' => $requiredMessage
+                    )
+                )
+            ),
+            array(
+                'name' => 'signup',
+                'fields' => _::keyBy(array(
+                    f::field('full-name', 'ФИО'),
+                    f::field('company', 'Название компании'),
+                    f::field('email', 'E-mail'),
+                    f::field('phone', 'Номер телефона'),
+                    f::field('password', 'Пароль'),
+                    f::field('password-confirmation', 'Введите пароль еще раз')
+                ), 'name'),
+                'validations' => array(
+                    array(
+                        'type' => 'required',
+                        'fields' => array('full-name', 'company', 'email', 'phone', 'password', 'password-confirmation'),
+                        'message' => $requiredMessage
+                    ),
+                    array(
+                        'type' => 'email',
+                        'fields' => array('email'),
+                        'message' => 'Неверный адрес электронной почты.'
+                    ),
+                    // bitrix password length requirement
+                    array(
+                        'type' => 'minLength',
+                        'minLength' => 6,
+                        'fields' => array('password', 'password-confirmation'),
+                        'message' => 'Пароль должен быть не менее {{ validation.minLength }} символов длиной.'
+                    )
+                )
+            )
+        ), 'name');
+        return array_map(function($spec) {
+            return _::set($spec, 'action', '/api/'.$spec['name']);
+        }, $ret);
+    }
+
+    // TODO move to core?
+    static function sendMailEvent($type, $siteId, $data) {
+        if (\Core\App::env() === Env::DEV) {
+            $event = array($type, $siteId, $data);
+            return $event;
+        } else {
+            return (new CEvent)->Send($type, $siteId, $data);
+        }
+    }
+
+    // TODO move to core?
+    private static function config() {
+        return nil::get(Configuration::getValue('app'), array());
+    }
+
+    static function mailFrom() {
+        return _::get(self::config(), 'mail_from', COption::GetOptionString('main', 'email_from'));
+    }
+
+    static function mailTo() {
+        return _::get(self::config(), 'mail_to', COption::GetOptionString('main', 'email_from'));
     }
 
     static function renderMainMenu() {
@@ -112,6 +200,10 @@ class App {
     }
 }
 
+class MailEvent {
+    const CONTACT_FORM = 'CONTACT_FORM';
+}
+
 class Iblock {
     const CONTENT_TYPE = 'content';
     const SLIDER_ID = 1;
@@ -123,8 +215,7 @@ class PageProperty {
     const LAYOUT = 'layout';
 }
 
-// TODO rename to User
-class Auth {
+class User {
     /**
      * @param $user CUser
      * @return string
@@ -145,6 +236,25 @@ class Auth {
         return '?logout=yes';
     }
 
+    static function parseFullName($fullName) {
+        $full = trim($fullName);
+        $parts = explode(' ', $full);
+        if ($parts[0] === '') unset($parts[0]);
+        if (count($parts) === 0) {
+            return array();
+        } elseif (count($parts) > 3) {
+            return array('FULL_NAME' => $full);
+        } else {
+            $ret = array();
+            $ret['FULL_NAME'] = $full;
+            if (isset($parts[0])) $ret['LAST_NAME'] = $parts[0];
+            if (isset($parts[1])) $ret['FIRST_NAME'] = $parts[1];
+            if (isset($parts[2])) $ret['PATRONYMIC'] = $parts[2];
+            return $ret;
+        }
+    }
+
+    // TODO unused?
     static function renderLoginForm() {
         global $APPLICATION;
         ob_start();

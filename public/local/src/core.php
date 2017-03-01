@@ -11,6 +11,7 @@ use Core\View as v;
 use Maximaster\Tools\Twig\TemplateEngine;
 use Underscore\Methods\ArraysMethods;
 use Underscore\Methods\StringsMethods;
+use Valitron\Validator;
 
 class Underscore extends ArraysMethods {
     static function map($array, $f) {
@@ -32,6 +33,15 @@ class Underscore extends ArraysMethods {
 
     static function take($array, $n) {
         return array_slice($array, 0, $n);
+    }
+
+    // TODO function $by support
+    static function keyBy($array, $by) {
+        $ret = array();
+        foreach ($array as $x) {
+            $ret[$x[$by]] = $x;
+        }
+        return $ret;
     }
 
     static function identity() {
@@ -219,6 +229,43 @@ class Form {
                     'attributes' => array()
                 );
             }, $options)
+        );
+    }
+
+    static function formRoute($spec, $f) {
+        $rule = function($validation) {
+            if ($validation['type'] === 'minLength') {
+                return array('lengthMin', $validation['minLength']);
+            } else {
+                return array($validation['type']);
+            }
+        };
+        $handler = function($request, $response) use ($spec, $f, $rule) {
+            $params = $request->params(_::pluck($spec['fields'], 'name'));
+            $validator = new Validator($params);
+            foreach ($spec['validations'] as $validation) {
+                foreach ($validation['fields'] as $field) {
+                    $tpl = View::twig()->createTemplate($validation['message']);
+                    $message = $tpl->render(array(
+                        'field' => $spec['fields'][$field],
+                        'validation' => $validation
+                    ));
+                    $r = $rule($validation);
+                    $type = _::first($r);
+                    $args = _::drop($r, 1);
+                    $ruleArgs = array_merge(array($type, $field), $args);
+                    // mutate
+                    call_user_func_array(array($validator, 'rule'), $ruleArgs)->message($message);
+                }
+            }
+            $validator->validate();
+            $errors = $validator->errors();
+            return $f($params, $errors, $response);
+        };
+        return array(
+            'method' => 'POST',
+            'path' => $spec['action'],
+            'handler' => $handler
         );
     }
 }
