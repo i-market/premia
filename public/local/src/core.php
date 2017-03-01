@@ -233,17 +233,29 @@ class Form {
     }
 
     static function formRoute($spec, $f) {
-        $handler = function($request, $response) use ($spec, $f) {
+        $rule = function($validation) {
+            if ($validation['type'] === 'minLength') {
+                return array('lengthMin', $validation['minLength']);
+            } else {
+                return array($validation['type']);
+            }
+        };
+        $handler = function($request, $response) use ($spec, $f, $rule) {
             $params = $request->params(_::pluck($spec['fields'], 'name'));
             $validator = new Validator($params);
             foreach ($spec['validations'] as $validation) {
-                if ($validation['type'] === 'required') {
-                    foreach ($validation['fields'] as $field) {
-                        $tpl = View::twig()->createTemplate($validation['message']);
-                        $message = $tpl->render($spec['fields'][$field]);
-                        // mutate
-                        $validator->rule('required', $field)->message($message);
-                    }
+                foreach ($validation['fields'] as $field) {
+                    $tpl = View::twig()->createTemplate($validation['message']);
+                    $message = $tpl->render(array(
+                        'field' => $spec['fields'][$field],
+                        'validation' => $validation
+                    ));
+                    $r = $rule($validation);
+                    $type = _::first($r);
+                    $args = _::drop($r, 1);
+                    $ruleArgs = array_merge(array($type, $field), $args);
+                    // mutate
+                    call_user_func_array(array($validator, 'rule'), $ruleArgs)->message($message);
                 }
             }
             $validator->validate();

@@ -38,8 +38,8 @@ class App {
     }
 
     static function formSpecs() {
-        $requiredMessage = "Пожалуйста, заполните поле «{{ label }}».";
-        // TODO field specs are incomplete, don't use them for rendering
+        $requiredMessage = "Пожалуйста, заполните это поле.";
+        // TODO field specs are incomplete, don't use them to render forms
         $ret = _::keyBy(array(
             array(
                 'name' => 'contact',
@@ -53,6 +53,36 @@ class App {
                         'type' => 'required',
                         'fields' => array('name', 'email', 'message'),
                         'message' => $requiredMessage
+                    )
+                )
+            ),
+            array(
+                'name' => 'signup',
+                'fields' => _::keyBy(array(
+                    f::field('full-name', 'ФИО'),
+                    f::field('company', 'Название компании'),
+                    f::field('email', 'E-mail'),
+                    f::field('phone', 'Номер телефона'),
+                    f::field('password', 'Пароль'),
+                    f::field('password-confirmation', 'Введите пароль еще раз')
+                ), 'name'),
+                'validations' => array(
+                    array(
+                        'type' => 'required',
+                        'fields' => array('full-name', 'company', 'email', 'phone', 'password', 'password-confirmation'),
+                        'message' => $requiredMessage
+                    ),
+                    array(
+                        'type' => 'email',
+                        'fields' => array('email'),
+                        'message' => 'Неверный адрес электронной почты.'
+                    ),
+                    // bitrix password length requirement
+                    array(
+                        'type' => 'minLength',
+                        'minLength' => 6,
+                        'fields' => array('password', 'password-confirmation'),
+                        'message' => 'Пароль должен быть не менее {{ validation.minLength }} символов длиной.'
                     )
                 )
             )
