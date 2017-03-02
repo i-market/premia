@@ -293,14 +293,29 @@ h4 {
     line-height: 46px;
     margin-right: 18px;
 
+    @media only screen and (max-width: 1023px) {
+      font-size: 14px;
+      line-height: 40px;
+    }
+    @media only screen and (max-width: 900px) {
+      display: none;
+    }
+
     a {
       color: $blue;
     }
   }
-  .lk,
   .reg {
+    &.short {
+      display: none;
+    }
     @media only screen and (max-width: 767px) {
-      display: none !important;
+      &.long {
+        display: none;
+      }
+      &.short {
+        display: block;
+      }
     }
   }
 }
