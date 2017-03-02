@@ -6,6 +6,15 @@ $APPLICATION->SetTitle("Личный кабинет");
 $APPLICATION->SetPageProperty(PageProperty::LAYOUT, 'bare.twig');
 ?>
 
+<? // TODO tmp whitespace fix, remove when breadcrumbs are done ?>
+<section class="bread_crumbs">
+    <div class="wrap">
+        <div class="inner">
+            <ul>
+            </ul>
+        </div>
+    </div>
+</section>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:main.profile",
 	"profile",
@@ -15,7 +24,7 @@ $APPLICATION->SetPageProperty(PageProperty::LAYOUT, 'bare.twig');
 		"AJAX_OPTION_HISTORY" => "N",
 		"AJAX_OPTION_JUMP" => "N",
 		"AJAX_OPTION_STYLE" => "N",
-		"CHECK_RIGHTS" => "Y",
+		"CHECK_RIGHTS" => "N",
 		"SEND_INFO" => "N",
 		"SET_TITLE" => "N",
 		"USER_PROPERTY" => array(),

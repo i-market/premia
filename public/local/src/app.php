@@ -30,7 +30,6 @@ class App {
             'footer_copyright' => v::renderIncludedArea('footer_copyright.php'),
             'is_logged_in' => $USER->IsAuthorized(),
             'user_display_name' => $USER->GetFormattedName(),
-            'signup_path' => User::signupPath(),
             'profile_path' => User::profilePath(),
             'logout_link' => User::logoutLink()
         );
@@ -216,11 +215,7 @@ class PageProperty {
 
 class User {
     static function profilePath() {
-        return v::path('user/profile');
-    }
-
-    static function signupPath() {
-        return v::path('user/signup');
+        return v::path('auth/profile');
     }
 
     static function logoutLink() {
@@ -243,22 +238,5 @@ class User {
             if (isset($parts[2])) $ret['PATRONYMIC'] = $parts[2];
             return $ret;
         }
-    }
-
-    // TODO unused?
-    static function renderLoginForm() {
-        global $APPLICATION;
-        ob_start();
-        $APPLICATION->IncludeComponent(
-            "bitrix:system.auth.form",
-            "",
-            Array(
-                "FORGOT_PASSWORD_URL" => v::path('user/reset'),
-                "PROFILE_URL" => self::profilePath(),
-                "REGISTER_URL" => self::signupPath(),
-                "SHOW_ERRORS" => "Y"
-            )
-        );
-        return ob_get_clean();
     }
 }

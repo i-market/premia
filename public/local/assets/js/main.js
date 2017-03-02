@@ -1,10 +1,11 @@
 import modals from './modals';
+import profile from './profile';
 import $ from 'jquery';
 import _ from 'lodash';
 
 $(() => {
-  // TODO user profile path, get it from the server
-  const signupRedirectPath = '/';
+  // TODO get it from the server
+  const profilePath = '/auth/profile/';
 
   {
     // TODO disable button on `submit`?
@@ -15,7 +16,7 @@ $(() => {
       if (isSuccess) {
         modals.toggleSubmitButton($form, false);
         setTimeout(() => {
-          window.location.href = window.location.origin + signupRedirectPath;
+          window.location.href = window.location.origin + profilePath;
         }, 2000);
       }
     });
@@ -26,7 +27,7 @@ $(() => {
     modals.init($form, (data) => {
       modals.mutateForm($form, data);
       if (data.isLoggedIn) {
-        window.location.reload();
+        window.location.href = window.location.origin + profilePath;
       }
     });
   }
@@ -48,9 +49,12 @@ $(() => {
       modals.mutateForm($form, data);
       const isSuccess = _.isEmpty(data.errors);
       if (isSuccess) {
-        modals.mutateMessage($form, 'Ваше сообщение было успешно отправлено. Спасибо.', 'info');
+        modals.mutateMessage($form, 'Ваше сообщение было успешно отправлено. Спасибо.', 'success');
         modals.toggleSubmitButton($form, false);
       }
     });
   }
+
+  // TODO refactor: optimize
+  profile.init($('.personal_area'));
 });
