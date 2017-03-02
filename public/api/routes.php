@@ -6,6 +6,7 @@ use App\MailEvent;
 use App\User;
 use Core\Form;
 use Klein\Klein;
+use Core\Underscore as _;
 
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_before.php');
 
@@ -52,6 +53,24 @@ $router->with('/api', function () use ($router, $signupRoute) {
             $login = $params['email'];
             $message = CUser::SendPassword($login, $params['email']);
             return $response->json(Api::formResponse(array(), $message));
+        });
+        $router->respond('POST', '/profile', function($request, $response) {
+            global $USER;
+            $params = $request->params();
+            $name = User::parseFullName($params['full-name']);
+            $fields = array_merge(
+                $params,
+                _::has($name, 'LAST_NAME') ? array(
+                    'LAST_NAME' => _::get($name, 'LAST_NAME', ''),
+                    'NAME' => _::get($name, 'FIRST_NAME', ''),
+                    'SECOND_NAME' => _::get($name, 'PATRONYMIC', '')
+                ) : array()
+            );
+            $isSuccess = $USER->Update($USER->GetID(), $fields);
+            return $response->json(array(
+                'isSuccess' => $isSuccess,
+                'errorMessageMaybe' => $isSuccess ? null : $USER->LAST_ERROR
+            ));
         });
     });
 });

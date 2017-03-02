@@ -1,8 +1,10 @@
+{% set user = result.arUser %}
 <section class="personal_area">
     <div class="wrap">
         <div class="inner">
             <h2>Личный кабинет</h2>
         </div>
+        {#
         <div class="tab_links grid">
             <div class="col col_3 tabLinks_item" data-tabLinks="contact_etails">
                 <div class="text">
@@ -21,68 +23,76 @@
                 </div>
             </div>
         </div>
+        #}
         <div class="tab_blocks">
             <div data-tabContent="contact_etails">
-                <form action="" method="post" id="">
+                <form action="/api/user/profile" method="post">
                     <div class="grid">
                         <div class="col col_2">
                             <h4 class="tab_title">1. Персональные данные</h4>
                             <label class="label">
-                                <input type="text" placeholder="Фамилия, Имя, Отчество">
+                                {# TODO value #}
+                                <input name="full-name" value="{{ user.FULL_NAME }}" type="text" placeholder="Фамилия, Имя, Отчество">
                             </label>
                             <label class="label">
-                                <input type="text" placeholder="Ваша должность">
+                                <input name="WORK_POSITION" value="{{ user.WORK_POSITION }}" type="text" placeholder="Ваша должность">
                             </label>
                             <label class="label">
-                                <input type="text" placeholder="E-mail">
+                                <input name="EMAIL" value="{{ user.EMAIL }}" type="text" placeholder="E-mail">
                             </label>
                             <label class="label">
-                                <input type="text" placeholder="Рабочий / мобильный телефон">
+                                <input name="PERSONAL_PHONE" value="{{ user.PERSONAL_PHONE }}" type="text" placeholder="Рабочий / мобильный телефон">
                             </label>
+                            {# TODO change password #}
+                            {#
                             <div class="change_password">
                                 <span class="btn">Изменить пароль</span>
                             </div>
+                            #}
                         </div>
                         <div class="col col_2">
                             <h4 class="tab_title">2. Данные компании номинантаx</h4>
                             <label class="label">
-                                <input type="text" placeholder="Название компании">
+                                <input name="WORK_COMPANY" value="{{ user.WORK_COMPANY }}" type="text" placeholder="Название компании">
                             </label>
                             <label class="label">
-                                <input type="text" placeholder="Направление деятельности организации">
+                                <input name="WORK_PROFILE" value="{{ user.WORK_PROFILE }}" type="text" placeholder="Направление деятельности организации">
                             </label>
                             <label class="label">
-                                <input type="text" placeholder="Сайт компании">
+                                <input name="WORK_WWW" value="{{ user.WORK_WWW }}" type="text" placeholder="Сайт компании">
                             </label>
                             <label class="label">
-                                <input type="text" placeholder="Фактический адрес организации">
+                                <input name="WORK_STREET" value="{{ user.WORK_STREET }}" type="text" placeholder="Фактический адрес организации">
                             </label>
                             <div class="grid grid--full">
                                 <div class="col col_2">
                                     <label class="label">
-                                        <input type="text" placeholder="Телефон ">
+                                        <input name="WORK_PHONE" value="{{ user.WORK_PHONE }}" type="text" placeholder="Телефон ">
                                     </label>
                                 </div>
                                 <div class="col col_2">
                                     <label class="label">
-                                        <input type="text" placeholder="E-mail">
+                                        <input name="UF_WORK_EMAIL" value="{{ user.UF_WORK_EMAIL }}" type="text" placeholder="E-mail">
                                     </label>
                                 </div>
                             </div>
                             <label class="label">
-                                <input type="text" placeholder="Генеральный директор / руководитель организации">
+                                <input name="UF_CEO" value="{{ user.UF_CEO }}" type="text" placeholder="Генеральный директор / руководитель организации">
                             </label>
                             <label class="label">
-                                <input type="text" placeholder="Директор по закупкам">
+                                <input name="UF_PURCHASING_DIRECT" value="{{ user.UF_PURCHASING_DIRECT }}" type="text" placeholder="Директор по закупкам">
                             </label>
                         </div>
                     </div>
                     <div class="wrap_formBtn">
-                        <p class="allert">Данные были измененны, для сохранения нажмите на кнопку “Сохранить”</p>
-                        <button class="btn--blue">Сохранить</button>
+                        {# TODO changed alert #}
+                        {#<p class="allert">Данные были измененны, для сохранения нажмите на кнопку “Сохранить”</p>#}
+                        <div class="form-message"></div>
+                        <button type="submit" class="btn--blue">Сохранить</button>
                     </div>
                 </form>
             </div>
+            {#
             <div data-tabContent="application_form">
                 <form action="" method="post" id="" class="application_form">
                     <div class="grid">
@@ -192,6 +202,7 @@
                     <div class="col col_2">333</div>
                 </div>
             </div>
+            #}
         </div>
     </div>
 </section>

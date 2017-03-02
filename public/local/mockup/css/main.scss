@@ -934,6 +934,11 @@ h4 {
 
 .personal_area {
   padding-bottom: 55px;
+  .form-message {
+    font-size: inherit;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
 }
 
 .tab_links {
@@ -1473,6 +1478,10 @@ input {
   &, &.info {
     background: $lightBlue;
     color: rgba($d_blue, 0.8);
+  }
+  &.success {
+    background: lighten($green, 40%);
+    color: darken($green, 30%);
   }
   &.error {
     background: lighten($errorRed, 42%);
