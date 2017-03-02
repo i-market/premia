@@ -4,6 +4,7 @@ use App\Api;
 use App\App;
 use App\MailEvent;
 use App\User;
+use Bitrix\Main\Localization\Loc;
 use Core\Form;
 use Klein\Klein;
 use Core\Underscore as _;
@@ -29,6 +30,8 @@ $signupRoute = Form::formRoute($formSpecs['signup'], function($params, $errors, 
                 'WORK_COMPANY' => $params['company'],
                 'PERSONAL_PHONE' => $params['phone']
             ));
+            $msg = Loc::getMessage('USER_REGISTERED_SIMPLE');
+            CUser::SendUserInfo($user['ID'], App::SITE_ID, $msg);
         }
     }
     return $response->json(Api::formResponse($errors, $message));

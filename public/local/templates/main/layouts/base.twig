@@ -12,8 +12,10 @@
                     <a class="btn lk" href="{{ profile_path }}">Личный кабинет</a>
                     <a class="btn--blue" href="{{ logout_link }}">Выход</a>
                 {% else %}
-                    <div data-modal="signup-modal" class="btn--blue reg">Зарегистрироваться</div>
-                    <div data-modal="login-modal" class="btn lk">Личный кабинет</div>
+                    {# show .short on smaller devices #}
+                    <a href="javascript:void(0)" data-modal="signup-modal" class="btn--blue reg long">Зарегистрироваться</a>
+                    <a href="javascript:void(0)" data-modal="signup-modal" class="btn--blue reg short">Регистрация</a>
+                    <a href="javascript:void(0)" data-modal="login-modal" class="btn lk">Личный кабинет</a>
                 {% endif %}
             </div>
         </div>

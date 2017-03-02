@@ -6,15 +6,6 @@ $APPLICATION->SetTitle("Личный кабинет");
 $APPLICATION->SetPageProperty(PageProperty::LAYOUT, 'bare.twig');
 ?>
 
-<? // TODO tmp whitespace fix, remove when breadcrumbs are done ?>
-<section class="bread_crumbs">
-    <div class="wrap">
-        <div class="inner">
-            <ul>
-            </ul>
-        </div>
-    </div>
-</section>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:main.profile",
 	"profile",
