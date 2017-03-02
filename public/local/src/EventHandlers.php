@@ -2,12 +2,18 @@
 
 namespace App;
 
+use Core\View as v;
+
 class EventHandlers {
     static function onBeforeUserUpdate(&$fields) {
         // email as login
         // https://dev.1c-bitrix.ru/community/webdev/user/17138/blog/1651/
         $fields['LOGIN'] = $fields['EMAIL'];
         return $fields;
+    }
+
+    static function onAfterUserLogout() {
+        LocalRedirect(v::path('/'));
     }
 
     private static function ref($name) {
@@ -17,5 +23,6 @@ class EventHandlers {
     static function listen() {
         AddEventHandler('main', 'OnBeforeUserRegister', self::ref('onBeforeUserUpdate'));
         AddEventHandler('main', 'OnBeforeUserUpdate', self::ref('onBeforeUserUpdate'));
+        AddEventHandler('main', 'OnAfterUserLogout', self::ref('onAfterUserLogout'));
     }
 }
