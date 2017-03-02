@@ -1095,7 +1095,7 @@ h4 {
   width: 100%;
   margin-bottom: 30px;
   &.error {
-    input {
+    input, textarea {
       border-color: $errorRed;
     }
     .message {
