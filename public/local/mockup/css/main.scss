@@ -1335,7 +1335,23 @@ input {
   margin-bottom: 40px;
 }
 
+%modal-like {
+  form {
+    padding: 40px 30px 0;
+    @media only screen and (max-width: 767px) {
+      padding: 20px;
+      padding-bottom: 0;
+    }
+  }
+  .message {
+    &.error {
+      color: $red;
+    }
+  }
+}
+
 .modal {
+  @extend %modal-like;
   display: none;
   position: fixed;
   top: 0;
@@ -1361,13 +1377,6 @@ input {
       margin: 0 30px 30px;
     }
   }
-  form {
-    padding: 40px 30px 0;
-    @media only screen and (max-width: 767px) {
-      padding: 20px;
-      padding-bottom: 0;
-    }
-  }
   .close {
     position: absolute;
     cursor: pointer;
@@ -1376,11 +1385,6 @@ input {
     top: 0px;
     right: -22px;
     background: url('../images/close.svg')no-repeat center center;
-  }
-  .message {
-    &.error {
-      color: $red;
-    }
   }
 }
 
@@ -1474,4 +1478,11 @@ input {
     background: lighten($errorRed, 42%);
     color: darken($errorRed, 5%);
   }
+}
+
+.embedded-modal-form {
+  @extend %modal-like;
+  margin: 0 auto;
+  max-width: 370px;
+  border: 1px solid $border;
 }

@@ -15,7 +15,7 @@ $APPLICATION->SetPageProperty(PageProperty::LAYOUT, 'bare.twig');
 		"AJAX_OPTION_HISTORY" => "N",
 		"AJAX_OPTION_JUMP" => "N",
 		"AJAX_OPTION_STYLE" => "N",
-		"CHECK_RIGHTS" => "Y",
+		"CHECK_RIGHTS" => "N",
 		"SEND_INFO" => "N",
 		"SET_TITLE" => "N",
 		"USER_PROPERTY" => array(),
