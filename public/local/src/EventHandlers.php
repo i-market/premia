@@ -12,8 +12,9 @@ class EventHandlers {
         return $fields;
     }
 
-    static function onAfterUserLogout() {
+    static function onAfterUserLogout(&$params) {
         LocalRedirect(v::path('/'));
+        return $params;
     }
 
     private static function ref($name) {
