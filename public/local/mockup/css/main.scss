@@ -287,18 +287,35 @@ h4 {
     }
   }
   .user-display-name {
+    position: relative;
     display: inline-block;
+    overflow-x: hidden;
+    white-space: nowrap;
+    max-width: 250px;
 
     // same as .btn
     line-height: 46px;
     margin-right: 18px;
 
+    @media only screen and (min-width: 1280px) {
+      max-width: 400px;
+    }
     @media only screen and (max-width: 1023px) {
       font-size: 14px;
       line-height: 40px;
     }
     @media only screen and (max-width: 900px) {
       display: none;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 30px;
+      background: linear-gradient(to right, transparent, #fff);
     }
 
     a {
