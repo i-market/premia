@@ -8,6 +8,7 @@ use Bitrix\Main\Localization\Loc;
 use Core\Form;
 use Klein\Klein;
 use Core\Underscore as _;
+use Core\Strings as str;
 
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_before.php');
 
@@ -59,8 +60,10 @@ $router->with('/api', function () use ($router, $signupRoute) {
         $router->respond('POST', '/profile', function($request, $response) {
             global $USER;
             $params = $request->params();
-            // TODO sanitize
-            $fields = $params;
+            // TODO sanitize params
+            $fields = str::isEmpty($params['PASSWORD'])
+                ? _::remove($params, array('PASSWORD', 'CONFIRM_PASSWORD'))
+                : $params;
             $isSuccess = $USER->Update($USER->GetID(), $fields);
             return $response->json(array(
                 'isSuccess' => $isSuccess,

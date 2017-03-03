@@ -46,12 +46,17 @@
                                 <input name="WORK_POSITION" value="{{ user.WORK_POSITION }}" type="text" placeholder="Ваша должность">
                             </label>
                             <label class="label">
+                                <input name="PERSONAL_PHONE" value="{{ user.PERSONAL_PHONE }}" type="text" placeholder="Рабочий / мобильный телефон">
+                            </label>
+                            <label class="label">
                                 <input name="EMAIL" value="{{ user.EMAIL }}" type="text" placeholder="E-mail">
                             </label>
                             <label class="label">
-                                <input name="PERSONAL_PHONE" value="{{ user.PERSONAL_PHONE }}" type="text" placeholder="Рабочий / мобильный телефон">
+                                <input name="PASSWORD" type="password" placeholder="Новый пароль">
                             </label>
-                            {# TODO change password #}
+                            <label class="label">
+                                <input name="CONFIRM_PASSWORD" type="password" placeholder="Подтверждение пароля">
+                            </label>
                             {#
                             <div class="change_password">
                                 <span class="btn">Изменить пароль</span>

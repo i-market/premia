@@ -188,8 +188,8 @@ h4 {
     }
   }
   &.editable-page {
-    h1, h2, h3 {
-      padding-left: 0;
+    h1, h2, h3, h4, h5, h6 {
+      padding-left: 40px;
     }
     p, ul, ol, h1, h2, h3, h4 {
       margin-bottom: 20px;
@@ -951,10 +951,12 @@ h4 {
   .item {
     margin: 40px 0;
     .text {
-      font-size: 16px;
-      line-height: 24px;
-      font-weight: 300;
       margin: 5px 0;
+      &, p {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 300;
+      }
     }
     .name {
       font-style: italic;
@@ -1528,4 +1530,5 @@ input {
   margin: 0 auto;
   max-width: 370px;
   border: 1px solid $border;
+  font-weight: normal;
 }
