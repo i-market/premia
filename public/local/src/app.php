@@ -29,7 +29,7 @@ class App {
             'footer_left' => v::renderIncludedArea('footer_left.php'),
             'footer_copyright' => v::renderIncludedArea('footer_copyright.php'),
             'is_logged_in' => $USER->IsAuthorized(),
-            'user_display_name' => $USER->GetFirstName(),
+            'user_display_name' => $USER->GetFormattedName(),
             'profile_path' => User::profilePath(),
             'logout_link' => User::logoutLink()
         );
