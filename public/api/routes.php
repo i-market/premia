@@ -17,16 +17,15 @@ $signupRoute = Form::formRoute($formSpecs['signup'], function($params, $errors, 
     global $USER;
     $message = array();
     if (count($errors) === 0) {
-        $name = User::parseFullName($params['full-name']);
         // mutate
         $login = $params['email'];
-        $message = $USER->Register($login, $name['FIRST_NAME'], $name['LAST_NAME'],
+        // bitrix user first name = full name
+        $message = $USER->Register($login, $params['full-name'], '',
             $params['password'], $params['password-confirmation'], $params['email']);
         $isSuccess = $message['TYPE'] === 'OK';
         if ($isSuccess) {
             $user = CUser::GetByLogin($login)->GetNext();
             $USER->Update($user['ID'], array(
-                'SECOND_NAME' => $name['PATRONYMIC'],
                 'WORK_COMPANY' => $params['company'],
                 'PERSONAL_PHONE' => $params['phone']
             ));
@@ -60,15 +59,8 @@ $router->with('/api', function () use ($router, $signupRoute) {
         $router->respond('POST', '/profile', function($request, $response) {
             global $USER;
             $params = $request->params();
-            $name = User::parseFullName($params['full-name']);
-            $fields = array_merge(
-                $params,
-                _::has($name, 'LAST_NAME') ? array(
-                    'LAST_NAME' => _::get($name, 'LAST_NAME', ''),
-                    'NAME' => _::get($name, 'FIRST_NAME', ''),
-                    'SECOND_NAME' => _::get($name, 'PATRONYMIC', '')
-                ) : array()
-            );
+            // TODO sanitize
+            $fields = $params;
             $isSuccess = $USER->Update($USER->GetID(), $fields);
             return $response->json(array(
                 'isSuccess' => $isSuccess,
