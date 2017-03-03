@@ -26,3 +26,7 @@ vault_pass.txt
 /public/local/mockup/css/main.css
 /public/local/mockup/css/main.css.map
 /public/local/mockup/dist
+
+# git-ftp deployment
+
+!/public/local/templates/main/build/
