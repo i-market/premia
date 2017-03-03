@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Публикации";
+$arDirProperties = Array(
+
+);
+?>

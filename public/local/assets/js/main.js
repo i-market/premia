@@ -8,7 +8,6 @@ $(() => {
   const profilePath = '/auth/profile/';
 
   {
-    // TODO disable button on `submit`?
     const $form = $('#signup-modal form');
     modals.init($form, (data) => {
       modals.mutateForm($form, data);
