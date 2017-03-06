@@ -229,6 +229,17 @@ class Iblock {
      */
     static function collect($ibResult) {
         $ret = array();
+        while($x = $ibResult->GetNext()) {
+            $ret[] = $x;
+        }
+        return $ret;
+    }
+
+    /**
+     * @param $ibResult CIBlockResult
+     */
+    static function collectElements($ibResult) {
+        $ret = array();
         while($x = $ibResult->GetNextElement()) {
             $ret[] = array_merge($x->GetFields(), array(
                 'PROPERTIES' => $x->GetProperties()

@@ -15,7 +15,7 @@ class ApplicationForm {
         $filter = array('IBLOCK_ID' => Iblock::GENERAL_INFO, 'ACTIVE' => 'Y', 'PROPERTY_USER' => $userId);
         $select = array('*', 'PROPERTY_*');
         $result = (new CIBlockElement)->GetList(array('SORT' => 'ASC'), $filter, false, false, $select);
-        return _::first(ib::collect($result));
+        return _::first(ib::collectElements($result));
     }
 
     static function updateGeneralInfo($userId, $fields) {
