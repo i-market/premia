@@ -3,13 +3,23 @@
 namespace App;
 
 use Core\View as v;
+use CUser;
+use Core\Iblock as ib;
+use Core\Underscore as _;
 
 class EventHandlers {
     static function onBeforeUserUpdate(&$fields) {
-        // email as login
-        // https://dev.1c-bitrix.ru/community/webdev/user/17138/blog/1651/
-        // TODO check if admin
-//        $fields['LOGIN'] = $fields['EMAIL'];
+        // TODO check for the appropriate user group instead
+        $adminGroup = 1;
+        $groups = array_map(function($group) {
+            return intval($group['GROUP_ID']);
+        }, ib::collect(CUser::GetUserGroupList($fields['ID'])));
+        $isNotAdmin = !_::contains($groups, $adminGroup);
+        if ($isNotAdmin) {
+            // email as login
+            // https://dev.1c-bitrix.ru/community/webdev/user/17138/blog/1651/
+            $fields['LOGIN'] = $fields['EMAIL'];
+        }
         return $fields;
     }
 
