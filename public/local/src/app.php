@@ -204,9 +204,11 @@ class MailEvent {
 
 class Iblock {
     const CONTENT_TYPE = 'content';
+    const FORMS_TYPE = 'forms';
     const SLIDER_ID = 1;
     const PARTNERS_ID = 2;
     const NOMINATIONS_ID = 3;
+    const GENERAL_INFO = 5;
 }
 
 class PageProperty {
