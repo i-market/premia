@@ -72,7 +72,7 @@ $(document).ready(function () {
       $(this).parent().find('[data-tabLinks]').removeClass('active').filter(this).addClass('active');
       targetNode.parent().find('[data-tabContent]').hide().filter(targetNode).show();
     });
-    $('[data-tabLinks]').parent().find('[data-tabLinks]:nth-child(1)').trigger('click');
+    $('[data-tabLinks]').parent('.activate').find('[data-tabLinks]:nth-child(1)').trigger('click');
   });
 
 });
