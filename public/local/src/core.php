@@ -21,7 +21,7 @@ class Underscore extends ArraysMethods {
     static function map($array, $f) {
         $ret = array();
         foreach ($array as $k => $v) {
-            $ret[$k] = $f($v, $k);
+            $ret[$k] = is_string($f) ? self::get($v, $f) : $f($v, $k);
         }
         return $ret;
     }
