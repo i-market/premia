@@ -3,7 +3,6 @@
 use App\Api;
 use App\App;
 use App\MailEvent;
-use App\User;
 use Bitrix\Main\Localization\Loc;
 use Core\Form;
 use Klein\Klein;
@@ -57,18 +56,26 @@ $router->with('/api', function () use ($router, $signupRoute) {
             $message = CUser::SendPassword($login, $params['email']);
             return $response->json(Api::formResponse(array(), $message));
         });
-        $router->respond('POST', '/profile', function($request, $response) {
-            global $USER;
-            $params = $request->params();
-            // TODO sanitize params
-            $fields = str::isEmpty($params['PASSWORD'])
-                ? _::remove($params, array('PASSWORD', 'CONFIRM_PASSWORD'))
-                : $params;
-            $isSuccess = $USER->Update($USER->GetID(), $fields);
-            return $response->json(array(
-                'isSuccess' => $isSuccess,
-                'errorMessageMaybe' => $isSuccess ? null : $USER->LAST_ERROR
-            ));
+        $router->with('/profile', function () use ($router) {
+            $router->respond('POST', '', function($request, $response) {
+                global $USER;
+                $params = $request->params();
+                // TODO sanitize params
+                $fields = str::isEmpty($params['PASSWORD'])
+                    ? _::remove($params, array('PASSWORD', 'CONFIRM_PASSWORD'))
+                    : $params;
+                $isSuccess = $USER->Update($USER->GetID(), $fields);
+                return $response->json(array(
+                    'isSuccess' => $isSuccess,
+                    'errorMessageMaybe' => $isSuccess ? null : $USER->LAST_ERROR
+                ));
+            });
+            $router->respond('POST', '/application', function($request, $response) {
+                return $response->json(Api::handleApplication($request));
+            });
+            $router->respond('DELETE', '/application', function($request, $response) {
+                return $response->json(Api::handleApplication($request));
+            });
         });
     });
 });

@@ -1,0 +1,86 @@
+{% set info = result.GENERAL_INFO_MAYBE %}
+<form action="/api/user/profile/application" method="post" class="application_form">
+    <div class="grid">
+        <div class="col col_2">
+            <h4 class="tab_title">1. Общая информация для компаний-поставщиков</h4>
+        </div>
+    </div>
+    {% set value = info.PROPERTIES.ACTIVITY.VALUE.TEXT %}
+    <label class="label label_textarea{{ value ? ' focus' }}">
+        <span class="placeholder">Описание деятельности компании, успешных контрактов, подаваемых на конкурс</span>
+        <textarea name="PROPERTY_ACTIVITY" rows="1" maxlength="15000">{{ value }}</textarea>
+        <span class="chars"></span>
+    </label>
+    {% set value = info.PROPERTIES.ACHIEVEMENTS.VALUE.TEXT %}
+    <label class="label label_textarea{{ value ? ' focus' }}">
+        <span class="placeholder">Основные достижения и результаты в области поставок за 2016 год</span>
+        <textarea name="PROPERTY_ACHIEVEMENTS" rows="1" maxlength="15000">{{ value }}</textarea>
+        <span class="chars"></span>
+    </label>
+    {% set value = info.PROPERTIES.QUANTITY.VALUE.TEXT %}
+    <label class="label label_textarea{{ value ? ' focus' }}">
+        <span class="placeholder">Объем сделок за 2016 год, количество выполненных контрактов </span>
+        <textarea name="PROPERTY_QUANTITY" rows="1" maxlength="15000">{{ value }}</textarea>
+        <span class="chars"></span>
+    </label>
+    {% set value = info.PROPERTIES.CLIENTS.VALUE.TEXT %}
+    <label class="label label_textarea{{ value ? ' focus' }}">
+        <span class="placeholder">Перечень основных заказчиков</span>
+        <textarea name="PROPERTY_CLIENTS" rows="1" maxlength="15000">{{ value }}</textarea>
+        <span class="chars"></span>
+    </label>
+    <div class="grid">
+        <div class="col col_2">
+            <h4 class="tab_title">2. Номинации премии для компаний-поставщиков</h4>
+        </div>
+        <div class="col col_2">
+            <div class="green_text">
+                Участник может участвовать в нескольких номинациях премии
+            </div>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-small-business">
+            <div class="text">
+                <span>Лучший поставщик в категории “Малый и средний бизнес”</span>
+            </div>
+        </div>
+        {#
+        <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-breakthrough">
+            <div class="text">
+                <span>Прорыв года</span>
+            </div>
+        </div>
+        <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-etp">
+            <div class="text">
+                <span>Профессионал ЭТП</span>
+            </div>
+        </div>
+        <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-sales-innovation">
+            <div class="text">
+                <span>Инновации в продажах</span>
+            </div>
+        </div>
+        <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-exporter">
+            <div class="text">
+                <span>Экспортер года</span>
+            </div>
+        </div>
+        <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-leader">
+            <div class="text">
+                <span>Поставщик-Лидер года</span>
+            </div>
+        </div>
+        #}
+    </div>
+    <div class="tab_blocks">
+        <div data-tabContent="application-small-business">
+            {% include partial('profile/application/small_business.twig') %}
+        </div>
+    </div>
+    <div class="wrap_formBtn">
+        <div class="form-message"></div>
+        <span class="btn btn--red">Удалить анкету</span>
+        <button type="submit" class="btn--blue">Сохранить</button>
+    </div>
+</form>
