@@ -74,7 +74,7 @@
     </div>
     <div class="tab_blocks">
         <div data-tabContent="application-small-business">
-            {% include partial('profile/application/small_business.twig') %}
+            {% include partial('profile/application/nomination_tab.twig') with {iblock_key: 'SMALL_BUSINESS'} %}
         </div>
         <div data-tabContent="application-breakthrough">
             {% include partial('profile/application/nomination_tab.twig') with {iblock_key: 'BREAKTHROUGH'} %}
