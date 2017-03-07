@@ -8,6 +8,14 @@ use Core\Iblock as ib;
 // TODO move to `ApplicationForm`
 $iblockIds = ApplicationForm::iblockIds();
 $application = ApplicationForm::application($USER->GetID());
+// mutate
+$application = array_map(function($element) {
+    return _::update($element, 'PROPERTIES.FILES.VALUE', function($fileIds) {
+        return array_map(function($fileId) {
+            return CFIle::GetFileArray($fileId);
+        }, $fileIds);
+    });
+}, $application);
 $excludeProps = array('USER', 'FILES');
 $inputs = _::mapValues($application, function($el, $iblockKey) use ($iblockIds, $excludeProps) {
     if ($el === null) {
