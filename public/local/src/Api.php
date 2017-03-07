@@ -3,7 +3,6 @@
 namespace App;
 
 use App\ApplicationForm;
-use CFile;
 use Core\Strings as str;
 use Core\Underscore as _;
 use CUser;
@@ -49,8 +48,6 @@ class Api {
                 $fields[$key] = array(
                     'IBLOCK_ID' => $iblockId,
                     'NAME' => $elementName,
-                    // TODO unused
-//                    'PROPERTY_USER' => $USER->GetID(),
                     'PROPERTY_VALUES' => array_merge($propTxtValues, array(
                         'USER' => $USER->GetID()
                     ))
