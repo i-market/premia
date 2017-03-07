@@ -33,16 +33,28 @@ class Api {
         $elementName = ApplicationForm::genericElementName($user, $USER->GetFormattedName());
         $fields = array();
         foreach(ApplicationForm::iblockIds() as $key => $iblockId) {
-            $paramsPropsPath = str::lower($key).'.properties';
-            $propValues = array_change_key_case(_::get($params, $paramsPropsPath, array()), CASE_UPPER);
-            $fields[$key] = array(
-                'IBLOCK_ID' => $iblockId,
-                'NAME' => $elementName,
-                'PROPERTY_USER' => $USER->GetID(),
-                'PROPERTY_VALUES' => array_merge($propValues, array(
-                    'USER' => $USER->GetID()
-                ))
-            );
+            // TODO refactor missing iblocks
+            if (_::has($params, str::lower($key))) {
+                $paramsPropsPath = str::lower($key) . '.properties';
+                $propValues = array_change_key_case(_::get($params, $paramsPropsPath, array()), CASE_UPPER);
+                $propTxtValues = array_map(function($value) {
+                    return array(
+                        'VALUE' => array(
+                            'TYPE' => 'text',
+                            'TEXT' => $value
+                        )
+                    );
+                }, $propValues);
+                $fields[$key] = array(
+                    'IBLOCK_ID' => $iblockId,
+                    'NAME' => $elementName,
+                    // TODO unused
+//                    'PROPERTY_USER' => $USER->GetID(),
+                    'PROPERTY_VALUES' => array_merge($propTxtValues, array(
+                        'USER' => $USER->GetID()
+                    ))
+                );
+            }
         }
         return $fields;
     }
@@ -51,9 +63,16 @@ class Api {
         global $USER;
         $user = CUser::GetByID($USER->GetID())->GetNext();
         // TODO sanitize params
-        $params = $request->params();
+        $params = array_filter($request->params(), function($group) {
+            return boolval($group['is_dirty']);
+        });
         $fields = self::applicationFields($user, $params);
-        // TODO if request method == POST update, otherwise delete
-        return ApplicationForm::updateApplication($USER->GetID(), $fields);
+        // TODO better noop? info warn
+        if (_::isEmpty($fields)) {
+            return array('isSuccess' => true, 'errorMessageMaybe' => null);
+        } else {
+            // TODO if request method == POST update, otherwise delete
+            return ApplicationForm::updateApplication($USER->GetID(), $fields);
+        }
     }
 }

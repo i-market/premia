@@ -7,6 +7,7 @@ use Bitrix\Main\Loader;
 use CIBlockElement;
 use Core\Iblock as ib;
 use Core\Underscore as _;
+use Core\Nullable as nil;
 
 assert(Loader::includeModule('iblock'));
 
@@ -53,10 +54,13 @@ class ApplicationForm {
     }
 
     static function updateApplication($userId, $fields) {
-        $results = array_values(_::mapValues(self::iblockIds(), function($iblockId, $key) use ($userId, $fields) {
-            return self::addOrUpdate(self::associatedElement($iblockId, $userId), $fields[$key]);
-        }));
-        return Api::reduceFormResults($results);
+        $results = _::mapValues(self::iblockIds(), function($iblockId, $key) use ($userId, $fields) {
+            // TODO refactor missing iblocks
+            return nil::map($fields[$key], function($fs) use ($iblockId, $userId) {
+                return self::addOrUpdate(self::associatedElement($iblockId, $userId), $fs);
+            });
+        });
+        return Api::reduceFormResults(array_values(_::clean($results)));
     }
 
     static function genericElementName($user, $formattedName) {
