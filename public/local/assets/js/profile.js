@@ -23,14 +23,16 @@ function init($component) {
     });
   }
   {
-    const $form = $component.find('form.application_form');
-    modals.init($form, (data) => {
-      if (data.isSuccess) {
-        modals.mutateMessage($form, successMessage, 'success');
-      } else {
-        // TODO error message
-        modals.mutateMessage($form, '', 'error');
-      }
+    // application, personal tabs
+    $component.find('form.application_form').each(function() {
+      const $form = $(this);
+      modals.init($form, (data) => {
+        if (data.isSuccess) {
+          modals.mutateMessage($form, successMessage, 'success');
+        } else {
+          modals.mutateMessage($form, data.errorMessageMaybe, 'error');
+        }
+      });
     });
   }
   $('.wrap_add_file').each(function() {
