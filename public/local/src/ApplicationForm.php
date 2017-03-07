@@ -22,7 +22,11 @@ class ApplicationForm {
         return array(
             'GENERAL_INFO' => Iblock::GENERAL_INFO,
             'SMALL_BUSINESS' => Iblock::SMALL_BUSINESS,
-            'BREAKTHROUGH' => Iblock::BREAKTHROUGH
+            'BREAKTHROUGH' => Iblock::BREAKTHROUGH,
+            'ETP' => Iblock::ETP,
+            'IMPORT_SUBSTITUTION' => Iblock::IMPORT_SUBSTITUTION,
+            'SALES_INNOVATION' => Iblock::SALES_INNOVATION,
+            'EXPORTER' => Iblock::EXPORTER
         );
     }
 

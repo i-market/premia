@@ -210,6 +210,10 @@ class Iblock {
     const GENERAL_INFO = 5;
     const SMALL_BUSINESS = 6;
     const BREAKTHROUGH = 7;
+    const ETP = 8;
+    const IMPORT_SUBSTITUTION = 9;
+    const SALES_INNOVATION = 10;
+    const EXPORTER = 11;
 }
 
 class PageProperty {

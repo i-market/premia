@@ -51,10 +51,14 @@
                 <span>Прорыв года</span>
             </div>
         </div>
-        {#
         <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-etp">
             <div class="text">
                 <span>Профессионал ЭТП</span>
+            </div>
+        </div>
+        <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-import-substitution">
+            <div class="text">
+                <span>Лидер импортозамещения</span>
             </div>
         </div>
         <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-sales-innovation">
@@ -67,12 +71,6 @@
                 <span>Экспортер года</span>
             </div>
         </div>
-        <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-leader">
-            <div class="text">
-                <span>Поставщик-Лидер года</span>
-            </div>
-        </div>
-        #}
     </div>
     <div class="tab_blocks">
         {% set inputs = result.APPLICATION.INPUTS %}
@@ -81,6 +79,18 @@
         </div>
         <div data-tabContent="application-breakthrough">
             {% include partial('profile/application/nomination_tab.twig') with {inputs: inputs.BREAKTHROUGH} %}
+        </div>
+        <div data-tabContent="application-etp">
+            {% include partial('profile/application/nomination_tab.twig') with {inputs: inputs.ETP} %}
+        </div>
+        <div data-tabContent="application-import-substitution">
+            {% include partial('profile/application/nomination_tab.twig') with {inputs: inputs.IMPORT_SUBSTITUTION} %}
+        </div>
+        <div data-tabContent="application-sales-innovation">
+            {% include partial('profile/application/nomination_tab.twig') with {inputs: inputs.SALES_INNOVATION} %}
+        </div>
+        <div data-tabContent="application-exporter">
+            {% include partial('profile/application/nomination_tab.twig') with {inputs: inputs.EXPORTER} %}
         </div>
     </div>
     <div class="wrap_formBtn">
