@@ -26,7 +26,9 @@ class ApplicationForm {
             'ETP' => Iblock::ETP,
             'IMPORT_SUBSTITUTION' => Iblock::IMPORT_SUBSTITUTION,
             'SALES_INNOVATION' => Iblock::SALES_INNOVATION,
-            'EXPORTER' => Iblock::EXPORTER
+            'EXPORTER' => Iblock::EXPORTER,
+            'SALES' => Iblock::SALES,
+            'LAW' => Iblock::LAW
         );
     }
 

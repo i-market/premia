@@ -1,0 +1,38 @@
+<form action="/api/user/profile/application" method="post" class="application_form">
+    <div class="grid">
+        <div class="col col_2">
+            <h4 class="tab_title">2. Персональные номинации</h4>
+        </div>
+        <div class="col col_2">
+            <div class="green_text">
+                Участник может участвовать в нескольких номинациях премии
+            </div>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="personal-sales">
+            <div class="text">
+                <span>«Профессионал продаж» (Коммерческий директор / Директор по продажам)</span>
+            </div>
+        </div>
+        <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-law">
+            <div class="text">
+                <span>«Мастер защиты интересов поставщика» (Руководитель юридического департамента)</span>
+            </div>
+        </div>
+    </div>
+    <div class="tab_blocks">
+        <div data-tabContent="personal-sales">
+            {% include partial('profile/application/nomination_tab.twig') with {iblock_key: 'SALES'} %}
+        </div>
+        <div data-tabContent="application-law">
+            {% include partial('profile/application/nomination_tab.twig') with {iblock_key: 'LAW'} %}
+        </div>
+    </div>
+    <div class="wrap_formBtn">
+        <div class="form-message"></div>
+        {# TODO delete application #}
+        {#<span class="btn btn--red">Удалить анкету</span>#}
+        <button type="submit" class="btn--blue">Сохранить</button>
+    </div>
+</form>

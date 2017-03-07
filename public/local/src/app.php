@@ -214,6 +214,8 @@ class Iblock {
     const IMPORT_SUBSTITUTION = 9;
     const SALES_INNOVATION = 10;
     const EXPORTER = 11;
+    const SALES = 12;
+    const LAW = 13;
 }
 
 class PageProperty {
