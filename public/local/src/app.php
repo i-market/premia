@@ -209,6 +209,7 @@ class Iblock {
     const NOMINATIONS_ID = 3;
     const GENERAL_INFO = 5;
     const SMALL_BUSINESS = 6;
+    const BREAKTHROUGH = 7;
 }
 
 class PageProperty {

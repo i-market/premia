@@ -46,12 +46,12 @@
                 <span>Лучший поставщик в категории «Малый и средний бизнес»</span>
             </div>
         </div>
-        {#
         <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-breakthrough">
             <div class="text">
                 <span>Прорыв года</span>
             </div>
         </div>
+        {#
         <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-etp">
             <div class="text">
                 <span>Профессионал ЭТП</span>
@@ -75,8 +75,12 @@
         #}
     </div>
     <div class="tab_blocks">
+        {% set inputs = result.APPLICATION.INPUTS %}
         <div data-tabContent="application-small-business">
             {% include partial('profile/application/small_business.twig') %}
+        </div>
+        <div data-tabContent="application-breakthrough">
+            {% include partial('profile/application/nomination_tab.twig') with {inputs: inputs.BREAKTHROUGH} %}
         </div>
     </div>
     <div class="wrap_formBtn">

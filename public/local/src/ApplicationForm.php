@@ -21,7 +21,8 @@ class ApplicationForm {
     static function iblockIds() {
         return array(
             'GENERAL_INFO' => Iblock::GENERAL_INFO,
-            'SMALL_BUSINESS' => Iblock::SMALL_BUSINESS
+            'SMALL_BUSINESS' => Iblock::SMALL_BUSINESS,
+            'BREAKTHROUGH' => Iblock::BREAKTHROUGH
         );
     }
 
