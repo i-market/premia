@@ -17,13 +17,4 @@
     <textarea name="small_business[properties][testimonials]" rows="1" maxlength="15000">{{ value }}</textarea>
     <span class="chars"></span>
 </label>
-<div class="wrap_add_file">
-    <div class="add_file">
-        {#
-        <p>Внедренные инновации компании “Novator” в 2016 году.PDF <span class="remove_file">(удалить)</span></p>
-        <p>Внедренные инновации компании “Novator” в 2016 году.PDF <span class="remove_file">(удалить)</span></p>
-        #}
-    </div>
-    {#<input type="file" hidden="hidden">#}
-    {#<button class="btn">Прикрепить файл</button>#}
-</div>
+{% include partial('profile/application/add_file.twig') %}

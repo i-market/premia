@@ -33,6 +33,25 @@ function init($component) {
       }
     });
   }
+  $('.wrap_add_file').each(function() {
+    const $root = $(this);
+    $root.find('.attach').on('click', () => {
+      const $input = $('<input name="file[]" class="file" type="file" hidden="hidden">');
+      $root.append($input);
+      $input.click();
+    });
+    $root.on('change', 'input.file', function() {
+      const $input = $(this);
+      const filename = $input[0].files[0].name;
+      $root.find('.add_file').append(
+        $(`<p>${filename} <span class="remove_file">(удалить)</span></p>`)
+          .on('click', '.remove_file', function() {
+            $input.remove();
+            $(this).parent('p').remove();
+          })
+      );
+    });
+  });
 }
 
 export default {init};
