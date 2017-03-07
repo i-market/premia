@@ -4,6 +4,7 @@ namespace App;
 
 use App\ApplicationForm;
 use Core\Strings as str;
+use Core\Underscore as _;
 use CUser;
 
 class Api {
@@ -14,13 +15,34 @@ class Api {
         );
     }
 
-    static function groupProperties($fields) {
-        $prefix = 'PROPERTY_';
-        foreach ($fields as $k => $v) {
-            if (str::startsWith($k, $prefix)) {
-                $withoutPrefix = mb_substr($k, mb_strlen($prefix));
-                $fields['PROPERTY_VALUES'][$withoutPrefix] = $v;
-            }
+    static function reduceFormResults($results) {
+        return array_reduce($results, function($ret, $result) {
+            if ($ret === null) return $result;
+            $msgs = _::clean(array($ret['errorMessageMaybe'], $result['errorMessageMaybe']));
+            return $ret['isSuccess'] && $result['isSuccess']
+                ? $ret
+                : array(
+                    'isSuccess' => false,
+                    'errorMessageMaybe' => _::isEmpty($msgs) ? null : join('', $msgs)
+                );
+        });
+    }
+
+    private static function applicationFields($user, $params) {
+        global $USER;
+        $elementName = ApplicationForm::genericElementName($user, $USER->GetFormattedName());
+        $fields = array();
+        foreach(ApplicationForm::iblockIds() as $key => $iblockId) {
+            $paramsPropsPath = str::lower($key).'.properties';
+            $propValues = array_change_key_case(_::get($params, $paramsPropsPath, array()), CASE_UPPER);
+            $fields[$key] = array(
+                'IBLOCK_ID' => $iblockId,
+                'NAME' => $elementName,
+                'PROPERTY_USER' => $USER->GetID(),
+                'PROPERTY_VALUES' => array_merge($propValues, array(
+                    'USER' => $USER->GetID()
+                ))
+            );
         }
         return $fields;
     }
@@ -30,15 +52,8 @@ class Api {
         $user = CUser::GetByID($USER->GetID())->GetNext();
         // TODO sanitize params
         $params = $request->params();
-        $elementName = ApplicationForm::genericElementName($user, $USER->GetFormattedName());
-        $fields = self::groupProperties(array_merge($params, array(
-            'IBLOCK_ID' => Iblock::GENERAL_INFO,
-            'NAME' => $elementName,
-            'PROPERTY_USER' => $USER->GetID()
-        )));
+        $fields = self::applicationFields($user, $params);
         // TODO if request method == POST update, otherwise delete
-        $result = ApplicationForm::updateGeneralInfo($USER->GetID(), $fields);
-        $isSuccess = $result === true || is_int($result);
-        return array('isSuccess' => $isSuccess);
+        return ApplicationForm::updateApplication($USER->GetID(), $fields);
     }
 }

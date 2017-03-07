@@ -3,22 +3,20 @@
 namespace Core;
 
 use Bitrix\Main\Config\Configuration;
-use Bitrix\Main\Loader;
 use CBitrixComponentTemplate;
 use CFile;
 use CIBlock;
 use CIBlockResult;
 use Core\Underscore as _;
 use Core\View as v;
+use Core\Nullable as nil;
 use Maximaster\Tools\Twig\TemplateEngine;
 use Underscore\Methods\ArraysMethods;
 use Underscore\Methods\StringsMethods;
 use Valitron\Validator;
 
-assert(Loader::includeModule('iblock'));
-
 class Underscore extends ArraysMethods {
-    static function map($array, $f) {
+    static function mapValues($array, $f) {
         $ret = array();
         foreach ($array as $k => $v) {
             $ret[$k] = is_string($f) ? self::get($v, $f) : $f($v, $k);
@@ -37,6 +35,11 @@ class Underscore extends ArraysMethods {
 
     static function take($array, $n) {
         return array_slice($array, 0, $n);
+    }
+
+    static function update($array, $key, $f) {
+        $nullable = nil::map(self::get($array, $key), $f);
+        return $nullable === null ? $array : self::set($array, $key, $nullable);
     }
 
     static function isEmpty($x) {
@@ -220,32 +223,6 @@ class View {
             $resized = CFile::ResizeImageGet($item[$key], $dimensions);
             return _::set($item, $key.'.RESIZED', $resized);
         }, $items);
-    }
-}
-
-class Iblock {
-    /**
-     * @param $ibResult CIBlockResult
-     */
-    static function collect($ibResult) {
-        $ret = array();
-        while($x = $ibResult->GetNext()) {
-            $ret[] = $x;
-        }
-        return $ret;
-    }
-
-    /**
-     * @param $ibResult CIBlockResult
-     */
-    static function collectElements($ibResult) {
-        $ret = array();
-        while($x = $ibResult->GetNextElement()) {
-            $ret[] = array_merge($x->GetFields(), array(
-                'PROPERTIES' => $x->GetProperties()
-            ));
-        }
-        return $ret;
     }
 }
 

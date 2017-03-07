@@ -1,16 +1,20 @@
-<label class="label label_textarea">
+{% set el = result.APPLICATION.SMALL_BUSINESS %}
+{% set value = el.PROPERTIES.CHANGE.VALUE.TEXT %}
+<label class="label label_textarea{{ value ? ' focus' }}">
     <span class="placeholder">Изменение количества контактов YOY (2016 к 2015)</span>
-    <textarea rows="1" maxlength="15000"></textarea>
+    <textarea name="small_business[properties][change]" rows="1" maxlength="15000">{{ value }}</textarea>
     <span class="chars"></span>
 </label>
-<label class="label label_textarea">
+{% set value = el.PROPERTIES.CONFIRMATION.VALUE.TEXT %}
+<label class="label label_textarea{{ value ? ' focus' }}">
     <span class="placeholder">Подтверждение статуса МСП (скан выписки из Единого реестра субъектов малого и среднего предпринимательства)</span>
-    <textarea rows="1" maxlength="15000"></textarea>
+    <textarea name="small_business[properties][confirmation]" rows="1" maxlength="15000">{{ value }}</textarea>
     <span class="chars"></span>
 </label>
-<label class="label label_textarea">
+{% set value = el.PROPERTIES.TESTIMONIALS.VALUE.TEXT %}
+<label class="label label_textarea{{ value ? ' focus' }}">
     <span class="placeholder">Отзывы клиентов (сканы отзывов необходимо приложить в виде файлов)</span>
-    <textarea rows="1" maxlength="15000"></textarea>
+    <textarea name="small_business[properties][testimonials]" rows="1" maxlength="15000">{{ value }}</textarea>
     <span class="chars"></span>
 </label>
 <div class="wrap_add_file">

@@ -1,4 +1,5 @@
-{% set info = result.GENERAL_INFO_MAYBE %}
+{# TODO refactor application/* templates: DRY #}
+{% set info = result.APPLICATION.GENERAL_INFO %}
 <form action="/api/user/profile/application" method="post" class="application_form">
     <div class="grid">
         <div class="col col_2">
@@ -8,25 +9,25 @@
     {% set value = info.PROPERTIES.ACTIVITY.VALUE.TEXT %}
     <label class="label label_textarea{{ value ? ' focus' }}">
         <span class="placeholder">Описание деятельности компании, успешных контрактов, подаваемых на конкурс</span>
-        <textarea name="PROPERTY_ACTIVITY" rows="1" maxlength="15000">{{ value }}</textarea>
+        <textarea name="general_info[properties][activity]" rows="1" maxlength="15000">{{ value }}</textarea>
         <span class="chars"></span>
     </label>
     {% set value = info.PROPERTIES.ACHIEVEMENTS.VALUE.TEXT %}
     <label class="label label_textarea{{ value ? ' focus' }}">
         <span class="placeholder">Основные достижения и результаты в области поставок за 2016 год</span>
-        <textarea name="PROPERTY_ACHIEVEMENTS" rows="1" maxlength="15000">{{ value }}</textarea>
+        <textarea name="general_info[properties][achievements]" rows="1" maxlength="15000">{{ value }}</textarea>
         <span class="chars"></span>
     </label>
     {% set value = info.PROPERTIES.QUANTITY.VALUE.TEXT %}
     <label class="label label_textarea{{ value ? ' focus' }}">
         <span class="placeholder">Объем сделок за 2016 год, количество выполненных контрактов </span>
-        <textarea name="PROPERTY_QUANTITY" rows="1" maxlength="15000">{{ value }}</textarea>
+        <textarea name="general_info[properties][quantity]" rows="1" maxlength="15000">{{ value }}</textarea>
         <span class="chars"></span>
     </label>
     {% set value = info.PROPERTIES.CLIENTS.VALUE.TEXT %}
     <label class="label label_textarea{{ value ? ' focus' }}">
         <span class="placeholder">Перечень основных заказчиков</span>
-        <textarea name="PROPERTY_CLIENTS" rows="1" maxlength="15000">{{ value }}</textarea>
+        <textarea name="general_info[properties][clients]" rows="1" maxlength="15000">{{ value }}</textarea>
         <span class="chars"></span>
     </label>
     <div class="grid">
@@ -42,7 +43,7 @@
     <div class="grid">
         <div class="col col_3 tabLinks_item tabLinks_item--small" data-tabLinks="application-small-business">
             <div class="text">
-                <span>Лучший поставщик в категории “Малый и средний бизнес”</span>
+                <span>Лучший поставщик в категории «Малый и средний бизнес»</span>
             </div>
         </div>
         {#
@@ -80,7 +81,8 @@
     </div>
     <div class="wrap_formBtn">
         <div class="form-message"></div>
-        <span class="btn btn--red">Удалить анкету</span>
+        {# TODO delete application #}
+        {#<span class="btn btn--red">Удалить анкету</span>#}
         <button type="submit" class="btn--blue">Сохранить</button>
     </div>
 </form>

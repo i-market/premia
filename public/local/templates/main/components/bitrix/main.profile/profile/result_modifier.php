@@ -1,5 +1,13 @@
 <?php
 
 use App\ApplicationForm;
+use Core\Underscore as _;
 
-$arResult['GENERAL_INFO_MAYBE'] = ApplicationForm::generalInfo($USER->GetID());
+$application = ApplicationForm::application($USER->GetID());
+//$arResult['APPLICATION'] = _::update($application, 'PROPERTIES', function($properties) {
+//    return _::mapValues($properties, function($prop, $key) {
+//        return _::has($prop, 'VALUE.TEXT')
+//            ? _::set($prop, 'TEXTAREA');
+//    });
+//});
+$arResult['APPLICATION'] = $application;
