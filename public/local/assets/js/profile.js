@@ -18,6 +18,22 @@ function notifyOnChange($form) {
   })
 }
 
+function initForm($form, onSuccess) {
+  $form.on('submit', (event) => {
+    event.preventDefault();
+    $.ajax({
+      url: $form.attr('action'),
+      type: 'POST',
+      data: new FormData($form[0]),
+      processData: false,
+      contentType: false,
+      success: onSuccess,
+      // TODO handle errors
+      error: _.noop
+    });
+  })
+}
+
 function init($component) {
   const successMessage = 'Ваши изменения были сохранены.';
   $component.find('form').each(function() {
@@ -37,7 +53,7 @@ function init($component) {
     // application, personal tabs
     $component.find('form.application_form').each(function() {
       const $form = $(this);
-      modals.init($form, (data) => {
+      initForm($form, (data) => {
         if (data.isSuccess) {
           modals.mutateMessage($form, successMessage, 'success');
         } else {
@@ -49,7 +65,8 @@ function init($component) {
   $('.wrap_add_file').each(function() {
     const $root = $(this);
     $root.find('.attach').on('click', () => {
-      const $input = $('<input name="file[]" class="file" type="file" hidden="hidden">');
+      const key = $root.data('name');
+      const $input = $(`<input name="${key}[file][]" class="file" type="file" hidden="hidden">`);
       $root.append($input);
       $input.click();
     });

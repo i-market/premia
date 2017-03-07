@@ -3,6 +3,7 @@
 namespace App;
 
 use App\ApplicationForm;
+use CFile;
 use Core\Strings as str;
 use Core\Underscore as _;
 use CUser;
@@ -59,6 +60,21 @@ class Api {
         return $fields;
     }
 
+    // TODO refactor
+    private static function files($files) {
+        $ret = array();
+        for($i = 0; $i < count($files['name']['file']); $i++) {
+            $ret[] = array(
+                'name' => $files['name']['file'][$i],
+                'type' => $files['type']['file'][$i],
+                'tmp_name' => $files['tmp_name']['file'][$i],
+                'error' => $files['error']['file'][$i],
+                'size' => $files['size']['file'][$i]
+            );
+        }
+        return $ret;
+    }
+
     static function handleApplication($request) {
         global $USER;
         $user = CUser::GetByID($USER->GetID())->GetNext();
@@ -67,6 +83,15 @@ class Api {
             return boolval($group['is_dirty']);
         });
         $fields = self::applicationFields($user, $params);
+        $files = array_map(function($fs) {
+            return self::files($fs);
+        }, $_FILES);
+        foreach($files as $key => $files) {
+            $propValue = array_map(function($file) {
+                return array('VALUE' => $file);
+            }, $files);
+            $fields[str::upper($key)]['PROPERTY_VALUES']['FILES'] = $propValue;
+        }
         // TODO better noop? info warn
         if (_::isEmpty($fields)) {
             return array('isSuccess' => true, 'errorMessageMaybe' => null);
