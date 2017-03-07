@@ -1,4 +1,4 @@
-{% for input in inputs %}
+{% for input in result.APPLICATION.INPUTS[iblock_key] %}
     <label class="label label_textarea{{ input.VALUE ? ' focus' }}">
         <span class="placeholder">{{ input.LABEL }}</span>
         <textarea name="{{ input.NAME }}" rows="1" maxlength="15000">{{ input.VALUE }}</textarea>

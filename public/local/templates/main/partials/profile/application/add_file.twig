@@ -1,5 +1,13 @@
 <div class="wrap_add_file">
-    <div class="add_file"></div>
+    <div class="add_file">
+        {# TODO render files #}
+        {#{% set files = result.APPLICATION[iblock_key].PROPERTIES.FILES %}#}
+        {% set files = [] %}
+        {% for file in files %}
+            {# TODO remove already uploaded files #}
+            <p>{{ file.NAME }} <span class="remove_file">(удалить)</span></p>
+        {% endfor %}
+    </div>
     {# TODO button/input tag? #}
     <div class="btn attach">Прикрепить файл</div>
 </div>
