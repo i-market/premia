@@ -51,10 +51,8 @@ $(document).ready(function () {
       }
     });
   });
-  var div = document.querySelectorAll('.label_textarea');
-  var ta = document.querySelector('textarea');
-  [].forEach.call(div, function (itm, idx) {
-    var t = itm.children[0],
+  $('.label_textarea').each(function(idx, itm) {
+    var t = $(this).find('textarea')[0],
       d = itm;
     t.addEventListener('keydown', function () {
       setTimeout(function () {

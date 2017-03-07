@@ -109,6 +109,7 @@ gulp.task('browser-sync', () => {
 
 gulp.task('watch', ['watch:sass', 'browser-sync'], () => {
   gulp.watch('mockup/css/*.scss', ['watch:sass']);
+  gulp.watch('mockup/js/*.js', ['build:vendor:js']);
   gulp.watch([`${paths.dist}/js/**/*.js`, `${paths.template}/**/*.twig`])
     .on('change', browserSync.reload);
 });

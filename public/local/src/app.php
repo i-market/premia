@@ -9,7 +9,6 @@ use Core\Env;
 use Core\Nullable as nil;
 use Core\View as v;
 use Core\Form as f;
-use CUser;
 use Core\Underscore as _;
 
 class App {
@@ -209,6 +208,14 @@ class Iblock {
     const PARTNERS_ID = 2;
     const NOMINATIONS_ID = 3;
     const GENERAL_INFO = 5;
+    const SMALL_BUSINESS = 6;
+    const BREAKTHROUGH = 7;
+    const ETP = 8;
+    const IMPORT_SUBSTITUTION = 9;
+    const SALES_INNOVATION = 10;
+    const EXPORTER = 11;
+    const SALES = 12;
+    const LAW = 13;
 }
 
 class PageProperty {
