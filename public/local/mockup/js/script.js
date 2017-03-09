@@ -52,12 +52,13 @@ $(document).ready(function () {
     });
   });
   $('.label_textarea').each(function(idx, itm) {
-    var t = $(this).find('textarea')[0],
+    var $t = $(this).find('textarea');
+    var t = $t[0],
       d = itm;
     t.addEventListener('keydown', function () {
       setTimeout(function () {
         t.style.cssText = 'height:0px';
-        var height = Math.min(20 * 5, t.scrollHeight);
+        var height = t.scrollHeight + parseFloat($t.css('border-bottom-width'));
         d.style.cssText = 'height:' + height + 'px';
         t.style.cssText = 'height:' + height + 'px';
       }, 0);
