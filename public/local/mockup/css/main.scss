@@ -315,7 +315,7 @@ h4 {
       right: 0;
       height: 100%;
       width: 30px;
-      background: linear-gradient(to right, transparent, #fff);
+      background: linear-gradient(to right, rgba(#fff, 0), #fff);
     }
 
     a {
