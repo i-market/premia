@@ -69,7 +69,7 @@ $(document).ready(function () {
     $('[data-tabLinks]').on('click', function () {
       var targetNode = $('[data-tabContent=' + $(this).attr('data-tabLinks') + ']');
       $(this).parent().find('[data-tabLinks]').removeClass('active').filter(this).addClass('active');
-      targetNode.parent().find('[data-tabContent]').hide().filter(targetNode).show();
+      targetNode.parent().find('> [data-tabContent]').hide().filter(targetNode).show();
     });
     $('[data-tabLinks]').parent('.activate').find('[data-tabLinks]:nth-child(1)').trigger('click');
   });
