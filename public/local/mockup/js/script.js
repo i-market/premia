@@ -59,7 +59,7 @@ $(document).ready(function () {
       setTimeout(function () {
         t.style.cssText = 'height:0px';
         var height = t.scrollHeight + parseFloat($t.css('border-bottom-width'));
-        d.style.cssText = 'height:' + height + 'px';
+        d.style.cssText = 'min-height:' + height + 'px';
         t.style.cssText = 'height:' + height + 'px';
       }, 0);
     });
