@@ -82,6 +82,9 @@ function init($component) {
       );
     });
   });
+  $('[data-tabLinks]').each(function() {
+    $(this).attr('data-scroll-to', 'true');
+  });
 }
 
 export default {init};
