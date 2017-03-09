@@ -315,7 +315,7 @@ h4 {
       right: 0;
       height: 100%;
       width: 30px;
-      background: linear-gradient(to right, transparent, #fff);
+      background: linear-gradient(to right, rgba(#fff, 0), #fff);
     }
 
     a {
@@ -973,6 +973,21 @@ h4 {
     padding: 15px;
     margin-bottom: 20px;
   }
+  @media only screen and (max-width: 767px) {
+    .tabLinks_item {
+      &:not(:last-child) {
+        margin-bottom: 0 !important;
+        border-bottom: none;
+      }
+      &:after {
+        display: none !important;
+      }
+    }
+  }
+}
+
+[data-tabContent] {
+  display: none;
 }
 
 .tab_links {
@@ -1057,6 +1072,8 @@ h4 {
   text-align: center;
   margin-bottom: 30px;
   span {
+    max-height: 54px;
+    overflow: hidden;
     font-size: 16px;
     margin-top: 0;
   }
@@ -1097,7 +1114,7 @@ h4 {
 
 .application_form {
   &>.grid {
-    .col_2 {
+    .col_2:not(.tabLinks_item) {
       @media only screen and (max-width: 767px) {
         margin-bottom: 0px;
       }

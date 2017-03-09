@@ -42,11 +42,23 @@ class ApplicationForm {
     }
 
     private static function addOrUpdate($elementMaybe, $fields) {
+        global $USER;
         $el = new CIBlockElement();
-        $result = $elementMaybe === null
+        // TODO refactor: ad-hoc
+        $isNomination = $fields['IBLOCK_ID'] !== Iblock::GENERAL_INFO;
+        $isAdd = $elementMaybe === null;
+        $result = $isAdd
             ? $el->Add($fields)
             : $el->Update($elementMaybe['ID'], $fields);
         $isSuccess = $result === true || is_int($result);
+        // TODO refactor: inappropriate place for this?
+        if ($isNomination && $isAdd && $isSuccess) {
+            $event = array(
+                'EMAIL' => $USER->GetEmail(),
+                'NAME' => $USER->GetFormattedName()
+            );
+            App::sendMailEvent(MailEvent::NEW_NOMINATION, App::SITE_ID, $event);
+        }
         return array(
             'isSuccess' => $isSuccess,
             'errorMessageMaybe' => $isSuccess ? null : $el->LAST_ERROR

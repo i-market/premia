@@ -199,6 +199,7 @@ class App {
 
 class MailEvent {
     const CONTACT_FORM = 'CONTACT_FORM';
+    const NEW_NOMINATION = 'NEW_NOMINATION';
 }
 
 class Iblock {
