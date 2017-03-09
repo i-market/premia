@@ -77,7 +77,10 @@ class Api {
         $user = CUser::GetByID($USER->GetID())->GetNext();
         // TODO sanitize params
         $params = array_filter($request->params(), function($group) {
-            return boolval($group['is_dirty']);
+            $isEmpty = _::matches($group['properties'], function($value) {
+                return str::isEmpty($value);
+            });
+            return boolval($group['is_dirty']) && !$isEmpty;
         });
         $fields = self::applicationFields($user, $params);
         $files = array_map(function($fs) {
