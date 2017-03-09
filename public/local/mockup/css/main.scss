@@ -973,6 +973,17 @@ h4 {
     padding: 15px;
     margin-bottom: 20px;
   }
+  @media only screen and (max-width: 767px) {
+    .tabLinks_item {
+      &:not(:last-child) {
+        margin-bottom: 0 !important;
+        border-bottom: none;
+      }
+      &:after {
+        display: none !important;
+      }
+    }
+  }
 }
 
 [data-tabContent] {
