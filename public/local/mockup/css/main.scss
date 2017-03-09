@@ -1032,7 +1032,6 @@ h4 {
     background: $green;
     color: #FFF;
     .text {
-      overflow: hidden;
       p {
         color: #FFF;
       }
@@ -1073,6 +1072,8 @@ h4 {
   text-align: center;
   margin-bottom: 30px;
   span {
+    max-height: 54px;
+    overflow: hidden;
     font-size: 16px;
     margin-top: 0;
   }
