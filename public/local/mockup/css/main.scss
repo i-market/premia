@@ -1021,6 +1021,7 @@ h4 {
     background: $green;
     color: #FFF;
     .text {
+      overflow: hidden;
       p {
         color: #FFF;
       }
@@ -1101,7 +1102,7 @@ h4 {
 
 .application_form {
   &>.grid {
-    .col_2 {
+    .col_2:not(.tabLinks_item) {
       @media only screen and (max-width: 767px) {
         margin-bottom: 0px;
       }
