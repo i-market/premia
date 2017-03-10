@@ -242,6 +242,9 @@ h4 {
     @media only screen and (max-width:767px) {
       width: 120px;
     }
+    @media only screen and (max-width:310px) {
+      display: none;
+    }
   }
   .hamburger {
     display: inline-block;
