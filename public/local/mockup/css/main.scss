@@ -1166,7 +1166,8 @@ h4 {
         left: 0;
         top: 0px !important;
         margin-bottom: 10px;
-        width: 100%;
+        // issue: safari animates `width` (transition)
+        //width: 100%;
         display: block;
         position: relative;
         white-space: normal;
