@@ -15,7 +15,10 @@ $(document).ready(function () {
       overflow: 'auto'
     });
   });
-  $('[data-modal]').on('click', function () {
+  $('[data-modal]').on('click', function (event) {
+    if ($(this).is('a')) {
+      event.preventDefault();
+    }
     // in case we open a modal from another modal
     $('.modal').fadeOut(100);
     var dataModal = $(this).attr('data-modal'),
@@ -51,27 +54,61 @@ $(document).ready(function () {
       }
     });
   });
-  $('.label_textarea').each(function(idx, itm) {
-    var $t = $(this).find('textarea');
-    var t = $t[0],
-      d = itm;
-    t.addEventListener('keydown', function () {
-      setTimeout(function () {
-        t.style.cssText = 'height:0px';
-        var height = t.scrollHeight + parseFloat($t.css('border-bottom-width'));
-        d.style.cssText = 'min-height:' + height + 'px';
-        t.style.cssText = 'height:' + height + 'px';
+
+  function adjustTextareaHeight($textarea, $label) {
+    $textarea.css('height', 0);
+    var height = $textarea[0].scrollHeight + parseFloat($textarea.css('border-bottom-width'));
+    $label.css('min-height', height);
+    $textarea.css('height', height);
+  }
+
+  $('.label_textarea').each(function() {
+    var $label = $(this);
+    var $textarea = $label.find('textarea');
+    adjustTextareaHeight($textarea, $label);
+    $textarea.on('change input', function() {
+      setTimeout(function() {
+        adjustTextareaHeight($textarea, $label);
       }, 0);
     });
   });
   // табы
   $(function () {
-    $('[data-tabLinks]').on('click', function () {
-      var targetNode = $('[data-tabContent=' + $(this).attr('data-tabLinks') + ']');
-      $(this).parent().find('[data-tabLinks]').removeClass('active').filter(this).addClass('active');
+    function activate($el) {
+      var targetNode = $('[data-tabContent=' + $el.attr('data-tabLinks') + ']');
+      $el.parent().find('[data-tabLinks]').removeClass('active').filter($el).addClass('active');
       targetNode.parent().find('> [data-tabContent]').hide().filter(targetNode).show();
+      targetNode.find('.label_textarea').each(function() {
+        var $label = $(this);
+        var $textarea = $label.find('textarea');
+        adjustTextareaHeight($textarea, $label);
+      });
+    }
+    $('[data-tabLinks]').on('click', function () {
+      activate($(this));
+      if ($(this).attr('data-scroll-to') === 'true') {
+        var targetNode = $('[data-tabContent=' + $(this).attr('data-tabLinks') + ']');
+        // TODO extract function
+        var headerHeight = $('header').filter(function() {
+          return $(this).css('position') === 'fixed';
+        }).height();
+        if (headerHeight !== null) {
+          var whitespace = 40;
+          var offset = headerHeight === null ? 0 : headerHeight + whitespace;
+          var $page = $('html, body');
+          var scrollEvents = 'scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove';
+          $page.on(scrollEvents, function() {
+            $page.stop();
+          });
+          $page.stop().animate({
+            scrollTop: targetNode.offset().top - offset
+          }, 1000, function() {
+            $page.off(scrollEvents);
+          });
+        }
+      }
     });
-    $('[data-tabLinks]').parent('.activate').find('[data-tabLinks]:nth-child(1)').trigger('click');
+    activate($('[data-tabLinks]').parent('.activate').find('[data-tabLinks]:nth-child(1)'));
   });
 
 });

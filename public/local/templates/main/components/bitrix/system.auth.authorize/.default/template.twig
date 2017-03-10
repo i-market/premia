@@ -1,43 +1,41 @@
-<section class="content_section">
-    <div class="wrap">
-        <div class="inner">
-            <div class="embedded-modal-form">
-                <form name="form_auth" action="{{ result.AUTH_URL }}" method="post">
-                    <input type="hidden" name="AUTH_FORM" value="Y" />
-                    <input type="hidden" name="TYPE" value="AUTH" />
-                    {% if result.BACKURL is not empty %}
-                        <input type="hidden" name="backurl" value="{{ result.BACKURL }}" />
-                    {% endif %}
-                    {% for key, value in result.POST %}
-                        <input type="hidden" name="{{ key }}" value="{{ value }}" />
-                    {% endfor %}
-                    {# TODO more generic heading #}
-                    <h4 class="tab_title">Вход в личный кабинет</h4>
-                    <label class="label">
-                        <input name="USER_LOGIN" value="{{ result.LAST_LOGIN }}" type="email" placeholder="E-mail">
-                    </label>
-                    <label class="label">
-                        <input name="USER_PASSWORD" type="password" placeholder="Пароль">
-                    </label>
-                    <div class="remember">
-                        <input name="USER_REMEMBER" value="Y" type="checkbox" hidden="hidden" id="remember">
-                        <label for="remember">Запомнить меня</label>
-                    </div>
-                    <div class="form-message"></div>
-                    <div class="wrap_btn">
-                        <div>
-                            <button type="submit" name="Login" class="btn--blue">Войти</button>
-                        </div>
-                        <div>
-                            <a data-modal="password-reset-modal" href="javascript:void(0)">Забыли пароль?</a>
-                        </div>
-                    </div>
-                </form>
-                <div class="registration">
-                    <p>Для участия в конкурсе вы должны </p>
-                    <a data-modal="signup-modal" href="javascript:void(0)">зарегистрироваться</a>
+{% embed partial('embedded_modal_section.twig') %}
+    {% block modal %}
+        <div class="embedded-modal-form">
+            <form name="form_auth" action="{{ result.AUTH_URL }}" method="post">
+                <input type="hidden" name="AUTH_FORM" value="Y" />
+                <input type="hidden" name="TYPE" value="AUTH" />
+                {% if result.BACKURL is not empty %}
+                    <input type="hidden" name="backurl" value="{{ result.BACKURL }}" />
+                {% endif %}
+                {% for key, value in result.POST %}
+                    <input type="hidden" name="{{ key }}" value="{{ value }}" />
+                {% endfor %}
+                {# TODO more generic heading #}
+                <h4 class="tab_title">Вход в личный кабинет</h4>
+                <label class="label">
+                    <input name="USER_LOGIN" value="{{ result.LAST_LOGIN }}" type="email" placeholder="E-mail">
+                </label>
+                <label class="label">
+                    <input name="USER_PASSWORD" type="password" placeholder="Пароль">
+                </label>
+                <div class="remember">
+                    <input name="USER_REMEMBER" value="Y" type="checkbox" hidden="hidden" id="remember">
+                    <label for="remember">Запомнить меня</label>
                 </div>
+                <div class="form-message"></div>
+                <div class="wrap_btn">
+                    <div>
+                        <button type="submit" name="Login" class="btn--blue">Войти</button>
+                    </div>
+                    <div>
+                        <a data-modal="password-reset-modal" href="javascript:void(0)">Забыли пароль?</a>
+                    </div>
+                </div>
+            </form>
+            <div class="registration">
+                <p>Для участия в конкурсе вы должны </p>
+                <a data-modal="signup-modal" href="javascript:void(0)">зарегистрироваться</a>
             </div>
         </div>
-    </div>
-</section>
+    {% endblock %}
+{% endembed %}

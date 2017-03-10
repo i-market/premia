@@ -54,6 +54,10 @@ $router->with('/api', function () use ($router, $signupRoute) {
             $params = $request->params(array('email'));
             $login = $params['email'];
             $message = CUser::SendPassword($login, $params['email']);
+            if ($message['TYPE'] === 'OK') {
+                // mutate
+                $message['MESSAGE'] = 'Ссылка для восстановления пароля выслана на вашу почту.';
+            }
             return $response->json(Api::formResponse(array(), $message));
         });
         $router->with('/profile', function () use ($router) {
@@ -71,9 +75,6 @@ $router->with('/api', function () use ($router, $signupRoute) {
                 ));
             });
             $router->respond('POST', '/application', function($request, $response) {
-                return $response->json(Api::handleApplication($request));
-            });
-            $router->respond('DELETE', '/application', function($request, $response) {
                 return $response->json(Api::handleApplication($request));
             });
         });

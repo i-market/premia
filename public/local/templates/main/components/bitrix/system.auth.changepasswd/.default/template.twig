@@ -1,45 +1,45 @@
-<div class="embedded-modal-form">
-    <form name="bform" action="{{ result.AUTH_FORM }}" method="post">
-        {% if result.BACKURL is not empty %}
-            <input type="hidden" name="backurl" value="{{ result.BACKURL }}" />
-        {% endif %}
-        <input type="hidden" name="AUTH_FORM" value="Y" />
-        <input type="hidden" name="TYPE" value="CHANGE_PWD" />
-        <h4 class="tab_title">Смена пароля</h4>
-        <label class="label">
-            <input name="USER_LOGIN"
-                   value="{{ result.LAST_LOGIN }}"
-                   type="email"
-                   placeholder="E-mail">
-        </label>
-        <label class="label">
-            <input name="USER_CHECKWORD"
-                   value="{{ result.USER_CHECKWORD }}"
-                   type="text"
-                   placeholder="Контрольная строка">
-        </label>
-        <label class="label">
-            <input name="USER_PASSWORD"
-                   value="{{ result.USER_PASSWORD }}"
-                   type="password"
-                   placeholder="Новый пароль">
-        </label>
-        <label class="label">
-            <input name="USER_CONFIRM_PASSWORD"
-                   value="{{ result.USER_CONFIRM_PASSWORD }}"
-                   type="password"
-                   placeholder="Подтверждение пароля">
-        </label>
-        {% set bxMessage = params['~AUTH_RESULT'] %}
-        {% if bxMessage %}
-            <div class="form-message {{ bxMessage.TYPE == 'ERROR' ? 'error' : 'success' }}" style="display: block">
-                {{ bxMessage.MESSAGE }}
-            </div>
-        {% endif %}
-        <div class="wrap_btn">
-            <div>
-                <button type="submit" name="change_pwd" class="btn--blue">Изменить пароль</button>
-            </div>
+{{ APPLICATION.SetPageProperty(constant('App\\PageProperty::LAYOUT'), 'bare.twig') }}
+{% embed partial('embedded_modal_section.twig') %}
+    {% block modal %}
+        <div class="embedded-modal-form">
+            <form name="bform" action="{{ result.AUTH_FORM }}" method="post">
+                <input type="hidden" name="USER_CHECKWORD" value="{{ result.USER_CHECKWORD }}">
+                {% if result.BACKURL is not empty %}
+                    <input type="hidden" name="backurl" value="{{ result.BACKURL }}" />
+                {% endif %}
+                <input type="hidden" name="AUTH_FORM" value="Y" />
+                <input type="hidden" name="TYPE" value="CHANGE_PWD" />
+                <h4 class="tab_title">Смена пароля</h4>
+                <label class="label">
+                    <input name="USER_LOGIN"
+                           value="{{ result.LAST_LOGIN }}"
+                           type="email"
+                           placeholder="E-mail">
+                </label>
+                <label class="label">
+                    <input name="USER_PASSWORD"
+                           value="{{ result.USER_PASSWORD }}"
+                           type="password"
+                           placeholder="Новый пароль">
+                </label>
+                <label class="label">
+                    <input name="USER_CONFIRM_PASSWORD"
+                           value="{{ result.USER_CONFIRM_PASSWORD }}"
+                           type="password"
+                           placeholder="Подтверждение пароля">
+                </label>
+                {% set bxMessage = params['~AUTH_RESULT'] %}
+                {% if bxMessage %}
+                    <div class="form-message {{ bxMessage.TYPE == 'ERROR' ? 'error' : 'success' }}" style="display: block">
+                        {{ bxMessage.MESSAGE }}
+                    </div>
+                {% endif %}
+                <div class="wrap_btn">
+                    <div>
+                        <button type="submit" name="change_pwd" class="btn--blue">Изменить пароль</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </form>
-</div>
+    {% endblock %}
+{% endembed %}

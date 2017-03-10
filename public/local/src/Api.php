@@ -33,9 +33,10 @@ class Api {
         $elementName = ApplicationForm::genericElementName($user, $USER->GetFormattedName());
         $fields = array();
         foreach(ApplicationForm::iblockIds() as $key => $iblockId) {
+            $paramsKey = str::lower($key);
             // TODO refactor missing iblocks
-            if (_::has($params, str::lower($key))) {
-                $paramsPropsPath = str::lower($key) . '.properties';
+            if (_::has($params, $paramsKey)) {
+                $paramsPropsPath = $paramsKey . '.properties';
                 $propValues = array_change_key_case(_::get($params, $paramsPropsPath, array()), CASE_UPPER);
                 $propTxtValues = array_map(function($value) {
                     return array(
@@ -52,6 +53,14 @@ class Api {
                         'USER' => $USER->GetID()
                     ))
                 );
+                // TODO refactor
+                $files = $params[$paramsKey]['files'];
+                if (isset($files)) {
+                    $filesProp = array_map(function($file) {
+                        return array('VALUE' => $file);
+                    }, $files);
+                    $fields[$key]['PROPERTY_VALUES']['FILES'] = $filesProp;
+                }
             }
         }
         return $fields;
@@ -75,28 +84,38 @@ class Api {
     static function handleApplication($request) {
         global $USER;
         $user = CUser::GetByID($USER->GetID())->GetNext();
+        $files = _::mapValues($_FILES, function($fs) {
+            return self::files($fs);
+        });
         // TODO sanitize params
-        $params = array_filter($request->params(), function($group) {
+        $params = $request->params();
+        $filteredParams = array();
+        foreach ($params as $key => $group) {
+            if (!is_array($group)) continue;
             $isEmpty = _::matches($group['properties'], function($value) {
                 return str::isEmpty($value);
             });
-            return boolval($group['is_dirty']) && !$isEmpty;
-        });
-        $fields = self::applicationFields($user, $params);
-        $files = array_map(function($fs) {
-            return self::files($fs);
-        }, $_FILES);
-        foreach($files as $key => $files) {
-            $propValue = array_map(function($file) {
-                return array('VALUE' => $file);
-            }, $files);
-            $fields[str::upper($key)]['PROPERTY_VALUES']['FILES'] = $propValue;
-        }
-        // TODO better noop? info warn
+            // user touched the form?
+            $isDirty = boolval($group['is_dirty']);
+            $hasFiles = array_key_exists($key, $files);
+            if ($hasFiles) {
+                $group['files'] = $files[$key];
+            }
+            // decide which field groups to act upon
+            if ($hasFiles || ($isDirty && !$isEmpty)) {
+                $filteredParams[$key] = $group;
+            }
+        };
+        $fields = self::applicationFields($user, $filteredParams);
         if (_::isEmpty($fields)) {
-            return array('isSuccess' => true, 'errorMessageMaybe' => null);
+            // TODO refactor: response types
+            return array(
+                'isSuccess' => true,
+                'errorMessageMaybe' => null,
+                'type' => 'info',
+                'message' => 'Нет изменений, требующих сохранения.'
+            );
         } else {
-            // TODO if request method == POST update, otherwise delete
             return ApplicationForm::updateApplication($USER->GetID(), $fields);
         }
     }
