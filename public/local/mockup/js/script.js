@@ -93,9 +93,16 @@ $(document).ready(function () {
         if (headerHeight !== null) {
           var whitespace = 40;
           var offset = headerHeight === null ? 0 : headerHeight + whitespace;
-          $('html, body').stop().animate({
+          var $page = $('html, body');
+          var scrollEvents = 'scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove';
+          $page.on(scrollEvents, function() {
+            $page.stop();
+          });
+          $page.stop().animate({
             scrollTop: targetNode.offset().top - offset
-          }, 1000);
+          }, 1000, function() {
+            $page.off(scrollEvents);
+          });
         }
       }
     });
