@@ -51,16 +51,23 @@ $(document).ready(function () {
       }
     });
   });
+
+  function adjustTextareaHeight($t, d) {
+    var t = $t[0];
+    t.style.cssText = 'height:0px';
+    var height = t.scrollHeight + parseFloat($t.css('border-bottom-width'));
+    d.style.cssText = 'min-height:' + height + 'px';
+    t.style.cssText = 'height:' + height + 'px';
+  }
+
   $('.label_textarea').each(function(idx, itm) {
     var $t = $(this).find('textarea');
     var t = $t[0],
       d = itm;
+    adjustTextareaHeight($t, d);
     t.addEventListener('keydown', function () {
-      setTimeout(function () {
-        t.style.cssText = 'height:0px';
-        var height = t.scrollHeight + parseFloat($t.css('border-bottom-width'));
-        d.style.cssText = 'min-height:' + height + 'px';
-        t.style.cssText = 'height:' + height + 'px';
+      setTimeout(function() {
+        adjustTextareaHeight($t, d);
       }, 0);
     });
   });
@@ -70,6 +77,10 @@ $(document).ready(function () {
       var targetNode = $('[data-tabContent=' + $el.attr('data-tabLinks') + ']');
       $el.parent().find('[data-tabLinks]').removeClass('active').filter($el).addClass('active');
       targetNode.parent().find('> [data-tabContent]').hide().filter(targetNode).show();
+      targetNode.find('.label_textarea').each(function(idx, itm) {
+        var $t = $(this).find('textarea');
+        adjustTextareaHeight($t, itm);
+      });
     }
     $('[data-tabLinks]').on('click', function () {
       activate($(this));
