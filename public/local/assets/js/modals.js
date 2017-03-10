@@ -21,7 +21,7 @@ function mutateField($label, errorMaybe) {
   $message.html(_.isNull(errorMaybe) ? '' : errorMaybe.message);
 }
 
-function mutateMessage($form, text, type) {
+function mutateMessage($form, text, type = 'info') {
   $(`<div class="form-message ${type}">${text}</div>`)
     .replaceAll($form.find('.form-message'))
     .toggle(!_.isEmpty(text));
@@ -38,7 +38,7 @@ function mutateForm($form, response) {
   });
   if (_.isEmpty(_.get(response, 'bxMessage', {}))) {
     // clear
-    mutateMessage($form, '', 'info');
+    mutateMessage($form, null);
   } else {
     const msgType = response.bxMessage.type === 'ERROR' ? 'error' : 'info';
     mutateMessage($form, response.bxMessage.message, msgType);

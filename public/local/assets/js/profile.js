@@ -39,27 +39,26 @@ function init($component) {
   $component.find('form').each(function() {
     notifyOnChange($(this));
   });
-  {
-    const $form = $component.find('form.contact_details');
-    modals.init($form, (data) => {
-      if (data.isSuccess) {
+  function onSuccessFn($form) {
+    return (data) => {
+      if (_.has(data, 'type')) {
+        modals.mutateMessage($form, data.message, data.type);
+      } else if (data.isSuccess) {
         modals.mutateMessage($form, successMessage, 'success');
       } else {
         modals.mutateMessage($form, data.errorMessageMaybe, 'error');
       }
-    });
+    };
+  }
+  {
+    const $form = $component.find('form.contact_details');
+    modals.init($form, onSuccessFn($form));
   }
   {
     // application, personal tabs
     $component.find('form.application_form').each(function() {
       const $form = $(this);
-      initForm($form, (data) => {
-        if (data.isSuccess) {
-          modals.mutateMessage($form, successMessage, 'success');
-        } else {
-          modals.mutateMessage($form, data.errorMessageMaybe, 'error');
-        }
-      });
+      initForm($form, onSuccessFn($form));
     });
   }
   $('.wrap_add_file').each(function() {
@@ -82,8 +81,14 @@ function init($component) {
       );
     });
   });
-  $('[data-tabLinks]').each(function() {
+  $component.find('[data-tabLinks]').each(function() {
     $(this).attr('data-scroll-to', 'true');
+    $(this).on('click', () => {
+      $component.find('form').each(function() {
+        // clear
+        modals.mutateMessage($(this), null);
+      });
+    });
   });
 }
 

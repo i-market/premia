@@ -107,7 +107,6 @@ class Api {
             }
         };
         $fields = self::applicationFields($user, $filteredParams);
-        // TODO better noop? info warn
         if (_::isEmpty($fields)) {
             return array('isSuccess' => true, 'errorMessageMaybe' => null);
         } else {
