@@ -84,10 +84,7 @@ function init($component) {
   $component.find('[data-tabLinks]').each(function() {
     $(this).attr('data-scroll-to', 'true');
     $(this).on('click', () => {
-      $component.find('form').each(function() {
-        // clear
-        modals.mutateMessage($(this), null);
-      });
+      $component.find('.form-message.success').hide();
     });
   });
 }
