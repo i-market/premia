@@ -108,7 +108,13 @@ class Api {
         };
         $fields = self::applicationFields($user, $filteredParams);
         if (_::isEmpty($fields)) {
-            return array('isSuccess' => true, 'errorMessageMaybe' => null);
+            // TODO refactor: response types
+            return array(
+                'isSuccess' => true,
+                'errorMessageMaybe' => null,
+                'type' => 'info',
+                'message' => 'Нет изменений, требующих сохранения.'
+            );
         } else {
             // TODO if request method == POST update, otherwise delete
             return ApplicationForm::updateApplication($USER->GetID(), $fields);
