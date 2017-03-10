@@ -6,6 +6,10 @@ import sass from 'gulp-sass';
 import util from 'gulp-util';
 import clean from 'gulp-clean';
 import uglify from 'gulp-uglify';
+import browserify from 'browserify';
+import babelify from 'babelify';
+import source from 'vinyl-source-stream';
+import buffer from 'vinyl-buffer';
 import browserSync from 'browser-sync';
 import child from 'child_process';
 import _ from 'lodash';
@@ -69,7 +73,20 @@ gulp.task('build:vendor:css', ['build:mockup'], () => {
     .pipe(gulp.dest(`${paths.dist}/css/lib`));
 });
 
-gulp.task('build:vendor', ['build:vendor:js', 'build:vendor:css']);
+gulp.task('build:js', () => {
+  return browserify('assets/js/main.js')
+    .on('error', (error) => {
+      util.log('Browserify:', error.message);
+    })
+    .transform(babelify, {presets: ['es2015']})
+    .bundle()
+    .pipe(source('bundle.js'))
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest(`${paths.dist}/js`));
+});
+
+gulp.task('build:vendor', ['build:vendor:js', 'build:js', 'build:vendor:css']);
 
 gulp.task('build', ['build:mockup', 'build:vendor']);
 
