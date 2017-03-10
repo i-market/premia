@@ -55,22 +55,20 @@ $(document).ready(function () {
     });
   });
 
-  function adjustTextareaHeight($t, d) {
-    var t = $t[0];
-    t.style.cssText = 'height:0px';
-    var height = t.scrollHeight + parseFloat($t.css('border-bottom-width'));
-    d.style.cssText = 'min-height:' + height + 'px';
-    t.style.cssText = 'height:' + height + 'px';
+  function adjustTextareaHeight($textarea, $label) {
+    $textarea.css('height', 0);
+    var height = $textarea[0].scrollHeight + parseFloat($textarea.css('border-bottom-width'));
+    $label.css('min-height', height);
+    $textarea.css('height', height);
   }
 
-  $('.label_textarea').each(function(idx, itm) {
-    var $t = $(this).find('textarea');
-    var t = $t[0],
-      d = itm;
-    adjustTextareaHeight($t, d);
-    t.addEventListener('keydown', function () {
+  $('.label_textarea').each(function() {
+    var $label = $(this);
+    var $textarea = $label.find('textarea');
+    adjustTextareaHeight($textarea, $label);
+    $textarea.on('change input', function() {
       setTimeout(function() {
-        adjustTextareaHeight($t, d);
+        adjustTextareaHeight($textarea, $label);
       }, 0);
     });
   });
@@ -80,9 +78,10 @@ $(document).ready(function () {
       var targetNode = $('[data-tabContent=' + $el.attr('data-tabLinks') + ']');
       $el.parent().find('[data-tabLinks]').removeClass('active').filter($el).addClass('active');
       targetNode.parent().find('> [data-tabContent]').hide().filter(targetNode).show();
-      targetNode.find('.label_textarea').each(function(idx, itm) {
-        var $t = $(this).find('textarea');
-        adjustTextareaHeight($t, itm);
+      targetNode.find('.label_textarea').each(function() {
+        var $label = $(this);
+        var $textarea = $label.find('textarea');
+        adjustTextareaHeight($textarea, $label);
       });
     }
     $('[data-tabLinks]').on('click', function () {
