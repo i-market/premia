@@ -15,7 +15,10 @@ $(document).ready(function () {
       overflow: 'auto'
     });
   });
-  $('[data-modal]').on('click', function () {
+  $('[data-modal]').on('click', function (event) {
+    if ($(this).is('a')) {
+      event.preventDefault();
+    }
     // in case we open a modal from another modal
     $('.modal').fadeOut(100);
     var dataModal = $(this).attr('data-modal'),
