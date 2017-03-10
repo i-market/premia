@@ -15,7 +15,7 @@
                     {# show .short on smaller devices #}
                     <a href="javascript:void(0)" data-modal="signup-modal" class="btn--blue reg long">Зарегистрироваться</a>
                     <a href="javascript:void(0)" data-modal="signup-modal" class="btn--blue reg short">Регистрация</a>
-                    <a href="javascript:void(0)" data-modal="login-modal" class="btn lk">Личный кабинет</a>
+                    <a href="{{ profile_path }}" data-modal="login-modal" class="btn lk">Личный кабинет</a>
                 {% endif %}
             </div>
         </div>
@@ -26,13 +26,11 @@
 <main class="content">
     {{ slider }}
     {% block page %}
-        <section class="content_section">
-            <div class="wrap">
-                <div class="inner editable-area editable-page">
-                    {{ page }}
-                </div>
-            </div>
-        </section>
+        {% embed partial('editable_page_section.twig') %}
+            {% block content %}
+                {{ page }}
+            {% endblock %}
+        {% endembed %}
     {% endblock %}
 </main>
 <!-- FOOTER START -->
@@ -56,7 +54,6 @@
                     </div>
                 </div>
                 <div class="bottom">
-                    {#TODO year#}
                     <p class="copy">{{ footer_copyright }}</p>
                 </div>
             </div>
