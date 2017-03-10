@@ -2,7 +2,7 @@
   "css/lib/normalize.min.css": "css/lib/normalize-3131a92235.min.css",
   "css/lib/slick.css": "css/lib/slick-6fe2d59831.css",
   "css/lib/vendor.css": "css/lib/vendor-d750cfcbd1.css",
-  "css/main.css": "css/main-05b86a79f8.css",
+  "css/main.css": "css/main-cf960dfaee.css",
   "images/avatar.svg": "images/avatar-f4116e29d2.svg",
   "images/b2b.png": "images/b2b-23d01b2b00.png",
   "images/back.svg": "images/back-c056809276.svg",
@@ -23,7 +23,8 @@
   "images/pic_1.png": "images/pic_1-231f086bbb.png",
   "images/pic_2.png": "images/pic_2-b582579a1b.png",
   "images/pic_3.png": "images/pic_3-658d08aa5d.png",
-  "js/script.js": "js/script-08e0ee32f3.js",
-  "js/vendor.js": "js/vendor-06ba85e053.js",
+  "js/bundle.js": "js/bundle-6170eb4a37.js",
+  "js/script.js": "js/script-a3544bec4b.js",
+  "js/vendor.js": "js/vendor-2924f87b54.js",
   "js/vendor/slick.min.js": "js/vendor/slick-17e331f34d.min.js"
 }
