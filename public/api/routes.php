@@ -73,9 +73,6 @@ $router->with('/api', function () use ($router, $signupRoute) {
             $router->respond('POST', '/application', function($request, $response) {
                 return $response->json(Api::handleApplication($request));
             });
-            $router->respond('DELETE', '/application', function($request, $response) {
-                return $response->json(Api::handleApplication($request));
-            });
         });
     });
 });

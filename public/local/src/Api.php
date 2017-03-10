@@ -116,7 +116,6 @@ class Api {
                 'message' => 'Нет изменений, требующих сохранения.'
             );
         } else {
-            // TODO if request method == POST update, otherwise delete
             return ApplicationForm::updateApplication($USER->GetID(), $fields);
         }
     }
