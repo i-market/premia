@@ -8,6 +8,7 @@ use CIBlockElement;
 use Core\Iblock as ib;
 use Core\Underscore as _;
 use Core\Nullable as nil;
+use CUser;
 
 assert(Loader::includeModule('iblock'));
 
@@ -94,5 +95,21 @@ class ApplicationForm {
             $user['~WORK_COMPANY'],
             $formattedName
         )));
+    }
+
+    private static function userCompany($userId) {
+        static $cache = array();
+        if (array_key_exists($userId, $cache)) {
+            return $cache[$userId];
+        } else {
+            $ret = CUser::GetByID($userId)->GetNext()['WORK_COMPANY'];
+            $cache[$userId] = $ret;
+            return $ret;
+        }
+    }
+
+    static function getDisplayName($application) {
+        $appUserId = $application['PROPERTIES']['USER']['VALUE'];
+        return self::userCompany($appUserId);
     }
 }

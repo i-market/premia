@@ -1,0 +1,81 @@
+<section class="publications">
+    <div class="wrap">
+        <div class="inner">
+            <h2>Личный кабинет</h2>
+        </div>
+        <div class="personal_area_page">
+            <div class="history_title">
+                <a href="{{ result.BACK_LINK }}" class="back"></a>
+                <h3>Анкеты компаний поставщиков / {{ result.IBLOCK.NAME }}</h3>
+            </div>
+            <div class="grid">
+                <div class="col col_2">
+                    <h4 class="tab_title">{{ result.DISPLAY_NAME }}</h4>
+                </div>
+            </div>
+            {% for prop in result.TEXT_PROPERTIES %}
+                {% set text = prop.VALUE.TEXT %}
+                {% if text is not empty %}
+                    <div class="pap_item">
+                        <div class="inner">
+                            <strong>{{ prop.NAME }}</strong>
+                            <p>{{ text }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="inner">
+                {% for file in result.FILES %}
+                    <div class="add_file{{ loop.last ? ' last' }}">
+                        <a href="{{ file.SRC }}" target="_blank" class="file">{{ file.ORIGINAL_NAME }} <span class="remove_file">(скачать файл)</span></a>
+                    </div>
+                {% endfor %}
+            </div>
+            {# TODO voting #}
+            <div class="wrap_evaluation">
+                <div class="inner">
+                    <div class="evaluation">
+                        <div class="left">
+                            <span>Вклад реализованного проекта в повышение эффективности бизнеса</span>
+                        </div>
+                        <div class="right">
+                            <input type="radio" id="someRadio1" name="family">
+                            <label for="someRadio1">1</label>
+                            <input type="radio" id="someRadio2" name="family" checked>
+                            <label for="someRadio2">2</label>
+                            <input type="radio" id="someRadio3" name="family">
+                            <label for="someRadio3">3</label>
+                            <input type="radio" id="someRadio4" name="family">
+                            <label for="someRadio4">4</label>
+                            <input type="radio" id="someRadio5" name="family">
+                            <label for="someRadio5">5</label>
+                        </div>
+                    </div>
+                    <div class="evaluation">
+                        <div class="left">
+                            <span>Вклад реализованного проекта в повышение эффективности бизнеса</span>
+                        </div>
+                        <div class="right">
+                            <input type="radio" id="someRadio6" name="family_2">
+                            <label for="someRadio6">6</label>
+                            <input type="radio" id="someRadio7" name="family_2">
+                            <label for="someRadio7">7</label>
+                            <input type="radio" id="someRadio8" name="family_2">
+                            <label for="someRadio8">8</label>
+                            <input type="radio" id="someRadio9" name="family_2" checked>
+                            <label for="someRadio9">9</label>
+                            <input type="radio" id="someRadio10" name="family_2">
+                            <label for="someRadio10">10</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrap_formBtn">
+                {# TODO form message #}
+                <p class="allert">Оценки были измененны, для сохранения изменений нажмите на кнопку “Сохранить”</p>
+                <button class="btn--blue">Сохранить</button>
+                <a class="back" href="{{ result.BACK_LINK }}"></a>
+            </div>
+        </div>
+    </div>
+</section>

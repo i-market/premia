@@ -1,8 +1,8 @@
 <div class="wrap_add_file" data-name="{{ iblock_key|lower }}">
-    <div class="add_file">
+    <div class="add_file last">
         {% set files = result.APPLICATION[iblock_key].PROPERTIES.FILES.VALUE %}
         {% for file in files %}
-            <p data-file-id="{{ file.ID }}">{{ file.ORIGINAL_NAME }} <span class="remove_file">(удалить)</span></p>
+            <p data-file-id="{{ file.ID }}"><a href="{{ file.SRC }}" target="_blank">{{ file.ORIGINAL_NAME }}</a> <span class="remove_file">(удалить)</span></p>
         {% endfor %}
     </div>
     {# TODO button/input tag? #}

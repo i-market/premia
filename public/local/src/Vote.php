@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Core\View as v;
+
 class Vote {
     static function iblockIds() {
         return array(
@@ -14,5 +16,9 @@ class Vote {
         assert(in_array($iblockId, self::iblockIds()));
         $private = array('USER', 'FORM');
         return !in_array($propertyCode, $private);
+    }
+
+    static function votePath($iblockId, $elementId) {
+        return v::path('auth/profile/vote/'.$iblockId.'/'.$elementId);
     }
 }

@@ -276,4 +276,63 @@ class User {
         );
         return ob_get_clean();
     }
+
+    static function renderApplication($iblockId, $elementId) {
+        // kind of important for security
+        assert(in_array($iblockId, ApplicationForm::iblockIds()));
+        global $APPLICATION;
+        ob_start();
+        $APPLICATION->IncludeComponent(
+            "bitrix:news.detail",
+            "application",
+            Array(
+                "ACTIVE_DATE_FORMAT" => "d.m.Y",
+                "ADD_ELEMENT_CHAIN" => "Y",
+                "ADD_SECTIONS_CHAIN" => "Y",
+                "AJAX_MODE" => "N",
+                "AJAX_OPTION_ADDITIONAL" => "",
+                "AJAX_OPTION_HISTORY" => "N",
+                "AJAX_OPTION_JUMP" => "N",
+                "AJAX_OPTION_STYLE" => "N",
+                "BROWSER_TITLE" => "-",
+                "CACHE_GROUPS" => "Y",
+                "CACHE_TIME" => "36000000",
+                "CACHE_TYPE" => "A",
+                "CHECK_DATES" => "Y",
+                "DETAIL_URL" => "",
+                "DISPLAY_BOTTOM_PAGER" => "N",
+                "DISPLAY_DATE" => "N",
+                "DISPLAY_NAME" => "N",
+                "DISPLAY_PICTURE" => "N",
+                "DISPLAY_PREVIEW_TEXT" => "N",
+                "DISPLAY_TOP_PAGER" => "N",
+                "ELEMENT_CODE" => "",
+                "ELEMENT_ID" => $elementId,
+                "FIELD_CODE" => array("",""),
+                "IBLOCK_ID" => $iblockId,
+                "IBLOCK_TYPE" => Iblock::FORMS_TYPE,
+                "IBLOCK_URL" => "",
+                "INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
+                "MESSAGE_404" => "",
+                "META_DESCRIPTION" => "-",
+                "META_KEYWORDS" => "-",
+                "PAGER_BASE_LINK_ENABLE" => "N",
+                "PAGER_SHOW_ALL" => "N",
+                "PAGER_TEMPLATE" => ".default",
+                "PAGER_TITLE" => "Страница",
+                "PROPERTY_CODE" => array("USER"),
+                "SET_BROWSER_TITLE" => "N",
+                "SET_CANONICAL_URL" => "N",
+                "SET_LAST_MODIFIED" => "N",
+                "SET_META_DESCRIPTION" => "Y",
+                "SET_META_KEYWORDS" => "Y",
+                "SET_STATUS_404" => "N",
+                "SET_TITLE" => "N",
+                "SHOW_404" => "N",
+                "USE_PERMISSIONS" => "N",
+                "USE_SHARE" => "N"
+            )
+        );
+        return ob_get_clean();
+    }
 }

@@ -1261,8 +1261,14 @@ input {
   font-size: 16px;
   color: $blue;
   line-height: 1.2;
-  margin-bottom: 40px;
-  p {
+  // TODO refactor: no need for additional class?
+  &.last {
+    margin-bottom: 40px;
+  }
+  a {
+    color: $blue;
+  }
+  p, .file {
     line-height: 1.2;
   }
 }

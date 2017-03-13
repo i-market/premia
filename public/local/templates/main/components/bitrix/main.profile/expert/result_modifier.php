@@ -6,20 +6,13 @@ use Core\Underscore as _;
 use Core\Iblock as ib;
 
 $el = new CIBlockElement();
-$userCompanyCache = array();
-// TODO refactor
-function userCompany($userId) {
-    global $userCompanyCache;
-    return array_key_exists($userId, $userCompanyCache)
-        ? $userCompanyCache[$userId]
-        : CUser::GetByID($userId)->GetNext()['WORK_COMPANY'];
-};
 $applications = _::mapValues(ApplicationForm::iblockIds(), function($iblockId) use ($el) {
     $filter = array('IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y');
     $apps = ib::collectElements($el->GetList(array('SORT' => 'ASC'), $filter));
-    return array_map(function($app) {
+    return array_map(function($app) use ($iblockId) {
         $appUserId = $app['PROPERTIES']['USER']['VALUE'];
-        return _::set($app, 'PROPERTIES.USER.WORK_COMPANY', userCompany($appUserId));
+        $ret = _::set($app, 'DISPLAY_NAME', ApplicationForm::getDisplayName($app));
+        return _::set($ret, 'VOTE_PATH', Vote::votePath($iblockId, $app['ID']));
     }, $apps);
 });
 // TODO merge votes of other experts when `status` matches
