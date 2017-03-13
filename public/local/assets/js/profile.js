@@ -63,8 +63,18 @@ function init($component) {
   }
   $('.wrap_add_file').each(function() {
     const $root = $(this);
+    const key = $root.data('name');
+    const $addFile = $root.find('.add_file');
+    // removing already uploaded files
+    $addFile.find('.remove_file').each(function() {
+      $(this).on('click', () => {
+        const $item = $(this).parent('p');
+        const fileId = $item.attr('data-file-id');
+        $root.append(`<input name="${key}[delete_files][]" value="${fileId}" type="text" hidden="hidden">`);
+        $item.remove();
+      });
+    });
     $root.find('.attach').on('click', () => {
-      const key = $root.data('name');
       const $input = $(`<input name="${key}[file][]" class="file" type="file" hidden="hidden">`);
       $root.append($input);
       $input.click();
@@ -72,7 +82,7 @@ function init($component) {
     $root.on('change', 'input.file', function() {
       const $input = $(this);
       const filename = $input[0].files[0].name;
-      $root.find('.add_file').append(
+      $addFile.append(
         $(`<p>${filename} <span class="remove_file">(удалить)</span></p>`)
           .on('click', '.remove_file', function() {
             $input.remove();

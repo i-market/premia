@@ -3,9 +3,11 @@
 namespace App;
 
 use App\ApplicationForm;
+use CIBlockElement;
 use Core\Strings as str;
 use Core\Underscore as _;
 use CUser;
+use Core\Iblock as ib;
 
 class Api {
     static function formResponse($errors, $bxMessage) {
@@ -53,14 +55,26 @@ class Api {
                         'USER' => $USER->GetID()
                     ))
                 );
-                // TODO refactor
-                $files = $params[$paramsKey]['files'];
-                if (isset($files)) {
-                    $filesProp = array_map(function($file) {
-                        return array('VALUE' => $file);
-                    }, $files);
-                    $fields[$key]['PROPERTY_VALUES']['FILES'] = $filesProp;
-                }
+                $group = $params[$paramsKey];
+                $filesProp = array_map(function($file) {
+                    return array('VALUE' => $file);
+                }, _::get($group, 'files', array()));
+                $deleteFileValuesFn = function($elementId) use ($group, $iblockId) {
+                    $propCode = 'FILES';
+                    $props = ib::collect(CIBlockElement::GetProperty($iblockId, $elementId, 'sort', 'asc', array('CODE' => $propCode)));
+                    return array_reduce(
+                        $props,
+                        function($values, $prop) use ($elementId, $iblockId, $group) {
+                            return in_array($prop['VALUE'], $group['delete_files'])
+                                ? _::set($values, $prop['PROPERTY_VALUE_ID'], array('VALUE' => array('del' => 'Y')))
+                                : $values;
+                        },
+                        array()
+                    );
+                };
+                $fields[$key]['PROPERTY_VALUES']['FILES'] = $filesProp;
+                // TODO refactor?
+                $fields[$key]['DELETE_FILE_VALUES_FN'] = $deleteFileValuesFn;
             }
         }
         return $fields;
@@ -68,14 +82,15 @@ class Api {
 
     // TODO refactor
     private static function files($files) {
+        $key = 'file';
         $ret = array();
-        for($i = 0; $i < count($files['name']['file']); $i++) {
+        for($i = 0; $i < count($files['name'][$key]); $i++) {
             $ret[] = array(
-                'name' => $files['name']['file'][$i],
-                'type' => $files['type']['file'][$i],
-                'tmp_name' => $files['tmp_name']['file'][$i],
-                'error' => $files['error']['file'][$i],
-                'size' => $files['size']['file'][$i]
+                'name' => $files['name'][$key][$i],
+                'type' => $files['type'][$key][$i],
+                'tmp_name' => $files['tmp_name'][$key][$i],
+                'error' => $files['error'][$key][$i],
+                'size' => $files['size'][$key][$i]
             );
         }
         return $ret;
@@ -98,11 +113,12 @@ class Api {
             // user touched the form?
             $isDirty = boolval($group['is_dirty']);
             $hasFiles = array_key_exists($key, $files);
+            $hasFileOps = $hasFiles || array_key_exists('delete_files', $group);
             if ($hasFiles) {
                 $group['files'] = $files[$key];
             }
             // decide which field groups to act upon
-            if ($hasFiles || ($isDirty && !$isEmpty)) {
+            if ($hasFileOps || ($isDirty && !$isEmpty)) {
                 $filteredParams[$key] = $group;
             }
         };

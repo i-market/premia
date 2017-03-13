@@ -47,6 +47,13 @@ class ApplicationForm {
         // TODO refactor: ad-hoc
         $isNomination = $fields['IBLOCK_ID'] !== Iblock::GENERAL_INFO;
         $isAdd = $elementMaybe === null;
+        if (isset($fields['DELETE_FILE_VALUES_FN']) && !$isAdd) {
+            $deleteFileValues = $fields['DELETE_FILE_VALUES_FN']($elementMaybe['ID']);
+            // mutate
+            $fields = _::update($fields, 'PROPERTY_VALUES.FILES', function($files) use ($deleteFileValues) {
+                return $files + $deleteFileValues;
+            });
+        }
         $result = $isAdd
             ? $el->Add($fields)
             : $el->Update($elementMaybe['ID'], $fields);
