@@ -217,6 +217,7 @@ class Iblock {
     const EXPORTER = 11;
     const SALES = 12;
     const LAW = 13;
+    const VOTE_SMALL_BUSINESS = 14;
 }
 
 class PageProperty {
@@ -225,6 +226,7 @@ class PageProperty {
 
 class User {
     const NOMINEE_GROUP = 5;
+    const EXPERT_GROUP = 6;
 
     static function profilePath() {
         return v::path('auth/profile');
@@ -250,5 +252,28 @@ class User {
             if (isset($parts[2])) $ret['PATRONYMIC'] = $parts[2];
             return $ret;
         }
+    }
+
+    static function renderProfile($userGroups) {
+        global $APPLICATION;
+        $isExpert = in_array(self::EXPERT_GROUP, array_map('intval', $userGroups));
+        ob_start();
+        $APPLICATION->IncludeComponent(
+            "bitrix:main.profile",
+            $isExpert ? "expert" : "profile",
+            Array(
+                "AJAX_MODE" => "N",
+                "AJAX_OPTION_ADDITIONAL" => "",
+                "AJAX_OPTION_HISTORY" => "N",
+                "AJAX_OPTION_JUMP" => "N",
+                "AJAX_OPTION_STYLE" => "N",
+                "CHECK_RIGHTS" => "N",
+                "SEND_INFO" => "N",
+                "SET_TITLE" => "N",
+                "USER_PROPERTY" => array(),
+                "USER_PROPERTY_NAME" => ""
+            )
+        );
+        return ob_get_clean();
     }
 }

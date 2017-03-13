@@ -1,0 +1,17 @@
+{% for nomination in result.NOMINATIONS[iblock_key] %}
+    {% set application = nomination.APPLICATION %}
+    {% set vote = nomination.VOTE %}
+    <div class="evaluation">
+        <div class="left">
+            <a href="{{ application.DETAIL_PAGE_URL }}">{{ application.PROPERTIES.USER.WORK_COMPANY }}</a>
+        </div>
+        {% if vote %}
+            <div class="right">
+                {% for score in vote.SCORES %}
+                    <label class="{{ score.VALUE ? 'active' }}">{{ score.VALUE }}</label>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}
+

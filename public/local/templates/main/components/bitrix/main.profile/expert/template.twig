@@ -1,0 +1,89 @@
+{% set user = result.arUser %}
+{# TODO tmp whitespace fix, remove when breadcrumbs are done #}
+<section class="bread_crumbs">
+    <div class="wrap">
+        <div class="inner">
+            <ul>
+            </ul>
+        </div>
+    </div>
+</section>
+<div class="wrap">
+  <div class="inner">
+    <h2>Личный кабинет</h2>
+  </div>
+  <div class="grid mb">
+    <a class="col col_2 tabLinks_item active" href="#">
+      <div class="text">
+        <p>Анкеты компаний поставщиков</p>
+      </div>
+    </a>
+    <a class="col col_2 tabLinks_item" href="#">
+      <div class="text">
+        <p>Анкеты в персональной номинации</p>
+      </div>
+    </a>
+  </div>
+  <div class="grid">
+    <div class="col col_2">
+      <h4 class="tab_title">Выберите номинацию компаний-поставщиков</h4>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col col_4 tabLinks_item tabLinks_item--small" data-tabLinks="small-business">
+      <div class="text">
+        <span>Лучший поставщик в категории «Малый и средний бизнес»</span>
+      </div>
+    </div>
+    <div class="col col_4 tabLinks_item tabLinks_item--small" data-tabLinks="breakthrough">
+      <div class="text">
+        <span>Прорыв года</span>
+      </div>
+    </div>
+    <div class="col col_4 tabLinks_item tabLinks_item--small" data-tabLinks="etp">
+      <div class="text">
+        <span>Профессионал ЭТП</span>
+      </div>
+    </div>
+    <div class="col col_4 tabLinks_item tabLinks_item--small" data-tabLinks="import-substitution">
+      <div class="text">
+        <span>Лидер импортозамещения</span>
+      </div>
+    </div>
+    <div class="col col_4 tabLinks_item tabLinks_item--small" data-tabLinks="sales-innovation">
+      <div class="text">
+        <span>Инновации в продажах</span>
+      </div>
+    </div>
+    <div class="col col_4 tabLinks_item tabLinks_item--small" data-tabLinks="exporter">
+      <div class="text">
+        <span>Экспортер года</span>
+      </div>
+    </div>
+    {#<div class="col col_4 tabLinks_item tabLinks_item--small" data-tabLinks="">#}
+      {#<div class="text">#}
+        {#<span>Поставщик-Лидер года</span>#}
+      {#</div>#}
+    {#</div>#}
+  </div>
+  <div class="tab_blocks tab_blocks--personal_area">
+    <div data-tabContent="small-business">
+      {% include partial('profile/expert/nomination_tab.twig') with {iblock_key: 'SMALL_BUSINESS'} %}
+    </div>
+    <div data-tabContent="breakthrough">
+      {% include partial('profile/expert/nomination_tab.twig') with {iblock_key: 'BREAKTHROUGH'} %}
+    </div>
+    <div data-tabContent="etp">
+      {% include partial('profile/expert/nomination_tab.twig') with {iblock_key: 'ETP'} %}
+    </div>
+    <div data-tabContent="import-substitution">
+      {% include partial('profile/expert/nomination_tab.twig') with {iblock_key: 'IMPORT_SUBSTITUTION'} %}
+    </div>
+    <div data-tabContent="sales-innovation">
+      {% include partial('profile/expert/nomination_tab.twig') with {iblock_key: 'SALES_INNOVATION'} %}
+    </div>
+    <div data-tabContent="exporter">
+      {% include partial('profile/expert/nomination_tab.twig') with {iblock_key: 'EXPORTER'} %}
+    </div>
+  </div>
+</div>
