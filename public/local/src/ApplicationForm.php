@@ -77,7 +77,7 @@ class ApplicationForm {
 
     static function genericElementName($user, $formattedName) {
         return join(' - ', _::clean(array(
-            $user['WORK_COMPANY'],
+            $user['~WORK_COMPANY'],
             $formattedName
         )));
     }
