@@ -33,6 +33,13 @@ class ApplicationForm {
         );
     }
 
+    // TODO refactor: very brittle way to do it
+    static function isPublicProperty($iblockId, $propertyCode) {
+        assert(in_array($iblockId, self::iblockIds()));
+        $private = array('USER', 'FILES');
+        return !in_array($propertyCode, $private);
+    }
+
     static function application($userId) {
         $ret = array();
         foreach (self::iblockIds() as $key => $iblockId) {

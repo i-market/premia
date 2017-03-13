@@ -16,12 +16,12 @@ $application = array_map(function($element) {
         }, $fileIds);
     });
 }, $application);
-$excludeProps = array('USER', 'FILES');
-$inputs = _::mapValues($application, function($el, $iblockKey) use ($iblockIds, $excludeProps) {
+$inputs = _::mapValues($application, function($el, $iblockKey) use ($iblockIds) {
+    $iblockId = $iblockIds[$iblockKey];
     if ($el === null) {
-        $props = ib::collect(CIBlock::GetProperties($iblockIds[$iblockKey]));
-        $inputProps = array_filter($props, function($prop) use ($excludeProps) {
-            return !in_array($prop['CODE'], $excludeProps);
+        $props = ib::collect(CIBlock::GetProperties($iblockId));
+        $inputProps = array_filter($props, function($prop) use ($iblockId) {
+            return ApplicationForm::isPublicProperty($iblockId, $prop['CODE']);
         });
         return array_map(function($prop) use ($iblockKey) {
             return array(
@@ -32,8 +32,8 @@ $inputs = _::mapValues($application, function($el, $iblockKey) use ($iblockIds, 
         }, $inputProps);
     } else {
         // TODO DRY
-        $inputProps = array_filter($el['PROPERTIES'], function($prop) use ($excludeProps) {
-            return !in_array($prop['CODE'], $excludeProps);
+        $inputProps = array_filter($el['PROPERTIES'], function($prop) use ($iblockId) {
+            return ApplicationForm::isPublicProperty($iblockId, $prop['CODE']);
         });
         return _::mapValues($inputProps, function ($prop, $propKey) use ($iblockKey) {
             // TODO refactor: DRY
