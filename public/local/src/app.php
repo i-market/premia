@@ -224,6 +224,8 @@ class PageProperty {
 }
 
 class User {
+    const NOMINEE_GROUP = 5;
+
     static function profilePath() {
         return v::path('auth/profile');
     }

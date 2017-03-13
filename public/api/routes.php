@@ -3,6 +3,7 @@
 use App\Api;
 use App\App;
 use App\MailEvent;
+use App\User;
 use Bitrix\Main\Localization\Loc;
 use Core\Form;
 use Klein\Klein;
@@ -12,6 +13,7 @@ use Core\Strings as str;
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_before.php');
 
 // TODO move handlers to `Api`
+// TODO extract business logic
 $formSpecs = App::formSpecs();
 $signupRoute = Form::formRoute($formSpecs['signup'], function($params, $errors, $response) {
     global $USER;
@@ -25,6 +27,8 @@ $signupRoute = Form::formRoute($formSpecs['signup'], function($params, $errors, 
         $isSuccess = $message['TYPE'] === 'OK';
         if ($isSuccess) {
             $user = CUser::GetByLogin($login)->GetNext();
+            $userGroups = _::append(CUser::GetUserGroup($user['ID']), User::NOMINEE_GROUP);
+            CUser::SetUserGroup($user['ID'], $userGroups);
             $USER->Update($user['ID'], array(
                 'WORK_COMPANY' => $params['company'],
                 'PERSONAL_PHONE' => $params['phone']
