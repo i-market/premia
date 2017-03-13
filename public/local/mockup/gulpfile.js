@@ -71,7 +71,7 @@ gulp.task('move', function () {
 gulp.task('tinypng', function () {
     gulp.src('./images/**/*.{png,jpg,jpeg}')
         .pipe(tinypng({
-            key: 'aplc3s05rdBkvvoDaU1zrrMmUUxTplxw'
+            key: ''
         }))
         .pipe(gulp.dest('./dist/images'));
 });
