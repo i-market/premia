@@ -781,14 +781,16 @@ h4 {
     }
   }
   .slick-slide {
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    height: 60px;
-    img {
-      display: block;
-      max-width: 100%;
-      margin: 0 auto;
+    .wrap {
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      height: 60px;
+      img {
+        display: block;
+        max-width: 100%;
+        margin: 0 auto;
+      }
     }
   }
 }

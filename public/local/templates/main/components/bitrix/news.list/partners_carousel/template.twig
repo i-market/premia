@@ -5,12 +5,18 @@
             {% for item in result.ITEMS %}
                 <div id="{{ add_editing_actions(item, template) }}">
                     {% set link = item.PROPERTIES.LINK.VALUE %}
-                    {% if link is not empty %}
-                        <a href="{{ link }}" target="_blank">
+                    {% set has_link = link is not empty %}
+                    {# TODO refactor conditional wrapping #}
+                    {% if has_link %}
+                        <a class="wrap" href="{{ link }}" target="_blank">
+                    {% else %}
+                        <div class="wrap">
                     {% endif %}
                     <img src="{{ item.PREVIEW_PICTURE.RESIZED.src }}" alt="{{ item.NAME }}">
-                    {% if link %}
+                    {% if has_link %}
                         </a>
+                    {% else %}
+                        </div>
                     {% endif %}
                 </div>
             {% endfor %}
