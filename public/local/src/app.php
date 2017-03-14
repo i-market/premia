@@ -10,6 +10,7 @@ use Core\Nullable as nil;
 use Core\View as v;
 use Core\Form as f;
 use Core\Underscore as _;
+use CUser;
 
 class App {
     const SITE_ID = 's1';
@@ -254,6 +255,14 @@ class User {
         }
     }
 
+    /**
+     * @param CUser $user
+     */
+    static function isInGroup($user, $groupId) {
+        $userGroups = CUser::GetUserGroup($user->GetID());
+        return in_array($groupId, array_map('intval', $userGroups));
+    }
+
     static function renderProfile($userGroups) {
         global $APPLICATION;
         $isExpert = in_array(self::EXPERT_GROUP, array_map('intval', $userGroups));
@@ -280,7 +289,16 @@ class User {
     static function renderApplication($iblockId, $elementId) {
         // kind of important for security
         assert(in_array($iblockId, ApplicationForm::iblockIds()));
-        global $APPLICATION;
+        global $APPLICATION, $USER;
+        $isExpert = self::isInGroup($USER, self::EXPERT_GROUP);
+        if (!$isExpert) {
+            $bxMessage = array(
+                'TYPE' => 'ERROR',
+                'MESSAGE' => 'Страница голосования доступна только экспертам.'
+            );
+            $APPLICATION->ShowAuthForm($bxMessage);
+            return '';
+        }
         ob_start();
         $APPLICATION->IncludeComponent(
             "bitrix:news.detail",
