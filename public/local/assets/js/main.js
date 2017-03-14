@@ -1,5 +1,6 @@
 import modals from './modals';
 import profile from './profile';
+import vote from './vote';
 import $ from 'jquery';
 import _ from 'lodash';
 
@@ -56,4 +57,5 @@ $(() => {
 
   // TODO refactor: optimize
   profile.init($('.personal_area'));
+  vote.init($('.application-vote'));
 });

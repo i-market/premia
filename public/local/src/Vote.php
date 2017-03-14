@@ -2,7 +2,13 @@
 
 namespace App;
 
+use Bitrix\Main\Loader;
+use CIBlockElement;
 use Core\View as v;
+use Core\Iblock as ib;
+use Core\Underscore as _;
+
+assert(Loader::includeModule('iblock'));
 
 class Vote {
     static function iblockIds() {
@@ -20,5 +26,16 @@ class Vote {
 
     static function votePath($iblockId, $elementId) {
         return v::path('auth/profile/vote/'.$iblockId.'/'.$elementId);
+    }
+
+    static function getByUser($userId, $iblockId, $filter) {
+        $el = new CIBlockElement();
+        $filterBase = array(
+            'IBLOCK_ID' => $iblockId,
+            'ACTIVE' => 'Y',
+            'PROPERTY_USER' => $userId
+        );
+        $result = $el->GetList(array('SORT' => 'ASC'), array_merge($filterBase, $filter));
+        return _::first(ib::collectElements($result));
     }
 }

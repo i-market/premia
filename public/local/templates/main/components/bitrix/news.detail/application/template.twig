@@ -1,5 +1,11 @@
-<section class="publications">
+<section class="publications application-vote">
     <form action="/api/user/profile/vote" method="post">
+        <input type="hidden" name="form[iblock_id]" value="{{ result.IBLOCK.ID }}">
+        <input type="hidden" name="form[id]" value="{{ result.ID }}">
+        <input type="hidden" name="form[display_name]" value="{{ result.DISPLAY_NAME|escape }}">
+        {% if result.VOTE.ID_MAYBE %}
+            <input type="hidden" name="vote[id]" value="{{ result.VOTE.ID_MAYBE }}">
+        {% endif %}
         <div class="wrap">
             <div class="inner">
                 <h2>Личный кабинет</h2>
@@ -43,7 +49,8 @@
                                     {% for num in range(1, 5) %}
                                         {% set id = 'score-' ~ prop.ID ~ '-' ~ num %}
                                         {% set is_checked = prop.VALUE == num %}
-                                        <input type="radio" name="vote[scores][{{ prop.ID }}]" value="{{ num }}" id="{{ id }}"{{ is_checked ? ' checked' }}>
+                                        {# int key is treated as index, that's why we prefix it #}
+                                        <input type="radio" name="vote[scores][id:{{ prop.ID }}]" value="{{ num }}" id="{{ id }}"{{ is_checked ? ' checked' }}>
                                         <label for="{{ id }}">{{ num }}</label>
                                     {% endfor %}
                                 </div>
@@ -52,7 +59,7 @@
                     </div>
                 </div>
                 <div class="wrap_formBtn">
-                    {# TODO form message #}
+                    <div class="form-message"></div>
                     <button type="submit" class="btn--blue">Сохранить</button>
                     <a class="back" href="{{ result.BACK_LINK }}"></a>
                 </div>

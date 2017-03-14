@@ -34,6 +34,11 @@ class ApplicationForm {
         );
     }
 
+    static function voteIblockId($formIblockId) {
+        $sharedKey = array_flip(self::iblockIds())[$formIblockId];
+        return Vote::iblockIds()[$sharedKey];
+    }
+
     // TODO refactor: very brittle way to do it
     static function isPublicProperty($iblockId, $propertyCode) {
         assert(in_array($iblockId, self::iblockIds()));
