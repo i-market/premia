@@ -102,7 +102,7 @@ class ApplicationForm {
         if (array_key_exists($userId, $cache)) {
             return $cache[$userId];
         } else {
-            $ret = CUser::GetByID($userId)->GetNext()['WORK_COMPANY'];
+            $ret = CUser::GetByID($userId)->GetNext()['~WORK_COMPANY'];
             $cache[$userId] = $ret;
             return $ret;
         }
