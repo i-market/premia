@@ -1,8 +1,8 @@
 import modals from './modals';
+import forms from './forms';
 import _ from 'lodash';
 
-// TODO refactor: rename
-function notifyOnChange($form) {
+function markWhenDirty($form) {
   $form.on('input change', (event) => {
     const parts = event.target.name.split('[');
     const isIblockInput = parts.length > 1;
@@ -13,8 +13,6 @@ function notifyOnChange($form) {
         $form.append(`<input name="${name}" type="hidden" value="true">`);
       }
     }
-    const msg = 'Данные были изменены, для сохранения нажмите кнопку «Сохранить».';
-    modals.mutateMessage($form, msg, 'info');
   })
 }
 
@@ -37,7 +35,8 @@ function initForm($form, onSuccess) {
 function init($component) {
   const successMessage = 'Ваши изменения были сохранены.';
   $component.find('form').each(function() {
-    notifyOnChange($(this));
+    markWhenDirty($(this));
+    forms.notifyOnChange($(this));
   });
   function onSuccessFn($form) {
     return (data) => {
