@@ -15,7 +15,6 @@ $applications = _::mapValues(ApplicationForm::iblockIds(), function($iblockId) u
         return _::set($ret, 'VOTE_PATH', Vote::votePath($iblockId, $app['ID']));
     }, $apps);
 });
-// TODO merge votes of other experts when `status` matches
 $userVotes = _::mapValues(Vote::iblockIds(), function($iblockId) use ($el) {
     global $USER;
     $filter = array('IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y', 'PROPERTY_USER' => $USER->GetID());
