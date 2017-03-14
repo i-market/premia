@@ -745,6 +745,16 @@ h4 {
   }
 }
 
+.partners-grid {
+  margin-bottom: 20px;
+  text-align: center;
+  .item {
+    display: inline-block;
+    width: 200px;
+    margin: 20px;
+  }
+}
+
 .carusel {
   position: relative;
   margin: 0 32px;
