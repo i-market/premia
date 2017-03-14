@@ -24,6 +24,13 @@ class Underscore extends ArraysMethods {
         return $ret;
     }
 
+    // TODO refactor: optimize?
+    static function reduce($array, $f, $initial) {
+        return array_reduce(array_keys($array), function($ret, $k) use ($array, $f) {
+            return $f($ret, $array[$k], $k);
+        }, $initial);
+    }
+
     static function filter($array, $pred = null) {
         // restore indices
         return array_values(array_filter($array, $pred));
