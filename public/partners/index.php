@@ -38,7 +38,6 @@ $APPLICATION->SetTitle("Партнеры");
 <p>
 	 По вопросам информационного партнерства обращайтесь по телефону +7 (915) 466-35-58.
 </p>
-<h3 style="text-align: center">Партнеры премии</h3>
 <? $APPLICATION->IncludeComponent(
 	"bitrix:news.list",
 	"partners_grid",
