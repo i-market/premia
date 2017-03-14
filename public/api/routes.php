@@ -114,8 +114,7 @@ $router->with('/api', function () use ($router, $signupRoute) {
                 $result = $voteIdMaybe === null
                     ? $el->Add($fields)
                     : $el->Update($voteIdMaybe, $fields);
-                // TODO response
-                return $response->json(array());
+                return $response->json(Api::iblockOpResponse($el, $result));
             });
         });
     });

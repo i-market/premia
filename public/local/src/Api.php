@@ -17,6 +17,24 @@ class Api {
         );
     }
 
+    // an attempt to refactor the api mess
+    /**
+     * @param CIBlockElement $element
+     */
+    static function iblockOpResponse($element, $result) {
+        $isSuccess = $result === true || is_int($result);
+        return $isSuccess
+            ? array(
+                'type' => 'success',
+                // same as in js
+                'message' => 'Ваши изменения были сохранены.'
+            )
+            : array(
+                'type' => 'error',
+                'message' => $element->LAST_ERROR
+            );
+    }
+
     static function reduceFormResults($results) {
         return array_reduce($results, function($ret, $result) {
             if ($ret === null) return $result;
