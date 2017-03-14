@@ -86,9 +86,14 @@ gulp.task('build:js', () => {
     .pipe(gulp.dest(`${paths.dist}/js`));
 });
 
+gulp.task('build:images', () => {
+  return gulp.src('assets/images/**', {base: 'assets'})
+    .pipe(gulp.dest(paths.dist));
+});
+
 gulp.task('build:vendor', ['build:vendor:js', 'build:js', 'build:vendor:css']);
 
-gulp.task('build', ['build:mockup', 'build:vendor']);
+gulp.task('build', ['build:mockup', 'build:vendor', 'build:images']);
 
 gulp.task('revision:rev', ['build'], () => {
   return gulp.src(`${paths.dist}/**`)
@@ -126,6 +131,7 @@ gulp.task('browser-sync', () => {
 
 gulp.task('watch', ['watch:sass', 'browser-sync'], () => {
   gulp.watch('mockup/css/*.scss', ['watch:sass']);
+  gulp.watch('assets/images/**', ['build:images']);
   gulp.watch('mockup/js/*.js', ['build:vendor:js']);
   gulp.watch([`${paths.dist}/js/**/*.js`, `${paths.template}/**/*.twig`])
     .on('change', browserSync.reload);
