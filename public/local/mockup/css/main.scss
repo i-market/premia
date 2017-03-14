@@ -1282,6 +1282,11 @@ input {
 
 .history_title {
   margin-bottom: 45px;
+  h3 {
+    @media only screen and (min-width: 426px) {
+      width: calc(100% - 120px);
+    }
+  }
 }
 
 .back {
