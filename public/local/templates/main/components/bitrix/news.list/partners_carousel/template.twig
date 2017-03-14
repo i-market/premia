@@ -4,7 +4,14 @@
         <div class="carusel">
             {% for item in result.ITEMS %}
                 <div id="{{ add_editing_actions(item, template) }}">
+                    {% set link = item.PROPERTIES.LINK.VALUE %}
+                    {% if link is not empty %}
+                        <a href="{{ link }}" target="_blank">
+                    {% endif %}
                     <img src="{{ item.PREVIEW_PICTURE.RESIZED.src }}" alt="{{ item.NAME }}">
+                    {% if link %}
+                        </a>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>

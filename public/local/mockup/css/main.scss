@@ -746,12 +746,39 @@ h4 {
 }
 
 .carusel {
+  position: relative;
+  margin: 0 32px;
+  .slick-arrow {
+    padding: 0;
+    border: 0;
+    outline: none;
+    font-size: 0;
+    background: none;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    margin-top: -20px;
+    width: 20px;
+    height: 40px;
+    vertical-align: middle;
+    &.slick-prev {
+      left: -33px;
+      background: url('../images/tmp/icons.png') 0 -121px no-repeat;
+    }
+    &.slick-next {
+      right: -33px;
+      background: url('../images/tmp/icons.png') -56px -43px no-repeat;
+    }
+  }
   .slick-slide {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
     height: 60px;
-    line-height: 60px;
     img {
+      display: block;
       max-width: 100%;
+      margin: 0 auto;
     }
   }
 }
