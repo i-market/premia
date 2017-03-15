@@ -90,12 +90,6 @@ function init($component) {
       );
     });
   });
-  $component.find('[data-tabLinks]').each(function() {
-    $(this).attr('data-scroll-to', 'true');
-    $(this).on('click', () => {
-      $component.find('.form-message.success').hide();
-    });
-  });
 }
 
 export default {init};

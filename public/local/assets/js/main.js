@@ -59,6 +59,16 @@ $(() => {
   profile.init($('.personal_area'));
   vote.init($('.application-vote'));
 
+  $('.personal_area, .expert-profile').each(function() {
+    const $component = $(this);
+    $component.find('[data-tabLinks]').each(function() {
+      $(this).attr('data-scroll-to', 'true');
+      $(this).on('click', () => {
+        $component.find('.form-message.success').hide();
+      });
+    });
+  });
+
   const $globalLoader = $('#global-loader');
   var timer = null;
   $(document)
