@@ -10,6 +10,7 @@ use Core\Nullable as nil;
 use Core\View as v;
 use Core\Form as f;
 use Core\Underscore as _;
+use CUser;
 
 class App {
     const SITE_ID = 's1';
@@ -217,6 +218,14 @@ class Iblock {
     const EXPORTER = 11;
     const SALES = 12;
     const LAW = 13;
+    const VOTE_SMALL_BUSINESS = 14;
+    const VOTE_BREAKTHROUGH = 15;
+    const VOTE_ETP = 16;
+    const VOTE_IMPORT_SUBSTITUTION = 17;
+    const VOTE_SALES_INNOVATION = 18;
+    const VOTE_EXPORTER = 19;
+    const VOTE_SALES = 20;
+    const VOTE_LAW = 21;
 }
 
 class PageProperty {
@@ -224,6 +233,9 @@ class PageProperty {
 }
 
 class User {
+    const NOMINEE_GROUP = 5;
+    const EXPERT_GROUP = 6;
+
     static function profilePath() {
         return v::path('auth/profile');
     }
@@ -248,5 +260,104 @@ class User {
             if (isset($parts[2])) $ret['PATRONYMIC'] = $parts[2];
             return $ret;
         }
+    }
+
+    /**
+     * @param CUser $user
+     */
+    static function isInGroup($user, $groupId) {
+        $userGroups = CUser::GetUserGroup($user->GetID());
+        return in_array($groupId, array_map('intval', $userGroups));
+    }
+
+    static function renderProfile($userGroups) {
+        global $APPLICATION;
+        $isExpert = in_array(self::EXPERT_GROUP, array_map('intval', $userGroups));
+        ob_start();
+        $APPLICATION->IncludeComponent(
+            "bitrix:main.profile",
+            $isExpert ? "expert" : "profile",
+            Array(
+                "AJAX_MODE" => "N",
+                "AJAX_OPTION_ADDITIONAL" => "",
+                "AJAX_OPTION_HISTORY" => "N",
+                "AJAX_OPTION_JUMP" => "N",
+                "AJAX_OPTION_STYLE" => "N",
+                "CHECK_RIGHTS" => "N",
+                "SEND_INFO" => "N",
+                "SET_TITLE" => "N",
+                "USER_PROPERTY" => array(),
+                "USER_PROPERTY_NAME" => ""
+            )
+        );
+        return ob_get_clean();
+    }
+
+    static function renderApplication($iblockId, $elementId) {
+        // kind of important for security
+        assert(in_array($iblockId, ApplicationForm::iblockIds()));
+        global $APPLICATION, $USER;
+        $isExpert = self::isInGroup($USER, self::EXPERT_GROUP);
+        if (!$isExpert) {
+            $bxMessage = array(
+                'TYPE' => 'ERROR',
+                'MESSAGE' => 'Страница голосования доступна только экспертам.'
+            );
+            $APPLICATION->ShowAuthForm($bxMessage);
+            return '';
+        }
+        ob_start();
+        $APPLICATION->IncludeComponent(
+            "bitrix:news.detail",
+            "application",
+            Array(
+                "ACTIVE_DATE_FORMAT" => "d.m.Y",
+                "ADD_ELEMENT_CHAIN" => "Y",
+                "ADD_SECTIONS_CHAIN" => "Y",
+                "AJAX_MODE" => "N",
+                "AJAX_OPTION_ADDITIONAL" => "",
+                "AJAX_OPTION_HISTORY" => "N",
+                "AJAX_OPTION_JUMP" => "N",
+                "AJAX_OPTION_STYLE" => "N",
+                "BROWSER_TITLE" => "-",
+                "CACHE_GROUPS" => "Y",
+                "CACHE_TIME" => "36000000",
+                "CACHE_TYPE" => "A",
+                "CHECK_DATES" => "Y",
+                "DETAIL_URL" => "",
+                "DISPLAY_BOTTOM_PAGER" => "N",
+                "DISPLAY_DATE" => "N",
+                "DISPLAY_NAME" => "N",
+                "DISPLAY_PICTURE" => "N",
+                "DISPLAY_PREVIEW_TEXT" => "N",
+                "DISPLAY_TOP_PAGER" => "N",
+                "ELEMENT_CODE" => "",
+                "ELEMENT_ID" => $elementId,
+                "FIELD_CODE" => array("",""),
+                "IBLOCK_ID" => $iblockId,
+                "IBLOCK_TYPE" => Iblock::FORMS_TYPE,
+                "IBLOCK_URL" => "",
+                "INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
+                "MESSAGE_404" => "",
+                "META_DESCRIPTION" => "-",
+                "META_KEYWORDS" => "-",
+                "PAGER_BASE_LINK_ENABLE" => "N",
+                "PAGER_SHOW_ALL" => "N",
+                "PAGER_TEMPLATE" => ".default",
+                "PAGER_TITLE" => "Страница",
+                "PROPERTY_CODE" => array("USER"),
+                "SET_BROWSER_TITLE" => "N",
+                "SET_CANONICAL_URL" => "N",
+                "SET_LAST_MODIFIED" => "N",
+                "SET_META_DESCRIPTION" => "Y",
+                "SET_META_KEYWORDS" => "Y",
+                "SET_STATUS_404" => "Y",
+                "SET_TITLE" => "N",
+                "SHOW_404" => "Y",
+                "USE_PERMISSIONS" => "N",
+                "USE_SHARE" => "N"
+            )
+        );
+        return ob_get_clean();
     }
 }

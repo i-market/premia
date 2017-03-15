@@ -1,5 +1,6 @@
 import modals from './modals';
 import profile from './profile';
+import vote from './vote';
 import $ from 'jquery';
 import _ from 'lodash';
 
@@ -56,4 +57,30 @@ $(() => {
 
   // TODO refactor: optimize
   profile.init($('.personal_area'));
+  vote.init($('.application-vote'));
+
+  $('.personal_area, .expert-profile').each(function() {
+    const $component = $(this);
+    $component.find('[data-tabLinks]').each(function() {
+      $(this).attr('data-scroll-to', 'true');
+      $(this).on('click', () => {
+        $component.find('.form-message.success').hide();
+      });
+    });
+  });
+
+  const $globalLoader = $('#global-loader');
+  var timer = null;
+  $(document)
+    .ajaxStart(() => {
+      timer = setTimeout(() => {
+        $globalLoader.show();
+      }, 500);
+    })
+    .ajaxStop(() => {
+      if (timer !== null) {
+        clearTimeout(timer);
+      }
+      $globalLoader.hide();
+    })
 });

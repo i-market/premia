@@ -8,10 +8,14 @@ use CIBlockElement;
 use Core\Iblock as ib;
 use Core\Underscore as _;
 use Core\Nullable as nil;
+use Core\Strings as str;
+use CUser;
 
 assert(Loader::includeModule('iblock'));
 
 class ApplicationForm {
+    const STATUS_ACCEPTED = 'ACCEPTED';
+
     private static function associatedElement($iblockId, $userId) {
         $filter = array('IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y', 'PROPERTY_USER' => $userId);
         $select = array('*', 'PROPERTY_*');
@@ -33,6 +37,18 @@ class ApplicationForm {
         );
     }
 
+    static function voteIblockId($formIblockId) {
+        $sharedKey = array_flip(self::iblockIds())[$formIblockId];
+        return Vote::iblockIds()[$sharedKey];
+    }
+
+    // TODO refactor: very brittle way to do it
+    static function isPublicProperty($iblockId, $propertyCode) {
+        assert(in_array($iblockId, self::iblockIds()));
+        $private = array('USER', 'FILES');
+        return !in_array($propertyCode, $private);
+    }
+
     static function application($userId) {
         $ret = array();
         foreach (self::iblockIds() as $key => $iblockId) {
@@ -47,6 +63,13 @@ class ApplicationForm {
         // TODO refactor: ad-hoc
         $isNomination = $fields['IBLOCK_ID'] !== Iblock::GENERAL_INFO;
         $isAdd = $elementMaybe === null;
+        if (isset($fields['DELETE_FILE_VALUES_FN']) && !$isAdd) {
+            $deleteFileValues = $fields['DELETE_FILE_VALUES_FN']($elementMaybe['ID']);
+            // mutate
+            $fields = _::update($fields, 'PROPERTY_VALUES.FILES', function($files) use ($deleteFileValues) {
+                return $files + $deleteFileValues;
+            });
+        }
         $result = $isAdd
             ? $el->Add($fields)
             : $el->Update($elementMaybe['ID'], $fields);
@@ -80,5 +103,22 @@ class ApplicationForm {
             $user['~WORK_COMPANY'],
             $formattedName
         )));
+    }
+
+    private static function userCompany($userId) {
+        static $cache = array();
+        if (array_key_exists($userId, $cache)) {
+            return $cache[$userId];
+        } else {
+            $ret = CUser::GetByID($userId)->GetNext()['~WORK_COMPANY'];
+            $cache[$userId] = $ret;
+            return $ret;
+        }
+    }
+
+    static function getDisplayName($application) {
+        $appUserId = $application['PROPERTIES']['USER']['VALUE'];
+        // generic default name just in case
+        return str::ifEmpty(self::userCompany($appUserId), 'Анкета № '.$application['ID']);
     }
 }

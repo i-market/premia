@@ -1,0 +1,20 @@
+{% set items = result.NOMINATIONS[iblock_key] %}
+{% if items is empty %}
+    <div class="empty-state-message">В этой номинации пока нет допущенных к конкурсу анкет.</div>
+{% endif %}
+{% for item in items %}
+    {% set application = item.APPLICATION %}
+    {% set vote = item.VOTE %}
+    <div class="evaluation">
+        <div class="left">
+            <a href="{{ application.VOTE_PATH }}">{{ application.DISPLAY_NAME }}</a>
+        </div>
+        {% if vote %}
+            <div class="right">
+                {% for score in vote.SCORES %}
+                    <label class="{{ score.VALUE ? 'active' }}">{{ score.VALUE }}</label>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}

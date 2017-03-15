@@ -22,7 +22,15 @@
                     <input name="USER_REMEMBER" value="Y" type="checkbox" hidden="hidden" id="remember">
                     <label for="remember">Запомнить меня</label>
                 </div>
-                <div class="form-message"></div>
+                {% set bx_msg = params['~AUTH_RESULT'] %}
+                {% if bx_msg %}
+                    {% set type = bx_msg.TYPE %}
+                    <div class="form-message {{ type == 'OK' ? 'success' : type|lower }}" style="display: block">
+                        {{ bx_msg.MESSAGE }}
+                    </div>
+                {% else %}
+                    <div class="form-message"></div>
+                {% endif %}
                 <div class="wrap_btn">
                     <div>
                         <button type="submit" name="Login" class="btn--blue">Войти</button>

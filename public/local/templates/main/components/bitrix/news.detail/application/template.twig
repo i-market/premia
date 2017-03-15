@@ -1,0 +1,78 @@
+{# TODO tmp whitespace fix, remove when breadcrumbs are done #}
+<section class="bread_crumbs">
+    <div class="wrap">
+        <div class="inner">
+            <ul>
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="publications application-vote">
+    <form action="/api/user/profile/vote" method="post">
+        <input type="hidden" name="form[iblock_id]" value="{{ result.IBLOCK.ID }}">
+        <input type="hidden" name="form[id]" value="{{ result.ID }}">
+        <input type="hidden" name="form[display_name]" value="{{ result.DISPLAY_NAME|escape }}">
+        {% if result.VOTE.ID_MAYBE %}
+            <input type="hidden" name="vote[id]" value="{{ result.VOTE.ID_MAYBE }}">
+        {% endif %}
+        <div class="wrap">
+            <div class="inner">
+                <h2>Личный кабинет</h2>
+            </div>
+            <div class="personal_area_page">
+                <div class="history_title">
+                    <a href="{{ result.BACK_LINK }}" class="back"></a>
+                    <h3>Анкеты компаний поставщиков / {{ result.IBLOCK.NAME }}</h3>
+                </div>
+                <div class="grid">
+                    <div class="col col_2">
+                        <h4 class="tab_title">{{ result.DISPLAY_NAME }}</h4>
+                    </div>
+                </div>
+                {% for prop in result.TEXT_PROPERTIES %}
+                    {% set text = prop.VALUE.TEXT %}
+                    {% if text is not empty %}
+                        <div class="pap_item">
+                            <div class="inner">
+                                <strong>{{ prop.NAME }}</strong>
+                                <p>{{ text }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="inner">
+                    {% for file in result.FILES %}
+                        <div class="add_file{{ loop.last ? ' last' }}">
+                            <a href="{{ file.SRC }}" target="_blank" class="file">{{ file.ORIGINAL_NAME }} <span class="remove_file">(скачать файл)</span></a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="wrap_evaluation">
+                    <div class="inner">
+                        {% for prop in result.VOTE.PROPERTIES %}
+                            <div class="evaluation">
+                                <div class="left">
+                                    <span>{{ prop.NAME }}</span>
+                                </div>
+                                <div class="right">
+                                    {% for num in range(1, 5) %}
+                                        {% set id = 'score-' ~ prop.ID ~ '-' ~ num %}
+                                        {% set is_checked = prop.VALUE == num %}
+                                        {# int key is treated as index, that's why we prefix it #}
+                                        <input type="radio" name="vote[scores][id:{{ prop.ID }}]" value="{{ num }}" id="{{ id }}"{{ is_checked ? ' checked' }}>
+                                        <label for="{{ id }}">{{ num }}</label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="wrap_formBtn">
+                    <div class="form-message"></div>
+                    <button type="submit" class="btn--blue">Сохранить</button>
+                    <a class="back" href="{{ result.BACK_LINK }}"></a>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

@@ -6,6 +6,7 @@ $red: #ec151e;
 $errorRed: #dd4b39;
 $border: #cfd1d6;
 $mainColorText: #606778;
+$lightYellow: #faebc1;
 html,
 body {
   margin: 0;
@@ -752,6 +753,13 @@ h4 {
     display: inline-block;
     width: 200px;
     margin: 20px;
+    @media only screen and (max-width: 523px) {
+      width: 100px;
+      margin: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
   }
 }
 
@@ -1009,6 +1017,10 @@ h4 {
 
 .personal_area {
   padding-bottom: 55px;
+}
+
+.personal_area,
+.application-vote {
   .form-message {
     font-size: inherit;
     padding: 15px;
@@ -1299,9 +1311,16 @@ input {
   font-size: 16px;
   color: $blue;
   line-height: 1.2;
-  margin-bottom: 40px;
-  p {
-    line-height: 1.2;
+  // TODO refactor: no need for additional class?
+  &.last {
+    margin-bottom: 40px;
+  }
+  a {
+    color: $blue;
+  }
+  p, .file {
+    display: block;
+    line-height: 1.5;
   }
 }
 
@@ -1314,6 +1333,11 @@ input {
 
 .history_title {
   margin-bottom: 45px;
+  h3 {
+    @media only screen and (min-width: 426px) {
+      width: calc(100% - 120px);
+    }
+  }
 }
 
 .back {
@@ -1403,7 +1427,6 @@ input {
     font-weight: 700;
     margin-right: 10px;
     text-align: center;
-    cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
     &.active {
@@ -1418,6 +1441,14 @@ input {
     color: $d_blue;
     border-color: $green;
   }
+}
+
+.empty-state-message {
+  @extend %form-message-like;
+  // TODO DRY
+  font-size: inherit !important;
+  padding: 15px !important;
+  text-align: center;
 }
 
 .mb {
@@ -1554,8 +1585,7 @@ input {
   }
 }
 
-.form-message {
-  display: none;
+%form-message-like {
   font-size: 14px;
   line-height: 1.4;
   padding: 10px;
@@ -1573,10 +1603,33 @@ input {
   }
 }
 
+.form-message {
+  display: none;
+  @extend %form-message-like;
+}
+
 .embedded-modal-form {
   @extend %modal-like;
   margin: 0 auto;
   max-width: 370px;
   border: 1px solid $border;
   font-weight: normal;
+}
+
+#global-loader {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  // TODO half of the width
+  margin-left: -60px;
+  z-index: 100;
+  padding: 5px 0;
+  background: $lightYellow;
+  border: 1px solid #f2c174;
+  border-top: none;
+  color: $d_blue;
+  width: 120px;
+  text-align: center;
+  box-shadow: 0 4px 2px -2px rgba(0,0,0,0.4);
 }

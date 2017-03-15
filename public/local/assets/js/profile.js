@@ -1,8 +1,8 @@
 import modals from './modals';
+import forms from './forms';
 import _ from 'lodash';
 
-// TODO refactor: rename
-function notifyOnChange($form) {
+function markWhenDirty($form) {
   $form.on('input change', (event) => {
     const parts = event.target.name.split('[');
     const isIblockInput = parts.length > 1;
@@ -13,8 +13,6 @@ function notifyOnChange($form) {
         $form.append(`<input name="${name}" type="hidden" value="true">`);
       }
     }
-    const msg = 'Данные были изменены, для сохранения нажмите кнопку «Сохранить».';
-    modals.mutateMessage($form, msg, 'info');
   })
 }
 
@@ -37,7 +35,8 @@ function initForm($form, onSuccess) {
 function init($component) {
   const successMessage = 'Ваши изменения были сохранены.';
   $component.find('form').each(function() {
-    notifyOnChange($(this));
+    markWhenDirty($(this));
+    forms.notifyOnChange($(this));
   });
   function onSuccessFn($form) {
     return (data) => {
@@ -63,8 +62,18 @@ function init($component) {
   }
   $('.wrap_add_file').each(function() {
     const $root = $(this);
+    const key = $root.data('name');
+    const $addFile = $root.find('.add_file');
+    // removing already uploaded files
+    $addFile.find('.remove_file').each(function() {
+      $(this).on('click', () => {
+        const $item = $(this).parent('p');
+        const fileId = $item.attr('data-file-id');
+        $root.append(`<input name="${key}[delete_files][]" value="${fileId}" type="text" hidden="hidden">`);
+        $item.remove();
+      });
+    });
     $root.find('.attach').on('click', () => {
-      const key = $root.data('name');
       const $input = $(`<input name="${key}[file][]" class="file" type="file" hidden="hidden">`);
       $root.append($input);
       $input.click();
@@ -72,19 +81,13 @@ function init($component) {
     $root.on('change', 'input.file', function() {
       const $input = $(this);
       const filename = $input[0].files[0].name;
-      $root.find('.add_file').append(
+      $addFile.append(
         $(`<p>${filename} <span class="remove_file">(удалить)</span></p>`)
           .on('click', '.remove_file', function() {
             $input.remove();
             $(this).parent('p').remove();
           })
       );
-    });
-  });
-  $component.find('[data-tabLinks]').each(function() {
-    $(this).attr('data-scroll-to', 'true');
-    $(this).on('click', () => {
-      $component.find('.form-message.success').hide();
     });
   });
 }
