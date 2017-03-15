@@ -8,6 +8,7 @@ use CIBlockElement;
 use Core\Iblock as ib;
 use Core\Underscore as _;
 use Core\Nullable as nil;
+use Core\Strings as str;
 use CUser;
 
 assert(Loader::includeModule('iblock'));
@@ -115,6 +116,7 @@ class ApplicationForm {
 
     static function getDisplayName($application) {
         $appUserId = $application['PROPERTIES']['USER']['VALUE'];
-        return self::userCompany($appUserId);
+        // generic default name just in case
+        return str::ifEmpty(self::userCompany($appUserId), 'Анкета № '.$application['ID']);
     }
 }
