@@ -74,6 +74,9 @@ $router->with('/api', function () use ($router, $signupRoute) {
                 $fields = str::isEmpty($params['PASSWORD'])
                     ? _::remove($params, array('PASSWORD', 'CONFIRM_PASSWORD'))
                     : $params;
+                // TODO refactor: ad-hoc
+                // make sure `WORK_COMPANY` is non-empty, it's used elsewhere (to identify application forms)
+                $fields = str::isEmpty($fields['WORK_COMPANY']) ? _::remove($fields, 'WORK_COMPANY') : $fields;
                 $isSuccess = $USER->Update($USER->GetID(), $fields);
                 return $response->json(array(
                     'isSuccess' => $isSuccess,
