@@ -14,6 +14,8 @@ use CUser;
 assert(Loader::includeModule('iblock'));
 
 class ApplicationForm {
+    const STATUS_ACCEPTED = 'ACCEPTED';
+
     private static function associatedElement($iblockId, $userId) {
         $filter = array('IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y', 'PROPERTY_USER' => $userId);
         $select = array('*', 'PROPERTY_*');
