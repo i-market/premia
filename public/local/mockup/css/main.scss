@@ -1443,6 +1443,14 @@ input {
   }
 }
 
+.empty-state-message {
+  @extend %form-message-like;
+  // TODO DRY
+  font-size: inherit !important;
+  padding: 15px !important;
+  text-align: center;
+}
+
 .mb {
   margin-bottom: 40px;
 }
@@ -1577,8 +1585,7 @@ input {
   }
 }
 
-.form-message {
-  display: none;
+%form-message-like {
   font-size: 14px;
   line-height: 1.4;
   padding: 10px;
@@ -1594,6 +1601,11 @@ input {
     background: lighten($errorRed, 42%);
     color: darken($errorRed, 5%);
   }
+}
+
+.form-message {
+  display: none;
+  @extend %form-message-like;
 }
 
 .embedded-modal-form {
