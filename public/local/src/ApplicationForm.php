@@ -37,6 +37,10 @@ class ApplicationForm {
         );
     }
 
+    static function isPersonalNomination($iblockId) {
+        return in_array($iblockId, array(Iblock::SALES, Iblock::LAW));
+    }
+
     static function voteIblockId($formIblockId) {
         $sharedKey = array_flip(self::iblockIds())[$formIblockId];
         return Vote::iblockIds()[$sharedKey];
@@ -118,7 +122,14 @@ class ApplicationForm {
 
     static function getDisplayName($application) {
         $appUserId = $application['PROPERTIES']['USER']['VALUE'];
-        // generic default name just in case
-        return str::ifEmpty(self::userCompany($appUserId), 'Анкета № '.$application['ID']);
+        $company = self::userCompany($appUserId);
+        if (self::isPersonalNomination(intval($application['IBLOCK_ID']))) {
+            $fullName = str::ifEmpty(_::get($application, 'PROPERTIES.FULL_NAME.VALUE.TEXT'), null);
+            $displayName = join(' / ', _::clean(array($company, $fullName)));
+            return str::ifEmpty($displayName, 'Анкета № '.$application['ID']);
+        } else {
+            // generic default name just in case
+            return str::ifEmpty($company, 'Анкета № '.$application['ID']);
+        }
     }
 }
