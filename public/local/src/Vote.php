@@ -13,7 +13,14 @@ assert(Loader::includeModule('iblock'));
 class Vote {
     static function iblockIds() {
         return array(
-            'SMALL_BUSINESS' => Iblock::VOTE_SMALL_BUSINESS
+            'SMALL_BUSINESS' => Iblock::VOTE_SMALL_BUSINESS,
+            'BREAKTHROUGH' => Iblock::VOTE_BREAKTHROUGH,
+            'ETP' => Iblock::VOTE_ETP,
+            'IMPORT_SUBSTITUTION' => Iblock::VOTE_IMPORT_SUBSTITUTION,
+            'SALES_INNOVATION' => Iblock::VOTE_SALES_INNOVATION,
+            'EXPORTER' => Iblock::VOTE_EXPORTER,
+            'SALES' => Iblock::VOTE_SALES,
+            'LAW' => Iblock::VOTE_LAW
         );
     }
 

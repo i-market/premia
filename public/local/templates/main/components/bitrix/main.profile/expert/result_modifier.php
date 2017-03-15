@@ -10,7 +10,6 @@ $applications = _::mapValues(ApplicationForm::iblockIds(), function($iblockId) u
     $filter = array('IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y');
     $apps = ib::collectElements($el->GetList(array('SORT' => 'ASC'), $filter));
     return array_map(function($app) use ($iblockId) {
-        $appUserId = $app['PROPERTIES']['USER']['VALUE'];
         $ret = _::set($app, 'DISPLAY_NAME', ApplicationForm::getDisplayName($app));
         return _::set($ret, 'VOTE_PATH', Vote::votePath($iblockId, $app['ID']));
     }, $apps);

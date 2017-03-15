@@ -1319,7 +1319,8 @@ input {
     color: $blue;
   }
   p, .file {
-    line-height: 1.2;
+    display: block;
+    line-height: 1.5;
   }
 }
 

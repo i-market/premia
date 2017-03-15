@@ -219,6 +219,13 @@ class Iblock {
     const SALES = 12;
     const LAW = 13;
     const VOTE_SMALL_BUSINESS = 14;
+    const VOTE_BREAKTHROUGH = 15;
+    const VOTE_ETP = 16;
+    const VOTE_IMPORT_SUBSTITUTION = 17;
+    const VOTE_SALES_INNOVATION = 18;
+    const VOTE_EXPORTER = 19;
+    const VOTE_SALES = 20;
+    const VOTE_LAW = 21;
 }
 
 class PageProperty {
