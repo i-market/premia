@@ -31,3 +31,7 @@ $arResult['VOTE'] = array(
     'ID_MAYBE' => $userVoteMaybe['ID'],
     'PROPERTIES' => $publicVoteProps
 );
+$arResult['HEADING'] =
+    af::isPersonalNomination($iblockId)
+        ? 'Анкеты в персональной номинации'
+        : 'Анкеты компаний поставщиков';
