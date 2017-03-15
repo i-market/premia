@@ -6,6 +6,8 @@ use App\Vote;
 use Core\Underscore as _;
 use Core\Iblock as ib;
 
+// mutate title
+$APPLICATION->SetTitle(af::getDisplayName($arResult));
 $iblockId = intval($arResult['IBLOCK']['ID']);
 $arResult['DISPLAY_NAME'] = af::getDisplayName($arResult);
 $arResult['TEXT_PROPERTIES'] = array_filter($arResult['PROPERTIES'], function($prop) use ($iblockId) {
