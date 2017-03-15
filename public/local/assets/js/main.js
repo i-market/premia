@@ -58,4 +58,19 @@ $(() => {
   // TODO refactor: optimize
   profile.init($('.personal_area'));
   vote.init($('.application-vote'));
+
+  const $globalLoader = $('#global-loader');
+  var timer = null;
+  $(document)
+    .ajaxStart(() => {
+      timer = setTimeout(() => {
+        $globalLoader.show();
+      }, 500);
+    })
+    .ajaxStop(() => {
+      if (timer !== null) {
+        clearTimeout(timer);
+      }
+      $globalLoader.hide();
+    })
 });

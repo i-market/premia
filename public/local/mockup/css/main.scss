@@ -6,6 +6,7 @@ $red: #ec151e;
 $errorRed: #dd4b39;
 $border: #cfd1d6;
 $mainColorText: #606778;
+$lightYellow: #faebc1;
 html,
 body {
   margin: 0;
@@ -1600,4 +1601,22 @@ input {
   max-width: 370px;
   border: 1px solid $border;
   font-weight: normal;
+}
+
+#global-loader {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  // TODO half of the width
+  margin-left: -60px;
+  z-index: 100;
+  padding: 5px 0;
+  background: $lightYellow;
+  border: 1px solid #f2c174;
+  border-top: none;
+  color: $d_blue;
+  width: 120px;
+  text-align: center;
+  box-shadow: 0 4px 2px -2px rgba(0,0,0,0.4);
 }
