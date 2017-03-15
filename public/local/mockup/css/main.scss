@@ -752,6 +752,13 @@ h4 {
     display: inline-block;
     width: 200px;
     margin: 20px;
+    @media only screen and (max-width: 523px) {
+      width: 100px;
+      margin: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
   }
 }
 
