@@ -351,9 +351,9 @@ class User {
                 "SET_LAST_MODIFIED" => "N",
                 "SET_META_DESCRIPTION" => "Y",
                 "SET_META_KEYWORDS" => "Y",
-                "SET_STATUS_404" => "N",
+                "SET_STATUS_404" => "Y",
                 "SET_TITLE" => "N",
-                "SHOW_404" => "N",
+                "SHOW_404" => "Y",
                 "USE_PERMISSIONS" => "N",
                 "USE_SHARE" => "N"
             )
