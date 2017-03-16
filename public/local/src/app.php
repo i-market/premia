@@ -92,11 +92,11 @@ class App {
 
     // TODO move to core?
     static function sendMailEvent($type, $siteId, $data) {
-        if (\Core\App::env() === Env::DEV) {
+        if (false) {
             $event = array($type, $siteId, $data);
             return $event;
         } else {
-            return (new CEvent)->Send($type, $siteId, $data);
+            return (new CEvent)->SendImmediate($type, $siteId, $data);
         }
     }
 
@@ -265,8 +265,8 @@ class User {
     /**
      * @param CUser $user
      */
-    static function isInGroup($user, $groupId) {
-        $userGroups = CUser::GetUserGroup($user->GetID());
+    static function isInGroup($userId, $groupId) {
+        $userGroups = CUser::GetUserGroup($userId);
         return in_array($groupId, array_map('intval', $userGroups));
     }
 
@@ -293,11 +293,12 @@ class User {
         return ob_get_clean();
     }
 
+    // TODO refactor: move
     static function renderApplication($iblockId, $elementId) {
         // kind of important for security
         assert(in_array($iblockId, ApplicationForm::iblockIds()));
         global $APPLICATION, $USER;
-        $isExpert = self::isInGroup($USER, self::EXPERT_GROUP);
+        $isExpert = self::isInGroup($USER->GetID(), self::EXPERT_GROUP);
         if (!$isExpert) {
             $bxMessage = array(
                 'TYPE' => 'ERROR',
@@ -322,7 +323,8 @@ class User {
                 "BROWSER_TITLE" => "-",
                 "CACHE_GROUPS" => "Y",
                 "CACHE_TIME" => "36000000",
-                "CACHE_TYPE" => "A",
+                // caching will not work properly: fetching additional data in result_modifier.php
+                "CACHE_TYPE" => "N",
                 "CHECK_DATES" => "Y",
                 "DETAIL_URL" => "",
                 "DISPLAY_BOTTOM_PAGER" => "N",

@@ -29,21 +29,16 @@
                         <h4 class="tab_title">{{ result.DISPLAY_NAME }}</h4>
                     </div>
                 </div>
-                {% for prop in result.TEXT_PROPERTIES %}
-                    {% set text = prop.VALUE.TEXT %}
-                    {% if text is not empty %}
-                        <div class="pap_item">
-                            <div class="inner">
-                                <strong>{{ prop.NAME }}</strong>
-                                <p>{{ text }}</p>
-                            </div>
-                        </div>
-                    {% endif %}
+                {% for prop in result.TEXT_PROPERTIES.GENERAL_INFO %}
+                    {% include partial('profile/application/text_property.twig') %}
+                {% endfor %}
+                {% for prop in result.TEXT_PROPERTIES.APPLICATION %}
+                    {% include partial('profile/application/text_property.twig') %}
                 {% endfor %}
                 <div class="inner">
                     {% for file in result.FILES %}
                         <div class="add_file{{ loop.last ? ' last' }}">
-                            <a href="{{ file.SRC }}" target="_blank" class="file">{{ file.ORIGINAL_NAME }} <span class="remove_file">(скачать файл)</span></a>
+                            <a href="/api/download/{{ file.ID }}" target="_blank" class="file">{{ file.ORIGINAL_NAME }} <span class="remove_file">(скачать файл)</span></a>
                         </div>
                     {% endfor %}
                 </div>

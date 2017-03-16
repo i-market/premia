@@ -352,7 +352,7 @@ h4 {
     overflow-y: auto;
     background: #003466;
     padding: 10px 0;
-    z-index: 1;
+    z-index: -1;
   }
   .wrap {
     @media only screen and (max-width: 1023px) {
@@ -1130,9 +1130,12 @@ h4 {
   }
 }
 
+.expert-profile {
+  padding-bottom: 80px;
+}
+
 .tab_blocks {
   &.tab_blocks--personal_area {
-    margin-bottom: 80px;
   }
   .grid {
     .col_2 {
@@ -1400,11 +1403,15 @@ input {
       margin-bottom: 20px;
     }
   }
-  span,
+  span:not(.num),
   a {
     font-size: 16px;
     font-weight: 700;
     color: $d_blue;
+    line-height: 1.2;
+  }
+  .num {
+    margin-right: 20px;
     line-height: 1.2;
   }
   a {
@@ -1551,7 +1558,7 @@ input {
   &>div {
     margin-bottom: 30px;
   }
-  a {
+  a:not(.btn--blue) {
     color: $blue;
     font-weight: 700;
     font-size: 14px;

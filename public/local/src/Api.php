@@ -3,6 +3,7 @@
 namespace App;
 
 use App\ApplicationForm;
+use CFile;
 use CIBlockElement;
 use Core\Strings as str;
 use Core\Underscore as _;
@@ -151,6 +152,24 @@ class Api {
             );
         } else {
             return ApplicationForm::updateApplication($USER->GetID(), $fields);
+        }
+    }
+
+    static function downloadFile($fileId) {
+        $file = CFile::GetByID($fileId)->Fetch();
+        $path = $_SERVER['DOCUMENT_ROOT'].CFile::GetPath($fileId);
+
+        if(!file_exists($path))
+            echo 'Ошибка: файл не найден.';
+        else {
+            header('Cache-Control: public');
+            header('Content-Description: File Transfer');
+            header('Content-Disposition: attachment; filename='.rawurlencode($file['ORIGINAL_NAME']));
+            header('Content-Type: '.$file['CONTENT_TYPE']);
+            header('Content-Transfer-Encoding: binary');
+            ob_clean();
+            flush();
+            echo file_get_contents($path);
         }
     }
 }

@@ -2,7 +2,7 @@
 {% embed partial('embedded_modal_section.twig') %}
     {% block modal %}
         <div class="embedded-modal-form">
-            <form name="bform" action="{{ result.AUTH_FORM }}" method="post">
+            <form name="bform" action="{{ result.AUTH_FORM }}" method="post" novalidate>
                 <input type="hidden" name="USER_CHECKWORD" value="{{ result.USER_CHECKWORD }}">
                 {% if result.BACKURL is not empty %}
                     <input type="hidden" name="backurl" value="{{ result.BACKURL }}" />
@@ -14,7 +14,8 @@
                     <input name="USER_LOGIN"
                            value="{{ result.LAST_LOGIN }}"
                            type="email"
-                           placeholder="E-mail">
+                           placeholder="E-mail"
+                           disabled="disabled">
                 </label>
                 <label class="label">
                     <input name="USER_PASSWORD"
@@ -28,15 +29,20 @@
                            type="password"
                            placeholder="Подтверждение пароля">
                 </label>
-                {% set bxMessage = params['~AUTH_RESULT'] %}
-                {% if bxMessage %}
-                    <div class="form-message {{ bxMessage.TYPE == 'ERROR' ? 'error' : 'success' }}" style="display: block">
-                        {{ bxMessage.MESSAGE }}
+                {% set bx_msg = params['~AUTH_RESULT'] %}
+                {% set is_success = bx_msg.TYPE == 'OK' %}
+                {% if bx_msg %}
+                    <div class="form-message {{ bx_msg.TYPE == 'ERROR' ? 'error' : 'success' }}" style="display: block">
+                        {{ bx_msg.MESSAGE }}
                     </div>
                 {% endif %}
                 <div class="wrap_btn">
                     <div>
-                        <button type="submit" name="change_pwd" class="btn--blue">Изменить пароль</button>
+                        {% if is_success %}
+                            <a href="{{ result.PROFILE_PATH }}" class="btn--blue">Личный кабинет</a>
+                        {% else %}
+                            <button type="submit" name="change_pwd" class="btn--blue">Изменить пароль</button>
+                        {% endif %}
                     </div>
                 </div>
             </form>

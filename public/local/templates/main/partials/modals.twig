@@ -2,7 +2,7 @@
 <div class="modal" id="password-reset-modal">
     <div class="block">
         <span class="close"></span>
-        <form action="/api/user/reset" method="post" class="modal_form">
+        <form action="/api/user/reset" method="post" class="modal_form" novalidate>
             <h4 class="tab_title">Восстановление доступа</h4>
             <label class="label">
                 <input name="email" type="email" placeholder="E-mail">
@@ -27,7 +27,7 @@
 <div class="modal" id="signup-modal">
     <div class="block">
         <span class="close"></span>
-        <form action="/api/user/signup" method="post" class="modal_form">
+        <form action="/api/user/signup" method="post" class="modal_form" novalidate>
             <h4 class="tab_title">Регистрация участника конкурса</h4>
             <label class="label">
                 <input name="full-name" type="text" placeholder="ФИО">
@@ -60,7 +60,7 @@
 <div class="modal" id="contact-modal">
     <div class="block">
         <span class="close"></span>
-        <form action="{{ form_specs.contact.action }}" method="post" class="modal_form">
+        <form action="{{ form_specs.contact.action }}" method="post" class="modal_form" novalidate>
             <h4 class="tab_title">Напишите нам сообщение</h4>
             <label class="label">
                 <input name="name" type="text" placeholder="Ваше имя">

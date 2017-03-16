@@ -7,7 +7,7 @@
     {% set vote = item.VOTE %}
     <div class="evaluation">
         <div class="left">
-            <a href="{{ application.VOTE_PATH }}">{{ application.DISPLAY_NAME }}</a>
+            <span class="num">{{ loop.index }}</span><a href="{{ application.VOTE_PATH }}">{{ application.DISPLAY_NAME }}</a>
         </div>
         {% if vote %}
             <div class="right">
