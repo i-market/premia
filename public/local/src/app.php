@@ -92,11 +92,11 @@ class App {
 
     // TODO move to core?
     static function sendMailEvent($type, $siteId, $data) {
-        if (\Core\App::env() === Env::DEV) {
+        if (false) {
             $event = array($type, $siteId, $data);
             return $event;
         } else {
-            return (new CEvent)->Send($type, $siteId, $data);
+            return (new CEvent)->SendImmediate($type, $siteId, $data);
         }
     }
 
