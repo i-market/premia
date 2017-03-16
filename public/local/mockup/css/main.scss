@@ -1558,7 +1558,7 @@ input {
   &>div {
     margin-bottom: 30px;
   }
-  a {
+  a:not(.btn--blue) {
     color: $blue;
     font-weight: 700;
     font-size: 14px;
