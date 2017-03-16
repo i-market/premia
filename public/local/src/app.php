@@ -293,6 +293,7 @@ class User {
         return ob_get_clean();
     }
 
+    // TODO refactor: move
     static function renderApplication($iblockId, $elementId) {
         // kind of important for security
         assert(in_array($iblockId, ApplicationForm::iblockIds()));
@@ -322,7 +323,8 @@ class User {
                 "BROWSER_TITLE" => "-",
                 "CACHE_GROUPS" => "Y",
                 "CACHE_TIME" => "36000000",
-                "CACHE_TYPE" => "A",
+                // caching will not work properly: fetching additional data in result_modifier.php
+                "CACHE_TYPE" => "N",
                 "CHECK_DATES" => "Y",
                 "DETAIL_URL" => "",
                 "DISPLAY_BOTTOM_PAGER" => "N",
