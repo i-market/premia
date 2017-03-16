@@ -265,8 +265,8 @@ class User {
     /**
      * @param CUser $user
      */
-    static function isInGroup($user, $groupId) {
-        $userGroups = CUser::GetUserGroup($user->GetID());
+    static function isInGroup($userId, $groupId) {
+        $userGroups = CUser::GetUserGroup($userId);
         return in_array($groupId, array_map('intval', $userGroups));
     }
 
@@ -298,7 +298,7 @@ class User {
         // kind of important for security
         assert(in_array($iblockId, ApplicationForm::iblockIds()));
         global $APPLICATION, $USER;
-        $isExpert = self::isInGroup($USER, self::EXPERT_GROUP);
+        $isExpert = self::isInGroup($USER->GetID(), self::EXPERT_GROUP);
         if (!$isExpert) {
             $bxMessage = array(
                 'TYPE' => 'ERROR',
