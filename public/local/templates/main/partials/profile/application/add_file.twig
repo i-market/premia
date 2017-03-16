@@ -2,7 +2,7 @@
     <div class="add_file last">
         {% set files = result.APPLICATION[iblock_key].PROPERTIES.FILES.VALUE %}
         {% for file in files %}
-            <p data-file-id="{{ file.ID }}"><a href="{{ file.SRC }}" target="_blank">{{ file.ORIGINAL_NAME }}</a> <span class="remove_file">(удалить)</span></p>
+            <p data-file-id="{{ file.ID }}"><a href="/api/download/{{ file.ID }}" target="_blank">{{ file.ORIGINAL_NAME }}</a> <span class="remove_file">(удалить)</span></p>
         {% endfor %}
     </div>
     {# TODO button/input tag? #}

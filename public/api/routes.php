@@ -43,6 +43,9 @@ $signupRoute = Form::formRoute($formSpecs['signup'], function($params, $errors, 
 });
 $router = new Klein();
 $router->with('/api', function () use ($router, $signupRoute) {
+    $router->respond('GET', '/download/[i:id]', function($request, $response) {
+        Api::downloadFile($request->id);
+    });
     $router->with('/user', function () use ($router, $signupRoute) {
         $router->respond('POST', '/signup', $signupRoute['handler']);
         $router->respond('POST', '/login', function($request, $response) {

@@ -43,7 +43,7 @@
                 <div class="inner">
                     {% for file in result.FILES %}
                         <div class="add_file{{ loop.last ? ' last' }}">
-                            <a href="{{ file.SRC }}" target="_blank" class="file">{{ file.ORIGINAL_NAME }} <span class="remove_file">(скачать файл)</span></a>
+                            <a href="/api/download/{{ file.ID }}" target="_blank" class="file">{{ file.ORIGINAL_NAME }} <span class="remove_file">(скачать файл)</span></a>
                         </div>
                     {% endfor %}
                 </div>
