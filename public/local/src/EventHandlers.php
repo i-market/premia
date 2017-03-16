@@ -28,6 +28,18 @@ class EventHandlers {
         return $params;
     }
 
+    static function onAfterUserAdd(&$fieldsRef) {
+        $groupIds = _::mapValues($fieldsRef['GROUP_ID'], 'GROUP_ID');
+        $isExpert = in_array(User::EXPERT_GROUP, $groupIds);
+        if ($isExpert) {
+            $msg = '';
+            $eventName = 'NEW_EXPERT';
+            // when expert is added by an admin, send a password reset link
+            CUser::SendUserInfo($fieldsRef['ID'], App::SITE_ID, $msg, false, $eventName);
+        }
+        return $fieldsRef;
+    }
+
     private static function ref($name) {
         return '\App\EventHandlers::'.$name;
     }
@@ -36,5 +48,6 @@ class EventHandlers {
         AddEventHandler('main', 'OnBeforeUserRegister', self::ref('onBeforeUserUpdate'));
         AddEventHandler('main', 'OnBeforeUserUpdate', self::ref('onBeforeUserUpdate'));
         AddEventHandler('main', 'OnAfterUserLogout', self::ref('onAfterUserLogout'));
+        AddEventHandler('main', 'OnAfterUserAdd', self::ref('onAfterUserAdd'));
     }
 }
