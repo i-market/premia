@@ -4,6 +4,7 @@ namespace App;
 
 use App\Iblock;
 use Bitrix\Main\Loader;
+use CIBlock;
 use CIBlockElement;
 use Core\Iblock as ib;
 use Core\Underscore as _;
@@ -80,9 +81,11 @@ class ApplicationForm {
         $isSuccess = $result === true || is_int($result);
         // TODO refactor: inappropriate place for this?
         if ($isNomination && $isAdd && $isSuccess) {
+            $nomination = CIBlock::GetByID($fields['IBLOCK_ID'])->GetNext();
             $event = array(
                 'EMAIL' => $USER->GetEmail(),
-                'NAME' => $USER->GetFormattedName()
+                'NAME' => $USER->GetFormattedName(),
+                'NOMINATION' => $nomination['~NAME']
             );
             App::sendMailEvent(MailEvent::NEW_NOMINATION, App::SITE_ID, $event);
         }
