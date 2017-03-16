@@ -1403,11 +1403,15 @@ input {
       margin-bottom: 20px;
     }
   }
-  span,
+  span:not(.num),
   a {
     font-size: 16px;
     font-weight: 700;
     color: $d_blue;
+    line-height: 1.2;
+  }
+  .num {
+    margin-right: 20px;
     line-height: 1.2;
   }
   a {
