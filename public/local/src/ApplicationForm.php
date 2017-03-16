@@ -49,7 +49,7 @@ class ApplicationForm {
     // TODO refactor: very brittle way to do it
     static function isPublicProperty($iblockId, $propertyCode) {
         assert(in_array($iblockId, self::iblockIds()));
-        $private = array('USER', 'FILES');
+        $private = array('USER', 'FILES', 'STATUS');
         return !in_array($propertyCode, $private);
     }
 
