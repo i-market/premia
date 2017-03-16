@@ -1,0 +1,9 @@
+{% set text = prop.VALUE.TEXT %}
+{% if text is not empty %}
+    <div class="pap_item">
+        <div class="inner">
+            <strong>{{ prop.NAME }}</strong>
+            <p>{{ text }}</p>
+        </div>
+    </div>
+{% endif %}
