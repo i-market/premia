@@ -2,7 +2,7 @@
 {% embed partial('embedded_modal_section.twig') %}
     {% block modal %}
         <div class="embedded-modal-form">
-            <form name="bform" action="{{ result.AUTH_FORM }}" method="post">
+            <form name="bform" action="{{ result.AUTH_FORM }}" method="post" novalidate>
                 <input type="hidden" name="USER_CHECKWORD" value="{{ result.USER_CHECKWORD }}">
                 {% if result.BACKURL is not empty %}
                     <input type="hidden" name="backurl" value="{{ result.BACKURL }}" />

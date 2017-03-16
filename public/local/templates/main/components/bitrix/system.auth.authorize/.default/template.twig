@@ -1,7 +1,7 @@
 {% embed partial('embedded_modal_section.twig') %}
     {% block modal %}
         <div class="embedded-modal-form">
-            <form name="form_auth" action="{{ result.AUTH_URL }}" method="post">
+            <form name="form_auth" action="{{ result.AUTH_URL }}" method="post" novalidate>
                 <input type="hidden" name="AUTH_FORM" value="Y" />
                 <input type="hidden" name="TYPE" value="AUTH" />
                 {% if result.BACKURL is not empty %}
