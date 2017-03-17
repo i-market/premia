@@ -22,6 +22,8 @@ class App {
     static function layoutContext() {
         global $USER;
         return array(
+            'app_env' => \Core\App::env(),
+            'is_sentry_enabled' => \Core\App::env() !== Env::DEV,
             'form_specs' => self::formSpecs(),
             'main_menu' => self::renderMainMenu(),
             'slider' => self::renderSlider(),
