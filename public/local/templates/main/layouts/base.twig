@@ -64,6 +64,14 @@
 {% include(partial('modals.twig')) %}
 <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ START -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+{% if is_sentry_enabled %}
+    <script type="text/javascript" src="https://cdn.ravenjs.com/3.12.1/raven.min.js"></script>
+    <script type="text/javascript">
+        Raven.config('https://6c589ea6735245e3b3701967490bd263@sentry.io/148291', {
+            environment: '{{ app_env }}'
+        }).install();
+    </script>
+{% endif %}
 <script type="text/javascript" src="{{ asset('js/vendor.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/bundle.js') }}"></script>
 <script type="text/javascript">
