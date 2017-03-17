@@ -84,6 +84,14 @@ $(document).ready(function () {
         adjustTextareaHeight($textarea, $label);
       });
     }
+    // function activateRec($scope) {
+    //   var $link = $scope.parent().find('[data-tabLinks]:not([data-tabContent] [data-tabLinks]):nth-child(1)');
+    //   activate($link);
+    //   var $content = $('[data-tabContent=' + $link.attr('data-tabLinks') + ']');
+    //   if ($content.length) {
+    //     activateRec($content);
+    //   }
+    // }
     $('[data-tabLinks]').on('click', function () {
       activate($(this));
       if ($(this).attr('data-scroll-to') === 'true') {
@@ -108,7 +116,7 @@ $(document).ready(function () {
         }
       }
     });
-    activate($('[data-tabLinks]').parent('.activate').find('[data-tabLinks]:nth-child(1)'));
+    // activate($('[data-tabLinks]').parent('.activate').find('[data-tabLinks]:nth-child(1)'));
   });
 
 });
