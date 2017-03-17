@@ -13,8 +13,8 @@
         <div class="inner">
             <h2>Личный кабинет</h2>
         </div>
-        <div class="tab_links grid activate">
-            <div class="col col_3 tabLinks_item" data-tabLinks="contact_details">
+        <div class="tab_links grid">
+            <div class="col col_3 tabLinks_item active" data-tabLinks="contact_details">
                 <div class="text">
                     <p>Контактные данные</p>
                     <span>Заполните все поля для участия в заявке</span>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="tab_blocks">
-            <div data-tabContent="contact_details">
+            <div data-tabContent="contact_details" style="display: block;">
                 {% include partial('profile/contact_details.twig') %}
             </div>
             <div data-tabContent="application_form">

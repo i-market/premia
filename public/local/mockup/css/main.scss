@@ -1276,6 +1276,8 @@ textarea {
 }
 
 .placeholder {
+  // z-index fix for ipad
+  z-index: 1;
   max-width: 100%;
   padding-right: 15px;
   position: absolute;

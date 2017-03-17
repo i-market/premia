@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="grid">
-        <div class="col col_2 tabLinks_item tabLinks_item--small" data-tabLinks="personal-sales">
+        <div class="col col_2 tabLinks_item tabLinks_item--small active" data-tabLinks="personal-sales">
             <div class="text">
                 <span>«Профессионал продаж» (Коммерческий директор / Директор по продажам)</span>
             </div>
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="tab_blocks">
-        <div data-tabContent="personal-sales">
+        <div data-tabContent="personal-sales" style="display: block;">
             {% include partial('profile/application/nomination_tab.twig') with {iblock_key: 'SALES'} %}
         </div>
         <div data-tabContent="application-law">
