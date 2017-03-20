@@ -8,6 +8,7 @@ use CIBlock;
 use CIBlockElement;
 use Core\Underscore as _;
 use Core\Iblock as ib;
+use Core\Nullable as nil;
 use CUser;
 use Core\View as v;
 use CUtil;
@@ -18,11 +19,11 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/classes/general/cs
 class Admin {
     private static function applicationsTable($name, $iblockPred) {
         $iblockIds = array_filter(af::iblockIds(), $iblockPred);
-        $groupedByIblock = _::mapValues($iblockIds, function ($iblockId) {
+        $groupedByIblock = _::mapValues($iblockIds, function($iblockId) {
             // TODO additional business logic filters?
             $filter = array('IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y');
             $elements = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), $filter));
-            $row = _::mapValues($elements, function($el) {
+            $rows = _::mapValues($elements, function($el) {
                 // TODO refactor: optimize
                 $user = CUser::GetByID(_::get($el, 'PROPERTIES.USER.VALUE'))->GetNext();
                 return array(
@@ -34,7 +35,7 @@ class Admin {
                     $el['~IBLOCK_NAME']
                 );
             });
-            return $row;
+            return $rows;
         });
         $rows = array_reduce($groupedByIblock, function($acc, $rows) {
             return array_merge($acc, $rows);
@@ -58,17 +59,86 @@ class Admin {
     }
 
     static function companyApplicationsTable() {
-        return self::applicationsTable('Анкеты компаний поставщиков', function ($iblockId) {
+        return self::applicationsTable('Анкеты компаний поставщиков', function($iblockId) {
             // TODO refactor: extract filter
             return $iblockId !== Iblock::GENERAL_INFO && !af::isPersonalNomination($iblockId);
         });
     }
 
     static function personalApplicationsTable() {
-        return self::applicationsTable('Анкеты в персональной номинации', function ($iblockId) {
+        return self::applicationsTable('Анкеты в персональной номинации', function($iblockId) {
             // TODO refactor: extract filter
             return $iblockId !== Iblock::GENERAL_INFO && af::isPersonalNomination($iblockId);
         });
+    }
+
+    static function nominationSummaryTable($iblockId) {
+        $voteIblockId = af::voteIblockId($iblockId);
+        // TODO clean up
+        $experts = ib::collect(CUser::GetList(($by = "NAME"), ($order = "asc"), Array("GROUPS_ID"=>Array(User::EXPERT_GROUP), "ACTIVE"=>"Y"), Array("FIELDS"=>Array("ID", "NAME"))));
+        $header = array_merge(
+            array(
+                'Название компании',
+                'ФИО контактного лица',
+                'Адрес электронной почты',
+                'Фактический адрес',
+            ),
+            // [Общий балл каждого эксперта]
+            _::pluck($experts, 'NAME'),
+            array(
+                'Общий балл',
+                'Средний балл'
+            )
+        );
+        // TODO additional business logic filters?
+        $forms = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), array(
+            'IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y'
+        )));
+        $votes = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), array(
+            'IBLOCK_ID' => $voteIblockId, 'ACTIVE' => 'Y'
+        )));
+        $formVotes = _::groupBy($votes, 'PROPERTIES.FORM.VALUE');
+        $rows = _::mapValues($forms, function($form) use ($voteIblockId, $experts, $formVotes) {
+            // TODO refactor: optimize
+            $user = CUser::GetByID(_::get($form, 'PROPERTIES.USER.VALUE'))->GetNext();
+            $votes_ = _::get($formVotes, $form['ID'], array());
+            // [Общий балл каждого эксперта] name → overall score
+            $expertOverallScores = array_reduce($experts, function($scores, $expert) use ($votes_) {
+                $voteMaybe = _::find($votes_, function($vote) use ($expert) {
+                    return _::get($vote, 'PROPERTIES.USER.VALUE') === intval($expert['ID']);
+                });
+                // important to assoc even if there is no vote
+                return _::set($scores, $expert['NAME'], nil::map($voteMaybe, function($vote) {
+                    return Vote::overallScore($vote);
+                }));
+            }, array());
+            // important to get rid of null votes
+            $cleanScores = _::clean(array_values($expertOverallScores));
+            // Общий балл
+            $overallScore = array_sum($cleanScores);
+            // Средний балл (общий балл/количество оценок)
+            $averageScore = $overallScore / count($cleanScores);
+            return array_merge(
+                array(
+                    $user['~WORK_COMPANY'],
+                    $user['~NAME'],
+                    $user['~EMAIL'],
+                    $user['~WORK_STREET'],
+                ),
+                $expertOverallScores,
+                array(
+                    $overallScore,
+                    $averageScore
+                )
+            );
+        });
+        return array(
+            // TODO handle empty $elements
+            'NAME' => nil::get($forms[0]['~IBLOCK_NAME'], ''),
+            'HEADER' => $header,
+            'ROWS' => $rows
+        );
+
     }
 
     private static function filename($text) {
@@ -81,16 +151,17 @@ class Admin {
             return self::companyApplicationsTable();
         } else if ($params['summary'] === 'personal') {
             return self::personalApplicationsTable();
-        } else {
+        } else if (isset($params['nomination_id'])) {
+            return self::nominationSummaryTable($params['nomination_id']);
+        } {
             return array();
         }
     }
 
     private static function writeCsvFile($table, $path) {
-        // php unlink doesn't work with symlinks?
-        $path = realpath($path);
         if (file_exists($path)) {
-            unlink($path);
+            // php unlink doesn't work with symlinks?
+            unlink(realpath($path));
         }
         // TODO bug: file encoding is utf-8 (content is 1251)
         $csv = new CCSVData('R', true);
@@ -106,7 +177,8 @@ class Admin {
         return $path;
     }
 
-    static function render($params) {
+    static function render($params, $setTitle) {
+        global $APPLICATION;
         if (User::ensureUserIsAdmin()) {
             $view = _::get($params, 'view', 'index');
             if ($view === 'table') {
@@ -114,7 +186,10 @@ class Admin {
                 if (!_::isEmpty($table)) {
                     $csvPath = '/admin/files/'.self::filename($table['NAME']);
                     self::writeCsvFile($table, $_SERVER['DOCUMENT_ROOT'].$csvPath);
-                    // TODO personal
+                    if ($setTitle) {
+                        // mutate
+                        $APPLICATION->SetTitle($table['NAME']);
+                    }
                     return v::twig()->render(v::partial('admin/table.twig'), array(
                         'table' => $table,
                         // TODO require authorization

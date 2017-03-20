@@ -71,13 +71,14 @@ class Underscore extends ArraysMethods {
         return is_array($x) && count($x) === 0;
     }
     
-//    static function groupBy($array, $f) {
-//        $ret = array();
-//        foreach ($array as $x) {
-//            $ret[$f($x)][] = $x;
-//        }
-//        return $ret;
-//    }
+    static function groupBy($array, $f) {
+        $ret = array();
+        foreach ($array as $x) {
+            $key = is_string($f) ? self::get($x, $f) : $f($x);
+            $ret[$key][] = $x;
+        }
+        return $ret;
+    }
 
     // TODO function $by support
     static function keyBy($array, $by) {

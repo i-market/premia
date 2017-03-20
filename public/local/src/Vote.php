@@ -7,6 +7,7 @@ use CIBlockElement;
 use Core\View as v;
 use Core\Iblock as ib;
 use Core\Underscore as _;
+use Core\Strings as str;
 
 assert(Loader::includeModule('iblock'));
 
@@ -24,7 +25,18 @@ class Vote {
         );
     }
 
+    static function overallScore($element) {
+        return array_reduce($element['PROPERTIES'], function($sum, $prop) use ($element) {
+            if (self::isPublicProperty($element['IBLOCK_ID'], $prop['CODE'])) {
+                return $sum + intval(str::ifEmpty($prop['VALUE'], 0));
+            } else {
+                return $sum;
+            }
+        }, 0);
+    }
+
     // TODO refactor: very brittle way to do it
+    // TODO refactor: more like isScoreProperty
     static function isPublicProperty($iblockId, $propertyCode) {
         assert(in_array($iblockId, self::iblockIds()));
         $private = array('USER', 'FORM');

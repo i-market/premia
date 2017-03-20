@@ -1,12 +1,12 @@
 <h2>{{ APPLICATION.showTitle(false) }}</h2>
 <h3>Выгрузка участников</h3>
 <ul>
-    <li><a href="?view=table&summary=companies" target="_blank">Анкеты компаний поставщиков</a></li>
-    <li><a href="?view=table&summary=personal" target="_blank">Анкеты в персональной номинации</a></li>
+    <li><a href="?view=table&summary=companies">Анкеты компаний поставщиков</a></li>
+    <li><a href="?view=table&summary=personal">Анкеты в персональной номинации</a></li>
 </ul>
 <h3>Сводная таблица</h3>
 <ul>
     {% for nomination in nominations %}
-        <li><a href="?view=table&nomination_id={{ nomination.ID }}" target="_blank">{{ nomination.NAME }}</a></li>
+        <li><a href="?view=table&nomination_id={{ nomination.ID }}">{{ nomination.NAME }}</a></li>
     {% endfor %}
 </ul>
