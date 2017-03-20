@@ -223,8 +223,7 @@ h4 {
       }
     }
     .table-responsive {
-      overflow: hidden;
-      overflow-x: scroll;
+      overflow-x: auto;
     }
     .admin-table {
       table.preview {
