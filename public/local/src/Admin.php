@@ -117,7 +117,7 @@ class Admin {
             // Общий балл
             $overallScore = array_sum($cleanScores);
             // Средний балл (общий балл/количество оценок)
-            $averageScore = $overallScore / count($cleanScores);
+            $averageScore = _::isEmpty($cleanScores) ? 0 : $overallScore / count($cleanScores);
             return array_merge(
                 array(
                     $user['~WORK_COMPANY'],
