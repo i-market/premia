@@ -1,24 +1,26 @@
 <div class="admin-table">
     <div class="top">
-        <h3>{{ table.NAME }}</h3>
-        <a href="{{ download_link }}" target="_blank" download class="right btn--blue">Скачать CSV файл</a>
+        <h3 class="heading">{{ table.NAME }}</h3>
+        <a href="{{ download_link }}" target="_blank" download class="button btn--blue">Скачать CSV файл</a>
     </div>
-    <table class="preview">
-        <thead>
-        <tr>
-            {% for col in table.HEADER %}
-                <th>{{ col }}</th>
-            {% endfor %}
-        </tr>
-        </thead>
-        <tbody>
-        {% for row in table.ROWS %}
+    <div class="table-responsive">
+        <table class="preview">
+            <thead>
             <tr>
-                {% for col in row %}
-                    <td>{{ col }}</td>
+                {% for col in table.HEADER %}
+                    <th>{{ col }}</th>
                 {% endfor %}
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for row in table.ROWS %}
+                <tr>
+                    {% for col in row %}
+                        <td>{{ col }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
