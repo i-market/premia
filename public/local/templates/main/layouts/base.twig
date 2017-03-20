@@ -1,4 +1,4 @@
-<div id="global-loader"><div class="loader"></div>Загрузка...</div>
+<div id="global-loader">Загрузка...</div>
 <!-- HEADER START -->
 <header class="header">
     <div class="top">
@@ -11,6 +11,7 @@
                 {% if is_logged_in %}
                     <div class="user-display-name">Вы вошли как: <a href="{{ profile_path }}">{{ user_display_name }}</a></div>
                     <a class="btn lk" href="{{ profile_path }}">Личный кабинет</a>
+                    {# TODO logout shouldn't stand out #}
                     <a class="btn--blue" href="{{ logout_link }}">Выход</a>
                 {% else %}
                     {# show .short on smaller devices #}

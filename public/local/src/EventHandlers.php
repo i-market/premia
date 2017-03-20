@@ -34,9 +34,8 @@ class EventHandlers {
         $isExpert = in_array(User::EXPERT_GROUP, $groupIds);
         if ($isExpert) {
             $msg = '';
-            $eventName = 'NEW_EXPERT';
             // when expert is added by an admin, send a password reset link
-            CUser::SendUserInfo($fields['ID'], App::SITE_ID, $msg, false, $eventName);
+            CUser::SendUserInfo($fields['ID'], App::SITE_ID, $msg, false, MailEvent::NEW_EXPERT);
         }
         return $fields;
     }

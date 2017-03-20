@@ -24,6 +24,24 @@ class Underscore extends ArraysMethods {
         return $ret;
     }
 
+//    static function flat($array, $shallow = false) {
+//        $ret = array();
+//        foreach ($array as $item) {
+//            if (is_array($item)) {
+//                $ret = array_merge($ret, $shallow ? $item : self::flat($item));
+//            } else {
+//                $ret[] = $item;
+//            };
+//        }
+//        return $ret;
+//    }
+
+    static function pick($array, $keys) {
+        return array_filter($array, function ($key) use ($keys) {
+            return in_array($key, $keys);
+        }, ARRAY_FILTER_USE_KEY);
+    }
+
     // TODO refactor: optimize?
     static function reduce($array, $f, $initial) {
         return array_reduce(array_keys($array), function($ret, $k) use ($array, $f) {
@@ -53,13 +71,14 @@ class Underscore extends ArraysMethods {
         return is_array($x) && count($x) === 0;
     }
     
-//    static function groupBy($array, $f) {
-//        $ret = array();
-//        foreach ($array as $x) {
-//            $ret[$f($x)][] = $x;
-//        }
-//        return $ret;
-//    }
+    static function groupBy($array, $f) {
+        $ret = array();
+        foreach ($array as $x) {
+            $key = is_string($f) ? self::get($x, $f) : $f($x);
+            $ret[$key][] = $x;
+        }
+        return $ret;
+    }
 
     // TODO function $by support
     static function keyBy($array, $by) {

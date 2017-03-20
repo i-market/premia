@@ -1,4 +1,4 @@
-* assets
-** `npm run release` в local, чтобы собрать production asset’ы в templates/main/build
-** `npm run watch` для разработки
-* подписи типа "логин:" заменены на email в templates/main/**/system.auth.*
+- assets
+  - `npm run release` в local, чтобы собрать production asset’ы в templates/main/build
+  - `npm run watch` для разработки
+- подписи типа "логин:" заменены на email в templates/main/**/system.auth.*

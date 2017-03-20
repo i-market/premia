@@ -15,7 +15,7 @@ $appPublicProps = array_filter($arResult['PROPERTIES'], function($prop) use ($ib
     return af::isPublicProperty($iblockId, $prop['CODE']);
 });
 $appUser = $arResult['PROPERTIES']['USER']['VALUE'];
-$filter = array('IBLOCK_ID' => Iblock::GENERAL_INFO, 'PROPERTY_USER' => $appUser);
+$filter = array('IBLOCK_ID' => Iblock::GENERAL_INFO, 'ACTIVE' => 'Y', 'PROPERTY_USER' => $appUser);
 $generalInfo = _::first(ib::collectElements((new CIBlockElement())->GetList(array(), $filter)));
 $generalInfoPublicProps = array_filter($generalInfo['PROPERTIES'], function($prop) use ($generalInfo) {
     return af::isPublicProperty($generalInfo['IBLOCK_ID'], $prop['CODE']);

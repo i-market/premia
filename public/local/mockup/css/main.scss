@@ -187,13 +187,81 @@ h4 {
       color: $blue;
       text-decoration: none;
     }
+    &.btn--blue, &.btn {
+      font-weight: normal;
+      text-decoration: none;
+    }
+    &.btn {
+      color: $blue;
+    }
+    &.btn--blue {
+      color: #fff;
+    }
   }
   &.editable-page {
+    padding-bottom: 40px;
     h1, h2, h3, h4, h5, h6 {
       padding-left: 40px;
     }
     p, ul, ol, h1, h2, h3, h4 {
       margin-bottom: 20px;
+    }
+    ol ol, ol ul, ul ol, ul ul {
+      margin-bottom: 0;
+    }
+    table {
+      border: 1px solid #ddd;
+      width: 100%;
+      max-width: 100%;
+      thead {
+        th {
+          vertical-align: bottom;
+          border-bottom: 2px solid #ddd;
+        }
+      }
+      th, td {
+        text-align: left;
+        padding: 8px;
+        line-height: 1.2;
+        border: 1px solid #ddd;
+      }
+      tbody td {
+        vertical-align: top;
+      }
+    }
+    .table-responsive {
+      overflow-x: auto;
+    }
+    .admin-table {
+      table.preview {
+        font-size: 14px;
+        color: #333;
+      }
+      .top {
+        display: flex;
+        margin-bottom: 20px;
+        align-items: center;
+        .buttons {
+          margin-left: auto;
+          flex-shrink: 0;
+        }
+        .heading {
+          margin-bottom: 0;
+          margin-right: 20px;
+          padding-left: 0;
+        }
+        @media only screen and (max-width: 768px) {
+          flex-direction: column;
+          align-items: flex-start;
+          .buttons {
+            margin-left: 0;
+            order: -1;
+            a {
+              margin-bottom: 20px;
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -1560,7 +1628,7 @@ input {
   &>div {
     margin-bottom: 30px;
   }
-  a:not(.btn--blue) {
+  a:not(.btn--blue):not(.btn) {
     color: $blue;
     font-weight: 700;
     font-size: 14px;
