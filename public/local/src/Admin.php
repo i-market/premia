@@ -16,25 +16,22 @@ use CUtil;
 require_once ($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/classes/general/csv_data.php');
 
 class Admin {
-    static function companyApplicationsTable() {
-        $iblockIds = array_filter(af::iblockIds(), function($id) {
-            // TODO refactor: extract filter
-            return $id !== Iblock::GENERAL_INFO && !af::isPersonalNomination($id);
-        });
+    private static function applicationsTable($name, $iblockPred) {
+        $iblockIds = array_filter(af::iblockIds(), $iblockPred);
         $groupedByIblock = _::mapValues($iblockIds, function ($iblockId) {
             // TODO additional business logic filters?
             $filter = array('IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y');
             $elements = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), $filter));
-            $row = _::mapValues($elements, function ($el) {
+            $row = _::mapValues($elements, function($el) {
                 // TODO refactor: optimize
                 $user = CUser::GetByID(_::get($el, 'PROPERTIES.USER.VALUE'))->GetNext();
                 return array(
-                    'COMPANY' => $user['~WORK_COMPANY'],
-                    'FULL_NAME' => $user['~NAME'],
-                    'EMAIL' => $user['~EMAIL'],
-                    'PHONE' => $user['~WORK_PHONE'],
-                    'ADDRESS' => $user['~WORK_STREET'],
-                    'NOMINATION' => $el['~IBLOCK_NAME']
+                    $user['~WORK_COMPANY'],
+                    $user['~NAME'],
+                    $user['~EMAIL'],
+                    $user['~WORK_PHONE'],
+                    $user['~WORK_STREET'],
+                    $el['~IBLOCK_NAME']
                 );
             });
             return $row;
@@ -54,32 +51,55 @@ class Admin {
             assert(count($header) === count(_::first($rows)));
         }
         return array(
-            'NAME' => 'Анкеты компаний поставщиков',
+            'NAME' => $name,
             'HEADER' => $header,
             'ROWS' => $rows
         );
     }
 
+    static function companyApplicationsTable() {
+        return self::applicationsTable('Анкеты компаний поставщиков', function ($iblockId) {
+            // TODO refactor: extract filter
+            return $iblockId !== Iblock::GENERAL_INFO && !af::isPersonalNomination($iblockId);
+        });
+    }
+
+    static function personalApplicationsTable() {
+        return self::applicationsTable('Анкеты в персональной номинации', function ($iblockId) {
+            // TODO refactor: extract filter
+            return $iblockId !== Iblock::GENERAL_INFO && af::isPersonalNomination($iblockId);
+        });
+    }
+
     private static function filename($text) {
         $name = CUtil::translit($text, 'ru', array('replace_space' => '_', 'replace_other' => '-'));
-        return join('_', array($name, date('d_m_Y'), uniqid())).'.csv';
+        return join('_', array($name, date('d_m_Y'))).'.csv';
     }
 
     private static function table($params) {
         if ($params['summary'] === 'companies') {
             return self::companyApplicationsTable();
+        } else if ($params['summary'] === 'personal') {
+            return self::personalApplicationsTable();
         } else {
             return array();
         }
     }
 
     private static function writeCsvFile($table, $path) {
+        // php unlink doesn't work with symlinks?
+        $path = realpath($path);
+        if (file_exists($path)) {
+            unlink($path);
+        }
+        // TODO bug: file encoding is utf-8 (content is 1251)
         $csv = new CCSVData('R', true);
         $csv->SetDelimiter(';');
         $rows = array_merge(array($table['HEADER']), $table['ROWS']);
         foreach ($rows as $row) {
             // TODO refactor: wth? can we write all rows at once?
             $csv->SaveFile($path, array_map(function($s) {
+                // just in case we pass escaped strings
                 return iconv('utf-8', 'windows-1251', htmlspecialcharsBack($s));
             }, array_values($row)));
         }
