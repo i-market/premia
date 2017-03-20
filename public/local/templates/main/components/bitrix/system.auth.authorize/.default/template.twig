@@ -10,10 +10,9 @@
                 {% for key, value in result.POST %}
                     <input type="hidden" name="{{ key }}" value="{{ value }}" />
                 {% endfor %}
-                {# TODO more generic heading #}
-                <h4 class="tab_title">Вход в личный кабинет</h4>
+                <h4 class="tab_title">Вход</h4>
                 <label class="label">
-                    <input name="USER_LOGIN" value="{{ result.LAST_LOGIN }}" type="email" placeholder="E-mail">
+                    <input name="USER_LOGIN" value="{{ result.LAST_LOGIN }}" type="email" placeholder="E-mail или логин">
                 </label>
                 <label class="label">
                     <input name="USER_PASSWORD" type="password" placeholder="Пароль">

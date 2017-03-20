@@ -22,11 +22,12 @@
         dest: "{{ document_root }}/robots.txt"
         backup: yes
       when: env == "stage"
-    - name: composer install
-      composer:
-        command: install
-        working_dir: "{{ document_root }}/local"
-      delegate_to: 127.0.0.1
+#    - name: composer install
+#      composer:
+#        command: install
+#        # TODO wrong path
+#        working_dir: "{{ document_root }}/local"
+#      delegate_to: 127.0.0.1
       # TODO npm install first?
     - name: build assets
       local_action: shell npm run release
