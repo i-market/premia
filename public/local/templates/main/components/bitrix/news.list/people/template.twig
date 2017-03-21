@@ -1,0 +1,20 @@
+<section class="people">
+    <div class="wrap">
+        <div class="grid">
+            {% for item in result.ITEMS %}
+                <div class="col col_2 item" id="{{ add_editing_actions(item, template) }}">
+                    {% set img = item.PREVIEW_PICTURE %}
+                    {% set style = img.SRC ? ("background-size: cover; background-image: url('" ~ img.RESIZED.src ~ "');") : '' %}
+                    <div class="img" style="{{ style }}"></div>
+                    <div class="info">
+                        <p class="name">{{ item.NAME }}</p>
+                        {% set text = item.PROPERTIES.POSITION.VALUE %}
+                        {% if text is not empty %}
+                            <p class="text">{{ text }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

@@ -212,6 +212,7 @@ class Iblock {
     const SLIDER_ID = 1;
     const PARTNERS_ID = 2;
     const NOMINATIONS_ID = 3;
+    const COUNCIL = 22;
     const GENERAL_INFO = 5;
     const SMALL_BUSINESS = 6;
     const BREAKTHROUGH = 7;
