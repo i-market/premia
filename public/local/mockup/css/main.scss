@@ -166,18 +166,27 @@ h4 {
 }
 
 .editable-area {
-  // TODO table styles
-  line-height: 32px;
-  font-weight: 300;
+  &, p {
+    line-height: 32px;
+    font-weight: 300;
+  }
   b {
     color: $d_blue;
   }
   h1 {
     color: $d_blue;
   }
-  // TODO ordered list styles
   ul, ol {
     @extend %list;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    padding-left: 40px;
+  }
+  p, ul, ol, h1, h2, h3, h4 {
+    margin-bottom: 20px;
+  }
+  ol ol, ol ul, ul ol, ul ul {
+    margin-bottom: 0;
   }
   a {
     font-weight: 700;
@@ -200,15 +209,6 @@ h4 {
   }
   &.editable-page {
     padding-bottom: 40px;
-    h1, h2, h3, h4, h5, h6 {
-      padding-left: 40px;
-    }
-    p, ul, ol, h1, h2, h3, h4 {
-      margin-bottom: 20px;
-    }
-    ol ol, ol ul, ul ol, ul ul {
-      margin-bottom: 0;
-    }
     table {
       border: 1px solid #ddd;
       width: 100%;
@@ -405,6 +405,14 @@ h4 {
       &.short {
         display: block;
       }
+    }
+  }
+}
+
+body.open {
+  @media only screen and (max-width: 1023px) {
+    .main_menu {
+      z-index: 1;
     }
   }
 }
@@ -1005,7 +1013,9 @@ h4 {
   }
 }
 
+// TODO refactor with flexbox
 .people {
+  $bgColor: #f5f9fd;
   padding: 55px 0;
   .col_2 {
     @media only screen and (max-width: 767px) {
@@ -1013,11 +1023,12 @@ h4 {
     }
   }
   .item {
+    background: $bgColor;
     margin-bottom: 30px;
     font-size: 0;
     &>div {
       display: inline-block;
-      vertical-align: top;
+      vertical-align: middle;
     }
     .img {
       width: 130px;
@@ -1032,13 +1043,13 @@ h4 {
     .info {
       width: calc(100% - 130px);
       min-height: 130px;
-      background: #f5f9fd;
-      padding: 25px 25px 0;
+      background: $bgColor;
+      padding: 25px;
       @media only screen and (max-width: 1023px) {
-        padding: 15px 15px 0;
+        padding: 15px;
       }
       @media only screen and (max-width:767px) {
-        padding: 10px 10px 0;
+        padding: 10px;
       }
     }
     .name {
