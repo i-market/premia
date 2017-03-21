@@ -23,9 +23,12 @@ class Admin {
             // TODO additional business logic filters?
             $filter = array('IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y');
             $elements = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), $filter));
-            $rows = _::mapValues($elements, function($el) {
+            $rows = _::clean(_::mapValues($elements, function($el) {
                 // TODO refactor: optimize
                 $user = CUser::GetByID(_::get($el, 'PROPERTIES.USER.VALUE'))->GetNext();
+                if (!$user) {
+                    return null;
+                }
                 return array(
                     $user['~WORK_COMPANY'],
                     $user['~NAME'],
@@ -34,7 +37,7 @@ class Admin {
                     $user['~WORK_STREET'],
                     $el['~IBLOCK_NAME']
                 );
-            });
+            }));
             return $rows;
         });
         $rows = array_reduce($groupedByIblock, function($acc, $rows) {
@@ -98,9 +101,12 @@ class Admin {
             'IBLOCK_ID' => $voteIblockId, 'ACTIVE' => 'Y'
         )));
         $formVotes = _::groupBy($votes, 'PROPERTIES.FORM.VALUE');
-        $rows = _::mapValues($forms, function($form) use ($voteIblockId, $experts, $formVotes) {
+        $rows = _::clean(_::mapValues($forms, function($form) use ($voteIblockId, $experts, $formVotes) {
             // TODO refactor: optimize
             $user = CUser::GetByID(_::get($form, 'PROPERTIES.USER.VALUE'))->GetNext();
+            if (!$user) {
+                return null;
+            }
             $votes_ = _::get($formVotes, $form['ID'], array());
             // [Общий балл каждого эксперта] name → overall score
             $expertOverallScores = array_reduce($experts, function($scores, $expert) use ($votes_) {
@@ -131,7 +137,7 @@ class Admin {
                     $averageScore
                 )
             );
-        });
+        }));
         return array(
             // TODO handle empty $elements
             'NAME' => nil::get($forms[0]['~IBLOCK_NAME'], ''),
