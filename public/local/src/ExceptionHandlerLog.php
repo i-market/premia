@@ -9,12 +9,20 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog {
     private $client = null;
 
     public function write($exception, $logType) {
+        global $USER;
         if (function_exists('curl_init')) {
             // TODO provide some context to sentry (e.g. user id)
-            $ret = $this->client->captureException($exception, array(
+            // https://docs.sentry.io/learn/context/
+            if (is_object($USER)) {
+                $this->client->user_context(array(
+                    'id' => $USER->GetID(),
+                    'username' => $USER->GetLogin(),
+                    'email' => $USER->GetEmail()
+                ));
+            }
+            $this->client->captureException($exception, array(
                 'logType' => $logType
             ));
-            return $ret;
         }
     }
 
