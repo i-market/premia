@@ -9,6 +9,18 @@ use Core\Iblock as ib;
 use Core\Underscore as _;
 
 class EventHandlers {
+    private static function ref($name) {
+        return '\App\EventHandlers::'.$name;
+    }
+
+    static function listen() {
+        AddEventHandler('main', 'OnBeforeUserRegister', self::ref('onBeforeUserUpdate'));
+        AddEventHandler('main', 'OnBeforeUserUpdate', self::ref('onBeforeUserUpdate'));
+        AddEventHandler('main', 'OnAfterUserLogout', self::ref('onAfterUserLogout'));
+        AddEventHandler('main', 'OnAfterUserAdd', self::ref('onAfterUserAdd'));
+        AddEventHandler('main', 'OnUserDelete', self::ref('onUserDelete'));
+    }
+
     static function onBeforeUserUpdate(&$fieldsRef) {
         // TODO check for the appropriate user group instead
         $adminGroup = 1;
@@ -41,30 +53,22 @@ class EventHandlers {
     }
 
     static function onUserDelete($userId) {
-        $isExpert = User::isInGroup($userId, User::EXPERT_GROUP);
-        if ($isExpert) {
-            $iblockFilters = array_map(function($id) {
-                return array('IBLOCK_ID' => $id);
-            }, array_values(Vote::iblockIds()));
-            $filter = array('PROPERTY_USER' => $userId, array_merge(array('LOGIC' => 'OR'), $iblockFilters));
-            $result = (new CIBlockElement)->GetList(array(), $filter, false, false, array('ID'));
-            $elementIds = _::mapValues(ib::collect($result), 'ID');
-            $results = array_map(function($id) {
-                return CIBlockElement::Delete($id);
-            }, $elementIds);
-        }
+        $iblockIds = array_merge(
+            array_values(ApplicationForm::iblockIds()),
+            array_values(Vote::iblockIds())
+        );
+        $iblockFilters = array_map(function($id) {
+            return array('IBLOCK_ID' => $id);
+        }, $iblockIds);
+        $filter = array('PROPERTY_USER' => $userId, array_merge(array('LOGIC' => 'OR'), $iblockFilters));
+        $result = (new CIBlockElement)->GetList(array(), $filter, false, false, array('ID'));
+        $elementIds = _::mapValues(ib::collect($result), 'ID');
+        $el = new CIBlockElement();
+        $results = array_map(function($id) use ($el) {
+            return $el->Update($id, array(
+                'ACTIVE' => 'N'
+            ));
+        }, $elementIds);
         return $userId;
-    }
-
-    private static function ref($name) {
-        return '\App\EventHandlers::'.$name;
-    }
-
-    static function listen() {
-        AddEventHandler('main', 'OnBeforeUserRegister', self::ref('onBeforeUserUpdate'));
-        AddEventHandler('main', 'OnBeforeUserUpdate', self::ref('onBeforeUserUpdate'));
-        AddEventHandler('main', 'OnAfterUserLogout', self::ref('onAfterUserLogout'));
-        AddEventHandler('main', 'OnAfterUserAdd', self::ref('onAfterUserAdd'));
-        AddEventHandler('main', 'OnUserDelete', self::ref('onUserDelete'));
     }
 }
