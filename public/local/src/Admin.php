@@ -138,8 +138,10 @@ class Admin {
                 )
             );
         }));
+        if (_::isEmpty($forms)) {
+            trigger_error('empty application form set', E_USER_WARNING);
+        }
         return array(
-            // TODO handle empty $elements
             'NAME' => nil::get($forms[0]['~IBLOCK_NAME'], ''),
             'HEADER' => $header,
             'ROWS' => $rows
@@ -159,8 +161,9 @@ class Admin {
             return self::personalApplicationsTable();
         } else if (isset($params['nomination_id'])) {
             return self::nominationSummaryTable($params['nomination_id']);
-        } {
-            return array();
+        } else {
+            trigger_error('invalid request params', E_USER_WARNING);
+            return null;
         }
     }
 
@@ -189,7 +192,7 @@ class Admin {
             $view = _::get($params, 'view', 'index');
             if ($view === 'table') {
                 $table = self::table($params);
-                if (!_::isEmpty($table)) {
+                if ($table !== null) {
                     $csvPath = '/admin/files/'.self::filename($table['NAME']);
                     self::writeCsvFile($table, $_SERVER['DOCUMENT_ROOT'].$csvPath);
                     if ($setTitle) {
@@ -202,7 +205,6 @@ class Admin {
                         'download_link' => $csvPath
                     ));
                 } else {
-                    // TODO handle invalid params
                     return '';
                 }
             } else {
