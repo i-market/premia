@@ -3,6 +3,7 @@
 use App\Api;
 use App\App;
 use App\ApplicationForm;
+use App\Gallery;
 use App\MailEvent;
 use App\User;
 use App\Vote;
@@ -45,6 +46,9 @@ $router = new Klein();
 $router->with('/api', function () use ($router, $signupRoute) {
     $router->respond('GET', '/download/[i:id]', function($request, $response) {
         Api::downloadFile($request->id);
+    });
+    $router->respond('GET', '/gallery/[i:id].html', function($request, $response) {
+        return Gallery::renderGallerySlider($request->id, null);
     });
     $router->with('/user', function () use ($router, $signupRoute) {
         $router->respond('POST', '/signup', $signupRoute['handler']);

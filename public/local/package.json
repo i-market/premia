@@ -7,6 +7,7 @@
     "babel-core": "^6.18.2",
     "babel-polyfill": "^6.20.0",
     "babel-preset-es2015": "^6.18.0",
+    "fancybox": "git+https://github.com/fancyapps/fancyBox.git#v3.0.47",
     "lodash": "^4.17.4"
   },
   "devDependencies": {

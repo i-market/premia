@@ -1743,13 +1743,21 @@ input {
     font-weight: normal;
   }
   .gallery-slider {
+    display: none;
     position: relative;
     flex: 0 0;
     margin-bottom: $margin * 3;
     background: $bg-color;
-    .img {
-      object-fit: cover;
-      object-position: 50% 50%;
+    &.active {
+      display: block;
+    }
+    .slick-slide {
+      .img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 25%;
+      }
     }
     .name {
       @media only screen and (min-width: 426px) {
@@ -1786,6 +1794,9 @@ input {
       font-size: 0;
       background: rgba(#000, 0.6);
       cursor: pointer;
+      &.slick-disabled {
+        display: none !important;
+      }
       &.slick-prev {
         left: 21px;
         &:before {
@@ -1826,10 +1837,6 @@ input {
     display: flex;
     flex-wrap: wrap;
     margin-right: -$margin;
-    > * {
-      // TODO placeholder
-      background: #ccc;
-    }
     .album {
       $width: 260px;
       position: relative;
@@ -1838,7 +1845,9 @@ input {
       margin-bottom: $margin;
       height: $width * 0.8;
       background-size: cover;
+      background-position: center 25%;
       background-color: $bg-color;
+      cursor: pointer;
     }
   }
 }

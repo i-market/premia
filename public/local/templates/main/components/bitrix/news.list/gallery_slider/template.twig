@@ -1,0 +1,14 @@
+<div class="gallery-slider{{ params.CLASS ? ' ' ~ params.CLASS }}" data-section-id="{{ result.SECTION.ID }}">
+    <div class="slick">
+        {% for item in result.ITEMS %}
+            {% set caption = item.PREVIEW_PICTURE.ALT %}
+            <a data-fancybox="gallery"
+               {#data-caption="{{ caption }}"#}
+               href="{{ item.PREVIEW_PICTURE.SRC }}"
+               id="{{ add_editing_actions(item, template) }}">
+                <img class="img" src="{{ item.PREVIEW_PICTURE.RESIZED.src }}" alt="{{ caption }}">
+            </a>
+        {% endfor %}
+    </div>
+    <div class="name">{{ result.SECTION.NAME }}</div>
+</div>

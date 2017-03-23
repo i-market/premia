@@ -208,11 +208,11 @@ class MailEvent {
 
 class Iblock {
     const CONTENT_TYPE = 'content';
-    const FORMS_TYPE = 'forms';
     const SLIDER_ID = 1;
     const PARTNERS_ID = 2;
     const NOMINATIONS_ID = 3;
     const COUNCIL = 22;
+    const FORMS_TYPE = 'forms';
     const GENERAL_INFO = 5;
     const SMALL_BUSINESS = 6;
     const BREAKTHROUGH = 7;
@@ -222,6 +222,7 @@ class Iblock {
     const EXPORTER = 11;
     const SALES = 12;
     const LAW = 13;
+    const VOTES_TYPE = 'votes';
     const VOTE_SMALL_BUSINESS = 14;
     const VOTE_BREAKTHROUGH = 15;
     const VOTE_ETP = 16;
@@ -230,6 +231,8 @@ class Iblock {
     const VOTE_EXPORTER = 19;
     const VOTE_SALES = 20;
     const VOTE_LAW = 21;
+    const MEDIA_TYPE = 'media';
+    const GALLERY_ID = 23;
 }
 
 class PageProperty {
