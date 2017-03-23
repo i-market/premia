@@ -6,6 +6,13 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
+	),
+	Array(
+		"Фотогалерея", 
+		"/press-center/gallery/", 
+		Array(), 
+		Array(), 
+		"" 
 	)
 );
 ?>
