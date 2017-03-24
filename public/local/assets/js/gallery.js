@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import objectFitImages from 'object-fit-images';
 
 function activate($component, sectionId) {
   $component.find('.gallery-slider').each(function() {
@@ -9,6 +10,7 @@ function activate($component, sectionId) {
 function initSlider($slider) {
   $slider.find('.slick').slick();
   $slider.find('[data-fancybox]:not(.slick-cloned)').fancybox();
+  objectFitImages();
 }
 
 function init($component) {
