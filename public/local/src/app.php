@@ -19,21 +19,31 @@ class App {
         EventHandlers::listen();
     }
 
+    static function requestUrl() {
+        global $APPLICATION;
+        $host = _::first(explode(':', $_SERVER['HTTP_HOST']));
+        $isHttps = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443;
+        return ($isHttps ? 'https' : 'http').'://'.$host.$APPLICATION->GetCurUri();
+    }
+
     static function layoutContext() {
-        global $USER;
+        global $APPLICATION, $USER;
         return array(
             'app_env' => \Core\App::env(),
             'is_sentry_enabled' => \Core\App::env() !== Env::DEV,
             'form_specs' => self::formSpecs(),
             'main_menu' => self::renderMainMenu(),
             'slider' => self::renderSlider(),
-            'social_links' => v::renderIncludedArea('social_links.php'),
             'footer_left' => v::renderIncludedArea('footer_left.php'),
             'footer_copyright' => v::renderIncludedArea('footer_copyright.php'),
             'is_logged_in' => $USER->IsAuthorized(),
             'user_display_name' => $USER->GetFormattedName(),
             'profile_path' => User::profilePath(),
-            'logout_link' => User::logoutLink()
+            'logout_link' => User::logoutLink(),
+            'sharing_buttons' => array(
+                'link' => self::requestUrl(),
+                'text' => $APPLICATION->GetTitle()
+            )
         );
     }
 

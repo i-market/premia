@@ -51,7 +51,7 @@
                     <div class="right">
                         <div data-modal="contact-modal" class="btn">Написать нам</div>
                         <div class="social">
-                            {{ social_links }}
+                            {% include partial('sharing_buttons.twig') with sharing_buttons %}
                         </div>
                     </div>
                 </div>
