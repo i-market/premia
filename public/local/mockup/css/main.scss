@@ -1,3 +1,22 @@
+// https://github.com/bfred-it/object-fit-images/blob/b12584d7d74a17510626d8eba5551a7cff5311d0/preprocessors/mixin.scss
+/*
+  This mixin can be used to set the object-fit:
+  @include object-fit(contain);
+  or object-fit and object-position:
+  @include object-fit(cover, top);
+*/
+@mixin object-fit($fit: fill, $position: null){
+  -o-object-fit: $fit;
+  object-fit: $fit;
+  @if $position {
+    -o-object-position: $position;
+    object-position: $position;
+    font-family: 'object-fit: #{$fit}; object-position: #{$position}';
+  } @else {
+    font-family: 'object-fit: #{$fit}';
+  }
+}
+
 $blue: #0066cc;
 $d_blue: #051945;
 $lightBlue: #dfebf8;
@@ -1755,8 +1774,7 @@ input {
       .img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        object-position: 50% 25%;
+        @include object-fit(cover, 50% 25%);
       }
     }
     .name {

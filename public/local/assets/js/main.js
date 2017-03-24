@@ -4,8 +4,11 @@ import vote from './vote';
 import gallery from './gallery';
 import $ from 'jquery';
 import _ from 'lodash';
+import objectFitImages from 'object-fit-images';
 
 $(() => {
+  objectFitImages();
+
   // TODO get it from the server
   const profilePath = '/auth/profile/';
 
