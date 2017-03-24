@@ -182,6 +182,9 @@ class View {
 
     static function showLayoutHeader($pageProperty, $defaultLayout, $context) {
         v::showForProperty($pageProperty, function($layout) use ($context) {
+            if (is_callable($context)) {
+                $context = $context();
+            }
             $path = is_array($layout) ? $layout[0] : $layout;
             $propCtx = is_array($layout) ? $layout[1] : array();
             $twig = TemplateEngine::getInstance()->getEngine();
