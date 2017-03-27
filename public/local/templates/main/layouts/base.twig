@@ -68,9 +68,18 @@
 {% if is_sentry_enabled %}
     <script type="text/javascript" src="https://cdn.ravenjs.com/3.12.1/raven.min.js"></script>
     <script type="text/javascript">
+        {# TODO move sentry dsn to config #}
         Raven.config('https://6c589ea6735245e3b3701967490bd263@sentry.io/148291', {
             environment: '{{ app_env }}'
         }).install();
+        {% set user_id = USER.GetID() %}
+        {% if user_id is not empty %}
+            Raven.setUserContext({
+                id: '{{ user_id }}',
+                username: '{{ USER.GetLogin() }}',
+                email: '{{ USER.GetEmail() }}'
+            });
+        {% endif %}
     </script>
 {% endif %}
 <script type="text/javascript" src="{{ asset('js/vendor.js') }}"></script>
