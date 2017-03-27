@@ -19,6 +19,13 @@ class App {
         EventHandlers::listen();
     }
 
+    static function state() {
+        return array(
+            'APPLICATIONS_LOCKED' => false,
+            'VOTES_LOCKED' => false
+        );
+    }
+
     static function requestUrl() {
         global $APPLICATION;
         $host = _::first(explode(':', $_SERVER['HTTP_HOST']));
@@ -208,6 +215,11 @@ class App {
         );
         return ob_get_clean();
     }
+}
+
+class Messages {
+    const APPLICATIONS_LOCKED = 'Прием заявок завершен.';
+    const VOTES_LOCKED = 'Конкурс завершен.';
 }
 
 class MailEvent {

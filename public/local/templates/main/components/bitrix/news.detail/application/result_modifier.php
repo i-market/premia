@@ -1,5 +1,6 @@
 <?php
 
+use App\App;
 use App\ApplicationForm as af;
 use App\User;
 use App\Vote;
@@ -46,3 +47,4 @@ $arResult['HEADING'] =
     af::isPersonalNomination($iblockId)
         ? 'Анкеты в персональной номинации'
         : 'Анкеты компаний поставщиков';
+$arResult['APP_STATE'] = App::state();

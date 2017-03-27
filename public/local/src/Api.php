@@ -117,41 +117,48 @@ class Api {
 
     static function handleApplication($request) {
         global $USER;
-        $user = CUser::GetByID($USER->GetID())->GetNext();
-        $files = _::mapValues($_FILES, function($fs) {
-            return self::files($fs);
-        });
-        // TODO sanitize params
-        $params = $request->params();
-        $filteredParams = array();
-        foreach ($params as $key => $group) {
-            if (!is_array($group)) continue;
-            $isEmpty = _::matches($group['properties'], function($value) {
-                return str::isEmpty($value);
-            });
-            // user touched the form?
-            $isDirty = boolval($group['is_dirty']);
-            $hasFiles = array_key_exists($key, $files);
-            $hasFileOps = $hasFiles || array_key_exists('delete_files', $group);
-            if ($hasFiles) {
-                $group['files'] = $files[$key];
-            }
-            // decide which field groups to act upon
-            if ($hasFileOps || ($isDirty && !$isEmpty)) {
-                $filteredParams[$key] = $group;
-            }
-        };
-        $fields = self::applicationFields($user, $filteredParams);
-        if (_::isEmpty($fields)) {
-            // TODO refactor: response types
+        if (App::state()['APPLICATIONS_LOCKED']) {
             return array(
-                'isSuccess' => true,
-                'errorMessageMaybe' => null,
-                'type' => 'info',
-                'message' => 'Нет изменений, требующих сохранения.'
+                'isSuccess' => false,
+                'errorMessageMaybe' => Messages::APPLICATIONS_LOCKED
             );
         } else {
-            return ApplicationForm::updateApplication($USER->GetID(), $fields);
+            $user = CUser::GetByID($USER->GetID())->GetNext();
+            $files = _::mapValues($_FILES, function ($fs) {
+                return self::files($fs);
+            });
+            // TODO sanitize params
+            $params = $request->params();
+            $filteredParams = array();
+            foreach ($params as $key => $group) {
+                if (!is_array($group)) continue;
+                $isEmpty = _::matches($group['properties'], function ($value) {
+                    return str::isEmpty($value);
+                });
+                // user touched the form?
+                $isDirty = boolval($group['is_dirty']);
+                $hasFiles = array_key_exists($key, $files);
+                $hasFileOps = $hasFiles || array_key_exists('delete_files', $group);
+                if ($hasFiles) {
+                    $group['files'] = $files[$key];
+                }
+                // decide which field groups to act upon
+                if ($hasFileOps || ($isDirty && !$isEmpty)) {
+                    $filteredParams[$key] = $group;
+                }
+            };
+            $fields = self::applicationFields($user, $filteredParams);
+            if (_::isEmpty($fields)) {
+                // TODO refactor: response types
+                return array(
+                    'isSuccess' => true,
+                    'errorMessageMaybe' => null,
+                    'type' => 'info',
+                    'message' => 'Нет изменений, требующих сохранения.'
+                );
+            } else {
+                return ApplicationForm::updateApplication($USER->GetID(), $fields);
+            }
         }
     }
 

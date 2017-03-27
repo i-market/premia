@@ -1571,12 +1571,17 @@ input {
   }
 }
 
+.page-message,
 .empty-state-message {
   @extend %form-message-like;
   // TODO DRY
   font-size: inherit !important;
   padding: 15px !important;
   text-align: center;
+}
+
+.page-message {
+  margin-bottom: 20px;
 }
 
 .mb {

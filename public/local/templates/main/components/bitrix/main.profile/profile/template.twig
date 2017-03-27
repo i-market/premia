@@ -13,6 +13,9 @@
         <div class="inner">
             <h2>Личный кабинет</h2>
         </div>
+        {% if result.APP_STATE.APPLICATIONS_LOCKED %}
+            <div class="page-message">{{ constant('App\\Messages::APPLICATIONS_LOCKED') }}</div>
+        {% endif %}
         <div class="tab_links grid">
             <div class="col col_3 tabLinks_item active" data-tabLinks="contact_details">
                 <div class="text">

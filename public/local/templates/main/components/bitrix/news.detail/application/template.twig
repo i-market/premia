@@ -19,6 +19,9 @@
             <div class="inner">
                 <h2>Личный кабинет</h2>
             </div>
+            {% if result.APP_STATE.VOTES_LOCKED %}
+            <div class="page-message">{{ constant('App\\Messages::VOTES_LOCKED') }}</div>
+            {% endif %}
             <div class="personal_area_page">
                 <div class="history_title">
                     <a href="{{ result.BACK_LINK }}" class="back"></a>
@@ -45,6 +48,7 @@
                 <div class="wrap_evaluation">
                     <div class="inner">
                         {% for prop in result.VOTE.PROPERTIES %}
+                            {% set read_only = result.APP_STATE.VOTES_LOCKED %}
                             <div class="evaluation">
                                 <div class="left">
                                     <span>{{ prop.NAME }}</span>
@@ -54,7 +58,7 @@
                                         {% set id = 'score-' ~ prop.ID ~ '-' ~ num %}
                                         {% set is_checked = prop.VALUE == num %}
                                         {# int key is treated as index, that's why we prefix it #}
-                                        <input type="radio" name="vote[scores][id:{{ prop.ID }}]" value="{{ num }}" id="{{ id }}"{{ is_checked ? ' checked' }}>
+                                        <input type="radio" name="vote[scores][id:{{ prop.ID }}]" value="{{ num }}" id="{{ id }}"{{ is_checked ? ' checked' }}{{ read_only ? ' disabled' }}>
                                         <label for="{{ id }}">{{ num }}</label>
                                     {% endfor %}
                                 </div>
@@ -62,11 +66,13 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="wrap_formBtn">
-                    <div class="form-message"></div>
-                    <button type="submit" class="btn--blue">Сохранить</button>
-                    <a class="back" href="{{ result.BACK_LINK }}"></a>
-                </div>
+                {% if not result.APP_STATE.VOTES_LOCKED %}
+                    <div class="wrap_formBtn">
+                        <div class="form-message"></div>
+                        <button type="submit" class="btn--blue">Сохранить</button>
+                        <a class="back" href="{{ result.BACK_LINK }}"></a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </form>

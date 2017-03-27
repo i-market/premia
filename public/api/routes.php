@@ -5,6 +5,7 @@ use App\App;
 use App\ApplicationForm;
 use App\Gallery;
 use App\MailEvent;
+use App\Messages;
 use App\User;
 use App\Vote;
 use Bitrix\Main\Localization\Loc;
@@ -95,36 +96,43 @@ $router->with('/api', function () use ($router, $signupRoute) {
             });
             $router->respond('POST', '/vote', function($request, $response) {
                 global $USER;
-                // TODO sanitize params
-                $params = $request->params();
-                $formIblockId = intval($params['form']['iblock_id']);
-                // make sure there is no shenanigans going on
-                assert(in_array($formIblockId, ApplicationForm::iblockIds()));
-                $formId = intval($params['form']['id']);
-                $scores = array_values(_::mapValues(_::get($params, 'vote.scores'), function($v, $k) {
-                    $propId = intval(_::last(explode(':', $k)));
-                    return array('PROPERTY_ID' => $propId, 'VALUE' => intval($v));
-                }));
-                $voteIblockId = ApplicationForm::voteIblockId($formIblockId);
-                $voteIdMaybe = _::get($params, 'vote.id');
-                $el = new CIBlockElement();
-                $propValues = array_reduce($scores, function($values, $score) {
-                    return _::set($values, $score['PROPERTY_ID'], array(
-                        'VALUE' => $score['VALUE']
+                if (App::state()['VOTES_LOCKED']) {
+                    return $response->json(array(
+                        'type' => 'error',
+                        'message' => Messages::VOTES_LOCKED
                     ));
-                }, array());
-                $fields = array(
-                    'IBLOCK_ID' => $voteIblockId,
-                    'NAME' => $params['form']['display_name'],
-                    'PROPERTY_VALUES' => $propValues + array(
-                        'USER' => $USER->GetID(),
-                        'FORM' => $formId
-                    )
-                );
-                $result = $voteIdMaybe === null
-                    ? $el->Add($fields)
-                    : $el->Update($voteIdMaybe, $fields);
-                return $response->json(Api::iblockOpResponse($el, $result));
+                } else {
+                    // TODO sanitize params
+                    $params = $request->params();
+                    $formIblockId = intval($params['form']['iblock_id']);
+                    // make sure there is no shenanigans going on
+                    assert(in_array($formIblockId, ApplicationForm::iblockIds()));
+                    $formId = intval($params['form']['id']);
+                    $scores = array_values(_::mapValues(_::get($params, 'vote.scores'), function($v, $k) {
+                        $propId = intval(_::last(explode(':', $k)));
+                        return array('PROPERTY_ID' => $propId, 'VALUE' => intval($v));
+                    }));
+                    $voteIblockId = ApplicationForm::voteIblockId($formIblockId);
+                    $voteIdMaybe = _::get($params, 'vote.id');
+                    $el = new CIBlockElement();
+                    $propValues = array_reduce($scores, function($values, $score) {
+                        return _::set($values, $score['PROPERTY_ID'], array(
+                            'VALUE' => $score['VALUE']
+                        ));
+                    }, array());
+                    $fields = array(
+                        'IBLOCK_ID' => $voteIblockId,
+                        'NAME' => $params['form']['display_name'],
+                        'PROPERTY_VALUES' => $propValues + array(
+                                'USER' => $USER->GetID(),
+                                'FORM' => $formId
+                            )
+                    );
+                    $result = $voteIdMaybe === null
+                        ? $el->Add($fields)
+                        : $el->Update($voteIdMaybe, $fields);
+                    return $response->json(Api::iblockOpResponse($el, $result));
+                }
             });
         });
     });
