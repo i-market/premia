@@ -243,6 +243,7 @@ class Iblock {
     const VOTE_LAW = 21;
     const MEDIA_TYPE = 'media';
     const GALLERY_ID = 23;
+    const VIDEO_ID = 24;
 }
 
 class PageProperty {
@@ -398,5 +399,17 @@ class User {
             )
         );
         return ob_get_clean();
+    }
+}
+
+class Video {
+    static function youtubeIdMaybe($url) {
+        $matchesRef = array();
+        // https://github.com/mpratt/Embera/blob/a31460d666050b7e444d92f852f491afbcb359f3/Lib/Embera/Providers/Youtube.php#L30
+        if (preg_match('~(?:v=|youtu\.be/|youtube\.com/embed/)([a-z0-9_-]+)~i', $url, $matchesRef)) {
+            return $matchesRef[1];
+        } else {
+            return null;
+        }
     }
 }

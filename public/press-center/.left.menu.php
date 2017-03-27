@@ -13,6 +13,13 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
+	),
+	Array(
+		"Видео", 
+		"/press-center/video/", 
+		Array(), 
+		Array(), 
+		"" 
 	)
 );
 ?>
