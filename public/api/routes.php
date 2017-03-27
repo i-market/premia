@@ -97,6 +97,7 @@ $router->with('/api', function () use ($router, $signupRoute) {
             $router->respond('POST', '/vote', function($request, $response) {
                 global $USER;
                 if (App::state()['VOTES_LOCKED']) {
+                    trigger_error('someone tried to change a locked vote', E_USER_WARNING);
                     return $response->json(array(
                         'type' => 'error',
                         'message' => Messages::VOTES_LOCKED

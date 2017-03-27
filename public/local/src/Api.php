@@ -118,6 +118,7 @@ class Api {
     static function handleApplication($request) {
         global $USER;
         if (App::state()['APPLICATIONS_LOCKED']) {
+            trigger_error('someone tried to change a locked application', E_USER_WARNING);
             return array(
                 'isSuccess' => false,
                 'errorMessageMaybe' => Messages::APPLICATIONS_LOCKED
