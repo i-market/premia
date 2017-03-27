@@ -3,6 +3,7 @@
 namespace App;
 
 use Bitrix\Main\Config\Configuration;
+use Bitrix\Main\Loader;
 use CEvent;
 use COption;
 use Core\Env;
@@ -11,6 +12,7 @@ use Core\View as v;
 use Core\Form as f;
 use Core\Underscore as _;
 use CUser;
+use WS_PSettings;
 
 class App {
     const SITE_ID = 's1';
@@ -20,10 +22,24 @@ class App {
     }
 
     static function state() {
-        return array(
+        assert(Loader::includeModule('ws.projectsettings'));
+        $awardState = WS_PSettings::getFieldValue('award-state', AwardState::OPEN);
+        $default = array(
             'APPLICATIONS_LOCKED' => false,
             'VOTES_LOCKED' => false
         );
+        $stateMap = array(
+            AwardState::OPEN => $default,
+            AwardState::LOCK_APPLICATIONS => array(
+                'APPLICATIONS_LOCKED' => true,
+                'VOTES_LOCKED' => false
+            ),
+            AwardState::CLOSED => array(
+                'APPLICATIONS_LOCKED' => true,
+                'VOTES_LOCKED' => true
+            )
+        );
+        return array_merge($default, $stateMap[$awardState]);
     }
 
     static function requestUrl() {
@@ -215,6 +231,12 @@ class App {
         );
         return ob_get_clean();
     }
+}
+
+class AwardState {
+    const OPEN = 'OPEN';
+    const LOCK_APPLICATIONS = 'LOCK_APPLICATIONS';
+    const CLOSED = 'CLOSED';
 }
 
 class Messages {
