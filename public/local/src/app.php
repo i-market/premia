@@ -16,15 +16,18 @@ use WS_PSettings;
 
 class App {
     const SITE_ID = 's1';
+    const AWARD_STATE_SETTING = 'award-state';
 
     static function init() {
+        assert(Loader::includeModule('iblock'));
+        assert(Loader::includeModule('ws.projectsettings'));
         EventHandlers::listen();
     }
 
     static function state() {
-        assert(Loader::includeModule('ws.projectsettings'));
-        $awardState = WS_PSettings::getFieldValue('award-state', AwardState::OPEN);
+        $awardState = WS_PSettings::getFieldValue(self::AWARD_STATE_SETTING, AwardState::OPEN);
         $default = array(
+            'AWARD_STATE' => $awardState,
             'APPLICATIONS_LOCKED' => false,
             'VOTES_LOCKED' => false
         );
