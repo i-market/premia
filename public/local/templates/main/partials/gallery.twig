@@ -1,6 +1,7 @@
 {% if sections is empty %}
     Извините, раздел находится в разработке.
 {% else %}
+    <h2>{{ APPLICATION.ShowTitle(false) }}</h2>
     <div class="gallery">
         {{ slider }}
         <div class="albums">
