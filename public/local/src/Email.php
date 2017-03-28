@@ -49,7 +49,9 @@ class Email {
         return (new CDsSubscriber)->add(array(
             'ACTIVE' => 'Y',
             'USER_ID' => $user['ID'],
-            'EMAIL' => $user['EMAIL']
+            /// TODO on user update sync email, name
+            'EMAIL' => $user['EMAIL'],
+            'NAME' => $user['NAME']
         ));
     }
 
