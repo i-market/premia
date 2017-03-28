@@ -21,6 +21,10 @@ vault_pass.txt
 
 *.log
 
+# email module
+
+/public/smartsubscribes/
+
 # project-specific
 
 /public/local/mockup/css/main.css

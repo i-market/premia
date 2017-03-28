@@ -18,7 +18,71 @@ class EventHandlers {
         AddEventHandler('main', 'OnBeforeUserUpdate', self::ref('onBeforeUserUpdate'));
         AddEventHandler('main', 'OnAfterUserLogout', self::ref('onAfterUserLogout'));
         AddEventHandler('main', 'OnAfterUserAdd', self::ref('onAfterUserAdd'));
+        AddEventHandler('main', 'OnAfterSetUserGroup', self::ref('onAfterSetUserGroup'));
         AddEventHandler('main', 'OnUserDelete', self::ref('onUserDelete'));
+        AddEventHandler('iblock', 'OnAfterIBlockElementAdd', self::ref('onAfterIBlockElementAdd'));
+        AddEventHandler('iblock', 'OnBeforeIBlockElementUpdate', self::ref('onBeforeIBlockElementUpdate'));
+        AddEventHandler('iblock', 'OnAfterIBlockElementUpdate', self::ref('onAfterIBlockElementUpdate'));
+    }
+
+    private static function onNomineeAdded($userId) {
+        return Email::addUsersToList(Email::NOMINEES, array(CUser::GetByID($userId)->GetNext()));
+    }
+
+    private static function onApplicationAdded($fields) {
+        $iblockId = $fields['IBLOCK_ID'];
+        $sharedKey = array_flip(ApplicationForm::iblockIds())[$iblockId];
+        $listId = Email::nominationListIds()[$sharedKey];
+        $userId = $fields['PROPERTY_VALUES']['USER'];
+        Email::addUsersToList($listId, array(CUser::GetByID($userId)->GetNext()));
+    }
+
+    private static function onApplicationStatusChange($curr, $prev) {
+        $currStatus = $curr['PROPERTIES']['STATUS']['VALUE_XML_ID'];
+        $prevStatus = $prev['PROPERTIES']['STATUS']['VALUE_XML_ID'];
+        if ($currStatus !== null) {
+            $userId = $curr['PROPERTIES']['USER']['VALUE'];
+            $user = CUser::GetByID($userId)->GetNext();
+            Email::addUsersToList(Email::statusListId($currStatus), array($user));
+        } else {
+            $userId = $prev['PROPERTIES']['USER']['VALUE'];
+            Email::updateList(Email::statusListId($prevStatus), function($userIds) use ($userId) {
+                return _::removeValue($userIds, $userId);
+            });
+        }
+        if ($prevStatus !== null) {
+            $userId = $prev['PROPERTIES']['USER']['VALUE'];
+            Email::updateList(Email::statusListId($prevStatus), function($userIds) use ($userId) {
+                return _::removeValue($userIds, $userId);
+            });
+        }
+    }
+
+    static function onAfterIBlockElementAdd($fields) {
+        $iblockId = $fields['IBLOCK_ID'];
+        if (ApplicationForm::isNomination($iblockId)) {
+            self::onApplicationAdded($fields);
+        }
+    }
+
+    static function onBeforeIBlockElementUpdate(&$fieldsRef) {
+        if (ApplicationForm::isNomination($fieldsRef['IBLOCK_ID'])) {
+            $fieldsRef['PREV'] = _::first(ib::collectElements(CIBlockElement::GetByID($fieldsRef['ID'])));
+        }
+    }
+
+    static function onAfterIBlockElementUpdate($fields) {
+        $status = function($element) {
+            return $element['PROPERTIES']['STATUS']['VALUE_XML_ID'];
+        };
+        if (ApplicationForm::isNomination($fields['IBLOCK_ID'])) {
+            $element = _::first(ib::collectElements(CIBlockElement::GetByID($fields['ID'])));
+            $prev = $fields['PREV'];
+            $statusChanged = $status($prev) !== $status($element);
+            if ($statusChanged) {
+                self::onApplicationStatusChange($element, $prev);
+            }
+        }
     }
 
     static function onBeforeUserUpdate(&$fieldsRef) {
@@ -34,6 +98,14 @@ class EventHandlers {
             $fieldsRef['LOGIN'] = $fieldsRef['EMAIL'];
         }
         return $fieldsRef;
+    }
+
+    static function onAfterSetUserGroup($userId) {
+        $groupIds = array_map('intval', CUser::GetUserGroup($userId));
+        $isNominee = in_array(User::NOMINEE_GROUP, $groupIds);
+        if ($isNominee) {
+            self::onNomineeAdded($userId);
+        }
     }
 
     static function onAfterUserLogout($params) {

@@ -21,6 +21,8 @@ class App {
     static function init() {
         assert(Loader::includeModule('iblock'));
         assert(Loader::includeModule('ws.projectsettings'));
+        // email subscriptions
+        assert(Loader::includeModule('devstrong.subscribe'));
         EventHandlers::listen();
     }
 
