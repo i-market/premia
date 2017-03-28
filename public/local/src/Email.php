@@ -36,13 +36,13 @@ class Email {
         );
     }
 
-    static function statusListId($status) {
+    static function statusListId($statusXmlId) {
         return array(
             'COMPLETED' => self::COMPLETED,
             'PARTIALLY_FILLED' => self::PARTIALLY_FILLED,
             'ACCEPTED' => self::ACCEPTED,
             'REJECTED' => self::REJECTED
-        )[$status];
+        )[$statusXmlId];
     }
 
     static function addSubscriber($user) {
@@ -55,7 +55,7 @@ class Email {
         ));
     }
 
-    private static function ensureIsSubscriber($user) {
+    static function ensureIsSubscriber($user) {
         $sub = new CDsSubscriber();
         if (!$sub->getByUserId($user['ID'])) {
             self::addSubscriber($user);
@@ -70,6 +70,7 @@ class Email {
             trigger_error('trying to update a non-existent email list', E_USER_WARNING);
         }
         $existingIds = array_map('intval', nil::get(unserialize($list['FILTER'])[0]['filter'], array()));
+        $userIds = $userIdsFn($existingIds);
         return $deliveryList->update($listId, array(
             'filter' => array(
                 array(
@@ -80,7 +81,7 @@ class Email {
                         'IN_NAME' => '',
                         'IN_EMAIL' => '',
                     ),
-                    'addByUserId' => join("\r\n", $userIdsFn($existingIds)),
+                    'addByUserId' => join("\r\n", $userIds),
                     'addByUserFilter' => array(
                         'LOGIN' => '',
                         'NAME' => '',
