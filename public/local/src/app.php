@@ -17,6 +17,7 @@ use WS_PSettings;
 class App {
     const SITE_ID = 's1';
     const AWARD_STATE_SETTING = 'award-state';
+    const ACTIVE_AWARD_SETTING = 'active-award';
 
     static function init() {
         assert(Loader::includeModule('iblock'));
@@ -45,6 +46,16 @@ class App {
             )
         );
         return array_merge($default, $stateMap[$awardState]);
+    }
+
+    static function getActiveAward() {
+        // just in case
+        $defaultAward = '2017';
+        return WS_PSettings::getFieldValue(self::ACTIVE_AWARD_SETTING, $defaultAward);
+    }
+
+    static function setActiveAward($key) {
+        return WS_PSettings::setFieldValue(self::ACTIVE_AWARD_SETTING, $key);
     }
 
     static function requestUrl() {
