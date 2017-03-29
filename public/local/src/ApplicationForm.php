@@ -62,6 +62,10 @@ class ApplicationForm {
         return $ret;
     }
 
+    static function isNomination($iblockId) {
+        return in_array($iblockId, self::iblockIds()) && $iblockId !== Iblock::GENERAL_INFO;
+    }
+
     private static function addOrUpdate($elementMaybe, $fields) {
         global $USER;
         $el = new CIBlockElement();

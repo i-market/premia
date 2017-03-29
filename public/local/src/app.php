@@ -3,6 +3,7 @@
 namespace App;
 
 use Bitrix\Main\Config\Configuration;
+use Bitrix\Main\Loader;
 use CEvent;
 use COption;
 use Core\Env;
@@ -11,29 +12,66 @@ use Core\View as v;
 use Core\Form as f;
 use Core\Underscore as _;
 use CUser;
+use WS_PSettings;
 
 class App {
     const SITE_ID = 's1';
+    const AWARD_STATE_SETTING = 'award-state';
 
     static function init() {
+        assert(Loader::includeModule('iblock'));
+        assert(Loader::includeModule('ws.projectsettings'));
+        // email subscriptions
+        assert(Loader::includeModule('devstrong.subscribe'));
         EventHandlers::listen();
     }
 
+    static function state() {
+        $awardState = WS_PSettings::getFieldValue(self::AWARD_STATE_SETTING, AwardState::OPEN);
+        $default = array(
+            'AWARD_STATE' => $awardState,
+            'APPLICATIONS_LOCKED' => false,
+            'VOTES_LOCKED' => false
+        );
+        $stateMap = array(
+            AwardState::OPEN => $default,
+            AwardState::LOCK_APPLICATIONS => array(
+                'APPLICATIONS_LOCKED' => true,
+                'VOTES_LOCKED' => false
+            ),
+            AwardState::CLOSED => array(
+                'APPLICATIONS_LOCKED' => true,
+                'VOTES_LOCKED' => true
+            )
+        );
+        return array_merge($default, $stateMap[$awardState]);
+    }
+
+    static function requestUrl() {
+        global $APPLICATION;
+        $host = _::first(explode(':', $_SERVER['HTTP_HOST']));
+        $isHttps = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443;
+        return ($isHttps ? 'https' : 'http').'://'.$host.$APPLICATION->GetCurUri();
+    }
+
     static function layoutContext() {
-        global $USER;
+        global $APPLICATION, $USER;
         return array(
             'app_env' => \Core\App::env(),
             'is_sentry_enabled' => \Core\App::env() !== Env::DEV,
             'form_specs' => self::formSpecs(),
             'main_menu' => self::renderMainMenu(),
             'slider' => self::renderSlider(),
-            'social_links' => v::renderIncludedArea('social_links.php'),
             'footer_left' => v::renderIncludedArea('footer_left.php'),
             'footer_copyright' => v::renderIncludedArea('footer_copyright.php'),
             'is_logged_in' => $USER->IsAuthorized(),
             'user_display_name' => $USER->GetFormattedName(),
             'profile_path' => User::profilePath(),
-            'logout_link' => User::logoutLink()
+            'logout_link' => User::logoutLink(),
+            'sharing_buttons' => array(
+                'link' => self::requestUrl(),
+                'text' => $APPLICATION->GetTitle()
+            )
         );
     }
 
@@ -200,6 +238,17 @@ class App {
     }
 }
 
+class AwardState {
+    const OPEN = 'OPEN';
+    const LOCK_APPLICATIONS = 'LOCK_APPLICATIONS';
+    const CLOSED = 'CLOSED';
+}
+
+class Messages {
+    const APPLICATIONS_LOCKED = 'Прием заявок завершен.';
+    const VOTES_LOCKED = 'Конкурс завершен.';
+}
+
 class MailEvent {
     const CONTACT_FORM = 'CONTACT_FORM';
     const NEW_NOMINATION = 'NEW_NOMINATION';
@@ -208,11 +257,11 @@ class MailEvent {
 
 class Iblock {
     const CONTENT_TYPE = 'content';
-    const FORMS_TYPE = 'forms';
     const SLIDER_ID = 1;
     const PARTNERS_ID = 2;
     const NOMINATIONS_ID = 3;
     const COUNCIL = 22;
+    const FORMS_TYPE = 'forms';
     const GENERAL_INFO = 5;
     const SMALL_BUSINESS = 6;
     const BREAKTHROUGH = 7;
@@ -222,6 +271,7 @@ class Iblock {
     const EXPORTER = 11;
     const SALES = 12;
     const LAW = 13;
+    const VOTES_TYPE = 'votes';
     const VOTE_SMALL_BUSINESS = 14;
     const VOTE_BREAKTHROUGH = 15;
     const VOTE_ETP = 16;
@@ -230,6 +280,9 @@ class Iblock {
     const VOTE_EXPORTER = 19;
     const VOTE_SALES = 20;
     const VOTE_LAW = 21;
+    const MEDIA_TYPE = 'media';
+    const GALLERY_ID = 23;
+    const VIDEO_ID = 24;
 }
 
 class PageProperty {
@@ -385,5 +438,17 @@ class User {
             )
         );
         return ob_get_clean();
+    }
+}
+
+class Video {
+    static function youtubeIdMaybe($url) {
+        $matchesRef = array();
+        // https://github.com/mpratt/Embera/blob/a31460d666050b7e444d92f852f491afbcb359f3/Lib/Embera/Providers/Youtube.php#L30
+        if (preg_match('~(?:v=|youtu\.be/|youtube\.com/embed/)([a-z0-9_-]+)~i', $url, $matchesRef)) {
+            return $matchesRef[1];
+        } else {
+            return null;
+        }
     }
 }

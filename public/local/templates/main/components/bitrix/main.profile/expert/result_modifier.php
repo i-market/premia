@@ -2,8 +2,11 @@
 
 use App\ApplicationForm;
 use App\Vote;
+use Bitrix\Main\Loader;
 use Core\Underscore as _;
 use Core\Iblock as ib;
+
+assert(Loader::includeModule('iblock'));
 
 $el = new CIBlockElement();
 $applications = _::mapValues(ApplicationForm::iblockIds(), function($iblockId) use ($el) {

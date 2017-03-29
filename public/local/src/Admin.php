@@ -12,6 +12,7 @@ use Core\Nullable as nil;
 use CUser;
 use Core\View as v;
 use CUtil;
+use WS_PSettings;
 
 // bitrix csv util
 require_once ($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/classes/general/csv_data.php');
@@ -78,6 +79,7 @@ class Admin {
     static function nominationSummaryTable($iblockId) {
         $voteIblockId = af::voteIblockId($iblockId);
         // TODO clean up
+        /** @noinspection PhpPassByRefInspection */
         $experts = ib::collect(CUser::GetList(($by = "NAME"), ($order = "asc"), Array("GROUPS_ID"=>Array(User::EXPERT_GROUP), "ACTIVE"=>"Y"), Array("FIELDS"=>Array("ID", "NAME"))));
         $header = array_merge(
             array(
@@ -138,8 +140,10 @@ class Admin {
                 )
             );
         }));
+        if (_::isEmpty($forms)) {
+            trigger_error('empty application form set', E_USER_WARNING);
+        }
         return array(
-            // TODO handle empty $elements
             'NAME' => nil::get($forms[0]['~IBLOCK_NAME'], ''),
             'HEADER' => $header,
             'ROWS' => $rows
@@ -159,8 +163,9 @@ class Admin {
             return self::personalApplicationsTable();
         } else if (isset($params['nomination_id'])) {
             return self::nominationSummaryTable($params['nomination_id']);
-        } {
-            return array();
+        } else {
+            trigger_error('invalid request params', E_USER_WARNING);
+            return null;
         }
     }
 
@@ -189,7 +194,7 @@ class Admin {
             $view = _::get($params, 'view', 'index');
             if ($view === 'table') {
                 $table = self::table($params);
-                if (!_::isEmpty($table)) {
+                if ($table !== null) {
                     $csvPath = '/admin/files/'.self::filename($table['NAME']);
                     self::writeCsvFile($table, $_SERVER['DOCUMENT_ROOT'].$csvPath);
                     if ($setTitle) {
@@ -202,9 +207,13 @@ class Admin {
                         'download_link' => $csvPath
                     ));
                 } else {
-                    // TODO handle invalid params
                     return '';
                 }
+            } else if ($params['action'] === 'change-award-state') {
+                WS_PSettings::setFieldValue(App::AWARD_STATE_SETTING, $params['to']);
+                $message = 'Состояние конкурса изменено.';
+                // TODO hacky flash message implementation
+                LocalRedirect('/admin?flash='.rawurlencode($message));
             } else {
                 $iblocks = ib::collect(CIBlock::GetList(array('SORT' => 'ASC'), array('IBLOCK_TYPE')));
                 $iblockIds = ApplicationForm::iblockIds();
@@ -213,7 +222,17 @@ class Admin {
                     // TODO refactor: extract filter
                     return $iblockId !== Iblock::GENERAL_INFO && in_array($iblockId, $iblockIds);
                 });
-                return v::twig()->render(v::partial('admin/index.twig'), array('nominations' => $nominations));
+                $awardStateText = array(
+                    AwardState::OPEN => 'Конкурс открыт',
+                    AwardState::LOCK_APPLICATIONS => 'Завершение подачи заявок',
+                    AwardState::CLOSED => 'Завершение конкурса'
+                )[App::state()['AWARD_STATE']];
+                $ctx = array(
+                    'flash' => $params['flash'],
+                    'nominations' => $nominations,
+                    'award_state' => $awardStateText
+                );
+                return v::twig()->render(v::partial('admin/index.twig'), $ctx);
             }
         } else {
             return '';

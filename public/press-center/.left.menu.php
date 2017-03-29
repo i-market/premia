@@ -6,6 +6,20 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
+	),
+	Array(
+		"Фотогалерея", 
+		"/press-center/gallery/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Видео", 
+		"/press-center/video/", 
+		Array(), 
+		Array(), 
+		"" 
 	)
 );
 ?>

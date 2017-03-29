@@ -1,10 +1,14 @@
 import modals from './modals';
 import profile from './profile';
 import vote from './vote';
+import gallery from './gallery';
 import $ from 'jquery';
 import _ from 'lodash';
+import objectFitImages from 'object-fit-images';
 
 $(() => {
+  objectFitImages();
+
   // TODO get it from the server
   const profilePath = '/auth/profile/';
 
@@ -55,9 +59,10 @@ $(() => {
     });
   }
 
-  // TODO refactor: optimize
+  // TODO refactor
   profile.init($('.personal_area'));
   vote.init($('.application-vote'));
+  gallery.init($('.gallery'));
 
   $('.personal_area, .expert-profile').each(function() {
     const $component = $(this);

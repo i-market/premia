@@ -11,8 +11,6 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog {
     public function write($exception, $logType) {
         global $USER;
         if (function_exists('curl_init')) {
-            // TODO provide some context to sentry (e.g. user id)
-            // https://docs.sentry.io/learn/context/
             if (is_object($USER)) {
                 $this->client->user_context(array(
                     'id' => $USER->GetID(),

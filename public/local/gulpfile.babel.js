@@ -57,6 +57,7 @@ gulp.task('build:vendor:js', ['build:mockup:copy'], () => {
     `${paths.dist}/js/script.js`
   ];
   return gulp.src(_.concat(mockup, [
+    'node_modules/fancybox/dist/jquery.fancybox.js'
   ]))
     .pipe(concat('vendor.js'))
     .pipe(uglify())
@@ -64,10 +65,13 @@ gulp.task('build:vendor:js', ['build:mockup:copy'], () => {
 });
 
 gulp.task('build:vendor:css', ['build:mockup'], () => {
-  return gulp.src([
+  const mockup = [
     `${paths.dist}/css/lib/normalize.min.css`,
     `${paths.dist}/css/lib/slick.css`
-  ])
+  ];
+  return gulp.src(_.concat(mockup, [
+    'node_modules/fancybox/dist/jquery.fancybox.css'
+  ]))
     .pipe(concat('vendor.css'))
     // keep it in `lib` in case relative paths rely on it being there
     .pipe(gulp.dest(`${paths.dist}/css/lib`));

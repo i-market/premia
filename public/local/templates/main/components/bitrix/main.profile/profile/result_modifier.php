@@ -1,5 +1,6 @@
 <?php
 
+use App\App;
 use App\ApplicationForm;
 use Core\Underscore as _;
 use Core\Strings as str;
@@ -46,3 +47,4 @@ $inputs = _::mapValues($application, function($el, $iblockKey) use ($iblockIds) 
     }
 });
 $arResult['APPLICATION'] = _::set($application, 'INPUTS', $inputs);
+$arResult['APP_STATE'] = App::state();

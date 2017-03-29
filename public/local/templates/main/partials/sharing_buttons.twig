@@ -1,0 +1,5 @@
+<a class="facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u={{ link|url_encode }}"></a>
+<a class="twitter" target="_blank" href="https://twitter.com/intent/tweet/?text={{ (text ~ ' |')|url_encode }}&amp;url={{ link|url_encode }}"></a>
+<a class="od" target="_blank" href="https://ok.ru/dk?st.cmd=addShare&st.s=1&st._surl={{ link|url_encode }}&st.comments={{ text|url_encode }}"></a>
+<a class="vk" target="_blank" href="https://vk.com/share.php?title={{ text|url_encode }}&amp;url={{ link|url_encode }}"></a>
+<a class="google" target="_blank" href="https://plus.google.com/share?url={{ link|url_encode }}"></a>

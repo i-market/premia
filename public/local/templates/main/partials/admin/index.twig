@@ -1,4 +1,7 @@
 <h2>{{ APPLICATION.showTitle(false) }}</h2>
+{% if flash %}
+    <div class="page-message success">{{ flash }}</div>
+{% endif %}
 <h3>Выгрузка участников</h3>
 <ul>
     <li><a href="?view=table&summary=companies">Анкеты компаний поставщиков</a></li>
@@ -9,4 +12,13 @@
     {% for nomination in nominations %}
         <li><a href="?view=table&nomination_id={{ nomination.ID }}">{{ nomination.NAME }}</a></li>
     {% endfor %}
+</ul>
+<h3>Состояние конкурса: {{ award_state|lower }}</h3>
+<ul>
+    <li><a href="?action=change-award-state&to={{ constant('App\\AwardState::OPEN') }}">Открыть конкурс</a></li>
+    <li><a href="?action=change-award-state&to={{ constant('App\\AwardState::LOCK_APPLICATIONS') }}">Запретить подачу заявок</a></li>
+    <li><a href="?action=change-award-state&to={{ constant('App\\AwardState::CLOSED') }}">Завершить конкурс</a></li>
+</ul>
+<ul>
+    {#<li>Запустить следующий конкурс</li>#}
 </ul>

@@ -1,0 +1,14 @@
+{% if result.ITEMS is empty %}
+    Извините, раздел находится в разработке.
+{% else %}
+    <h2>{{ APPLICATION.ShowTitle(false) }}</h2>
+    <div class="videos">
+        {% for item in result.ITEMS %}
+            {% if item.YOUTUBE_ID %}
+                <div class="embed-container">
+                    <iframe src="https://www.youtube-nocookie.com/embed/{{ item.YOUTUBE_ID }}?rel=0" frameborder="0" allowfullscreen></iframe>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

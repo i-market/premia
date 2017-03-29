@@ -1,0 +1,17 @@
+{% if sections is empty %}
+    Извините, раздел находится в разработке.
+{% else %}
+    <h2>{{ APPLICATION.ShowTitle(false) }}</h2>
+    <div class="gallery">
+        {{ slider }}
+        <div class="albums">
+            {# TODO add section editing actions #}
+            {% for section in sections %}
+                {% set style = "background-image: url('" ~ section.COVER_IMAGE.RESIZED.src ~ "');" %}
+                <div data-section-id="{{ section.ID }}" role="button" tabindex="0" class="album" style="{{ style }}">
+                    <div class="name">{{ section.NAME }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
