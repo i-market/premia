@@ -19,6 +19,7 @@
     <li><a href="?action=change-award-state&to={{ constant('App\\AwardState::LOCK_APPLICATIONS') }}">Запретить подачу заявок</a></li>
     <li><a href="?action=change-award-state&to={{ constant('App\\AwardState::CLOSED') }}">Завершить конкурс</a></li>
 </ul>
+<h3>Активный конкурс: {{ active_award|lower }}</h3>
 <ul>
-    {#<li>Запустить следующий конкурс</li>#}
+    <li><a href="javascript:void(0)" data-modal="set-award-modal">Запустить следующий конкурс</a></li>
 </ul>
