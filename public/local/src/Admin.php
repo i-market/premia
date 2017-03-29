@@ -22,7 +22,7 @@ class Admin {
         $iblockIds = array_filter(af::iblockIds(), $iblockPred);
         $groupedByIblock = _::mapValues($iblockIds, function($iblockId) {
             // TODO additional business logic filters?
-            $filter = array('IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y');
+            $filter = array_merge(array('IBLOCK_ID' => $iblockId), af::activeFilter());
             $elements = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), $filter));
             $rows = _::clean(_::mapValues($elements, function($el) {
                 // TODO refactor: optimize
@@ -96,9 +96,8 @@ class Admin {
             )
         );
         // TODO additional business logic filters?
-        $forms = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), array(
-            'IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y'
-        )));
+        $filter = array_merge(array('IBLOCK_ID' => $iblockId), af::activeFilter());
+        $forms = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), $filter));
         $votes = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), array(
             'IBLOCK_ID' => $voteIblockId, 'ACTIVE' => 'Y'
         )));
