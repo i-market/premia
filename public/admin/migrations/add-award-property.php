@@ -2,7 +2,6 @@
 use App\App;
 use App\ApplicationForm;
 use App\User;
-use App\Vote;
 use Core\Iblock as ib;
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
@@ -64,10 +63,8 @@ if (User::ensureUserIsAdmin()) {
     }, array());
 
     foreach ($applications as $app) {
-        $results[] = $el->Update($app['ID'], array(
-            'PROPERTY_VALUES' => array(
-                'AWARD' => $activeAward
-            )
+        CIBlockElement::SetPropertyValuesEx($app['ID'], $app['IBLOCK_ID'], array(
+            'AWARD' => $activeAward
         ));
     }
     var_dump($results);
