@@ -1,5 +1,5 @@
 module.exports = {
-  'Signup' : function(browser) {
+  'Signup': function(browser) {
     browser
       .url(browser.launch_url)
       .waitForElementVisible('header .reg', 1000)
