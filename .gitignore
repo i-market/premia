@@ -16,6 +16,7 @@ node_modules/
 vault_pass.txt
 
 /public/local/out/
+/public/local/reports/
 /public/local/templates/*/build/
 /public/local/e2e-tests/screenshots/
 
