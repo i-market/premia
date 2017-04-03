@@ -18,11 +18,17 @@ use WS_PSettings;
 require_once ($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/classes/general/csv_data.php');
 
 class Admin {
+    static function layoutContext() {
+        return array(
+            'next_award_suggestion' => intval(App::getActiveAward()) + 1
+        );
+    }
+
     private static function applicationsTable($name, $iblockPred) {
         $iblockIds = array_filter(af::iblockIds(), $iblockPred);
         $groupedByIblock = _::mapValues($iblockIds, function($iblockId) {
             // TODO additional business logic filters?
-            $filter = array('IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y');
+            $filter = array_merge(array('IBLOCK_ID' => $iblockId), af::activeFilter());
             $elements = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), $filter));
             $rows = _::clean(_::mapValues($elements, function($el) {
                 // TODO refactor: optimize
@@ -96,9 +102,8 @@ class Admin {
             )
         );
         // TODO additional business logic filters?
-        $forms = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), array(
-            'IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y'
-        )));
+        $filter = array_merge(array('IBLOCK_ID' => $iblockId), af::activeFilter());
+        $forms = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), $filter));
         $votes = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), array(
             'IBLOCK_ID' => $voteIblockId, 'ACTIVE' => 'Y'
         )));
@@ -188,6 +193,28 @@ class Admin {
         return $path;
     }
 
+    private static function renderIndex($flashMessage = null) {
+        $iblocks = ib::collect(CIBlock::GetList(array('SORT' => 'ASC'), array('IBLOCK_TYPE')));
+        $iblockIds = ApplicationForm::iblockIds();
+        $nominations = array_filter($iblocks, function($iblock) use ($iblockIds) {
+            $iblockId = intval($iblock['ID']);
+            // TODO refactor: extract filter
+            return $iblockId !== Iblock::GENERAL_INFO && in_array($iblockId, $iblockIds);
+        });
+        $awardStateText = array(
+            AwardState::OPEN => 'Конкурс открыт',
+            AwardState::LOCK_APPLICATIONS => 'Завершение подачи заявок',
+            AwardState::CLOSED => 'Завершение конкурса'
+        )[App::state()['AWARD_STATE']];
+        $ctx = array(
+            'flash' => $flashMessage,
+            'nominations' => $nominations,
+            'award_state' => $awardStateText,
+            'active_award' => App::getActiveAward()
+        );
+        return v::twig()->render(v::partial('admin/index.twig'), $ctx);
+    }
+
     static function render($params, $setTitle) {
         global $APPLICATION;
         if (User::ensureUserIsAdmin()) {
@@ -211,28 +238,13 @@ class Admin {
                 }
             } else if ($params['action'] === 'change-award-state') {
                 WS_PSettings::setFieldValue(App::AWARD_STATE_SETTING, $params['to']);
-                $message = 'Состояние конкурса изменено.';
-                // TODO hacky flash message implementation
-                LocalRedirect('/admin?flash='.rawurlencode($message));
+                return self::renderIndex('Состояние конкурса изменено.');
+            } else if ($params['action'] === 'set-active-award') {
+                $award = $params['to'];
+                App::setActiveAward($award);
+                return self::renderIndex('Конкурс «'.$award.'» запущен.');
             } else {
-                $iblocks = ib::collect(CIBlock::GetList(array('SORT' => 'ASC'), array('IBLOCK_TYPE')));
-                $iblockIds = ApplicationForm::iblockIds();
-                $nominations = array_filter($iblocks, function($iblock) use ($iblockIds) {
-                    $iblockId = intval($iblock['ID']);
-                    // TODO refactor: extract filter
-                    return $iblockId !== Iblock::GENERAL_INFO && in_array($iblockId, $iblockIds);
-                });
-                $awardStateText = array(
-                    AwardState::OPEN => 'Конкурс открыт',
-                    AwardState::LOCK_APPLICATIONS => 'Завершение подачи заявок',
-                    AwardState::CLOSED => 'Завершение конкурса'
-                )[App::state()['AWARD_STATE']];
-                $ctx = array(
-                    'flash' => $params['flash'],
-                    'nominations' => $nominations,
-                    'award_state' => $awardStateText
-                );
-                return v::twig()->render(v::partial('admin/index.twig'), $ctx);
+                return self::renderIndex();
             }
         } else {
             return '';

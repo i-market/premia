@@ -1,0 +1,25 @@
+{% extends layout('base.twig') %}
+
+{% block modals %}
+    {{ parent() }}
+    <div class="modal" id="set-award-modal">
+        <div class="block">
+            <span class="close"></span>
+            <form action="" method="get" class="modal_form">
+                <input type="hidden" name="action" value="set-active-award">
+                <h4 class="tab_title tab_title--modal">Вы уверены,<br>что хотите запустить следующий конкурс?</h4>
+                <label class="label">
+                    <input name="to" value="{{ next_award_suggestion }}" type="text" placeholder="Идентификатор нового конкурса">
+                </label>
+                <div class="wrap_btn">
+                    <div>
+                        <button type="submit" class="btn--red_modal">Запустить</button>
+                    </div>
+                    <div>
+                        <div class="btn--blue" data-close="true">Отменить</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

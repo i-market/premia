@@ -38,6 +38,10 @@ class ApplicationForm {
         );
     }
 
+    static function activeFilter() {
+        return array('ACTIVE' => 'Y', 'PROPERTY_AWARD' => App::getActiveAward());
+    }
+
     static function isPersonalNomination($iblockId) {
         return in_array($iblockId, array(Iblock::SALES, Iblock::LAW));
     }

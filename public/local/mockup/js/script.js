@@ -9,7 +9,7 @@ $(document).ready(function () {
     });
     event.stopPropagation();
   });
-  $('.modal .close').click(function () {
+  $('.modal .close, .modal [data-close]').click(function () {
     $('.modal, .modal>.block').fadeOut(100);
     $('html, body').css({
       overflow: 'auto'

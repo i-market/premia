@@ -62,7 +62,9 @@
         </div>
     </div>
 </footer>
-{% include(partial('modals.twig')) %}
+{% block modals %}
+    {% include(partial('modals.twig')) %}
+{% endblock %}
 <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ START -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 {% if is_sentry_enabled %}

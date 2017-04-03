@@ -10,7 +10,7 @@ assert(Loader::includeModule('iblock'));
 
 $el = new CIBlockElement();
 $applications = _::mapValues(ApplicationForm::iblockIds(), function($iblockId) use ($el) {
-    $filter = array('IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y');
+    $filter = array_merge(array('IBLOCK_ID' => $iblockId), ApplicationForm::activeFilter());
     $apps = ib::collectElements($el->GetList(array('SORT' => 'ASC'), $filter));
     // TODO refactor: would be nice to filter by value XML_ID in GetList instead
     // https://dev.1c-bitrix.ru/community/forums/forum6/topic37199/

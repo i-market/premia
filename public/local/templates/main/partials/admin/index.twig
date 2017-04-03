@@ -4,21 +4,22 @@
 {% endif %}
 <h3>Выгрузка участников</h3>
 <ul>
-    <li><a href="?view=table&summary=companies">Анкеты компаний поставщиков</a></li>
-    <li><a href="?view=table&summary=personal">Анкеты в персональной номинации</a></li>
+    <li><a href="?view=table&amp;summary=companies">Анкеты компаний поставщиков</a></li>
+    <li><a href="?view=table&amp;summary=personal">Анкеты в персональной номинации</a></li>
 </ul>
 <h3>Сводная таблица</h3>
 <ul>
     {% for nomination in nominations %}
-        <li><a href="?view=table&nomination_id={{ nomination.ID }}">{{ nomination.NAME }}</a></li>
+        <li><a href="?view=table&amp;nomination_id={{ nomination.ID }}">{{ nomination.NAME }}</a></li>
     {% endfor %}
 </ul>
 <h3>Состояние конкурса: {{ award_state|lower }}</h3>
 <ul>
-    <li><a href="?action=change-award-state&to={{ constant('App\\AwardState::OPEN') }}">Открыть конкурс</a></li>
-    <li><a href="?action=change-award-state&to={{ constant('App\\AwardState::LOCK_APPLICATIONS') }}">Запретить подачу заявок</a></li>
-    <li><a href="?action=change-award-state&to={{ constant('App\\AwardState::CLOSED') }}">Завершить конкурс</a></li>
+    <li><a href="?action=change-award-state&amp;to={{ constant('App\\AwardState::OPEN') }}">Открыть конкурс</a></li>
+    <li><a href="?action=change-award-state&amp;to={{ constant('App\\AwardState::LOCK_APPLICATIONS') }}">Запретить подачу заявок</a></li>
+    <li><a href="?action=change-award-state&amp;to={{ constant('App\\AwardState::CLOSED') }}">Завершить конкурс</a></li>
 </ul>
+<h3>Активный конкурс: {{ active_award|lower }}</h3>
 <ul>
-    {#<li>Запустить следующий конкурс</li>#}
+    <li><a href="javascript:void(0)" data-modal="set-award-modal">Запустить следующий конкурс</a></li>
 </ul>
