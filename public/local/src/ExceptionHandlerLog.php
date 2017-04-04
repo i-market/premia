@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Core\App;
 use Raven_Client;
 
 class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog {
@@ -26,8 +25,9 @@ class ExceptionHandlerLog extends \Bitrix\Main\Diag\ExceptionHandlerLog {
 
     public function initialize(array $options) {
         $dsn = $options['sentry_dsn'];
+        /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
         $this->client = new Raven_Client($dsn, array(
-            'environment' => App::env()
+            'environment' => \Core\App::env()
         ));
     }
 }
