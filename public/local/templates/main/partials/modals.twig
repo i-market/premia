@@ -75,8 +75,17 @@
             </label>
             <div class="form-message"></div>
             <div class="wrap_btn">
+                <script>
+                    function submitForm(token) {
+                        $('#contact-modal form').submit();
+                    }
+                </script>
                 <div>
-                    <button type="submit" class="btn--blue">Отправить</button>
+                    <button class="g-recaptcha btn--blue"
+                            data-sitekey="{{ recaptcha.site_key }}"
+                            data-callback="submitForm">
+                        Отправить
+                    </button>
                 </div>
             </div>
         </form>

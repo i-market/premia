@@ -3,7 +3,7 @@
 import _ from 'lodash';
 
 function toggleSubmitButton($form, state) {
-  const $button = $form.find('button[type=submit]');
+  const $button = $form.find('button[type=submit], button.g-recaptcha');
   if (state) {
     $button.removeAttr('disabled');
   } else {

@@ -12,6 +12,7 @@ use Core\View as v;
 use Core\Form as f;
 use Core\Underscore as _;
 use CUser;
+use ReCaptcha\ReCaptcha;
 use WS_PSettings;
 
 class App {
@@ -73,6 +74,9 @@ class App {
         global $APPLICATION, $USER;
         return array(
             'app_env' => \Core\App::env(),
+            'recaptcha' => array(
+                'site_key' => _::get(self::config(), 'recaptcha.site_key')
+            ),
             'is_sentry_enabled' => \Core\App::env() !== Env::DEV,
             'form_specs' => self::formSpecs(),
             'main_menu' => self::renderMainMenu(),
@@ -143,6 +147,14 @@ class App {
         return array_map(function($spec) {
             return _::set($spec, 'action', '/api/'.$spec['name']);
         }, $ret);
+    }
+
+    static function validateRecaptcha($value, $errorMessage) {
+        $recaptcha = new ReCaptcha(_::get(self::config(), 'recaptcha.secret_key'));
+        $resp = $recaptcha->verify($value);
+        return $resp->isSuccess() ? array() : array(
+            'captcha' => array($errorMessage)
+        );
     }
 
     // TODO move to core?
