@@ -45,7 +45,7 @@ class Email {
         )[$statusXmlId];
     }
 
-    static function addSubscriber($user) {
+    private static function addSubscriber($user) {
         return (new CDsSubscriber)->add(array(
             'ACTIVE' => 'Y',
             'USER_ID' => $user['ID'],
