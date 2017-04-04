@@ -287,7 +287,8 @@ class Form {
             }
         };
         $handler = function($request, $response) use ($spec, $f, $rule) {
-            $params = $request->params(_::pluck($spec['fields'], 'name'));
+            // TODO refactor: this function should'nt know about recaptcha
+            $params = $request->params(_::append(_::pluck($spec['fields'], 'name'), 'g-recaptcha-response'));
             $validator = new Validator($params);
             foreach ($spec['validations'] as $validation) {
                 foreach ($validation['fields'] as $field) {

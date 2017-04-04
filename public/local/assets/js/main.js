@@ -55,6 +55,12 @@ $(() => {
       if (isSuccess) {
         modals.mutateMessage($form, 'Ваше сообщение было успешно отправлено. Спасибо.', 'success');
         modals.toggleSubmitButton($form, false);
+      } else {
+        grecaptcha.reset();
+        if (_.has(data.errors, 'captcha')) {
+          const msg = _.join(data.errors.captcha, '<br>');
+          modals.mutateMessage($form, msg, 'error');
+        }
       }
     });
   }

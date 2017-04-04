@@ -138,6 +138,9 @@ $router->with('/api', function () use ($router, $signupRoute) {
     });
 });
 $route = Form::formRoute($formSpecs['contact'], function($params, $errors, $response) {
+    $captchaMessage = 'Капча не подошла. Пожалуйста, попробуйте еще раз.';
+    // mutate
+    $errors = array_merge($errors, App::validateRecaptcha($params['g-recaptcha-response'], $captchaMessage));
     if (count($errors) === 0) {
         $event = array_merge(array_change_key_case($params, CASE_UPPER), array(
             'EMAIL_FROM' => App::mailFrom(),
