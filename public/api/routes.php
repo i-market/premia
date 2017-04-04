@@ -7,7 +7,6 @@ use App\Gallery;
 use App\MailEvent;
 use App\Messages;
 use App\User;
-use App\Vote;
 use Bitrix\Main\Localization\Loc;
 use Core\Form;
 use Klein\Klein;

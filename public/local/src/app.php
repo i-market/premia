@@ -463,3 +463,20 @@ class Video {
         }
     }
 }
+
+class Util {
+    /**
+     * catch and warn, but don't fail
+     */
+    static function warnOnException($f) {
+        try {
+            $f();
+        }
+        catch (\Throwable $t) {
+            trigger_error(strval($t), E_USER_WARNING);
+        }
+        catch (\Exception $e) {
+            trigger_error(strval($e), E_USER_WARNING);
+        }
+    }
+}
