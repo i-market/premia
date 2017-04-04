@@ -22,7 +22,6 @@ class Email {
     const SALES = 22;
     const LAW = 23;
 
-
     static function nominationListIds() {
         return array(
             'SMALL_BUSINESS' => self::SMALL_BUSINESS,
@@ -45,7 +44,7 @@ class Email {
         )[$statusXmlId];
     }
 
-    static function addSubscriber($user) {
+    private static function addSubscriber($user) {
         return (new CDsSubscriber)->add(array(
             'ACTIVE' => 'Y',
             'USER_ID' => $user['ID'],

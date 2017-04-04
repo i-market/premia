@@ -22,8 +22,12 @@ class App {
     static function init() {
         assert(Loader::includeModule('iblock'));
         assert(Loader::includeModule('ws.projectsettings'));
-        // email subscriptions
-        assert(Loader::includeModule('devstrong.subscribe'));
+        if (self::emailSubscriptionsEnabled()) {
+            Util::warnOnException(function() {
+                // email subscriptions
+                assert(Loader::includeModule('devstrong.subscribe'));
+            });
+        }
         EventHandlers::listen();
     }
 
@@ -154,6 +158,13 @@ class App {
     // TODO move to core?
     private static function config() {
         return nil::get(Configuration::getValue('app'), array());
+    }
+
+    /**
+     * feature toggle
+     */
+    static function emailSubscriptionsEnabled() {
+        return _::get(self::config(), 'email_subscriptions', false);
     }
 
     static function mailFrom() {
@@ -460,6 +471,23 @@ class Video {
             return $matchesRef[1];
         } else {
             return null;
+        }
+    }
+}
+
+class Util {
+    /**
+     * catch and warn, but don't fail
+     */
+    static function warnOnException($f) {
+        try {
+            $f();
+        }
+        catch (\Throwable $t) {
+            trigger_error(strval($t), E_USER_WARNING);
+        }
+        catch (\Exception $e) {
+            trigger_error(strval($e), E_USER_WARNING);
         }
     }
 }

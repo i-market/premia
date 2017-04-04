@@ -26,34 +26,46 @@ class EventHandlers {
     }
 
     private static function onNomineeAdded($userId) {
-        return Email::addUsersToList(Email::NOMINEES, array(CUser::GetByID($userId)->GetNext()));
+        if (App::emailSubscriptionsEnabled()) {
+            Util::warnOnException(function () use ($userId) {
+                Email::addUsersToList(Email::NOMINEES, array(CUser::GetByID($userId)->GetNext()));
+            });
+        }
     }
 
     private static function onApplicationAdded($fields) {
-        $iblockId = $fields['IBLOCK_ID'];
-        $sharedKey = array_flip(ApplicationForm::iblockIds())[$iblockId];
-        $listId = Email::nominationListIds()[$sharedKey];
-        $userId = $fields['PROPERTY_VALUES']['USER'];
-        Email::addUsersToList($listId, array(CUser::GetByID($userId)->GetNext()));
+        if (App::emailSubscriptionsEnabled()) {
+            Util::warnOnException(function () use ($fields) {
+                $iblockId = $fields['IBLOCK_ID'];
+                $sharedKey = array_flip(ApplicationForm::iblockIds())[$iblockId];
+                $listId = Email::nominationListIds()[$sharedKey];
+                $userId = $fields['PROPERTY_VALUES']['USER'];
+                Email::addUsersToList($listId, array(CUser::GetByID($userId)->GetNext()));
+            });
+        }
     }
 
     private static function onApplicationStatusChange($curr, $prev) {
-        $currStatus = $curr['PROPERTIES']['STATUS']['VALUE_XML_ID'];
-        $prevStatus = $prev['PROPERTIES']['STATUS']['VALUE_XML_ID'];
-        if ($currStatus !== null) {
-            $userId = $curr['PROPERTIES']['USER']['VALUE'];
-            $user = CUser::GetByID($userId)->GetNext();
-            Email::addUsersToList(Email::statusListId($currStatus), array($user));
-        } else {
-            $userId = $prev['PROPERTIES']['USER']['VALUE'];
-            Email::updateList(Email::statusListId($prevStatus), function($userIds) use ($userId) {
-                return _::removeValue($userIds, $userId);
-            });
-        }
-        if ($prevStatus !== null) {
-            $userId = $prev['PROPERTIES']['USER']['VALUE'];
-            Email::updateList(Email::statusListId($prevStatus), function($userIds) use ($userId) {
-                return _::removeValue($userIds, $userId);
+        if (App::emailSubscriptionsEnabled()) {
+            Util::warnOnException(function () use ($curr, $prev) {
+                $currStatus = $curr['PROPERTIES']['STATUS']['VALUE_XML_ID'];
+                $prevStatus = $prev['PROPERTIES']['STATUS']['VALUE_XML_ID'];
+                if ($currStatus !== null) {
+                    $userId = $curr['PROPERTIES']['USER']['VALUE'];
+                    $user = CUser::GetByID($userId)->GetNext();
+                    Email::addUsersToList(Email::statusListId($currStatus), array($user));
+                } else {
+                    $userId = $prev['PROPERTIES']['USER']['VALUE'];
+                    Email::updateList(Email::statusListId($prevStatus), function ($userIds) use ($userId) {
+                        return _::removeValue($userIds, $userId);
+                    });
+                }
+                if ($prevStatus !== null) {
+                    $userId = $prev['PROPERTIES']['USER']['VALUE'];
+                    Email::updateList(Email::statusListId($prevStatus), function ($userIds) use ($userId) {
+                        return _::removeValue($userIds, $userId);
+                    });
+                }
             });
         }
     }
