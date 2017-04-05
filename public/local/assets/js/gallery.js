@@ -5,6 +5,7 @@ function activate($component, sectionId) {
   $component.find('.gallery-slider').each(function() {
     $(this).toggleClass('active', $(this).attr('data-section-id') === sectionId);
   });
+  objectFitImages();
 }
 
 function initSlider($slider) {
