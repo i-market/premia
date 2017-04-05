@@ -77,8 +77,29 @@ $(document).ready(function () {
       }, 0);
     });
   });
-  // табы
+
+  function scrollTo($target, whitespace) {
+    whitespace = whitespace || 40;
+    var headerHeight = $('header').filter(function() {
+      return $(this).css('position') === 'fixed';
+    }).height();
+    if (headerHeight !== null) {
+      var offset = headerHeight === null ? 0 : headerHeight + whitespace;
+      var $page = $('html, body');
+      var scrollEvents = 'scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove';
+      $page.on(scrollEvents, function() {
+        $page.stop();
+      });
+      $page.stop().animate({
+        scrollTop: $target.offset().top - offset
+      }, 1000, function() {
+        $page.off(scrollEvents);
+      });
+    }
+  }
+
   $(function () {
+    // табы
     function activate($el) {
       var targetNode = $('[data-tabContent=' + $el.attr('data-tabLinks') + ']');
       $el.parent().find('[data-tabLinks]').removeClass('active').filter($el).addClass('active');
@@ -89,28 +110,18 @@ $(document).ready(function () {
         adjustTextareaHeight($textarea, $label);
       });
     }
-    $('[data-tabLinks]').on('click', function () {
+    // gallery
+    $('.gallery').each(function() {
+      var $gallery = $(this);
+      $gallery.find('.album').on('click', function() {
+        scrollTo($gallery.find('.gallery-slider.active'), 20);
+      });
+    });
+    $('[data-tabLinks]').on('click', function() {
       activate($(this));
       if ($(this).attr('data-scroll-to') === 'true') {
-        var targetNode = $('[data-tabContent=' + $(this).attr('data-tabLinks') + ']');
-        // TODO extract function
-        var headerHeight = $('header').filter(function() {
-          return $(this).css('position') === 'fixed';
-        }).height();
-        if (headerHeight !== null) {
-          var whitespace = 40;
-          var offset = headerHeight === null ? 0 : headerHeight + whitespace;
-          var $page = $('html, body');
-          var scrollEvents = 'scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove';
-          $page.on(scrollEvents, function() {
-            $page.stop();
-          });
-          $page.stop().animate({
-            scrollTop: targetNode.offset().top - offset
-          }, 1000, function() {
-            $page.off(scrollEvents);
-          });
-        }
+        var $target = $('[data-tabContent=' + $(this).attr('data-tabLinks') + ']');
+        scrollTo($target);
       }
     });
   });
