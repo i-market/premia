@@ -110,6 +110,11 @@ class App {
                         'type' => 'required',
                         'fields' => array('name', 'email', 'message'),
                         'message' => $requiredMessage
+                    ),
+                    array(
+                        'type' => 'email',
+                        'fields' => array('email'),
+                        'message' => 'Неверный адрес электронной почты.'
                     )
                 )
             ),
