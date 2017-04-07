@@ -34,12 +34,21 @@ return array (
       {% else %}
       'debug' => false,
       {% endif %}
-      'handled_errors_types' => 4437,
+      'handled_errors_types' => 4437 | E_USER_WARNING,
       'exception_errors_types' => 4437,
       'ignore_silence' => false,
       'assertion_throws_exception' => true,
       'assertion_error_type' => 256,
-      'log' => NULL,
+      {% if env == 'dev' %}
+      'log' => null,
+      {% else %}
+      'log' => array(
+        'class_name' => '\App\ExceptionHandlerLog',
+        'settings' => array(
+          'sentry_dsn' => '{{ sentry.php_dsn }}'
+        )
+      ),
+      {% endif %}
     ),
     'readonly' => false,
   ),
@@ -49,7 +58,11 @@ return array (
     array (
       'default' => 
       array (
+        {% if use_mysqli %}
         'className' => '\\Bitrix\\Main\\DB\\MysqliConnection',
+        {% else %}
+        'className' => '\\Bitrix\\Main\\DB\\MysqlConnection',
+        {% endif %}
         'host' => '{{ db_host }}',
         'database' => '{{ db_name }}',
         'login' => '{{ db_user }}',
@@ -61,10 +74,13 @@ return array (
   ),
   'app' => array(
     'value' => array(
-      'env' => '{{ env }}'
+      'env' => '{{ env }}',
       'recaptcha' => array(
         'site_key' => '{{ recaptcha.site_key }}',
         'secret_key' => '{{ recaptcha.secret_key }}'
+      ),
+      'sentry' => array(
+        'js_dsn' => '{{ sentry.js_dsn }}'
       )
     )
   ),

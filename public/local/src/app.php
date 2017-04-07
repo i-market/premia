@@ -77,7 +77,10 @@ class App {
             'recaptcha' => array(
                 'site_key' => _::get(self::config(), 'recaptcha.site_key')
             ),
-            'is_sentry_enabled' => \Core\App::env() !== Env::DEV,
+            'sentry' => array(
+                'enabled' => \Core\App::env() !== Env::DEV,
+                'js_dsn' => _::get(self::config(), 'sentry.js_dsn'),
+            ),
             'form_specs' => self::formSpecs(),
             'main_menu' => self::renderMainMenu(),
             'slider' => self::renderSlider(),

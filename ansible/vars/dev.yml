@@ -7,3 +7,4 @@ db_host: localhost
 db_name: premia
 db_user: root
 db_password: ~
+use_mysqli: false
