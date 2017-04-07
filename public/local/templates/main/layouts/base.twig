@@ -68,11 +68,10 @@
 <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ START -->
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-{% if is_sentry_enabled %}
+{% if sentry.enabled %}
     <script type="text/javascript" src="https://cdn.ravenjs.com/3.12.1/raven.min.js"></script>
     <script type="text/javascript">
-        {# TODO move sentry dsn to config #}
-        Raven.config('https://6c589ea6735245e3b3701967490bd263@sentry.io/148291', {
+        Raven.config('{{ sentry.js_dsn }}', {
             environment: '{{ app_env }}'
         }).install();
         {% set user_id = USER.GetID() %}
