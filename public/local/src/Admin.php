@@ -7,6 +7,7 @@ use CCSVData;
 use CIBlock;
 use CIBlockElement;
 use Core\Underscore as _;
+use Core\Strings as str;
 use Core\Iblock as ib;
 use Core\Nullable as nil;
 use CUser;
@@ -220,9 +221,10 @@ class Admin {
         return v::twig()->render(v::partial('admin/index.twig'), $ctx);
     }
 
-    private static function renderTable($table, $setTitle) {
+    private static function renderTable($table, $setTitle, $filenamePrefix = '') {
         global $APPLICATION;
-        $csvPath = '/admin/files/'.self::filename($table['NAME']);
+        $prefix = str::isEmpty($filenamePrefix) ? '' : $filenamePrefix.' ';
+        $csvPath = '/admin/files/'.self::filename($prefix.$table['NAME']);
         self::writeCsvFile($table, $_SERVER['DOCUMENT_ROOT'].$csvPath);
         if ($setTitle) {
             // mutate
@@ -264,7 +266,7 @@ class Admin {
                         }, User::nominees($fields))
 
                 );
-                return self::renderTable($table, $setTitle);
+                return self::renderTable($table, $setTitle, 'email');
             } else if ($params['view'] === 'by-status') {
                 $option = _::find(ApplicationForm::statusOptions(), function($option) use ($params) {
                     return $option['XML_ID'] === $params['status'];
@@ -281,7 +283,7 @@ class Admin {
                         }, $users)
 
                 );
-                return self::renderTable($table, $setTitle);
+                return self::renderTable($table, $setTitle, 'email');
             } else if ($params['view'] === 'by-nomination') {
                 $nomination = _::find(self::nominations(), function($iblock) use ($params) {
                     return $iblock['ID'] === $params['nomination_id'];
@@ -298,7 +300,7 @@ class Admin {
                         }, $users)
 
                 );
-                return self::renderTable($table, $setTitle);
+                return self::renderTable($table, $setTitle, 'email');
             } else {
                 return self::renderIndex();
             }
