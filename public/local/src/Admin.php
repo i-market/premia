@@ -209,10 +209,26 @@ class Admin {
         $ctx = array(
             'flash' => $flashMessage,
             'nominations' => $nominations,
+            'status_options' => ApplicationForm::statusOptions(),
             'award_state' => $awardStateText,
             'active_award' => App::getActiveAward()
         );
         return v::twig()->render(v::partial('admin/index.twig'), $ctx);
+    }
+
+    private static function renderTable($table, $setTitle) {
+        global $APPLICATION;
+        $csvPath = '/admin/files/'.self::filename($table['NAME']);
+        self::writeCsvFile($table, $_SERVER['DOCUMENT_ROOT'].$csvPath);
+        if ($setTitle) {
+            // mutate
+            $APPLICATION->SetTitle($table['NAME']);
+        }
+        return v::twig()->render(v::partial('admin/table.twig'), array(
+            'table' => $table,
+            // TODO require authorization
+            'download_link' => $csvPath
+        ));
     }
 
     static function render($params, $setTitle) {
@@ -222,17 +238,7 @@ class Admin {
             if ($view === 'table') {
                 $table = self::table($params);
                 if ($table !== null) {
-                    $csvPath = '/admin/files/'.self::filename($table['NAME']);
-                    self::writeCsvFile($table, $_SERVER['DOCUMENT_ROOT'].$csvPath);
-                    if ($setTitle) {
-                        // mutate
-                        $APPLICATION->SetTitle($table['NAME']);
-                    }
-                    return v::twig()->render(v::partial('admin/table.twig'), array(
-                        'table' => $table,
-                        // TODO require authorization
-                        'download_link' => $csvPath
-                    ));
+                    return self::renderTable($table, $setTitle);
                 } else {
                     return '';
                 }
@@ -243,6 +249,37 @@ class Admin {
                 $award = $params['to'];
                 App::setActiveAward($award);
                 return self::renderIndex('Конкурс «'.$award.'» запущен.');
+            } else if ($params['view'] === 'nominees') {
+                $fields = array('EMAIL', 'NAME');
+                $table = array(
+                    'NAME' => 'Все участники конкурса',
+                    'HEADER' => array('Адрес электронной почты', 'ФИО контактного лица'),
+                    'ROWS' =>
+                        array_map(function($user) use ($fields) {
+                            return _::pick($user, $fields);
+                        }, User::nominees($fields))
+
+                );
+                return self::renderTable($table, $setTitle);
+            } else if ($params['view'] === 'by-status') {
+                $option = _::find(ApplicationForm::statusOptions(), function($option) use ($params) {
+                    return $option['XML_ID'] === $params['status'];
+                });
+                $fields = array('EMAIL', 'NAME');
+                $groups = User::groupByAppStatus(ApplicationForm::all(), $fields);
+                $users = $groups[$option['XML_ID']];
+                $table = array(
+                    'NAME' => $option['VALUE'],
+                    'HEADER' => array('Адрес электронной почты', 'ФИО контактного лица'),
+                    'ROWS' =>
+                        array_map(function($user) use ($fields) {
+                            return _::pick($user, $fields);
+                        }, $users)
+
+                );
+                return self::renderTable($table, $setTitle);
+            } else if ($params['view'] === 'by-nomination') {
+                return self::renderTable($table, $setTitle);
             } else {
                 return self::renderIndex();
             }

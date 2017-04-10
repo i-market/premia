@@ -23,3 +23,18 @@
 <ul>
     <li><a href="javascript:void(0)" data-modal="set-award-modal">Запустить следующий конкурс</a></li>
 </ul>
+<h3>Email-адреса участников</h3>
+<ul>
+    <li><a href="?view=nominees">Все участники конкурса</a></li>
+</ul>
+<ul>
+    {% for option in status_options %}
+        {# TODO better description #}
+        <li><a href="?view=by-status&amp;status={{ option.XML_ID }}">{{ option.VALUE }}</a></li>
+    {% endfor %}
+</ul>
+<ul>
+    {% for nomination in nominations %}
+        <li><a href="?view=by-nomination&amp;nomination_id={{ nomination.ID }}">{{ nomination.NAME }}</a></li>
+    {% endfor %}
+</ul>

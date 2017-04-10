@@ -11,6 +11,7 @@ use Core\Nullable as nil;
 use Core\View as v;
 use Core\Form as f;
 use Core\Underscore as _;
+use Core\Iblock as ib;
 use CUser;
 use ReCaptcha\ReCaptcha;
 use WS_PSettings;
@@ -25,7 +26,6 @@ class App {
         assert(Loader::includeModule('ws.projectsettings'));
         if (self::emailSubscriptionsEnabled()) {
             Util::warnOnException(function() {
-                // email subscriptions
                 assert(Loader::includeModule('devstrong.subscribe'));
             });
         }
@@ -181,7 +181,7 @@ class App {
     }
 
     /**
-     * feature toggle
+     * feature toggle. doesn't work on php 7
      */
     static function emailSubscriptionsEnabled() {
         return _::get(self::config(), 'email_subscriptions', false);
@@ -341,6 +341,30 @@ class User {
 
     static function logoutLink() {
         return '?logout=yes';
+    }
+
+    static function nominees($fields) {
+        /** @noinspection PhpPassByRefInspection */
+        return ib::collect(CUser::GetList(($by = "NAME"), ($order = "asc"), Array("GROUPS_ID"=>Array(User::NOMINEE_GROUP), "ACTIVE"=>"Y"), Array("FIELDS"=>$fields)));
+    }
+
+    static function groupByAppStatus($applications, $fields) {
+        $groups = _::groupBy($applications, function($element) {
+            return $element['PROPERTIES']['STATUS']['VALUE_XML_ID'];
+        });
+        return _::mapValues($groups, function($items) use ($fields) {
+            return ApplicationForm::users($items, $fields);
+        });
+    }
+
+    static function groupByNomination($applications, $fields) {
+        $groups = _::groupBy($applications, function($element) {
+            $sharedKey = array_flip(ApplicationForm::iblockIds())[$element['IBLOCK_ID']];
+            return $sharedKey;
+        });
+        return _::mapValues($groups, function($items) use ($fields) {
+            return ApplicationForm::users($items, $fields);
+        });
     }
 
     static function parseFullName($fullName) {
