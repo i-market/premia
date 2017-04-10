@@ -359,8 +359,7 @@ class User {
 
     static function groupByNomination($applications, $fields) {
         $groups = _::groupBy($applications, function($element) {
-            $sharedKey = array_flip(ApplicationForm::iblockIds())[$element['IBLOCK_ID']];
-            return $sharedKey;
+            return $element['IBLOCK_ID'];
         });
         return _::mapValues($groups, function($items) use ($fields) {
             return ApplicationForm::users($items, $fields);

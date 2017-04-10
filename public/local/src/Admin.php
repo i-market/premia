@@ -193,14 +193,18 @@ class Admin {
         return $path;
     }
 
-    private static function renderIndex($flashMessage = null) {
+    private static function nominations() {
         $iblocks = ib::collect(CIBlock::GetList(array('SORT' => 'ASC'), array('IBLOCK_TYPE')));
         $iblockIds = ApplicationForm::iblockIds();
-        $nominations = array_filter($iblocks, function($iblock) use ($iblockIds) {
+        return array_filter($iblocks, function($iblock) use ($iblockIds) {
             $iblockId = intval($iblock['ID']);
             // TODO refactor: extract filter
             return $iblockId !== Iblock::GENERAL_INFO && in_array($iblockId, $iblockIds);
         });
+    }
+
+    private static function renderIndex($flashMessage = null) {
+        $nominations = self::nominations();
         $awardStateText = array(
             AwardState::OPEN => 'Конкурс открыт',
             AwardState::LOCK_APPLICATIONS => 'Завершение подачи заявок',
@@ -279,6 +283,21 @@ class Admin {
                 );
                 return self::renderTable($table, $setTitle);
             } else if ($params['view'] === 'by-nomination') {
+                $nomination = _::find(self::nominations(), function($iblock) use ($params) {
+                    return $iblock['ID'] === $params['nomination_id'];
+                });
+                $fields = array('EMAIL', 'NAME');
+                $groups = User::groupByNomination(ApplicationForm::all(), $fields);
+                $users = $groups[$nomination['ID']];
+                $table = array(
+                    'NAME' => $nomination['NAME'],
+                    'HEADER' => array('Адрес электронной почты', 'ФИО контактного лица'),
+                    'ROWS' =>
+                        array_map(function($user) use ($fields) {
+                            return _::pick($user, $fields);
+                        }, $users)
+
+                );
                 return self::renderTable($table, $setTitle);
             } else {
                 return self::renderIndex();
