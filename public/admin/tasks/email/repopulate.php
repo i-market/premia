@@ -8,6 +8,7 @@ use Core\Underscore as _;
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Раздел администратора");
 
+// TODO refactor with `User` functions
 if (User::ensureUserIsAdmin()) {
     $el = new CIBlockElement();
     /// all nominees

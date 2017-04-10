@@ -31,4 +31,15 @@ class Iblock {
         }
         return $ret;
     }
+
+    /**
+     * @param $result \CDBResult
+     */
+    static function fetch($result) {
+        $ret = array();
+        while($x = $result->Fetch()) {
+            $ret[] = $x;
+        }
+        return $ret;
+    }
 }

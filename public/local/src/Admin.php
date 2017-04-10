@@ -7,6 +7,7 @@ use CCSVData;
 use CIBlock;
 use CIBlockElement;
 use Core\Underscore as _;
+use Core\Strings as str;
 use Core\Iblock as ib;
 use Core\Nullable as nil;
 use CUser;
@@ -193,14 +194,18 @@ class Admin {
         return $path;
     }
 
-    private static function renderIndex($flashMessage = null) {
+    private static function nominations() {
         $iblocks = ib::collect(CIBlock::GetList(array('SORT' => 'ASC'), array('IBLOCK_TYPE')));
         $iblockIds = ApplicationForm::iblockIds();
-        $nominations = array_filter($iblocks, function($iblock) use ($iblockIds) {
+        return array_filter($iblocks, function($iblock) use ($iblockIds) {
             $iblockId = intval($iblock['ID']);
             // TODO refactor: extract filter
             return $iblockId !== Iblock::GENERAL_INFO && in_array($iblockId, $iblockIds);
         });
+    }
+
+    private static function renderIndex($flashMessage = null) {
+        $nominations = self::nominations();
         $awardStateText = array(
             AwardState::OPEN => 'Конкурс открыт',
             AwardState::LOCK_APPLICATIONS => 'Завершение подачи заявок',
@@ -209,10 +214,27 @@ class Admin {
         $ctx = array(
             'flash' => $flashMessage,
             'nominations' => $nominations,
+            'status_options' => ApplicationForm::statusOptions(),
             'award_state' => $awardStateText,
             'active_award' => App::getActiveAward()
         );
         return v::twig()->render(v::partial('admin/index.twig'), $ctx);
+    }
+
+    private static function renderTable($table, $setTitle, $filenamePrefix = '') {
+        global $APPLICATION;
+        $prefix = str::isEmpty($filenamePrefix) ? '' : $filenamePrefix.' ';
+        $csvPath = '/admin/files/'.self::filename($prefix.$table['NAME']);
+        self::writeCsvFile($table, $_SERVER['DOCUMENT_ROOT'].$csvPath);
+        if ($setTitle) {
+            // mutate
+            $APPLICATION->SetTitle($table['NAME']);
+        }
+        return v::twig()->render(v::partial('admin/table.twig'), array(
+            'table' => $table,
+            // TODO require authorization
+            'download_link' => $csvPath
+        ));
     }
 
     static function render($params, $setTitle) {
@@ -222,17 +244,7 @@ class Admin {
             if ($view === 'table') {
                 $table = self::table($params);
                 if ($table !== null) {
-                    $csvPath = '/admin/files/'.self::filename($table['NAME']);
-                    self::writeCsvFile($table, $_SERVER['DOCUMENT_ROOT'].$csvPath);
-                    if ($setTitle) {
-                        // mutate
-                        $APPLICATION->SetTitle($table['NAME']);
-                    }
-                    return v::twig()->render(v::partial('admin/table.twig'), array(
-                        'table' => $table,
-                        // TODO require authorization
-                        'download_link' => $csvPath
-                    ));
+                    return self::renderTable($table, $setTitle);
                 } else {
                     return '';
                 }
@@ -243,6 +255,52 @@ class Admin {
                 $award = $params['to'];
                 App::setActiveAward($award);
                 return self::renderIndex('Конкурс «'.$award.'» запущен.');
+            } else if ($params['view'] === 'nominees') {
+                $fields = array('EMAIL', 'NAME');
+                $table = array(
+                    'NAME' => 'Все участники конкурса',
+                    'HEADER' => array('Адрес электронной почты', 'ФИО контактного лица'),
+                    'ROWS' =>
+                        array_map(function($user) use ($fields) {
+                            return _::pick($user, $fields);
+                        }, User::nominees($fields))
+
+                );
+                return self::renderTable($table, $setTitle, 'email');
+            } else if ($params['view'] === 'by-status') {
+                $option = _::find(ApplicationForm::statusOptions(), function($option) use ($params) {
+                    return $option['XML_ID'] === $params['status'];
+                });
+                $fields = array('EMAIL', 'NAME');
+                $groups = User::groupByAppStatus(ApplicationForm::all(), $fields);
+                $users = $groups[$option['XML_ID']];
+                $table = array(
+                    'NAME' => $option['VALUE'],
+                    'HEADER' => array('Адрес электронной почты', 'ФИО контактного лица'),
+                    'ROWS' =>
+                        array_map(function($user) use ($fields) {
+                            return _::pick($user, $fields);
+                        }, $users)
+
+                );
+                return self::renderTable($table, $setTitle, 'email');
+            } else if ($params['view'] === 'by-nomination') {
+                $nomination = _::find(self::nominations(), function($iblock) use ($params) {
+                    return $iblock['ID'] === $params['nomination_id'];
+                });
+                $fields = array('EMAIL', 'NAME');
+                $groups = User::groupByNomination(ApplicationForm::all(), $fields);
+                $users = $groups[$nomination['ID']];
+                $table = array(
+                    'NAME' => $nomination['NAME'],
+                    'HEADER' => array('Адрес электронной почты', 'ФИО контактного лица'),
+                    'ROWS' =>
+                        array_map(function($user) use ($fields) {
+                            return _::pick($user, $fields);
+                        }, $users)
+
+                );
+                return self::renderTable($table, $setTitle, 'email');
             } else {
                 return self::renderIndex();
             }

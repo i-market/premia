@@ -2,10 +2,11 @@
 
 namespace App;
 
-use App\Iblock;
 use Bitrix\Main\Loader;
+use Bitrix\Main\UserTable;
 use CIBlock;
 use CIBlockElement;
+use CIBlockPropertyEnum;
 use Core\Iblock as ib;
 use Core\Underscore as _;
 use Core\Nullable as nil;
@@ -22,6 +23,61 @@ class ApplicationForm {
         $select = array('*', 'PROPERTY_*');
         $result = (new CIBlockElement)->GetList(array('SORT' => 'ASC'), $filter, false, false, $select);
         return _::first(ib::collectElements($result));
+    }
+
+    static function all() {
+        $el = new CIBlockElement();
+        $nominationIds = array_filter(ApplicationForm::iblockIds(), function($iblockId) {
+            return ApplicationForm::isNomination($iblockId);
+        });
+        $elements = array_reduce($nominationIds, function($acc, $iblockId) use ($el) {
+            $filter = array_merge(array('IBLOCK_ID' => $iblockId), self::activeFilter());
+            // TODO optimize
+            $elements = ib::collectElements($el->GetList(array('SORT' => 'ASC'), $filter));
+            return array_merge($acc, $elements);
+        }, array());
+        return $elements;
+    }
+
+    static function users($applications, $fields) {
+        $userIds = array_map(function($item) {
+            return $item['PROPERTIES']['USER']['VALUE'];
+        }, $applications);
+        $userFilter = array_merge(
+            array('LOGIC' => 'OR'),
+            array_map(function($userId) {
+                return array('ID' => $userId);
+            }, $userIds)
+        );
+        $result = UserTable::getList(array('select' => $fields, 'filter' => array($userFilter, 'ACTIVE' => 'Y')));
+        $ret = array();
+        while($x = $result->fetch()) {
+            $ret[] = $x;
+        }
+        return $ret;
+    }
+
+    static function statusOptions() {
+        $nominationIds = array_filter(ApplicationForm::iblockIds(), function($iblockId) {
+            return ApplicationForm::isNomination($iblockId);
+        });
+        $iblockFilter = array_merge(
+            array('LOGIC' => 'OR'),
+            array_map(function($iblockId) {
+                return array('IBLOCK_ID' => $iblockId);
+            }, $nominationIds)
+        );
+        $props = ib::fetch(CIBlockPropertyEnum::GetList(array(), array($iblockFilter, 'CODE' => 'STATUS')));
+        $options = array_unique(array_map(function($prop) {
+            return _::pick($prop, array('XML_ID', 'VALUE'));
+        }, $props), SORT_REGULAR);
+        assert(
+            count($options) === count(array_unique(array_map(function($prop) {
+                return _::pick($prop, array('XML_ID'));
+            }, $props), SORT_REGULAR)),
+            'inconsistent status properties'
+        );
+        return $options;
     }
 
     static function iblockIds() {
