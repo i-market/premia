@@ -80,6 +80,21 @@ class Underscore extends ArraysMethods {
         return $ret;
     }
 
+    static function uniqBy($array, $f) {
+        $seen = array();
+        return array_filter($array, function($x) use ($f, $seen) {
+            $val = $f($x);
+            if ($val === null) {
+                return true;
+            } elseif (_::contains($seen, $val)) {
+                return false;
+            } else {
+                $seen[] = $val;
+                return true;
+            }
+        });
+    }
+
     // TODO function $by support
     static function keyBy($array, $by) {
         $ret = array();

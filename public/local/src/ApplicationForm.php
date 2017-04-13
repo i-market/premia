@@ -139,6 +139,21 @@ class ApplicationForm {
                 return $files + $deleteFileValues;
             });
         }
+//        $existingFiles = $elementMaybe === null ? array() : array_map(function($fileId) {
+//            return CFile::GetFileArray($fileId);
+//        }, $elementMaybe['PROPERTIES']['FILES']['VALUE']);
+        // temporary duplicate files bug workaround
+        // mutate
+        $fields = _::update($fields, 'PROPERTY_VALUES.FILES', function($files) {
+            $ret = _::uniqBy($files, function($file) {
+                // dedupe by filename
+                return _::get($file, 'VALUE.name');
+            });
+            if (count($files) !== count($ret)) {
+                trigger_error('debugging duplicate filenames', E_USER_WARNING);
+            }
+            return $ret;
+        });
         $result = $isAdd
             ? $el->Add($fields)
             : $el->Update($elementMaybe['ID'], $fields);
