@@ -145,10 +145,14 @@ class ApplicationForm {
         // temporary duplicate files bug workaround
         // mutate
         $fields = _::update($fields, 'PROPERTY_VALUES.FILES', function($files) {
-            return _::uniqBy($files, function($file) {
+            $ret = _::uniqBy($files, function($file) {
                 // dedupe by filename
                 return _::get($file, 'VALUE.name');
             });
+            if (count($files) !== count($ret)) {
+                trigger_error('debugging duplicate filenames', E_USER_WARNING);
+            }
+            return $ret;
         });
         $result = $isAdd
             ? $el->Add($fields)
