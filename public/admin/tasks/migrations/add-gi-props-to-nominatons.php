@@ -64,19 +64,20 @@ if (User::ensureUserIsAdmin()) {
                         'IBLOCK_ID' => $iblockId
                     )
                 );
-                $results[] = array('prop', $prop->Add($fields));
+//                $results[] = array('prop', $prop->Add($fields));
                 assert($el->LAST_ERROR === '');
             }
             /// copy values
             $elements = ib::collectElements($el->GetList(array(), array('IBLOCK_ID' => $iblockId)));
             foreach ($elements as $element) {
-                foreach ($giProps as $propCode => $prop) {
-                    $userId = $element['PROPERTIES']['USER']['VALUE'];
-                    $generalInfo = _::first(ib::collectElements($el->GetList(array(), array('IBLOCK_ID' => Iblock::GENERAL_INFO, 'PROPERTY_USER' => $userId))));
-                    $value = $generalInfo['PROPERTIES'][$propCode]['VALUE'];
-                    $results[] = array('value', $el->SetPropertyValueCode($element['ID'], $propCode, array('VALUE' => $value)));
-                    assert($el->LAST_ERROR === '');
-                }
+                $results[] = \App\ApplicationForm::syncGeneralInfo($element['PROPERTIES']['USER']['VALUE']);
+//                foreach ($giProps as $propCode => $prop) {
+//                    $userId = $element['PROPERTIES']['USER']['VALUE'];
+//                    $generalInfo = _::first(ib::collectElements($el->GetList(array(), array('IBLOCK_ID' => Iblock::GENERAL_INFO, 'PROPERTY_USER' => $userId))));
+//                    $value = $generalInfo['PROPERTIES'][$propCode]['VALUE'];
+//                    $results[] = array('value', $el->SetPropertyValueCode($element['ID'], af::NOMINATION_GI_PROP_PREFIX.$propCode, array('VALUE' => $value)));
+//                    assert($el->LAST_ERROR === '');
+//                }
             }
         }
     }

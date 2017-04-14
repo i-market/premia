@@ -255,7 +255,7 @@ class ApplicationForm {
         $appForms = ib::collectElements($el->GetList(array(), $appFilter));
         $results = array_map(function($appForm) use ($giProps, $el) {
             return array_map(function($prop) use ($appForm, $giProps, $el) {
-                return $el->SetPropertyValueCode($appForm['ID'], self::NOMINATION_GI_PROP_PREFIX.$prop['CODE'], $prop['VALUE']['TEXT']);
+                return $el->SetPropertyValueCode($appForm['ID'], self::NOMINATION_GI_PROP_PREFIX.$prop['CODE'], $prop['~VALUE']['TEXT']);
             }, $giProps);
         }, $appForms);
         return $results;
