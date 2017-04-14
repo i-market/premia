@@ -8,6 +8,7 @@ use Core\Underscore as _;
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Раздел администратора");
 
+// TODO add with ApplicationForm::NOMINATION_GI_PROP_PREFIX
 if (User::ensureUserIsAdmin()) {
     ini_set('max_execution_time', 300);
 

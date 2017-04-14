@@ -7,6 +7,7 @@ use Core\View as v;
 use CUser;
 use Core\Iblock as ib;
 use Core\Underscore as _;
+use Core\Nullable as nil;
 
 class EventHandlers {
     private static function ref($name) {
@@ -74,6 +75,9 @@ class EventHandlers {
         $iblockId = $fields['IBLOCK_ID'];
         if (ApplicationForm::isNomination($iblockId)) {
             self::onApplicationAdded($fields);
+            ApplicationForm::syncGeneralInfo($fields['PROPERTY_VALUES']['USER']);
+        } elseif (intval($iblockId) === Iblock::GENERAL_INFO) {
+            ApplicationForm::syncGeneralInfo($fields['PROPERTY_VALUES']['USER']);
         }
     }
 
@@ -94,6 +98,9 @@ class EventHandlers {
             if ($statusChanged) {
                 self::onApplicationStatusChange($element, $prev);
             }
+            ApplicationForm::syncGeneralInfo($fields['PROPERTY_VALUES']['USER']);
+        } elseif (intval($fields['IBLOCK_ID']) === Iblock::GENERAL_INFO) {
+            ApplicationForm::syncGeneralInfo($fields['PROPERTY_VALUES']['USER']);
         }
     }
 
