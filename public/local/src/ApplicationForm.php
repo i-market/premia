@@ -17,6 +17,7 @@ assert(Loader::includeModule('iblock'));
 
 class ApplicationForm {
     const STATUS_ACCEPTED = 'ACCEPTED';
+    const NOMINATION_GI_PROP_PREFIX = 'GI_';
 
     private static function associatedElement($iblockId, $userId) {
         $filter = array('IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y', 'PROPERTY_USER' => $userId);
@@ -117,7 +118,11 @@ class ApplicationForm {
     static function isPublicProperty($iblockId, $propertyCode) {
         assert(in_array($iblockId, self::iblockIds()));
         $private = array('USER', 'FILES', 'STATUS');
-        return !in_array($propertyCode, $private);
+        if (str::startsWith($propertyCode, self::NOMINATION_GI_PROP_PREFIX)) {
+            return false;
+        } else {
+            return !in_array($propertyCode, $private);
+        }
     }
 
     static function application($userId) {
@@ -250,7 +255,7 @@ class ApplicationForm {
         $appForms = ib::collectElements($el->GetList(array(), $appFilter));
         $results = array_map(function($appForm) use ($giProps, $el) {
             return array_map(function($prop) use ($appForm, $giProps, $el) {
-                return $el->SetPropertyValueCode($appForm['ID'], $prop['CODE'], $prop['VALUE']['TEXT']);
+                return $el->SetPropertyValueCode($appForm['ID'], self::NOMINATION_GI_PROP_PREFIX.$prop['CODE'], $prop['VALUE']['TEXT']);
             }, $giProps);
         }, $appForms);
         return $results;
