@@ -384,6 +384,15 @@ class User {
         }
     }
 
+    static function getDisplayName($user) {
+        $hasFullname = _::matches(array('LAST_NAME', 'NAME', 'SECOND_NAME'), function($key) use ($user) {
+            return _::has($user, $key);
+        });
+        return $hasFullname
+            ? $user['LAST_NAME'].' '.$user['NAME'].' '.$user['SECOND_NAME']
+            : $user['NAME'];
+    }
+
     /**
      * @param CUser $user
      */
