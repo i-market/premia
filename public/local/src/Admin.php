@@ -105,7 +105,7 @@ class Admin {
         $filter = array_merge(array('IBLOCK_ID' => $iblockId), af::activeFilter());
         $forms = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), $filter));
         // mutate
-        $forms = array_filter($forms, function($form) {
+        $forms = _::filter($forms, function($form) {
             return _::get($form, 'PROPERTIES.STATUS.VALUE_XML_ID') === ApplicationForm::STATUS_ACCEPTED;
         });
         $votes = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), array(
