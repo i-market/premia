@@ -94,6 +94,12 @@ class ApplicationForm {
         );
     }
 
+    static function nominationIblockIds() {
+        return array_filter(self::iblockIds(), function($iblockId) {
+            return self::isNomination($iblockId);
+        });
+    }
+
     static function activeFilter() {
         return array('ACTIVE' => 'Y', 'PROPERTY_AWARD' => App::getActiveAward());
     }
@@ -213,5 +219,40 @@ class ApplicationForm {
             // generic default name just in case
             return str::ifEmpty($company, 'Анкета № '.$application['ID']);
         }
+    }
+
+    static function syncGeneralInfo($userId) {
+        $el = new CIBlockElement();
+        $filter = array_merge(
+            array(
+                'IBLOCK_ID' => Iblock::GENERAL_INFO,
+                'PROPERTY_USER' => $userId
+            ),
+            ApplicationForm::activeFilter()
+        );
+        $generalInfo = _::first(ib::collectElements($el->GetList(array(), $filter)));
+        $giProps = array_filter($generalInfo['PROPERTIES'], function($prop) {
+            return self::isPublicProperty(Iblock::GENERAL_INFO, $prop['CODE']);
+        });
+        $iblockFilter = array_merge(
+            array('LOGIC' => 'OR'),
+            array_values(array_map(function($iblockId) {
+                return array('IBLOCK_ID' => $iblockId);
+            }, ApplicationForm::nominationIblockIds()))
+        );
+        $appFilter = array_merge(
+            array(
+                $iblockFilter,
+                'PROPERTY_USER' => $userId
+            ),
+            ApplicationForm::activeFilter()
+        );
+        $appForms = ib::collectElements($el->GetList(array(), $appFilter));
+        $results = array_map(function($appForm) use ($giProps, $el) {
+            return array_map(function($prop) use ($appForm, $giProps, $el) {
+                return $el->SetPropertyValueCode($appForm['ID'], $prop['CODE'], $prop['VALUE']['TEXT']);
+            }, $giProps);
+        }, $appForms);
+        return $results;
     }
 }
