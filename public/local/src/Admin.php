@@ -86,8 +86,9 @@ class Admin {
     static function nominationSummaryTable($iblockId) {
         $voteIblockId = af::voteIblockId($iblockId);
         // TODO clean up
+        $fields = Array("ID", "LAST_NAME", "NAME", "SECOND_NAME");
         /** @noinspection PhpPassByRefInspection */
-        $experts = ib::collect(CUser::GetList(($by = "NAME"), ($order = "asc"), Array("GROUPS_ID"=>Array(User::EXPERT_GROUP), "ACTIVE"=>"Y"), Array("FIELDS"=>Array("ID", "NAME"))));
+        $experts = ib::collect(CUser::GetList(($by = "NAME"), ($order = "asc"), Array("GROUPS_ID"=>Array(User::EXPERT_GROUP), "ACTIVE"=>"Y"), Array("FIELDS"=>$fields)));
         $header = array_merge(
             array(
                 'Название компании',
@@ -96,7 +97,9 @@ class Admin {
                 'Фактический адрес',
             ),
             // [Общий балл каждого эксперта]
-            _::pluck($experts, 'NAME'),
+            array_map(function($expert) {
+                return User::getDisplayName($expert);
+            }, $experts),
             array(
                 'Общий балл',
                 'Средний балл'
@@ -105,7 +108,7 @@ class Admin {
         $filter = array_merge(array('IBLOCK_ID' => $iblockId), af::activeFilter());
         $forms = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), $filter));
         // mutate
-        $forms = array_filter($forms, function($form) {
+        $forms = _::filter($forms, function($form) {
             return _::get($form, 'PROPERTIES.STATUS.VALUE_XML_ID') === ApplicationForm::STATUS_ACCEPTED;
         });
         $votes = ib::collectElements((new CIBlockElement)->GetList(array('SORT' => 'ASC'), array(
