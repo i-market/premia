@@ -33,15 +33,6 @@ if (User::ensureUserIsAdmin()) {
                 assert(count($keep) + count($delete) === count($files));
                 $propCode = 'FILES';
                 $props = ib::collect(CIBlockElement::GetProperty($iblockId, $element['ID'], 'sort', 'asc', array('CODE' => $propCode)));
-//                $propValue = array_reduce(
-//                    $props,
-//                    function($values, $prop) use ($element, $iblockId, $delete) {
-//                        return in_array($prop['VALUE'], _::pluck($delete, 'ID'))
-//                            ? _::set($values, $prop['PROPERTY_VALUE_ID'], array('VALUE' => array('del' => 'Y')))
-//                            : $values;
-//                    },
-//                    array()
-//                );
                 $result = array(
                     'delete_count' => count($delete)
                 );
