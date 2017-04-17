@@ -71,6 +71,15 @@ class EventHandlers {
         }
     }
 
+    private static function syncGeneralInfo($fields) {
+        $userId = $fields['PROPERTY_VALUES']['USER'];
+        if ($userId === null) {
+            $element = _::first(ib::collectElements(CIBlockElement::GetByID($fields['ID'])));
+            $userId = $element['PROPERTIES']['USER']['VALUE'];
+        }
+        ApplicationForm::syncGeneralInfo($userId);
+    }
+
     static function onAfterIBlockElementAdd($fields) {
         $iblockId = $fields['IBLOCK_ID'];
         $isNomination = ApplicationForm::isNomination($iblockId);
@@ -80,12 +89,7 @@ class EventHandlers {
         }
         $isGeneralInfo = intval($fields['IBLOCK_ID']) === Iblock::GENERAL_INFO;
         if ($isNomination || $isGeneralInfo) {
-            $userId = $fields['PROPERTY_VALUES']['USER'];
-            if ($userId === null) {
-                $element = CIBlockElement::GetByID($fields['ID'])->GetNext();
-                $userId = $element['PROPERTIES']['USER']['VALUE'];
-            }
-            ApplicationForm::syncGeneralInfo($userId);
+            self::syncGeneralInfo($fields);
         }
     }
 
@@ -110,12 +114,7 @@ class EventHandlers {
         }
         $isGeneralInfo = intval($fields['IBLOCK_ID']) === Iblock::GENERAL_INFO;
         if ($isNomination || $isGeneralInfo) {
-            $userId = $fields['PROPERTY_VALUES']['USER'];
-            if ($userId === null) {
-                $element = CIBlockElement::GetByID($fields['ID'])->GetNext();
-                $userId = $element['PROPERTIES']['USER']['VALUE'];
-            }
-            ApplicationForm::syncGeneralInfo($userId);
+            self::syncGeneralInfo($fields);
         }
     }
 
