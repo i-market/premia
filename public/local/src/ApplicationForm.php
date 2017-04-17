@@ -227,7 +227,7 @@ class ApplicationForm {
     }
 
     static function syncGeneralInfo($userId) {
-        if ($userId === null) {
+        if (!$userId) {
             trigger_error('invalid arguments', E_USER_WARNING);
             return null;
         }
