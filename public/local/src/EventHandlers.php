@@ -73,11 +73,19 @@ class EventHandlers {
 
     static function onAfterIBlockElementAdd($fields) {
         $iblockId = $fields['IBLOCK_ID'];
-        if (ApplicationForm::isNomination($iblockId)) {
+        $isNomination = ApplicationForm::isNomination($iblockId);
+        if ($isNomination) {
             self::onApplicationAdded($fields);
             ApplicationForm::syncGeneralInfo($fields['PROPERTY_VALUES']['USER']);
-        } elseif (intval($iblockId) === Iblock::GENERAL_INFO) {
-            ApplicationForm::syncGeneralInfo($fields['PROPERTY_VALUES']['USER']);
+        }
+        $isGeneralInfo = intval($fields['IBLOCK_ID']) === Iblock::GENERAL_INFO;
+        if ($isNomination || $isGeneralInfo) {
+            $userId = $fields['PROPERTY_VALUES']['USER'];
+            if ($userId === null) {
+                $element = CIBlockElement::GetByID($fields['ID'])->GetNext();
+                $userId = $element['PROPERTIES']['USER']['VALUE'];
+            }
+            ApplicationForm::syncGeneralInfo($userId);
         }
     }
 
@@ -91,16 +99,23 @@ class EventHandlers {
         $status = function($element) {
             return $element['PROPERTIES']['STATUS']['VALUE_XML_ID'];
         };
-        if (ApplicationForm::isNomination($fields['IBLOCK_ID'])) {
+        $isNomination = ApplicationForm::isNomination($fields['IBLOCK_ID']);
+        if ($isNomination) {
             $element = _::first(ib::collectElements(CIBlockElement::GetByID($fields['ID'])));
             $prev = $fields['PREV'];
             $statusChanged = $status($prev) !== $status($element);
             if ($statusChanged) {
                 self::onApplicationStatusChange($element, $prev);
             }
-            ApplicationForm::syncGeneralInfo($fields['PROPERTY_VALUES']['USER']);
-        } elseif (intval($fields['IBLOCK_ID']) === Iblock::GENERAL_INFO) {
-            ApplicationForm::syncGeneralInfo($fields['PROPERTY_VALUES']['USER']);
+        }
+        $isGeneralInfo = intval($fields['IBLOCK_ID']) === Iblock::GENERAL_INFO;
+        if ($isNomination || $isGeneralInfo) {
+            $userId = $fields['PROPERTY_VALUES']['USER'];
+            if ($userId === null) {
+                $element = CIBlockElement::GetByID($fields['ID'])->GetNext();
+                $userId = $element['PROPERTIES']['USER']['VALUE'];
+            }
+            ApplicationForm::syncGeneralInfo($userId);
         }
     }
 
