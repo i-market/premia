@@ -227,6 +227,10 @@ class ApplicationForm {
     }
 
     static function syncGeneralInfo($userId) {
+        if ($userId === null) {
+            trigger_error('invalid arguments', E_USER_WARNING);
+            return null;
+        }
         $el = new CIBlockElement();
         $filter = array_merge(
             array(
