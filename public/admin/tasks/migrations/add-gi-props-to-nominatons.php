@@ -1,5 +1,6 @@
 <?php
 use App\ApplicationForm as af;
+use App\ApplicationForm;
 use App\Iblock;
 use App\User;
 use Core\Iblock as ib;
@@ -11,6 +12,45 @@ $APPLICATION->SetTitle("Раздел администратора");
 // TODO add with ApplicationForm::NOMINATION_GI_PROP_PREFIX
 if (User::ensureUserIsAdmin()) {
     ini_set('max_execution_time', 300);
+
+    $syncGeneralInfo = function($userId) {
+        if (!$userId) {
+            trigger_error('invalid arguments', E_USER_WARNING);
+            return null;
+        }
+        $el = new CIBlockElement();
+        $filter = array_merge(
+            array(
+                'IBLOCK_ID' => Iblock::GENERAL_INFO,
+                'PROPERTY_USER' => $userId
+            ),
+            ApplicationForm::activeFilter()
+        );
+        $generalInfo = _::first(ib::collectElements($el->GetList(array(), $filter)));
+        if ($generalInfo === null) {
+            $iblockFilter = array_merge(
+                array('LOGIC' => 'OR'),
+                array_values(array_map(function ($iblockId) {
+                    return array('IBLOCK_ID' => $iblockId);
+                }, ApplicationForm::nominationIblockIds()))
+            );
+            $appFilter = array_merge(
+                array(
+                    $iblockFilter,
+                    'PROPERTY_USER' => $userId
+                ),
+                ApplicationForm::activeFilter()
+            );
+            $appForms = ib::collectElements($el->GetList(array(), $appFilter));
+            $results = array_map(function ($appForm) use ($el) {
+                return array_map(function ($propCode) use ($appForm, $el) {
+                    // cleanup incorrect values
+                    return $el->SetPropertyValueCode($appForm['ID'], $propCode, '');
+                }, ['GI_ACTIVITY', 'GI_ACHIEVEMENTS', 'GI_QUANTITY', 'GI_CLIENTS']);
+            }, $appForms);
+            return $results;
+        } else return [];
+    };
 
     $el = new CIBlockElement();
     $results = array();
@@ -70,7 +110,9 @@ if (User::ensureUserIsAdmin()) {
             /// copy values
             $elements = ib::collectElements($el->GetList(array(), array('IBLOCK_ID' => $iblockId)));
             foreach ($elements as $element) {
-                $results[] = \App\ApplicationForm::syncGeneralInfo($element['PROPERTIES']['USER']['VALUE']);
+//                $results[] = \App\ApplicationForm::syncGeneralInfo($element['PROPERTIES']['USER']['VALUE']);
+                // cleanup
+                $results[] = $syncGeneralInfo($element['PROPERTIES']['USER']['VALUE']);
 //                foreach ($giProps as $propCode => $prop) {
 //                    $userId = $element['PROPERTIES']['USER']['VALUE'];
 //                    $generalInfo = _::first(ib::collectElements($el->GetList(array(), array('IBLOCK_ID' => Iblock::GENERAL_INFO, 'PROPERTY_USER' => $userId))));
