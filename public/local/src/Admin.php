@@ -123,15 +123,14 @@ class Admin {
             }
             $votes_ = _::get($formVotes, $form['ID'], array());
             // [Общий балл каждого эксперта] name → overall score
-            $expertOverallScores = array_reduce($experts, function($scores, $expert) use ($votes_) {
+            $expertOverallScores = array_map(function($expert) use ($votes_) {
                 $voteMaybe = _::find($votes_, function($vote) use ($expert) {
                     return _::get($vote, 'PROPERTIES.USER.VALUE') === intval($expert['ID']);
                 });
-                // important to assoc even if there is no vote
-                return _::set($scores, $expert['NAME'], nil::map($voteMaybe, function($vote) {
+                return nil::map($voteMaybe, function($vote) {
                     return Vote::overallScore($vote);
-                }));
-            }, array());
+                });
+            }, $experts);
             // important to get rid of null votes
             $cleanScores = _::clean(array_values($expertOverallScores));
             // Общий балл
