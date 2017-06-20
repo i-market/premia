@@ -13,6 +13,13 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
+	),
+	Array(
+		"Премия 2017", 
+		"/award/2017/", 
+		Array(), 
+		Array(), 
+		"" 
 	)
 );
 ?>
