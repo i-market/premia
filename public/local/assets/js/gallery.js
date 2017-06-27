@@ -16,9 +16,9 @@ function activate($component, sectionId) {
 }
 
 function initSlider($slider) {
+  objectFitImages();
   $slider.find('.slick').slick();
   $slider.find('[data-fancybox]:not(.slick-cloned)').fancybox();
-  objectFitImages();
 }
 
 function init($component) {
@@ -35,6 +35,8 @@ function init($component) {
       });
     } else {
       activate($component, sectionId);
+      const $slider = $component.find('.gallery-slider.active');
+      $slider.find('.slick').slick('reinit');
     }
   });
 }
