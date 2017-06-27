@@ -8,7 +8,7 @@
             {# TODO add section editing actions #}
             {% for section in sections %}
                 {% set style = "background-image: url('" ~ section.COVER_IMAGE.RESIZED.src ~ "');" %}
-                <div data-section-id="{{ section.ID }}" role="button" tabindex="0" class="album" style="{{ style }}">
+                <div data-section-id="{{ section.ID }}" role="button" tabindex="0" class="album{{ section.ACTIVE ? ' active' }}" style="{{ style }}">
                     <div class="name">{{ section.NAME }}</div>
                 </div>
             {% endfor %}

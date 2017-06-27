@@ -1882,16 +1882,24 @@ input {
     flex-wrap: wrap;
     margin-right: -$margin;
     .album {
-      $width: 260px;
       position: relative;
-      flex: 1 0 260px;
+      flex-basis: 100%;
       margin-right: $margin;
       margin-bottom: $margin;
-      height: $width * 0.8;
+      height: 210px;
       background-size: cover;
       background-position: center 25%;
       background-color: $bg-color;
       cursor: pointer;
+      @media only screen and (min-width: 426px) {
+        flex-basis: calc(50% - #{$margin});
+      }
+      @media only screen and (min-width: 769px) {
+        flex-basis: calc(33.33% - #{$margin});
+      }
+      &.active {
+        display: none;
+      }
     }
   }
 }
