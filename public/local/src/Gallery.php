@@ -104,7 +104,9 @@ class Gallery {
         $activeSectionId = _::first($sections)['ID'];
         $ctx = array(
             'slider' => self::renderGallerySlider($activeSectionId, 'active'),
-            'sections' => $sections
+            'sections' => array_map(function($section) use ($activeSectionId) {
+                return _::set($section, 'ACTIVE', $section['ID'] === $activeSectionId);
+            }, $sections)
         );
         return v::twig()->render(v::partial('gallery.twig'), $ctx);
     }

@@ -1,9 +1,16 @@
 import $ from 'jquery';
+import _ from 'lodash';
 import objectFitImages from 'object-fit-images';
 
 function activate($component, sectionId) {
   $component.find('.gallery-slider').each(function() {
     $(this).toggleClass('active', $(this).attr('data-section-id') === sectionId);
+  });
+  const $prev = $component.find('.album.active');
+  const $next = $component.find(`.album[data-section-id="${sectionId}"]`);
+  $next.after($prev);
+  _.forEach([$prev, $next], function($el) {
+    $el.toggleClass('active', $el.attr('data-section-id') === sectionId);
   });
   objectFitImages();
 }
