@@ -23,21 +23,28 @@ function initSlider($slider) {
 
 function init($component) {
   initSlider($component.find('.gallery-slider'));
-  $component.find('.album').on('click', function() {
-    const sectionId = $(this).attr('data-section-id');
-    const isSectionLoaded = $component.find(`.gallery-slider[data-section-id="${sectionId}"]`).length;
-    if (!isSectionLoaded) {
-      $.get(`/api/gallery/${sectionId}.html`, (html) => {
-        const $slider = $(html);
-        $component.prepend($slider);
+  $component.find('.album').each(function() {
+    var loading = false;
+    $(this).on('click', function() {
+      // wait for ajax requests to complete
+      if (loading) return;
+      const sectionId = $(this).attr('data-section-id');
+      const isSectionLoaded = $component.find(`.gallery-slider[data-section-id="${sectionId}"]`).length;
+      if (!isSectionLoaded) {
+        loading = true;
+        $.get(`/api/gallery/${sectionId}.html`, (html) => {
+          const $slider = $(html);
+          $component.prepend($slider);
+          activate($component, sectionId);
+          initSlider($slider);
+          loading = false;
+        });
+      } else {
         activate($component, sectionId);
-        initSlider($slider);
-      });
-    } else {
-      activate($component, sectionId);
-      const $slider = $component.find('.gallery-slider.active');
-      $slider.find('.slick').slick('reinit');
-    }
+        const $slider = $component.find('.gallery-slider.active');
+        $slider.find('.slick').slick('reinit');
+      }
+    })
   });
 }
 
