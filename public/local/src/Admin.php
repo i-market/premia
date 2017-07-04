@@ -254,11 +254,14 @@ class Admin {
                     return '';
                 }
             } else if ($params['action'] === 'change-award-state') {
+                // TODO refactor encapsulate state change
                 WS_PSettings::setFieldValue(App::AWARD_STATE_SETTING, $params['to']);
                 return self::renderIndex('Состояние конкурса изменено.');
             } else if ($params['action'] === 'set-active-award') {
                 $award = $params['to'];
                 App::setActiveAward($award);
+                // TODO refactor encapsulate state change
+                WS_PSettings::setFieldValue(App::AWARD_STATE_SETTING, AwardState::OPEN);
                 return self::renderIndex('Конкурс «'.$award.'» запущен.');
             } else if ($params['view'] === 'nominees') {
                 $fields = array('EMAIL', 'NAME');
