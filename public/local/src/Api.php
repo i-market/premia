@@ -71,7 +71,8 @@ class Api {
                     'IBLOCK_ID' => $iblockId,
                     'NAME' => $elementName,
                     'PROPERTY_VALUES' => array_merge($propTxtValues, array(
-                        'USER' => $USER->GetID()
+                        'USER' => $USER->GetID(),
+                        'AWARD' => App::getActiveAward()
                     ))
                 );
                 $group = $params[$paramsKey];
