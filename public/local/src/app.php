@@ -98,6 +98,7 @@ class App {
     }
 
     static function formSpecs() {
+        $privacyPolicyField = f::field('privacy-policy', 'Согласие на обработку персональных данных');
         $privacyPolicyValidation = array(
             'type' => 'required',
             'fields' => array('privacy-policy'),
@@ -111,9 +112,11 @@ class App {
                 'fields' => _::keyBy(array(
                     f::field('name', 'Ваше имя'),
                     f::field('email', 'Ваш E-mail'),
-                    f::field('message', 'Ваше сообщение')
+                    f::field('message', 'Ваше сообщение'),
+                    $privacyPolicyField
                 ), 'name'),
                 'validations' => array(
+                    $privacyPolicyValidation,
                     array(
                         'type' => 'required',
                         'fields' => array('name', 'email', 'message'),
@@ -135,15 +138,15 @@ class App {
                     f::field('phone', 'Номер телефона'),
                     f::field('password', 'Пароль'),
                     f::field('password-confirmation', 'Введите пароль еще раз'),
-                    f::field('privacy-policy', 'Согласие на обработку персональных данных')
+                    $privacyPolicyField
                 ), 'name'),
                 'validations' => array(
+                    $privacyPolicyValidation,
                     array(
                         'type' => 'required',
                         'fields' => array('full-name', 'company', 'email', 'phone', 'password', 'password-confirmation'),
                         'message' => $requiredMessage
                     ),
-                    $privacyPolicyValidation,
                     array(
                         'type' => 'email',
                         'fields' => array('email'),
