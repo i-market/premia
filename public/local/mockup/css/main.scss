@@ -184,6 +184,16 @@ h4 {
   margin-bottom: 5px;
 }
 
+@mixin link {
+  font-weight: 700;
+  text-decoration: underline;
+  color: $d_blue;
+  &:hover {
+    color: $blue;
+    text-decoration: none;
+  }
+}
+
 .editable-area {
   &, p {
     line-height: 32px;
@@ -208,13 +218,7 @@ h4 {
     margin-bottom: 0;
   }
   a {
-    font-weight: 700;
-    text-decoration: underline;
-    color: $d_blue;
-    &:hover {
-      color: $blue;
-      text-decoration: none;
-    }
+    @include link;
     &.btn--blue, &.btn {
       font-weight: normal;
       text-decoration: none;
@@ -1311,6 +1315,14 @@ body.open {
   margin-top: 50px;
 }
 
+@mixin form-field-message {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.2;
+  color: $errorRed;
+}
+
 .label {
   position: relative;
   display: block;
@@ -1321,11 +1333,7 @@ body.open {
       border-color: $errorRed;
     }
     .message {
-      display: block;
-      margin-top: 10px;
-      font-size: 14px;
-      line-height: 1.2;
-      color: $errorRed;
+      @include form-field-message;
     }
   }
   &.focus {
@@ -1715,6 +1723,30 @@ input {
 .modal_form {
   .wrap_btn {
     padding-bottom: 1px;
+  }
+  .checkbox {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    input {
+      flex-shrink: 0;
+      margin-right: 10px;
+      margin-top: 0.1em;
+      width: auto;
+      height: auto;
+    }
+    &, .label-text {
+      flex: 1 1;
+      font-size: 14px;
+      line-height: 1.2;
+      a {
+        @include link;
+      }
+    }
+    .message {
+      @include form-field-message;
+      flex-basis: 100%;
+    }
   }
 }
 

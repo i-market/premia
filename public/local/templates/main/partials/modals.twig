@@ -47,6 +47,9 @@
             <label class="label">
                 <input name="password-confirmation" type="password" placeholder="Введите пароль еще раз">
             </label>
+            <label class="checkbox">
+                {% include partial('forms_legal.twig') %}
+            </label>
             <div class="form-message"></div>
             <div class="wrap_btn">
                 <div>
@@ -72,6 +75,9 @@
                 <span class="placeholder">Ваше сообщение</span>
                 <textarea name="message" rows="1" maxlength="15000"></textarea>
                 <span class="chars"></span>
+            </label>
+            <label class="checkbox">
+                {% include partial('forms_legal.twig') %}
             </label>
             <div class="form-message"></div>
             <div class="wrap_btn">
