@@ -302,8 +302,9 @@ class Form {
             }
         };
         $handler = function($request, $response) use ($spec, $f, $rule) {
-            // TODO refactor: this function should'nt know about recaptcha
-            $params = $request->params(_::append(_::pluck($spec['fields'], 'name'), 'g-recaptcha-response'));
+            // TODO refactor implicit global fields
+            $globalFields = ['g-recaptcha-response'];
+            $params = $request->params(array_merge(_::pluck($spec['fields'], 'name'), $globalFields));
             $validator = new Validator($params);
             foreach ($spec['validations'] as $validation) {
                 foreach ($validation['fields'] as $field) {
@@ -322,6 +323,11 @@ class Form {
             }
             $validator->validate();
             $errors = $validator->errors();
+            if ($params['g-recaptcha-response'] !== null) {
+                $captchaMessage = 'Капча не подошла. Пожалуйста, попробуйте еще раз.';
+                // mutate
+                $errors = array_merge($errors, \App\App::validateRecaptcha($params['g-recaptcha-response'], $captchaMessage));
+            }
             return $f($params, $errors, $response);
         };
         return array(

@@ -98,6 +98,11 @@ class App {
     }
 
     static function formSpecs() {
+        $privacyPolicyValidation = array(
+            'type' => 'required',
+            'fields' => array('privacy-policy'),
+            'message' => 'Согласие на обработку персональных данных обязательно.'
+        );
         $requiredMessage = "Пожалуйста, заполните это поле.";
         // TODO field specs are incomplete, don't use them to render forms
         $ret = _::keyBy(array(
@@ -129,7 +134,8 @@ class App {
                     f::field('email', 'E-mail'),
                     f::field('phone', 'Номер телефона'),
                     f::field('password', 'Пароль'),
-                    f::field('password-confirmation', 'Введите пароль еще раз')
+                    f::field('password-confirmation', 'Введите пароль еще раз'),
+                    f::field('privacy-policy', 'Согласие на обработку персональных данных')
                 ), 'name'),
                 'validations' => array(
                     array(
@@ -137,6 +143,7 @@ class App {
                         'fields' => array('full-name', 'company', 'email', 'phone', 'password', 'password-confirmation'),
                         'message' => $requiredMessage
                     ),
+                    $privacyPolicyValidation,
                     array(
                         'type' => 'email',
                         'fields' => array('email'),
